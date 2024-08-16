@@ -8,18 +8,13 @@ It includes a frontend built with Vite and React, and a backend written in JS/TS
 
 Make sure you have you have the latest version of Docker (e.g. >25) and VS Code installed and running, then click the button below
 
-[![Open locally in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/fxgst/azle-react)
+[![Open locally in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/icPHubPH/azle-react)
 
 ### In your browser:
 
 In Gitpod 
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fxgst/azle-react/)
-
-or GitHub Codespaces
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fxgst/azle-react/?quickstart=1)
-
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/icPHubPH/azle-react/)
 
 ## 🚀 Develop
 
