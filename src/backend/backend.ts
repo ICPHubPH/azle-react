@@ -1,63 +1,64 @@
-import express from 'express';
-import { Server, ic, query } from 'azle';
-import {
-    HttpResponse,
-    HttpTransformArgs,
-} from 'azle/canisters/management';
 
+import { Server, init, postUpgrade, preUpgrade, setNodeServer } from 'azle';
+import { Database, DatabaseOptions } from './database';
+import { ENTITIES } from './database/entities';
+import { ConsoleLogger } from './database/logger';
+import { DatabaseStorage } from './database/storage';
+import { CreateServer } from './server';
 
-export default Server(
-    () => {
-        const app = express();
-        app.use(express.json());
-
-        let phonebook = {
-            'Alice': { 'phone': '123-456-789', 'added': new Date() }
-        };
-
-        app.get('/contacts', (_req, res) => {
-            res.json(phonebook);
-        });
-
-        app.post('/contacts/add', (req, res) => {
-            if (Object.keys(phonebook).includes(req.body.name)) {
-                res.json({ error: 'Name already exists' });
-            } else {
-                const contact = { [req.body.name]: { phone: req.body.phone, added: new Date() } };
-                phonebook = { ...phonebook, ...contact };
-                res.json({ status: 'Ok' });
-            }
-        });
-
-        app.get('/greet', (req, res) => {
-            res.json({ greeting: `Hello, ${req.query.name}` });
-        });
-
-        app.post('/price-oracle', async (req, res) => {
-            ic.setOutgoingHttpOptions({
-                maxResponseBytes: 20_000n,
-                cycles: 500_000_000_000n, // HTTP outcalls cost cycles. Unused cycles are returned.
-                transformMethodName: 'transform'
-            });
-
-            const date = '2024-04-01';
-            const response = await (await fetch(`https://api.coinbase.com/v2/prices/${req.body.pair}/spot?date=${date}`)).json();
-            res.json(response);
-        });
-
-        app.use(express.static('/dist'));
-        return app.listen();
+const databaseOptions: DatabaseOptions = {
+    sincronize: false,
+    migrationsRun: true,
+    storage: new DatabaseStorage({
+      key: 'DATABASE',
+      index: 0,
+    }),
+    entities: ENTITIES,
+    // TODO: Migrations are not found
+    migrations: ['/migrations/*.{ts,js}'],
+    // TODO: logger not working,
+    logger: new ConsoleLogger(false),
+  };
+  
+  let db: Database | undefined;
+  
+  export default Server(
+    async () => {
+      db = new Database(databaseOptions);
+      await db.load();
+      return CreateServer();
     },
     {
-        // The transformation function for the HTTP outcall responses.
-        // Required to reach consensus among different results the nodes might get.
-        // Only if they all get the same response, the result is returned, so make sure
-        // your HTTP requests are idempotent and don't depend e.g. on the time.
-        transform: query([HttpTransformArgs], HttpResponse, (args) => {
-            return {
-                ...args.response,
-                headers: []
-            };
-        })
-    }
-);
+      init: init([], async () => {
+        try {
+          db = new Database(databaseOptions);
+          await db.init();
+          setNodeServer(CreateServer());
+        } catch (error) {
+          console.error('Error initializing database:', error);
+          throw error;
+        }
+      }),
+      preUpgrade: preUpgrade(() => {
+        try {
+          if (!db) {
+            throw new Error('Database not initialized');
+          }
+  
+          db.save();
+        } catch (error) {
+          console.error('Error saving database:', error);
+        }
+      }),
+      postUpgrade: postUpgrade([], async () => {
+        try {
+          db = new Database(databaseOptions);
+          await db.load();
+          setNodeServer(CreateServer());
+        } catch (error) {
+          console.error('Error loading database:', error);
+        }
+      }),
+    },
+  );
+  

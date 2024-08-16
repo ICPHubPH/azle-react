@@ -35,10 +35,15 @@ The smart contract will be reachable under `http://bkyz2-fmaaa-aaaaa-qaaaq-cai.l
 Call the smart contract using `curl` on the command line: 
 
 ```bash
-# contacts endpoint
-curl http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/contacts
-# price-oracle endpoint
-curl -X POST http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/price-oracle -H 'content-type: application/json' -d '{"pair": "ICP-USD"}'
+# create configuration
+curl -X POST http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/configuration/insert -H 'content-type: application/json' -d '{"key": "site_name", "value": "ICP HUB PH"}'
+# update configuration
+curl -X POST http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/configuration/update -H 'content-type: application/json' -d '{"key": "site_name", "value": "ICP HUB Philippines"}'
+# delete configuration
+curl -X POST http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/configuration/delete -H 'content-type: application/json' -d '{"key": "site_name"}'
+# get configurations endpoint
+curl http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/configurations
+
 ```
 You can also use tools like Postman or HTTPie to interact with the smart contract.
 To redeploy the smart contract, run `dfx deploy` again.
@@ -71,9 +76,5 @@ You can make calls to the smart contract on mainnet just like to the local one!
 
 - When developing remotely, navigating to the canister's frontend in the browser will not work.
 Use `curl` on the command line instead, or develop locally.
-
-- Note that you might need to disable CORS in your browser to make backend calls from `localhost`.
-For example, for Chrome, run `open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security`
- to disable CORS.
 
 - If you get an error "Error: An error happened during communication with the replica: ... Connection refused", run `dfx start --clean` to start dfx.
