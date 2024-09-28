@@ -28,14 +28,16 @@ const formSchema = z.object({
 });
 
 function App() {
-  const [data, setData] = useState<string>("");
+  const [data, setData] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${import.meta.env.VITE_CANISTER_URL}/get_users`);
-      const data = await response.json();
-      setData(data.data);
-    }
+      const response = await fetch(
+        `${import.meta.env.VITE_CANISTER_URL}/get_users`
+      );
+      const data: User = await response.json();
+      setData(data);
+    };
     fetchData();
   }, []);
 
@@ -53,21 +55,21 @@ function App() {
 
     const url = "https://bkyz2-fmaaa-aaaaa-qaaaq-cai/add_user";
     // const response = await fetch(url, {
-    const response = await fetch(`${import.meta.env.VITE_CANISTER_URL}/add_user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_CANISTER_URL}/add_user`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       console.log(data);
     }
-    
   }
-    
-
 
   // function handleSubmit(event: any) {
   //   event.preventDefault();
@@ -144,8 +146,7 @@ function App() {
         </form>
       </Form>
       <div>
-        <h1>{data || "Loading..."}</h1>
-
+        <h1>{data ? JSON.stringify(data) : "No data available"}</h1>
       </div>
     </main>
   );
