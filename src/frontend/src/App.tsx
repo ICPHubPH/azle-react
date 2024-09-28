@@ -34,7 +34,7 @@ function App() {
     const fetchData = async () => {
       const response = await fetch(`${import.meta.env.VITE_CANISTER_URL}/get_users`);
       const data = await response.json();
-      setData(data.greeting);
+      setData(data.data);
     }
     fetchData();
   }, []);
@@ -51,6 +51,8 @@ function App() {
   async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
     const user: User = values;
 
+    const url = "https://bkyz2-fmaaa-aaaaa-qaaaq-cai/add_user";
+    // const response = await fetch(url, {
     const response = await fetch(`${import.meta.env.VITE_CANISTER_URL}/add_user`, {
       method: "POST",
       headers: {

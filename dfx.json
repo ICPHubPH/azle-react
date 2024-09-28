@@ -4,7 +4,7 @@
             "type": "custom",
             "main": "src/backend/backend.ts",
             "candid": "src/backend/backend.did",
-            "build": "npx azle backend",
+            "build": "npx azle --native-compilation backend",
             "wasm": ".azle/backend/backend.wasm",
             "gzip": true,
             "assets": [

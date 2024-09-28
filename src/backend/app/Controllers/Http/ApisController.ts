@@ -11,7 +11,7 @@ export default class ApisController {
 
   static async get_users(request: Request, response: Response) {
     const users = await User.find();
-    response.json({ data: users });
+    response.json({ data: users } );
   }
 
   static async update_user(request: Request, response: Response) {
