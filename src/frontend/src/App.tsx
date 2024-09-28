@@ -28,14 +28,14 @@ const formSchema = z.object({
 });
 
 function App() {
-  const [data, setData] = useState<User | null>(null);
+  const [data, setData] = useState<User[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
         `${import.meta.env.VITE_CANISTER_URL}/get_users`
       );
-      const data: User = await response.json();
+      const data: User[] = await response.json();
       setData(data);
     };
     fetchData();
@@ -146,7 +146,25 @@ function App() {
         </form>
       </Form>
       <div>
-        <h1>{data ? JSON.stringify(data) : "No data available"}</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Password</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((user: User) => (
+              <tr key={user.id}>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{user.password}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* <h1>{data ? JSON.stringify(data) : "No data available"}</h1> */}
       </div>
     </main>
   );
