@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FormInputIcon } from "lucide-react";
+import { User } from "../../types/UserTypes";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -28,7 +28,16 @@ const formSchema = z.object({
 });
 
 function App() {
-  const [greeting, setGreeting] = useState("");
+  const [data, setData] = useState<string>("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`${import.meta.env.VITE_CANISTER_URL}/get_users`);
+      const data = await response.json();
+      setData(data.greeting);
+    }
+    fetchData();
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,17 +48,24 @@ function App() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    const { username, email, password } = values;
-    fetch(`${import.meta.env.VITE_CANISTER_URL}/greet?name=${username}`)
-      .then((response) => response.json())
-      .then((json) => {
-        setGreeting(json.greeting);
-      });
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
+    const user: User = values;
+
+    const response = await fetch(`${import.meta.env.VITE_CANISTER_URL}/add_user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+    }
+    
   }
+    
+
 
   // function handleSubmit(event: any) {
   //   event.preventDefault();
@@ -125,6 +141,10 @@ function App() {
           </div>
         </form>
       </Form>
+      <div>
+        <h1>{data || "Loading..."}</h1>
+
+      </div>
     </main>
   );
 }
