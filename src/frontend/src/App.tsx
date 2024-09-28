@@ -67,8 +67,11 @@ function App() {
     );
     if (response.ok) {
       const data = await response.json();
+      
       console.log(data);
     }
+    window.location.reload();
+
   }
 
   // function handleSubmit(event: any) {
@@ -146,7 +149,7 @@ function App() {
         </form>
       </Form>
       <div>
-        <table>
+        {/* <table>
           <thead>
             <tr>
               <th>Username</th>
@@ -155,7 +158,7 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {data?.map((user: User) => (
+            {data?.map((user) => (
               <tr key={user.id}>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
@@ -163,8 +166,8 @@ function App() {
               </tr>
             ))}
           </tbody>
-        </table>
-        {/* <h1>{data ? JSON.stringify(data) : "No data available"}</h1> */}
+        </table> */}
+        <h1>{data ? JSON.stringify(data) : "No data available"}</h1>
       </div>
     </main>
   );
