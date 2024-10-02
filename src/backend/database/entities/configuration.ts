@@ -1,15 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
-  name: 'configurations',
+	name: "configurations",
 })
 export class Configuration extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Column({ type: 'text' })
-  key: string;
+	@Column({ type: "text" })
+	key: string;
 
-  @Column({ type: 'text' })
-  value: string;
+	@Column({ type: "text" })
+	value: string;
 }
