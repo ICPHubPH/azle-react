@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import environment from 'vite-plugin-environment';
 import dotenv from 'dotenv';
+import path from "path";
 
 dotenv.config({ path: '../../.env' });
 
@@ -38,6 +39,10 @@ export default defineConfig({
           new URL("../declarations", import.meta.url)
         ),
       },
+      {
+        find: "@",
+        replacement: path.resolve(__dirname, "./src"),
+      }
     ],
   },
 });
