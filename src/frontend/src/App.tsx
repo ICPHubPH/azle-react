@@ -1,11 +1,14 @@
+import type React from "react";
 import { useState } from "react";
 
 function App() {
 	const [greeting, setGreeting] = useState("");
 
-	function handleSubmit(event: any) {
+	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		const name = event.target.elements.name.value;
+		const target = event.target as HTMLFormElement;
+		const name = (target.elements.namedItem('name') as HTMLInputElement).value;
+		
 		fetch(`${import.meta.env.VITE_CANISTER_URL}/greet?name=${name}`)
 			.then((response) => response.json())
 			.then((json) => {

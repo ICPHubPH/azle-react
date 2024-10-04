@@ -1,4 +1,4 @@
-import { Opt, StableBTreeMap, stableJson } from "azle";
+import { type Opt, StableBTreeMap, stableJson } from "azle";
 
 export interface DatabaseStorageInterface {
 	get(): Promise<Uint8Array | undefined>;
@@ -14,7 +14,8 @@ export class DatabaseStorage implements DatabaseStorageInterface {
 	private readonly STORAGE_KEY: string;
 	private readonly STORAGE_INDEX: number;
 	// TODO: Fix type
-	private storage: any;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		private storage: any;
 
 	constructor(options?: DatabaseStorageOptions) {
 		this.STORAGE_KEY = options?.key || "DATABASE";
