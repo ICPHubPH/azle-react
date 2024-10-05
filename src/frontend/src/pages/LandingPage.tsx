@@ -33,7 +33,7 @@ const LandingPage = () => {
 					<Link to="/">
 						<Button variant="ghost">Login</Button>
 					</Link>
-					<Link to="/">
+					<Link to="/signup">
 						<Button>Sign Up</Button>
 					</Link>
 				</div>
