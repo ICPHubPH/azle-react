@@ -26,7 +26,7 @@ const SignUpPage = () => {
 						Start growing your
 						<span className="block md:inline"> urban garden today</span>
 					</h1>
-					<p className="text-gray-500 text-sm md:text-base">
+					<p className="mt-1 text-gray-500 text-sm md:text-base">
 						Sign up to __ and join our amazing community
 					</p>
 				</div>
@@ -82,7 +82,10 @@ const SignUpPage = () => {
 
 			{/* Background Image Section */}
 			<section className="hidden md:block size-full relative overflow-hidden">
-				<div className="absolute inset-0 bg-cover bg-right bg-no-repeat bg-[url('person-giving-vegetables.png')]" />
+				<div
+					className="absolute inset-0 bg-cover bg-no-repeat bg-[url('person-giving-vegetables.png')]"
+					style={{ backgroundPositionX: "60%" }}
+				/>
 				{/* <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" /> */}
 				{/* <p className="absolute bottom-6 left-6 lg:bottom-12 lg:left-12 w-2/4 lg:w-3/5 xl:w-2/5 text-white font-bold md:text-4xl lg:text-5xl">
 					Start growing your urban garden today.
