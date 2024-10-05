@@ -44,13 +44,13 @@ const LandingPage = () => {
 					<div className="text-6xl text-center leading-snug flex flex-col">
 						<span>Join Us In a</span>
 						<div className="flex gap-x-1 items-center">
-							<span className="bg-[#CFE9AD] rounded-full px-4 py-2">
+							<span className="bg-lima-200 rounded-full px-4 py-2">
 								Hunger Free
 							</span>
 							<span> World</span>
 						</div>
 					</div>
-					<Button className="flex gap-x-2 items-center bg-[#588828] font-medium rounded-full">
+					<Button className="flex gap-x-2 items-center bg-lima-600 font-medium rounded-full">
 						<span className="text-base sm:text-lg">Visit us</span>
 						<ArrowUpRight
 							className="bg-white p-1 rounded-full text-black"
@@ -65,19 +65,19 @@ const LandingPage = () => {
 						style={{ backgroundImage: "url('Maskgroup.png')" }}
 					/>
 
-					<div className="bg-[#446922] h-4/5 w-1/5 rounded-3xl flex flex-col justify-center items-center text-white shadow-lg ">
+					<div className="bg-lima-700 h-4/5 w-1/5 rounded-3xl flex flex-col justify-center items-center text-white shadow-lg ">
 						<span className="text-5xl font-bold">200+</span>
 						<span className="text-lg font-medium">monthly</span>
 						<span className="text-lg font-medium">users</span>
 					</div>
 
-					<div className="bg-[#CFE9AD] h-4/6 w-1/4 rounded-3xl flex flex-col justify-center items-center text-slate-900 shadow-lg ">
+					<div className="bg-lima-200 h-4/6 w-1/4 rounded-3xl flex flex-col justify-center items-center text-slate-900 shadow-lg ">
 						<span className="text-5xl font-bold">500+</span>
 						<span className="text-lg font-medium">Urban Farming</span>
 						<span className="text-lg font-medium">Tutorials</span>
 					</div>
 
-					<div className="bg-[#73AC36] h-4/5 w-1/5 rounded-3xl flex flex-col justify-center items-center text-white shadow-lg ">
+					<div className="bg-lima-500 h-4/5 w-1/5 rounded-3xl flex flex-col justify-center items-center text-white shadow-lg ">
 						<span className="text-5xl font-bold">50+</span>
 						<span className="text-lg font-medium">Daily farming</span>
 						<span className="text-lg font-medium">Resources</span>
