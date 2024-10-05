@@ -50,7 +50,7 @@ const LandingPage = () => {
 							<span> World</span>
 						</div>
 					</div>
-					<Button className="flex gap-x-2 items-center bg-lima-600 font-medium rounded-full">
+					<Button className="space-x-2 items-center bg-lima-600 font-medium rounded-full">
 						<span className="text-base sm:text-lg">Visit us</span>
 						<ArrowUpRight
 							className="bg-white p-1 rounded-full text-black"
@@ -59,11 +59,14 @@ const LandingPage = () => {
 					</Button>
 				</div>
 
-				<div className="h-96 w-full flex justify-between items-end gap-x-4 p-4">
-					<div
-						className=" h-full w-1/5 rounded-3xl bg-cover bg-center text-white shadow-lg"
-						style={{ backgroundImage: "url('Maskgroup.png')" }}
-					/>
+				<div className="h-96 w-full flex justify-between items-end gap-x-6 p-4">
+					<div className="h-full w-1/5 rounded-3xl bg-center shadow-lg">
+						<img
+							src="woman-in-greenhouse.png"
+							alt="Woman in Greenhouse"
+							className="size-full rounded-3xl object-cover"
+						/>
+					</div>
 
 					<div className="bg-lima-700 h-4/5 w-1/5 rounded-3xl flex flex-col justify-center items-center text-white shadow-lg ">
 						<span className="text-5xl font-bold">200+</span>
@@ -71,7 +74,7 @@ const LandingPage = () => {
 						<span className="text-lg font-medium">users</span>
 					</div>
 
-					<div className="bg-lima-200 h-4/6 w-1/4 rounded-3xl flex flex-col justify-center items-center text-slate-900 shadow-lg ">
+					<div className="bg-lima-200 h-4/6 w-1/4 rounded-3xl flex flex-col justify-center items-center text-lima-900 shadow-lg ">
 						<span className="text-5xl font-bold">500+</span>
 						<span className="text-lg font-medium">Urban Farming</span>
 						<span className="text-lg font-medium">Tutorials</span>
@@ -83,10 +86,13 @@ const LandingPage = () => {
 						<span className="text-lg font-medium">Resources</span>
 					</div>
 
-					<div
-						className="h-full w-1/5 rounded-3xl bg-cover bg-center text-white shadow-l0g"
-						style={{ backgroundImage: "url('Maskgroup-2.png')" }}
-					/>
+					<div className="h-full w-1/5 rounded-3xl bg-center text-white shadow-lg">
+						<img
+							src="couple-checking-plants.png"
+							alt="Couple checking plants"
+							className="size-full rounded-3xl object-cover"
+						/>
+					</div>
 				</div>
 			</section>
 
@@ -94,21 +100,30 @@ const LandingPage = () => {
 			<section className="h-[40rem] flex flex-col justify-evenly items-center">
 				<h1 className="text-4xl font-medium">SECTION TITLE</h1>
 
-				<div className="h-96 w-full flex justify-between items-center gap-4">
-					<div
-						className="w-1/4 h-full bg-fit bg-center  bg-no-repeat"
-						style={{ backgroundImage: "url('highfoodprices.png')" }}
-					/>
+				<div className="h-96 w-full flex-col md:flex-row flex justify-between items-center gap-10 md:gap-4">
+					<div className="w-full md:w-1/4 h-full">
+						<img
+							src="high-food-prices.png"
+							alt="High food prices continues to plague many nations despite falling in 2021."
+							className="size-full object-scale-down object-center"
+						/>
+					</div>
 
-					<div
-						className="w-2/5 h-full bg-fit bg-center bg-no-repeat"
-						style={{ backgroundImage: "url('600million.png')" }}
-					/>
+					<div className="w-full md:w-2/5 h-full">
+						<img
+							src="600million.png"
+							alt="More than 600 million people worldwide are projected to face hunger in 2030."
+							className="size-full object-scale-down object-center"
+						/>
+					</div>
 
-					<div
-						className="w-1/4 h-full bg-cover bg-center bg-no-repeat"
-						style={{ backgroundImage: "url('1in3people.png')" }}
-					/>
+					<div className="w-full md:w-1/4 h-full">
+						<img
+							src="1-in-3-people.png"
+							alt="1 in 3 people worldwide struggle with moderate to severe food insecurity."
+							className="size-full object-scale-down object-center"
+						/>
+					</div>
 				</div>
 			</section>
 		</div>
