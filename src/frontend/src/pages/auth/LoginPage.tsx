@@ -60,46 +60,47 @@ const LoginPage = () => {
                 </p>
             </div>
 
+        <div className="mt-14 w-full space-y-4 ">
             <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} 
-                    className="space-y-3">
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                        <FormItem className="space-y-2" >
-                        <FormLabel>Email Address</FormLabel>
-                                <FormControl>
-                                    <Input  {...field} />
-                                </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                    />
+                <form onSubmit={form.handleSubmit(onSubmit)} 
+                        className="space-y-3 ">
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                            <FormItem className="space-y-2" >
+                            <FormLabel>Email Address</FormLabel>
+                                    <FormControl>
+                                        <Input  {...field} />
+                                    </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                        <FormItem className="space-y-2" >
-                        <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <PasswordInput {...field} />
-                                </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                            <FormItem className="space-y-2" >
+                            <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <PasswordInput {...field} />
+                                    </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
 
-                    <Button type="submit" className="w-full">
-                        Login
-                    </Button>
-            </form>
+                        <Button type="submit" className="w-full">
+                            Login
+                        </Button>
+                </form>
             </Form>
                 
             <div className="text-center">
                 <span>Don't have an account?</span>{" "}
-                <Link to={"/login"} className="text-primary hover:underline">
+                <Link to={"/signup"} className="text-primary hover:underline">
                     Sign Up
                 </Link>
             </div>
@@ -109,6 +110,7 @@ const LoginPage = () => {
                 </p>
                 <hr className="absolute top-1/2 w-full h-0.5 bg-gray-300" />
             </div>
+        </div>
         </section>
     </div>
   )
