@@ -1,5 +1,5 @@
 import { Server, init, postUpgrade, preUpgrade, setNodeServer } from "azle";
-import { Database, DatabaseOptions } from "./database";
+import { Database, type DatabaseOptions } from "./database";
 import { ENTITIES } from "./database/entities";
 import { ConsoleLogger } from "./database/logger";
 import { DatabaseStorage } from "./database/storage";

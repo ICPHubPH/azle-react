@@ -1,4 +1,4 @@
-import ApisController from "App/Controllers/Http/ApisController";
+import { ApisController } from "App/Controllers/Http/ApisController";
 import { Router } from "express";
 const Route = Router();
 

@@ -1,12 +1,12 @@
 import { Configuration } from "Database/entities/configuration";
-import { Response, Request } from "express";
+import type { Response, Request } from "express";
 
-export default class ApisController {
-	static async greet(request: Request, response: Response) {
+export namespace ApisController {
+	export async function greet(request: Request, response: Response) {
 		response.json({ greeting: `Hello, ${request.query.name}` });
 	}
 
-	static async configurations(request: Request, response: Response) {
+	export async function configurations(request: Request, response: Response) {
 		const configuration = await Configuration.find();
 
 		response.json({
@@ -15,7 +15,7 @@ export default class ApisController {
 		});
 	}
 
-	static async insert_configuration(request: Request, response: Response) {
+	export async function insert_configuration(request: Request, response: Response) {
 		const { key, value } = request.body;
 		await Configuration.insert({ key, value });
 
@@ -34,7 +34,7 @@ export default class ApisController {
 		});
 	}
 
-	static async update_configuration(request: Request, response: Response) {
+	export async function update_configuration(request: Request, response: Response) {
 		const { key, value } = request.body;
 		const getConfiguration = await Configuration.findBy({ key });
 
@@ -52,7 +52,7 @@ export default class ApisController {
 		});
 	}
 
-	static async delete_configuration(request: Request, response: Response) {
+	export async function delete_configuration(request: Request, response: Response) {
 		const { key } = request.body;
 		const getConfiguration = await Configuration.findBy({ key });
 
