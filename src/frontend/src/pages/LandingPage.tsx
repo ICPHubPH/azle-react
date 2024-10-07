@@ -30,7 +30,7 @@ const LandingPage = () => {
 				</nav>
 
 				<div className=" flex justify-end items-center gap-x-4">
-					<Link to="/">
+					<Link to="/login">
 						<Button variant="ghost">Login</Button>
 					</Link>
 					<Link to="/signup">

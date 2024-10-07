@@ -33,7 +33,7 @@ const SignUpPage = () => {
 
 				{/* <Form {...form}>
 
-        </Form> */}
+                 </Form> */}
 				<div className="mt-14 w-full space-y-4 ">
 					{/* TODO: Turn this into a form component */}
 					<div className="space-y-3">
@@ -65,6 +65,7 @@ const SignUpPage = () => {
 							Sign Up
 						</Button>
 					</div>
+					
 					<div className="text-center">
 						<span>Already have an account?</span>{" "}
 						<Link to={"/login"} className="text-primary hover:underline">
