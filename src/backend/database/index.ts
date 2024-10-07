@@ -1,7 +1,7 @@
-import initSqlJs, { Database as SqlJsDatabase } from "sql.js/dist/sql-asm.js";
-import { DataSource, EntitySchema, Logger, MixedList } from "typeorm";
+import initSqlJs, { type Database as SqlJsDatabase } from "sql.js/dist/sql-asm.js";
+import { DataSource, type EntitySchema, type Logger, type MixedList } from "typeorm";
 
-import { DatabaseStorage, DatabaseStorageInterface } from "./storage";
+import { DatabaseStorage, type DatabaseStorageInterface } from "./storage";
 
 export type DatabaseOptions = {
 	storage: DatabaseStorageInterface;
