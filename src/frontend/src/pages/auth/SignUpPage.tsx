@@ -17,7 +17,7 @@ const SignUpPage = () => {
 	return (
 		<div className="h-screen grid grid-cols-1 md:grid-cols-2 relative">
 			{/* Sign In Section */}
-			<section className="w-full flex flex-col items-center md:block p-6 md:p-12 overflow-scroll">
+			<section className="w-full flex flex-col items-center md:block p-6 md:p-12 overflow-y-scroll">
 				<div className="w-full text-center md:text-left xl:w-2/3">
 					<h1 className="font-light text-2xl lg:text-3xl">
 						Website <span className="text-primary">Name</span>
@@ -34,7 +34,7 @@ const SignUpPage = () => {
 				{/* <Form {...form}>
 
         </Form> */}
-				<div className="mt-14 w-full space-y-4">
+				<div className="mt-14 w-full space-y-4 ">
 					{/* TODO: Turn this into a form component */}
 					<div className="space-y-3">
 						<div className="space-y-2">
@@ -67,7 +67,7 @@ const SignUpPage = () => {
 					</div>
 					<div className="text-center">
 						<span>Already have an account?</span>{" "}
-						<Link to={"/login"} className="text-primary">
+						<Link to={"/login"} className="text-primary hover:underline">
 							Login
 						</Link>
 					</div>
