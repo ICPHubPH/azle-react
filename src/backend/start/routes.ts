@@ -6,18 +6,6 @@ const Route = Router();
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
-
-Route.get('/greet',ApisController.greet)
-Route.get('/configurations',ApisController.configurations)
-Route.post('/configuration/insert', ApisController.insert_configuration)
-Route.post('/configuration/update', ApisController.update_configuration)
-Route.post('/configuration/delete', ApisController.delete_configuration)
-
-/*
-|--------------------------------------------------------------------------
 | Authenticated Routes
 |--------------------------------------------------------------------------
 */
@@ -40,5 +28,17 @@ Route.get('/category/:id', PostController.findPostByCategory);
 // TODO: Feedback Routes
 // Route.get('/feedback/:id')
 // ...
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+Route.get('/greet',ApisController.greet)
+Route.get('/configurations',ApisController.configurations)
+Route.post('/configuration/insert', ApisController.insert_configuration)
+Route.post('/configuration/update', ApisController.update_configuration)
+Route.post('/configuration/delete', ApisController.delete_configuration)
 
 export { Route as routes };
