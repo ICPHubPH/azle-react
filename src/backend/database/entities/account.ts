@@ -1,8 +1,10 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./user";
 
-@Entity()
-export class Account {
+@Entity({
+    name: "accounts"
+})
+export class Account extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 

@@ -1,9 +1,11 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Post } from "./post";
 import { User } from "./user";
 
-@Entity()
-export class Feedback {
+@Entity({
+    name: "feedbacks"
+})
+export class Feedback extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
