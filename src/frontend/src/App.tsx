@@ -23,6 +23,9 @@ function App() {
         <button type="submit">Hey hey!</button>
       </form>
       <section id="greeting">{greeting}</section>
+
+
+      <small>test by Kurtd</small>
     </main >
   );
 }
