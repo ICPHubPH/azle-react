@@ -1,9 +1,11 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Post } from "./post";
 import { User } from "./user";
 
-@Entity()
-export class Rating {
+@Entity({
+    name: "ratings"
+})
+export class Rating extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 

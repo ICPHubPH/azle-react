@@ -1,12 +1,14 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Post } from "./post";
 
-@Entity()
-export class Category {
+@Entity({
+    name: "categories"
+})
+export class Category extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @CreateDateColumn()
