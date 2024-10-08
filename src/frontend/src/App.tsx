@@ -24,6 +24,8 @@ function App() {
       </form>
       <section id="greeting">{greeting}</section>
 
+      <p>Wasak ang hackathon</p>
+
 
       <small>test by Kurtd</small>
     </main >
