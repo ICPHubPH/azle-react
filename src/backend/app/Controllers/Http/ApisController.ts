@@ -1,5 +1,5 @@
 import { Configuration } from 'Database/entities/configuration';
-import { Response, Request } from 'express';
+import { Request, Response } from 'express';
 
 export default class ApisController {
     static async greet(request: Request, response: Response) {
@@ -13,6 +13,15 @@ export default class ApisController {
             status: 1,
             data: configuration
         });
+    }
+
+    static user = {
+        users: async (request: Request, response: Response) => {
+            response.json({
+                status: 1,
+                message: "users"
+            })
+        }
     }
 
     static async insert_configuration(request: Request, response: Response){
