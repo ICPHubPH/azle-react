@@ -166,6 +166,7 @@ export default class ApisController {
     //     }
     // }
 
+    
     // static post = {
     //     async getAll(request: Request, response: Response) {
     //         const page = request.query.page ? Number(request.query.page) : 1;

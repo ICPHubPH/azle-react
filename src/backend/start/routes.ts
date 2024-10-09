@@ -1,4 +1,6 @@
 import ApisController from 'App/Controllers/Http/ApisController';
+import PostController from 'App/Controllers/Http/PostController';
+import UserController from 'App/Controllers/Http/UserController';
 import { Router } from 'express';
 const Route = Router();
 
@@ -24,8 +26,12 @@ const Route = Router();
 // Route.get('/post/:id/category', ApisController.post.findByCategory);
 
 // TODO: Feedback Routes
-// Route.get('/feedback/:id')
+// Route.get('/feedback/:id', ApisController.feedback.findById);
 // ...
+
+Route.get('/users/test', UserController.test);
+Route.get('/posts/test', PostController.test);
+
 
 /*
 |--------------------------------------------------------------------------
