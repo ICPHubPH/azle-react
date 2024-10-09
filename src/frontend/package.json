@@ -6,23 +6,28 @@
   "scripts": {
     "setup": "npm i && dfx canister create backend && dfx generate backend && dfx deploy",
     "start": "vite --port 3000",
+    "dev": "vite",
     "prebuild": "dfx generate",
     "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@dfinity/agent": "^1.2.0",
     "@dfinity/candid": "^1.2.0",
-    "@dfinity/principal": "^1.2.0"
+    "@dfinity/principal": "^1.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.23",
     "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.5",
+    "postcss": "^8.4.47",
     "sass": "^1.72.0",
+    "tailwindcss": "^3.4.13",
     "typescript": "^5.4.3",
     "vite": "^5.2.7",
     "vite-plugin-environment": "^1.1.3"
