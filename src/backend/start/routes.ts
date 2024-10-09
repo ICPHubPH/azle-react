@@ -6,6 +6,35 @@ const Route = Router();
 
 /*
 |--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+
+// TODO: Authorize Routes
+// Route.use(AuthMiddleware)
+
+// Route.get('/users', ApisController.user.getAll);
+// Route.get('/user/:id', ApisController.user.findById);
+// Route.put('/user/:id', ApisController.user.updateById);
+// Route.delete('/user/:id', ApisController.user.deleteById);
+
+// Route.get('/posts', ApisController.post.getAll);
+// Route.post('/posts', ApisController.post.create);
+// Route.get('/posts/:id', ApisController.post.findById);
+// Route.put('/posts/:id', ApisController.post.updateById);
+// Route.delete('/posts/:id', ApisController.post.deleteById);
+// Route.get('/post/:id/category', ApisController.post.findByCategory);
+
+// TODO: Feedback Routes
+// Route.get('/feedback/:id', ApisController.feedback.findById);
+// ...
+
+Route.get('/users/test', UserController.test);
+Route.get('/posts/test', PostController.test);
+
+
+/*
+|--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
@@ -15,30 +44,5 @@ Route.get('/configurations',ApisController.configurations)
 Route.post('/configuration/insert', ApisController.insert_configuration)
 Route.post('/configuration/update', ApisController.update_configuration)
 Route.post('/configuration/delete', ApisController.delete_configuration)
-
-/*
-|--------------------------------------------------------------------------
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
-
-// TODO: Authorize Routes
-// Route.use(AuthMiddleware)
-
-Route.get('/users', UserController.users);
-Route.get('/user/:id', UserController.findUserById);
-Route.put('/user/:id', UserController.updateUserById);
-Route.delete('/user/:id', UserController.deleteUserById);
-
-Route.get('/posts', PostController.posts);
-Route.post('/posts', PostController.createPost);
-Route.get('/posts/:id', PostController.findPostById);
-Route.put('/posts/:id', PostController.updatedPostById);
-Route.delete('/posts/:id', PostController.deletePostById);
-Route.get('/category/:id', PostController.findPostByCategory);
-
-// TODO: Feedback Routes
-// Route.get('/feedback/:id')
-// ...
 
 export { Route as routes };
