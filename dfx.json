@@ -1,30 +1,37 @@
 {
     "canisters": {
-        "backend": {
-            "type": "custom",
-            "main": "src/backend/backend.ts",
-            "candid": "src/backend/backend.did",
-            "build": "npx azle --native-compilation backend",
-            "wasm": ".azle/backend/backend.wasm",
-            "gzip": true,
-            "assets": [
-                [
-                    "src/frontend/dist",
-                    "dist"
-                ]
-            ],
-            "build_assets": "npm run build",
-            "metadata": [
-                {
-                    "name": "candid:service",
-                    "path": "src/backend/backend.did"
-                },
-                {
-                    "name": "cdk:name",
-                    "content": "azle"
-                }
-            ]
-        }
+      "backend": {
+        "type": "custom",
+        "main": "src/backend/backend.ts",
+        "candid": "src/backend/backend.did",
+        "build": "npx azle --native-compilation backend",
+        "wasm": ".azle/backend/backend.wasm",
+        "gzip": true,
+        "metadata": [
+          {
+            "name": "candid:service",
+            "path": "src/backend/backend.did"
+          },
+          {
+            "name": "cdk:name",
+            "content": "azle"
+          }
+        ]
+      },
+      "frontend": {
+        "type": "assets",
+        "source": [
+          "src/frontend/dist"
+        ],
+        "build": "cd src/frontend && npm install && npm run build"
+      }
+    },
+    "networks": {
+      "local": {
+        "bind": "127.0.0.1:8000",
+        "type": "ephemeral"
+      }
     },
     "output_env_file": ".env"
-}
+  }
+  
