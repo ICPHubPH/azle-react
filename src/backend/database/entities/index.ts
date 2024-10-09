@@ -1,5 +1,4 @@
 import { Account } from './account';
-import { Category } from './category';
 import { Configuration } from './configuration';
 import { Feedback } from './feedback';
 import { Post } from './post';
@@ -12,6 +11,5 @@ export const ENTITIES = [
     Account,
     Post,
     Feedback,
-    Rating,
-    Category
+    Rating
 ];

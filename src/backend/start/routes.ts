@@ -11,19 +11,17 @@ const Route = Router();
 // TODO: Authorize Routes
 // Route.use(AuthMiddleware)
 
-// Route.get('/users', UserController.users);
-// Route.get('/user/:id', UserController.findUserById);
-// Route.put('/user/:id', UserController.updateUserById);
-// Route.delete('/user/:id', UserController.deleteUserById);
+// Route.get('/users', ApisController.user.getAll);
+// Route.get('/user/:id', ApisController.user.findById);
+// Route.put('/user/:id', ApisController.user.updateById);
+// Route.delete('/user/:id', ApisController.user.deleteById);
 
-// Route.get('/posts', PostController.posts);
-// Route.post('/posts', PostController.createPost);
-// Route.get('/posts/:id', PostController.findPostById);
-// Route.put('/posts/:id', PostController.updatedPostById);
-// Route.delete('/posts/:id', PostController.deletePostById);
-// Route.get('/category/:id', PostController.findPostByCategory);
-
-// Route.get('/users', ApisController.user.users);
+// Route.get('/posts', ApisController.post.getAll);
+// Route.post('/posts', ApisController.post.create);
+// Route.get('/posts/:id', ApisController.post.findById);
+// Route.put('/posts/:id', ApisController.post.updateById);
+// Route.delete('/posts/:id', ApisController.post.deleteById);
+// Route.get('/post/:id/category', ApisController.post.findByCategory);
 
 // TODO: Feedback Routes
 // Route.get('/feedback/:id')

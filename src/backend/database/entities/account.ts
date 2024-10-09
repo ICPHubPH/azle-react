@@ -15,7 +15,7 @@ export class Account extends BaseEntity {
   accountId: string;
 
   @OneToOne(() => User, user => user.account, { onDelete: "CASCADE" })
-  @JoinColumn()  // Ensures that the userId acts as the foreign key
+  @JoinColumn()
   user: User;
 
   @CreateDateColumn()
