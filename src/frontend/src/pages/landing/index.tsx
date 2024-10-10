@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "@/components/student/Header";
 import { Separator } from "@/components/ui/separator";
 import Testimonies from "@/components/landing/testimonies/Testimonies";
 import Providers from "@/components/landing/donor/Providers";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { Star, Bookmark, MessageSquare } from "lucide-react";
+import Header from "@/components/landing/Header";
 
 const Home: React.FC = () => {
   return (
