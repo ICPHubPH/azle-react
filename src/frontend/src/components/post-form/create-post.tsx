@@ -16,14 +16,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CirclePlus, Plus } from "lucide-react";
-import "./create-post-ql.css";
-
 import { ChangeEvent, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import "./create-post-ql.css";
 
 const modules = {
   toolbar: [
@@ -191,6 +190,7 @@ export default function CreatePost() {
               className="overflow-y-auto no-scrollbar"
             />
           </div>
+
           <div className="flex justify-end gap-2 items-center">
             <Button variant={"default"} size={"lg"} onClick={createPostHandler}>
               Create new post
