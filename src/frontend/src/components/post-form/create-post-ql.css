@@ -1,0 +1,9 @@
+
+  /* Global Tailwind CSS styles or utility classes can be used here */
+  .ql-toolbar {
+    @apply sticky top-0 z-10 bg-transparent border-b border-slate-500;
+  }
+
+  .ql-container {
+    @apply max-h-80 overflow-y-auto; /* Limit the editor height and make it scrollable */
+  }
