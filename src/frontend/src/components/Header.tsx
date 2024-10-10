@@ -1,4 +1,5 @@
 
+import { ModeToggle } from "./mode-toggle";
 const Header = () => {
   return (
     <header className="bg-blue-600 text-white p-4">
@@ -10,9 +11,11 @@ const Header = () => {
           <ul className="list-none flex space-x-4">
             <li><a href="#home" className="hover:underline">Home</a></li>
             <li><a href="#about" className="hover:underline">Testimony</a></li>
-            <li><a href="#services" className="hover:underline">Providers</a></li>
+            <li><a href="#services" className="hover:underline">Providers</a></li>        <ModeToggle/>
+
           </ul>
         </div>
+        
       </nav>
     </header>
   );
