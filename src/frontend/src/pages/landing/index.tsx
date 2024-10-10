@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../components/Header'
+import Header from '../../components/landing/Header'
 import { Separator } from "@/components/ui/separator"
 import Testimonies from '@/components/landing/testimonies/Testimonies'
 import Providers from '@/components/landing/donor/Providers'
