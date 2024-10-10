@@ -11,39 +11,74 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const SignIn: React.FC = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 
-    const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      setIsLoading(true);
-      // TODO: Implement sign-in logic
-      console.log("Sign in");
-      setIsLoading(false);
-    };
-    return (
-        <Card >
-        <CardHeader>
-          <CardTitle>Sign In</CardTitle>
-          <CardDescription>
-            Enter your credentials to access your account.
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSignIn}>
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { signInSchema } from "@/lib/schema";
+
+const SignIn: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const signInForm = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSignIn = async (values: z.infer<typeof signInSchema>) => {
+    setIsLoading(true)
+    // TODO: Implement sign-in logic
+    console.log("Sign in", values)
+    setIsLoading(false)
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Sign In</CardTitle>
+        <CardDescription>
+          Enter your credentials to access your account.
+        </CardDescription>
+      </CardHeader>
+      <Form {...signInForm}>
+        <form onSubmit={signInForm.handleSubmit(onSignIn)}>
           <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="signin-email">Email</Label>
-              <Input
-                id="signin-email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="signin-password">Password</Label>
-              <Input id="signin-password" type="password" required />
-            </div>
+            <FormField
+              control={signInForm.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Email</Label>
+                  <FormControl>
+                    <Input placeholder="m@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={signInForm.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Password</Label>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </CardContent>
           <CardFooter>
             <Button type="submit" className="w-full" disabled={isLoading}>
@@ -51,8 +86,9 @@ const SignIn: React.FC = () => {
             </Button>
           </CardFooter>
         </form>
-      </Card>
-    )
-}
+      </Form>
+    </Card>
+  );
+};
 
-export default SignIn
+export default SignIn;
