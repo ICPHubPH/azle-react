@@ -1,52 +1,67 @@
-import React, { useState } from 'react'
-import { ModeToggle } from "../mode-toggle"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog" // Import the Dialog components
+import React, { useState } from "react";
+import { ModeToggle } from "../mode-toggle";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog"; // Import the Dialog components
 
 const Header: React.FC = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false) // State for dialog
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Testimonies', href: '#testimonies' },
-    { name: 'Providers', href: '#providers' },
-  ]
+    { name: "Home", href: "#home" },
+    { name: "Testimonies", href: "#testimonies" },
+    { name: "Providers", href: "#providers" },
+  ];
 
   const handleSignIn = (role: string) => {
     // Redirect logic based on the role selected
-    if (role === 'student') {
+    if (role === "student") {
       // redirect to student route
-      window.location.href = '/student';
-    } else if (role === 'provider') {
+      window.location.href = "/student";
+    } else if (role === "provider") {
       // redirect to provider route
-      window.location.href = '/provider';
+      window.location.href = "/provider";
     }
-  }
+  };
 
   return (
     <header className="border-b z-50 sticky top-0 backdrop-blur-md">
       <div className="container mx-auto px-4">
         <nav className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-blue-500 dark:text-yellow-500">ISKOLAR PH</h1>
-            
+            <h1 className="text-2xl font-bold text-blue-500 dark:text-yellow-500">
+              ISKOLAR PH
+            </h1>
           </div>
-{/* Desktop Menu */}
-<ul className="hidden md:flex space-x-4">
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex space-x-4">
             {navItems.map((item) => (
               <li key={item.name}>
-                <Button variant="ghost" asChild className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500">
-                  <a href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200">
+                <Button
+                  variant="ghost"
+                  asChild
+                  className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
+                >
+                  <a
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200"
+                  >
                     {item.name}
                   </a>
                 </Button>
               </li>
             ))}
           </ul>
-          
 
           {/* Mobile Menu */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -60,8 +75,16 @@ const Header: React.FC = () => {
                 <ul className="flex flex-col gap-2">
                   {navItems.map((item) => (
                     <li key={item.name}>
-                      <Button variant="ghost" asChild className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500">
-                        <a href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200">
+                      <Button
+                        variant="ghost"
+                        asChild
+                        className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
+                      >
+                        <a
+                          href={item.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200"
+                        >
                           {item.name}
                         </a>
                       </Button>
@@ -84,8 +107,24 @@ const Header: React.FC = () => {
                   Please choose if you are a Student or a Provider.
                 </DialogDescription>
                 <div className="flex flex-col space-y-4 mt-4">
-                  <Button variant="outline" onClick={() => { handleSignIn('student'); setIsDialogOpen(false); }}>I am a Student</Button>
-                  <Button variant="outline" onClick={() => { handleSignIn('provider'); setIsDialogOpen(false); }}>I am a Provider</Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      handleSignIn("student");
+                      setIsDialogOpen(false);
+                    }}
+                  >
+                    I am a Student
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      handleSignIn("provider");
+                      setIsDialogOpen(false);
+                    }}
+                  >
+                    I am a Provider
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
@@ -93,7 +132,7 @@ const Header: React.FC = () => {
         </nav>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
