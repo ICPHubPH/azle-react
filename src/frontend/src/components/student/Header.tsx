@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import { useNavigate } from 'react-router-dom';
+import UserDropdown from '../dropdowns/UserDropdown';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Sample user data (You can replace this with actual state or context data)
   const user = {
@@ -53,9 +61,11 @@ const Header: React.FC = () => {
         <div className="flex items-center space-x-2">
           <h1 className="text-2xl font-bold text-blue-500 dark:text-yellow-500">ISKOLAR PH</h1>
           {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-4">
-            <NavItems />
-          </ul>
+          {!isMobile && (
+            <ul className="hidden md:flex space-x-4">
+              <NavItems />
+            </ul>
+          )}
         </div>
 
         {/* Mobile Menu */}
@@ -68,12 +78,10 @@ const Header: React.FC = () => {
           <SheetContent side="right" className="w-[240px] sm:w-[300px]">
             {/* User Info in Mobile Menu */}
             <div className="px-4 py-3 flex items-center gap-3 border-b mb-2">
-              {/* User Avatar */}
               <Avatar className="w-12 h-12">
                 <AvatarImage src={user.avatarUrl} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              {/* User Details */}
               <div>
                 <p className="text-sm font-semibold text-gray-900 dark:text-white">{user.name}</p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
@@ -81,10 +89,10 @@ const Header: React.FC = () => {
               </div>
             </div>
 
-            {/* Navigation Items */}
             <nav className="flex flex-col gap-4">
               <ul className="flex flex-col gap-2">
-                <NavItems />
+                {/* Render NavItems only in mobile view */}
+                {isMobile && <NavItems />}
               </ul>
             </nav>
 
@@ -100,9 +108,7 @@ const Header: React.FC = () => {
               <Button
                 variant="ghost"
                 className="w-full justify-start mt-2"
-                onClick={() => {
-                  console.log("User logged out");
-                }}
+                onClick={() => console.log("User logged out")}
               >
                 Logout
               </Button>
@@ -110,51 +116,13 @@ const Header: React.FC = () => {
           </SheetContent>
         </Sheet>
 
-        <div className="hidden md:flex items-center space-x-4">
-          <ModeToggle />
-          {/* User Avatar with Dropdown Menu for Desktop */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="relative cursor-pointer">
-                <Avatar>
-                  <AvatarImage src={user.avatarUrl} />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {/* Display User Information */}
-              <div className="px-4 py-3 flex items-center gap-3">
-                {/* User Avatar */}
-                <Avatar className="w-12 h-12">
-                  <AvatarImage src={user.avatarUrl} />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                {/* User Details */}
-                <div>
-                  <p className="text-sm font-semibold text-gray-900 dark:text-white">{user.name}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">{user.role}</p>
-                </div>
-              </div>
-
-              {/* Separator */}
-              <DropdownMenuLabel className="border-t my-2" />
-
-              {/* Menu Options */}
-              <DropdownMenuItem onSelect={() => navigate('/profile')}>
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onSelect={() => {
-                  console.log("User logged out");
-                }}
-              >
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {!isMobile && (
+          <div className="hidden md:flex items-center space-x-4">
+            <ModeToggle />
+            {/* Use the UserDropdown component here */}
+            <UserDropdown user={user} />
+          </div>
+        )}
       </div>
     </header>
   );
