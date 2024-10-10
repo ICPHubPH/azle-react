@@ -22,8 +22,8 @@ const Header: React.FC = () => {
   )
 
   return (
-    <header className="border-b">
-      <div className="container mx-auto px-4 ">
+    <header className="border-b  z-50 sticky top-0 backdrop-blur-lg"> 
+      <div className="container mx-auto px-4">
         <nav className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <h1 className="text-2xl font-bold">ISKOLAR PH</h1>
@@ -36,9 +36,9 @@ const Header: React.FC = () => {
           
           {/* Mobile Menu */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild className="md:hidden ">
+            <SheetTrigger asChild className="md:hidden">
               <Button variant="outline" size="icon">
-                <Menu className="h-6 w-6 " />
+                <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[240px] sm:w-[300px]">
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
             </SheetContent>
           </Sheet>
           
-          <div className=" items-center space-x-4 hidden md:flex">
+          <div className="items-center space-x-4 hidden md:flex">
             <ModeToggle />
             <Button variant="outline" className="hidden md:inline-flex">Sign In</Button>
           </div>
