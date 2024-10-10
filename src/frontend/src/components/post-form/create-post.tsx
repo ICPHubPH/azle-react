@@ -23,50 +23,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import "./create-post-ql.css";
-
-const modules = {
-  toolbar: [
-    [
-      { size: ["small", false, "large", "huge"] },
-      { header: "1" },
-      { header: "2" },
-      { font: [] },
-    ],
-    [{ script: "sub" }, { script: "super" }], // Subscript/Superscript
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ indent: "-1" }, { indent: "+1" }], // Indent
-    [{ bold: true }, { italic: true }, { underline: true }, { strike: true }],
-    [{ color: [] }, { background: [] }], // Text color and background color
-    [{ align: [] }], // Text alignment
-    [{ direction: "rtl" }], // Text direction
-
-    // Custom items:
-    ["blockquote", "code-block"], // Block quote and code block
-    ["image"], // Image upload
-    ["clean"], // Clear formatting
-  ],
-};
-
-const formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "color",
-  "background",
-  "script",
-  "blockquote",
-  "code-block",
-  "list",
-  "bullet",
-  "indent",
-  "direction",
-  "align",
-  "image",
-];
+import { formats, modules } from "./quill-options";
 
 export default function CreatePost() {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
@@ -109,12 +66,6 @@ export default function CreatePost() {
     console.log(title);
     console.log(type);
     console.log(content);
-  }
-
-  function draftPost() {
-    localStorage.setItem("draft-platform-title", title);
-    localStorage.setItem("draft-platform-type", type);
-    localStorage.setItem("draft-platform-content", content);
   }
 
   return (
@@ -179,7 +130,7 @@ export default function CreatePost() {
             </Select>
           </div>
 
-          <div className="">
+          <div>
             <ReactQuill
               theme="snow"
               value={content}
