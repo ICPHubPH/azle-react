@@ -2,8 +2,7 @@ export const modules = {
     toolbar: [
       [
         { size: ["small", false, "large", "huge"] },
-        { header: "1" },
-        { header: "2" },
+        { header: ["1", "2", "3", "4", "5", "6"] },
         { font: [] },
       ],
       [{ script: "sub" }, { script: "super" }], // Subscript/Superscript
@@ -16,7 +15,8 @@ export const modules = {
   
       // Custom items:
       ["blockquote", "code-block"], // Block quote and code block
-      ["image"], // Image upload
+    ["image"], // Image upload
+      ["video"],
       ["clean"], // Clear formatting
     ],
 };
@@ -39,5 +39,6 @@ export const formats = [
     "indent",
     "direction",
     "align",
-    "image",
+  "image",
+    "video"
 ];
