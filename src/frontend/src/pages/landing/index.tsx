@@ -3,10 +3,10 @@ import { Separator } from "@/components/ui/separator";
 import Testimonies from "@/components/landing/testimonies/Testimonies";
 import Providers from "@/components/landing/donor/Providers";
 import Header from "@/components/landing/Header";
-import TopProviders from "@/components/homepage/top-providers/top-providers";
-import { dummyPosts } from "./dummy-data";
-import PostSummary from "@/components/post-summary/PostSummary";
+import { dummyPosts, dummyTopProviders } from "./dummy-data";
 import CreatePost from "@/components/post-form/CreatePost";
+import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard";
+import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 
 const Home: React.FC = () => {
   return (
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
         <h1 className="text-2xl font-bold">Test Posts</h1>
         <div className="px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
           {dummyPosts.map((post) => (
-            <PostSummary
+            <PostSummaryCard
               postAuthorEmail={post.email}
               postAuthorAvatarSource={post.avatarSource}
               postTitle={post.postTitle}
@@ -52,8 +52,21 @@ const Home: React.FC = () => {
       </div>
 
       {/* test only for top providers */}
-      <div className="container mx-auto px-4">
-        <TopProviders />
+
+      <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
+        <h1 className="text-2xl font-bold">Test Posts</h1>
+        <div className="w-full px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
+          {dummyTopProviders.map((provider, index) => (
+            <TopProviderCard
+              key={index}
+              thumbnail={provider.thumbnail}
+              avatar={provider.avatar}
+              provider={provider.provider}
+              description={provider.description}
+              scholarship={provider.scholarship}
+            />
+          ))}
+        </div>
       </div>
 
       <CreatePost />
