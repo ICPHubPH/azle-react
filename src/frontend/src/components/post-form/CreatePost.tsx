@@ -22,8 +22,9 @@ import "react-quill/dist/quill.snow.css";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import "./create-post-ql.css";
 import { formats, modules } from "./quill-options";
+
+import './quill.css'
 
 export default function CreatePost() {
   const [thumbnail, setThumbnail] = useState<File | null>(null);

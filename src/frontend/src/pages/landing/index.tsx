@@ -2,13 +2,11 @@ import React from "react";
 import { Separator } from "@/components/ui/separator";
 import Testimonies from "@/components/landing/testimonies/Testimonies";
 import Providers from "@/components/landing/donor/Providers";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { Star, Bookmark, MessageSquare } from "lucide-react";
 import Header from "@/components/landing/Header";
 import TopProviders from "@/components/homepage/top-providers/top-providers";
 import { dummyPosts } from "./dummy-data";
 import PostSummary from "@/components/post-summary/PostSummary";
+import CreatePost from "@/components/post-form/CreatePost";
 
 const Home: React.FC = () => {
   return (
@@ -34,23 +32,31 @@ const Home: React.FC = () => {
         <Providers />
       </div>
 
-      {dummyPosts.map((post) => (
-        <PostSummary
-          postAuthorEmail={post.email}
-          postAuthorAvatarSource={post.avatarSource}
-          postTitle={post.postTitle}
-          postThumbnailSource={post.postThumbnailSource}
-          postDescription={post.postDescription}
-          postRatingCount={post.postRatingCount}
-          postBookmarkCount={post.postBookmarkCount}
-          postCommentCount={post.postCommentCount}
-        />
-      ))}
+      {/** TEST POST ONLY */}
+      <div className="flex flex-col gap-4 items-center border-red-500 border container mx-auto">
+        <h1 className="text-2xl font-bold">Test Posts</h1>
+        <div className="px-4 grid grid-cols-3 gap-8">
+          {dummyPosts.map((post) => (
+            <PostSummary
+              postAuthorEmail={post.email}
+              postAuthorAvatarSource={post.avatarSource}
+              postTitle={post.postTitle}
+              postThumbnailSource={post.postThumbnailSource}
+              postDescription={post.postDescription}
+              postRatingCount={post.postRatingCount}
+              postBookmarkCount={post.postBookmarkCount}
+              postCommentCount={post.postCommentCount}
+            />
+          ))}
+        </div>
+      </div>
 
       {/* test only for top providers */}
       <div className="container mx-auto px-4">
         <TopProviders />
       </div>
+
+      <CreatePost />
     </div>
   );
 };
