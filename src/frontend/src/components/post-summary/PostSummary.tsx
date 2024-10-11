@@ -1,20 +1,20 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
-import { CalendarDays } from "lucide-react";
-import { useState } from "react";
+import { Bookmark, CalendarDays, Forward, Star } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { Button } from "../ui/button";
 
 interface PostSummaryProps {
   postAuthorEmail: string;
@@ -70,6 +70,8 @@ const PostSummary: React.FC<PostSummaryProps> = ({
     "Commenter8",
   ]);
 
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>();
+
   const fetchRatingsUsers = async () => {
     const response = await fetch("/api/v1");
     const data = await response.json();
@@ -87,6 +89,15 @@ const PostSummary: React.FC<PostSummaryProps> = ({
     const data = await response.json();
     setCommentsUsers(data);
   };
+
+  useEffect(() => {
+    if (
+      navigator.maxTouchPoints > 0 ||
+      (navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 0)
+    ) {
+      setIsTouchDevice(true);
+    }
+  }, []);
 
   return (
     <Card>
@@ -156,7 +167,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
             </div>
           </div>
           <div className="flex flex-col gap-1 items-center">
-            <Badge className="cursor-pointer">Trending</Badge>
+            {/* <Badge className="cursor-pointer">Trending</Badge> */}
             <a
               className="text-blue-500 text-sm hover:underline underline-offset-2"
               href="#"
@@ -168,7 +179,10 @@ const PostSummary: React.FC<PostSummaryProps> = ({
         </div>
       </CardHeader>
       <Separator className="mb-4" />
-      <CardContent className="pb-4">
+      <CardContent
+        className="pb-4 cursor-pointer"
+        onClick={() => alert("Redirect to indiv post screen")}
+      >
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex flex-col gap-1">
             <div className="flex justify-between items-center">
@@ -177,8 +191,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
             <img
               src={postThumbnailSource}
               alt={`${postTitle} thumbnail`}
-              onClick={() => alert("Redirect to indiv post screen")}
-              className="w-full rounded-md object-cover max-h-[15rem] cursor-pointer"
+              className="w-full rounded-md object-cover max-h-[15rem]"
             />
           </div>
 
@@ -191,28 +204,29 @@ const PostSummary: React.FC<PostSummaryProps> = ({
         </div>
       </CardContent>
 
-      <div className="w-full h-12 rounded-b-md flex justify-between items-center px-4 border-t">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                <small>{postRatingCount} ratings</small>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="min-w-[6rem]">
-              <ul>
-                {ratingsUsers.slice(0, 7).map((user, index) => (
-                  <li key={index}>{user}</li>
-                ))}
-                {ratingsUsers.length > 7 && (
-                  <li>{ratingsUsers.length - 7} more</li>
-                )}
-              </ul>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      {!isTouchDevice ? (
+        <div className="w-full h-12 rounded-b-md flex justify-between items-center px-4 border-b">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
+                  <small>{postRatingCount} ratings</small>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="min-w-[6rem]">
+                <ul>
+                  {ratingsUsers.slice(0, 7).map((user, index) => (
+                    <li key={index}>{user}</li>
+                  ))}
+                  {ratingsUsers.length > 7 && (
+                    <li>{ratingsUsers.length - 7} more</li>
+                  )}
+                </ul>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
-        <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -251,7 +265,39 @@ const PostSummary: React.FC<PostSummaryProps> = ({
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          </div>
         </div>
+      ) : (
+        <div className="w-full h-12 rounded-b-md flex justify-between items-center px-4 border-b">
+          <div className="flex items-center hover:underline underline-offset-2">
+            <small>{postRatingCount} ratings</small>
+          </div>
+
+          <div className="flex gap-2 items-center">
+            <div className="flex items-center hover:underline underline-offset-2">
+              <small>{postBookmarkCount} bookmarks</small>
+            </div>
+
+            <div className="flex items-center hover:underline underline-offset-2">
+              <small>{postCommentCount} comments</small>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="w-full flex gap-2 items-center p-2">
+        <Button className="w-full" variant="ghost">
+          {" "}
+          <Star className="mr-0.5 h-4" /> Rate
+        </Button>
+        <Button className="w-full" variant="ghost">
+          <Bookmark className="mr-0.5 h-4" />
+          Bookmark
+        </Button>
+        <Button className="w-full" variant="ghost">
+          <Forward className="mr-0.5 h-4" />
+          Share
+        </Button>
       </div>
     </Card>
   );
