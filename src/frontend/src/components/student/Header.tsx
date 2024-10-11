@@ -28,9 +28,9 @@ const Header: React.FC = () => {
   };
 
   const navItems = [
-    { name: 'Scholarship', href: '#scholarship' },
-    { name: 'Providers', href: '#providers' },
-    { name: 'Terms of Use', href: '#terms' },
+    { name: 'Scholarship', href: '' },
+    { name: 'Providers', href: '' },
+    { name: 'Terms of Use', href: '' },
   ];
 
   const NavItems = () => (
@@ -108,7 +108,7 @@ const Header: React.FC = () => {
               <Button
                 variant="ghost"
                 className="w-full justify-start mt-2"
-                onClick={() => console.log("User logged out")}
+                onClick={() => navigate('/')}
               >
                 Logout
               </Button>
