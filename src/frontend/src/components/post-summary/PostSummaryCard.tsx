@@ -16,7 +16,7 @@ import {
 } from "../ui/tooltip";
 import { Button } from "../ui/button";
 
-interface PostSummaryProps {
+interface PostSummaryCardProps {
   postAuthorEmail: string;
   postAuthorAvatarSource: string;
   postTitle: string;
@@ -27,7 +27,7 @@ interface PostSummaryProps {
   postCommentCount: number;
 }
 
-const PostSummary: React.FC<PostSummaryProps> = ({
+const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postAuthorEmail,
   postAuthorAvatarSource,
   postTitle,
@@ -205,7 +205,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
       </CardContent>
 
       {!isTouchDevice ? (
-        <div className="w-full h-12 rounded-b-md flex justify-between items-center px-4 border-b">
+        <div className="w-full h-12 flex justify-between items-center px-4 border-b">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -268,7 +268,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
           </div>
         </div>
       ) : (
-        <div className="w-full h-12 rounded-b-md flex justify-between items-center px-4 border-b">
+        <div className="w-full h-12 flex justify-between items-center px-4 border-b">
           <div className="flex items-center hover:underline underline-offset-2">
             <small>{postRatingCount} ratings</small>
           </div>
@@ -303,4 +303,4 @@ const PostSummary: React.FC<PostSummaryProps> = ({
   );
 };
 
-export default PostSummary;
+export default PostSummaryCard;

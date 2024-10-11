@@ -24,7 +24,7 @@ const TopProviderCard: React.FC<TopProviderCardProps> = ({
   avatar,
 }) => {
   return (
-    <Card className="w-full max-w-md overflow-hidden">
+    <Card className="w-full overflow-hidden">
       <CardHeader className="p-0">
         <div className="relative h-48">
           <img
