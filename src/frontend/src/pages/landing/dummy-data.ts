@@ -4,7 +4,7 @@ export const dummyPosts = [
     avatarSource: "https://via.placeholder.com/150",
     postTitle: "TechCorp Summer Internship 2024",
     postThumbnailSource: "https://via.placeholder.com/400x200",
-    postDescription: `<p>Join <strong>TechCorp</strong> for a <em>12-week summer internship</em> program. Gain hands-on experience in <code>software development</code>, <code>data analysis</code>, and more!</p> <ul><li>Duration: June - August 2024</li><li>Location: Remote</li><li>Stipend: $1000/month</li></ul> <a href='https://techcorp.com/internships' target='_blank'>Apply here</a>`,
+    postDescription: `<p>Join <strong>TechCorp</strong></p> <b/> <p> for a <em>12-week summer internship</em> program. Gain hands-on experience in <code>software development</code>, <code>data analysis</code>, and more!</p> <ul><li>Duration: June - August 2024</li><li>Location: Remote</li><li>Stipend: $1000/month</li></ul> <a href='https://techcorp.com/internships' target='_blank'>Apply here</a>`,
     postRatingCount: 150,
     postBookmarkCount: 95,
     postCommentCount: 40,

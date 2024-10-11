@@ -33,9 +33,9 @@ const Home: React.FC = () => {
       </div>
 
       {/** TEST POST ONLY */}
-      <div className="flex flex-col gap-4 items-center border-red-500 border container mx-auto">
+      <div className="flex flex-col gap-4 items-center container mx-auto">
         <h1 className="text-2xl font-bold">Test Posts</h1>
-        <div className="px-4 grid grid-cols-3 gap-8">
+        <div className="px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
           {dummyPosts.map((post) => (
             <PostSummary
               postAuthorEmail={post.email}
