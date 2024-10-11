@@ -6,6 +6,7 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { Star, Bookmark, MessageSquare } from "lucide-react";
 import Header from "@/components/landing/Header";
+import TopProviders from "@/components/homepage/top-providers/top-providers";
 
 const Home: React.FC = () => {
   return (
@@ -109,6 +110,10 @@ const Home: React.FC = () => {
           </div>
         </div>
       </Card>
+       {/* test only for top providers */}
+       <div className="container mx-auto px-4">
+        <TopProviders/>
+      </div>
     </div>
   );
 };
