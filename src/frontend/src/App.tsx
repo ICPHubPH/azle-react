@@ -12,9 +12,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/student" element={<StudentPage />} /> {/* Add this line */}
-          <Route path="/auth" element={<AuthPage />} /> {/* Add this line */}
-        </Routes>
+          <Route path="/student" element={<StudentPage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/auth" element={<AuthPage />} />
+        </Routes> 
       </Router>
     </ThemeProvider>
   );

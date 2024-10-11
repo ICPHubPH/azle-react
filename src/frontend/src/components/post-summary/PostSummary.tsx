@@ -27,7 +27,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
   const alt = `@${postAuthorEmail.split("@")[0]}`;
 
   return (
-    <Card className="w-[22.5%] mx-auto my-[2rem]">
+    <Card className="w-[90.5%] md:w-[90.5%] lg:w-[90.0%] mx-auto my-[2rem] ">
       <CardHeader className="py-4">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">
