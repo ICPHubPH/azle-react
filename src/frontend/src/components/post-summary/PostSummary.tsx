@@ -24,14 +24,14 @@ const PostSummary: React.FC<PostSummaryProps> = ({
   postBookmarkCount,
   postCommentCount,
 }) => {
-  const alt = `@${postAuthorEmail.split('@')[0]}`;
+  const alt = `@${postAuthorEmail.split("@")[0]}`;
 
   return (
     <Card className="w-[22.5%] mx-auto my-[2rem]">
       <CardHeader className="py-4">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">
-            <Avatar className="w-14 h-14">
+            <Avatar className="w-10 h-10">
               <AvatarImage
                 className="aspect-square object-cover rounded-full"
                 src={postAuthorAvatarSource}
@@ -44,17 +44,23 @@ const PostSummary: React.FC<PostSummaryProps> = ({
               <h3
                 role="button"
                 className="text-md font-medium z-[1] w-max hover:underline underline-offset-2 cursor-pointer"
-                onClick={(e) => {
-                  alert("name");
-                  e.stopPropagation();
-                }}
+                onClick={() => alert('Redirect to indiv provider screen')}
               >
                 {alt}
               </h3>
               <p className="text-xs text-gray-500">{postAuthorEmail}</p>
             </div>
           </div>
-          <Badge className="cursor-pointer">Trending</Badge>
+          <div className="flex flex-col gap-1 items-center">
+            <Badge className="cursor-pointer">Trending</Badge>
+            <a
+              className="text-blue-500 text-sm hover:underline underline-offset-2"
+              href="#"
+              onClick={() => alert('Redirect to indiv post screen')}
+            >
+              View post
+            </a>
+          </div>
         </div>
       </CardHeader>
       <Separator className="mb-4" />
@@ -63,17 +69,12 @@ const PostSummary: React.FC<PostSummaryProps> = ({
           <div className="w-full flex flex-col gap-1">
             <div className="flex justify-between items-center">
               <h3 className="text-md font-medium">{postTitle}</h3>
-              <a
-                className="text-blue-500 text-sm hover:underline underline-offset-2"
-                href="#"
-              >
-                View post
-              </a>
             </div>
             <img
               src={postThumbnailSource}
               alt={`${postTitle} thumbnail`}
-              className="w-full rounded-md object-contain"
+              onClick={() => alert('Redirect to indiv post screen')}
+              className="w-full rounded-md object-cover max-h-[15rem] cursor-pointer"
             />
           </div>
 

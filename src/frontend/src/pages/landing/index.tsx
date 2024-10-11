@@ -1,8 +1,13 @@
 import React from "react";
-import Header from "../../components/Header";
 import { Separator } from "@/components/ui/separator";
 import Testimonies from "@/components/landing/testimonies/Testimonies";
 import Providers from "@/components/landing/donor/Providers";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Star, Bookmark, MessageSquare } from "lucide-react";
+import Header from "@/components/landing/Header";
+import TopProviders from "@/components/homepage/top-providers/top-providers";
+import { dummyPosts } from "./dummy-data";
 import PostSummary from "@/components/post-summary/PostSummary";
 
 const Home: React.FC = () => {
@@ -27,6 +32,24 @@ const Home: React.FC = () => {
       <Separator />
       <div className="container mx-auto px-4" id="providers">
         <Providers />
+      </div>
+
+      {dummyPosts.map((post) => (
+        <PostSummary
+          postAuthorEmail={post.email}
+          postAuthorAvatarSource={post.avatarSource}
+          postTitle={post.postTitle}
+          postThumbnailSource={post.postThumbnailSource}
+          postDescription={post.postDescription}
+          postRatingCount={post.postRatingCount}
+          postBookmarkCount={post.postBookmarkCount}
+          postCommentCount={post.postCommentCount}
+        />
+      ))}
+
+      {/* test only for top providers */}
+      <div className="container mx-auto px-4">
+        <TopProviders />
       </div>
     </div>
   );
