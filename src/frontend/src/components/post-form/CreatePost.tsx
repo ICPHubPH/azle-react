@@ -80,7 +80,15 @@ export default function CreatePost() {
   }
 
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={() => {
+        if (thumbnailURL) {
+          setThumbnailURL(null);
+          setThumbnail(null);
+          URL.revokeObjectURL(thumbnailURL);
+        }
+      }}
+    >
       <DialogTrigger>
         <Plus />
       </DialogTrigger>
@@ -132,34 +140,41 @@ export default function CreatePost() {
               placeholder="Title"
               onChange={handleTitle}
               value={title}
-              className="w-60"
+              className="w-full"
             />
 
             <Select onValueChange={handlePlatformType}>
-              <SelectTrigger className="w-52">
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Scholarships</SelectLabel>
                   <SelectItem value="gov">Government Supported</SelectItem>
-                  <SelectItem value="school">
+                  <SelectItem value="college/university">
                     College/University Scholarship
                   </SelectItem>
                   <SelectItem value="standalone">Standalone</SelectItem>
+                  <SelectItem value="corporate/industry sponsored">
+                    Corporate/Industry Sponsored
+                  </SelectItem>
+                  <SelectItem value="local government">
+                    Local Government
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
 
           <div>
+            {/* @ts-ignore */}
             <ReactQuill
               theme="snow"
               value={content}
               onChange={handleContent}
               modules={modules}
               formats={formats}
-              placeholder="Enter scholarship details here..."
+              placeholder=""
               className="overflow-y-auto custom-ql"
             />
           </div>
