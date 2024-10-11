@@ -4,7 +4,7 @@ export const dummyPosts = [
     avatarSource: "https://via.placeholder.com/150",
     postTitle: "TechCorp Summer Internship 2024",
     postThumbnailSource: "https://via.placeholder.com/400x200",
-    postDescription: `<p>Join <strong>TechCorp</strong> for a <em>12-week summer internship</em> program. Gain hands-on experience in <code>software development</code>, <code>data analysis</code>, and more!</p> <ul><li>Duration: June - August 2024</li><li>Location: Remote</li><li>Stipend: $1000/month</li></ul> <a href='https://techcorp.com/internships' target='_blank'>Apply here</a>`,
+    postDescription: `<p>Join <strong>TechCorp</strong></p> <b/> <p> for a <em>12-week summer internship</em> program. Gain hands-on experience in <code>software development</code>, <code>data analysis</code>, and more!</p> <ul><li>Duration: June - August 2024</li><li>Location: Remote</li><li>Stipend: $1000/month</li></ul> <a href='https://techcorp.com/internships' target='_blank'>Apply here</a>`,
     postRatingCount: 150,
     postBookmarkCount: 95,
     postCommentCount: 40,
@@ -31,4 +31,42 @@ export const dummyPosts = [
     postBookmarkCount: 105,
     postCommentCount: 38,
   },
+];
+
+export const dummyTopProviders = [
+  {
+    thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+1",
+    avatar: "https://via.placeholder.com/150?text=Org+1",
+    provider: "Tech Innovators Foundation",
+    description: "Empowering the next generation of tech leaders",
+    scholarship: "Future Tech Leaders Scholarship 2024",
+  },
+  {
+    thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+2",
+    avatar: "https://via.placeholder.com/150?text=Org+2",
+    provider: "Global Scholars Program",
+    description: "Promoting global education and innovation",
+    scholarship: "Global Visionary Scholarship 2024",
+  },
+  {
+    thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+3",
+    avatar: "https://via.placeholder.com/150?text=Org+3",
+    provider: "STEM Excellence Foundation",
+    description: "Supporting excellence in STEM education",
+    scholarship: "STEM Leaders Scholarship 2024",
+  },
+  // {
+  //   thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+4",
+  //   avatar: "https://via.placeholder.com/150?text=Org+4",
+  //   provider: "Innovation for All",
+  //   description: "Creating equal opportunities for future innovators",
+  //   scholarship: "Inclusive Innovation Scholarship 2024",
+  // },
+  // {
+  //   thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+5",
+  //   avatar: "https://via.placeholder.com/150?text=Org+5",
+  //   provider: "NextGen Tech Alliance",
+  //   description: "Fostering next-gen leaders in technology",
+  //   scholarship: "NextGen Tech Scholarship 2024",
+  // },
 ];
