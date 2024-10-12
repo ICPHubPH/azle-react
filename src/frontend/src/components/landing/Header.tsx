@@ -38,9 +38,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4">
         <nav className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-blue-500 dark:text-yellow-500">
-              ISKOLAR PH
-            </h1>
+          <h1 className="text-2xl font-bold text-blue-500 ">CONNECT<span className='text-yellow-300'>ED</span></h1>
           </div>
           {/* Desktop Menu */}
           <ul className="hidden md:flex space-x-4">

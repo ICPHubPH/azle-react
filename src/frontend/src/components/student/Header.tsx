@@ -28,24 +28,24 @@ const Header: React.FC = () => {
   };
 
   const navItems = [
-    { name: 'Scholarship', href: '' },
-    { name: 'Providers', href: '' },
-    { name: 'Terms of Use', href: '' },
+    { name: 'Scholarship', },
+    { name: 'Providers', },
+    { name: 'Terms of Use', },
   ];
 
   const NavItems = () => (
     <>
       {navItems.map((item) => (
-        <li key={item.name}>
+        <li key={""}>
           <Button
             variant="ghost"
             asChild
             className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
           >
             <a
-              href={item.href}
+              
               onClick={() => setIsMobileMenuOpen(false)}
-              className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200"
+              className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200 cursor-pointer"
             >
               {item.name}
             </a>
@@ -59,7 +59,7 @@ const Header: React.FC = () => {
     <header className="border-b z-50 sticky top-0 backdrop-blur-md">
       <div className="container mx-auto flex justify-between items-center h-16 px-4">
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-bold text-blue-500 dark:text-yellow-500">ISKOLAR PH</h1>
+          <h1 className="text-2xl font-bold text-blue-500 ">CONNECT<span className='text-yellow-300'>ED</span></h1>
           {/* Desktop Menu */}
           {!isMobile && (
             <ul className="hidden md:flex space-x-4">
@@ -75,9 +75,9 @@ const Header: React.FC = () => {
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[240px] sm:w-[300px]">
+          <SheetContent side="right" className="w-[250px] sm:w-[300px]">
             {/* User Info in Mobile Menu */}
-            <div className="px-4 py-3 flex items-center gap-3 border-b mb-2">
+            <div className="px-4 py-3 flex items-center gap-3 border-b mb-2 ">
               <Avatar className="w-12 h-12">
                 <AvatarImage src={user.avatarUrl} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
@@ -101,14 +101,14 @@ const Header: React.FC = () => {
               <Button
                 variant="ghost"
                 className="w-full justify-start"
-                onClick={() => navigate('/profile')}
+                onClick={() => navigate('')}
               >
                 Profile
               </Button>
               <Button
                 variant="ghost"
                 className="w-full justify-start mt-2"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('')}
               >
                 Logout
               </Button>
