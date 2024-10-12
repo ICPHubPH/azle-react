@@ -29,10 +29,10 @@ export const dummyPosts = [
     email: "internships@creativeworks.com",
     name: "Internships Reactive",
     avatarSource: "https://via.placeholder.com/150",
-    postTitle: "Creative Works Design Internship",
+    postTitle: "Creative Works Design Internship Blabla",
     postThumbnailSource: "https://via.placeholder.com/400x200",
     postDescription:
-      "<p>Are you passionate about <strong>graphic design</strong> and <code>UX/UI</code>? Join <em>Creative Works</em> for a <u>6-month internship</u> where you'll work with top designers on real-world projects.</p> <p><strong>Perks:</strong> Remote work, mentorship, and a performance bonus!</p> <a href='https://creativeworks.com/internships' target='_blank'>Apply today</a>",
+      "<p>Are you passionate about <strong>graphic design</strong> and <code>UX/UI</code>? Join <em>Creative Works</em> for a <a href='www.facebook.com' target='_blank'>6-month internship</a> where you'll work with top designers on real-world projects.</p> <p><strong>Perks:</strong> Remote work, mentorship, and a performance bonus!</p> <a href='https://creativeworks.com/internships' target='_blank'>Apply today</a>",
     postRatingCount: 180,
     postBookmarkCount: 105,
     postCommentCount: 38,

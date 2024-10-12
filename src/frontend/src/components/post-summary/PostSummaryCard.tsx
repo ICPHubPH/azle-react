@@ -102,7 +102,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   }, []);
 
   return (
-    <Card>
+    <Card className="bg-primary-foreground">
       <CardHeader className="py-4">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">
@@ -122,7 +122,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                 <HoverCardTrigger>
                   <h3
                     role="button"
-                    className="text-md font-medium z-[1] w-max hover:underline underline-offset-2 cursor-pointer lg:max-w-[18rem] lg:truncate"
+                    className="text-md font-medium z-[1] max-w-[10rem] truncate hover:underline underline-offset-2 cursor-pointer md:max-w-[12rem] xl:max-w-[14rem] 2xl:max-w-[18rem]"
                     onClick={() => alert("Redirect to indiv provider screen")}
                   >
                     {postAuthorName}
@@ -165,7 +165,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                 </HoverCardContent>
               </HoverCard>
 
-              <p className="text-xs text-gray-500">{postAuthorEmail}</p>
+              <p className="text-xs text-gray-500 max-w-[10rem] truncate md:max-w-[12rem] xl:max-w-[14rem] 2xl:max-w-[18rem]">
+                {postAuthorEmail}
+              </p>
             </div>
           </div>
           <div className="flex flex-col gap-1 items-center">
@@ -181,26 +183,24 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
         </div>
       </CardHeader>
       <Separator className="mb-4" />
-      <CardContent
-        className="pb-4 cursor-pointer"
-        onClick={() => alert("Redirect to indiv post screen")}
-      >
+      <CardContent className="pb-4 ">
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex flex-col gap-1">
             <div className="flex justify-between items-center">
               <h3
-                className="text-lg font-bold"
+                className="text-lg font-bold max-w-[18rem] truncate xl:max-w-[26rem]"
                 dangerouslySetInnerHTML={{ __html: postTitle }}
               ></h3>
             </div>
             <img
               src={postThumbnailSource}
               alt={`${postTitle} thumbnail`}
-              className="w-full rounded-md object-cover max-h-[15rem] min-h-[15rem]"
+              className="w-full rounded-md object-cover max-h-[15rem] min-h-[15rem] cursor-pointer"
+              onClick={() => alert("Redirect to indiv post screen")}
             />
           </div>
 
-          <div className="w-full flex flex-col gap-1">
+          <div className="w-full flex flex-col gap-1 z-[2]">
             <p
               dangerouslySetInnerHTML={{ __html: postDescription }}
               className="text-sm text-gray-500 line-clamp-3"
@@ -291,15 +291,15 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
       )}
 
       <div className="w-full flex gap-1 items-center p-2">
-        <Button className="w-full" variant="ghost">
+        <Button className="w-full px-2" variant="ghost">
           {" "}
           <Star className="mr-0.5 h-4" /> Rate
         </Button>
-        <Button className="w-full" variant="ghost">
+        <Button className="w-full px-2" variant="ghost">
           <Bookmark className="mr-0.5 h-4" />
           Bookmark
         </Button>
-        <Button className="w-full" variant="ghost">
+        <Button className="w-full px-2" variant="ghost">
           <Forward className="mr-0.5 h-4" />
           Share
         </Button>
