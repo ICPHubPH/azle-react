@@ -1,9 +1,28 @@
 
   /* Global Tailwind CSS styles or utility classes can be used here */
-  .ql-toolbar {
-    @apply sticky top-0 z-10 bg-transparent border-b border-slate-500;
+  .custom-ql .ql-toolbar {
+    @apply sticky top-0 z-10 bg-transparent border border-slate-500 rounded-t-lg hover:border-gray-300;
   }
 
-  .ql-container {
-    @apply max-h-80 overflow-y-auto; /* Limit the editor height and make it scrollable */
+  .custom-ql .ql-container {
+    @apply max-h-80 overflow-y-auto border border-slate-500 rounded-b-lg hover:border-gray-300; /* Limit the editor height and make it scrollable */
   }
+
+  .custom-ql .ql-editor::before {
+    @apply text-slate-500;
+  }
+
+  /* custom.css */
+  /* .hide-scrollbar { */
+    /* overflow: auto; Allow scrolling */
+  /* } */
+  
+  /* For webkit browsers (Chrome, Safari) */
+  /* .hide-scrollbar::-webkit-scrollbar { */
+    /* display: none; Hides the scrollbar */
+  /* } */
+  
+  /* For Firefox */
+  /* .hide-scrollbar { */
+    /* scrollbar-width: none; Hides the scrollbar */
+  /* } */
