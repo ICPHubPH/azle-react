@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 
 interface PostSummaryCardProps {
   postAuthorEmail: string;
+  postAuthorName: string;
   postAuthorAvatarSource: string;
   postTitle: string;
   postThumbnailSource: string;
@@ -29,6 +30,7 @@ interface PostSummaryCardProps {
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postAuthorEmail,
+  postAuthorName,
   postAuthorAvatarSource,
   postTitle,
   postThumbnailSource,
@@ -120,10 +122,10 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                 <HoverCardTrigger>
                   <h3
                     role="button"
-                    className="text-md font-medium z-[1] w-max hover:underline underline-offset-2 cursor-pointer"
+                    className="text-md font-medium z-[1] w-max hover:underline underline-offset-2 cursor-pointer lg:max-w-[18rem] lg:truncate"
                     onClick={() => alert("Redirect to indiv provider screen")}
                   >
-                    {alt}
+                    {postAuthorName}
                   </h3>
                 </HoverCardTrigger>
                 <HoverCardContent className="w-[25rem]">
@@ -142,12 +144,12 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                     <div className="space-y-1">
                       <h3
                         role="button"
-                        className="text-lg font-medium z-[1] w-max hover:underline underline-offset-2 cursor-pointer"
+                        className="text-lg font-medium z-[1] w-full hover:underline underline-offset-2 cursor-pointer lg:text-wrap"
                         onClick={() =>
                           alert("Redirect to indiv provider screen")
                         }
                       >
-                        {alt}
+                        {postAuthorName}
                       </h3>
                       <p className="text-sm">
                         Insert provider description here if there is any.
@@ -186,12 +188,15 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex flex-col gap-1">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-bold">{postTitle}</h3>
+              <h3
+                className="text-lg font-bold"
+                dangerouslySetInnerHTML={{ __html: postTitle }}
+              ></h3>
             </div>
             <img
               src={postThumbnailSource}
               alt={`${postTitle} thumbnail`}
-              className="w-full rounded-md object-cover max-h-[15rem]"
+              className="w-full rounded-md object-cover max-h-[15rem] min-h-[15rem]"
             />
           </div>
 
@@ -285,7 +290,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
         </div>
       )}
 
-      <div className="w-full flex gap-2 items-center p-2">
+      <div className="w-full flex gap-1 items-center p-2">
         <Button className="w-full" variant="ghost">
           {" "}
           <Star className="mr-0.5 h-4" /> Rate
