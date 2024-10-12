@@ -5,13 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -20,65 +13,30 @@ import {
 } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
 import Header from "@/components/landing/Header";
+import PostSummaryCard, { PostSummaryCardProps } from "@/components/post-summary/PostSummaryCard";
+import { dummyPosts } from "../landing/dummy-data";
 
-type Post = {
-  id: number;
-  title: string;
-  content: string;
-  type: "scholarship" | "internship";
-  date: string;
-};
 
-const initialPosts: Post[] = [
-  {
-    id: 1,
-    title: "Summer Internship at Tech Co",
-    content: "Great opportunity for CS students",
-    type: "internship",
-    date: "2023-06-01",
-  },
-  {
-    id: 2,
-    title: "STEM Scholarship 2023",
-    content: "Full ride for exceptional students",
-    type: "scholarship",
-    date: "2023-05-15",
-  },
-  {
-    id: 3,
-    title: "Data Science Internship",
-    content: "Work with cutting-edge AI",
-    type: "internship",
-    date: "2023-06-10",
-  },
-  {
-    id: 4,
-    title: "Women in Engineering Scholarship",
-    content: "Supporting diversity in STEM",
-    type: "scholarship",
-    date: "2023-05-20",
-  },
-];
 
 export default function PostFeed() {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [posts, setPosts] = useState<PostSummaryCardProps[]>();
   const [activeTab, setActiveTab] = useState<
     "all" | "scholarship" | "internship"
   >("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
 
-  const filteredPosts = posts
-    .filter((post) => activeTab === "all" || post.type === activeTab)
+  const filteredPosts = dummyPosts
+    .filter((post) => activeTab === "all" || post.postType === activeTab)
     .filter(
       (post) =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.content.toLowerCase().includes(searchQuery.toLowerCase())
+        post.postTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.postDescription.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) =>
       sortOrder === "latest"
-        ? new Date(b.date).getTime() - new Date(a.date).getTime()
-        : new Date(a.date).getTime() - new Date(b.date).getTime()
+        ? new Date(b.postDate).getTime() - new Date(a.postDate).getTime()
+        : new Date(a.postDate).getTime() - new Date(b.postDate).getTime()
     );
 
   const handleCreatePost = () => {
@@ -91,7 +49,7 @@ export default function PostFeed() {
       <Header />
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Post Feed</h1>
+          <h1 className="text-2xl font-bold">Feed</h1>
           <Button onClick={handleCreatePost}>
             <PlusCircle className="mr-2 h-4 w-4" /> Create Post
           </Button>
@@ -136,70 +94,61 @@ export default function PostFeed() {
           <TabsContent value="all" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.map((post) => (
-                <Card key={post.id}>
-                  <CardHeader>
-                    <CardTitle>{post.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>{post.content}</p>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      {post.type}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {post.date}
-                    </span>
-                  </CardFooter>
-                </Card>
+                <PostSummaryCard
+                  postAuthorEmail={post.email}
+                  postAuthorAvatarSource={post.avatarSource}
+                  postTitle={post.postTitle}
+                  postThumbnailSource={post.postThumbnailSource}
+                  postDescription={post.postDescription}
+                  postRatingCount={post.postRatingCount}
+                  postBookmarkCount={post.postBookmarkCount}
+                  postAuthorName={post.name}
+                  postCommentCount={post.postCommentCount}
+                  postType={post.postType}
+                  postDate={post.postDate}
+                />
               ))}
             </div>
           </TabsContent>
           <TabsContent value="scholarship" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts
-                .filter((post) => post.type === "scholarship")
+                .filter((post) => post.postType === "scholarship")
                 .map((post) => (
-                  <Card key={post.id}>
-                    <CardHeader>
-                      <CardTitle>{post.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p>{post.content}</p>
-                    </CardContent>
-                    <CardFooter className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        {post.type}
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        {post.date}
-                      </span>
-                    </CardFooter>
-                  </Card>
+                  <PostSummaryCard
+                  postAuthorEmail={post.email}
+                  postAuthorAvatarSource={post.avatarSource}
+                  postTitle={post.postTitle}
+                  postThumbnailSource={post.postThumbnailSource}
+                  postDescription={post.postDescription}
+                  postRatingCount={post.postRatingCount}
+                  postBookmarkCount={post.postBookmarkCount}
+                  postAuthorName={post.name}
+                  postCommentCount={post.postCommentCount}
+                  postType={post.postType}
+                  postDate={post.postDate}
+                />
                 ))}
             </div>
           </TabsContent>
           <TabsContent value="internship" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts
-                .filter((post) => post.type === "internship")
+                .filter((post) => post.postType === "internship")
                 .map((post) => (
-                  <Card key={post.id}>
-                    <CardHeader>
-                      <CardTitle>{post.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p>{post.content}</p>
-                    </CardContent>
-                    <CardFooter className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        {post.type}
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        {post.date}
-                      </span>
-                    </CardFooter>
-                  </Card>
+                  <PostSummaryCard
+                  postAuthorEmail={post.email}
+                  postAuthorAvatarSource={post.avatarSource}
+                  postTitle={post.postTitle}
+                  postThumbnailSource={post.postThumbnailSource}
+                  postDescription={post.postDescription}
+                  postRatingCount={post.postRatingCount}
+                  postBookmarkCount={post.postBookmarkCount}
+                  postAuthorName={post.name}
+                  postCommentCount={post.postCommentCount}
+                  postType={post.postType}
+                  postDate={post.postDate}
+                />
                 ))}
             </div>
           </TabsContent>

@@ -51,6 +51,7 @@ const Home: React.FC = () => {
               postAuthorName={post.name}
               postCommentCount={post.postCommentCount}
               postType={post.postType}
+              postDate={post.postDate}
             />
           ))}
         </div>
