@@ -16,9 +16,11 @@ const Home: React.FC = () => {
         className="flex flex-col items-center justify-center h-screen"
         id="home"
       >
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold text-blue-500 dark:text-yellow-500">
-          Welcome to <span className="text-7xl font-bold text-blue-500 dark:text--200">CONNECT<span className='text-yellow-300'>ED</span></span>
-        
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold">
+          Welcome to{" "}
+          <span className="text-7xl font-bold dark:text--200 bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
+            ConnectED
+          </span>
         </h1>
         <p className="text-lg text-gray-800 dark:text-gray-200">
           Connecting students and providers for quality education.

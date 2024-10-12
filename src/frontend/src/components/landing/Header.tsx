@@ -38,7 +38,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4">
         <nav className="flex justify-between items-center h-16">
           <div className="flex items-center">
-          <h1 className="text-2xl font-bold text-blue-500 ">CONNECT<span className='text-yellow-300'>ED</span></h1>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">ConnectED</h1>
           </div>
           {/* Desktop Menu */}
           <ul className="hidden md:flex space-x-4">
