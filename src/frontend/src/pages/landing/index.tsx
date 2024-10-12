@@ -45,6 +45,7 @@ const Home: React.FC = () => {
               postDescription={post.postDescription}
               postRatingCount={post.postRatingCount}
               postBookmarkCount={post.postBookmarkCount}
+              postAuthorName={post.name}
               postCommentCount={post.postCommentCount}
             />
           ))}
