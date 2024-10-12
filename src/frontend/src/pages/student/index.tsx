@@ -19,8 +19,9 @@ const StudentPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">
           {dummyPosts.map((post) => (
             <PostSummaryCard
-              key={post.email} // Add a unique key for each mapped item
+              key={post.email} 
               postAuthorEmail={post.email}
+              postAuthorName={post.name}
               postAuthorAvatarSource={post.avatarSource}
               postTitle={post.postTitle}
               postThumbnailSource={post.postThumbnailSource}
@@ -35,16 +36,18 @@ const StudentPage: React.FC = () => {
 
       {/* Center the top providers */}
       <div className="container mx-auto px-4">
-        {dummyTopProviders.map((provider, index) => (
-          <TopProviderCard
-            key={index}
-            thumbnail={provider.thumbnail}
-            avatar={provider.avatar}
-            provider={provider.provider}
-            description={provider.description}
-            scholarship={provider.scholarship}
-          />
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">
+          {dummyTopProviders.map((provider, index) => (
+            <TopProviderCard
+              key={index}
+              thumbnail={provider.thumbnail}
+              avatar={provider.avatar}
+              provider={provider.provider}
+              description={provider.description}
+              scholarship={provider.scholarship}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
