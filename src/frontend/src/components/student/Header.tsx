@@ -59,7 +59,7 @@ const Header: React.FC = () => {
     <header className="border-b z-50 sticky top-0 backdrop-blur-md">
       <div className="container mx-auto flex justify-between items-center h-16 px-4">
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-bold text-blue-500 dark:text-yellow-500">ISKOLAR PH</h1>
+          <h1 className="text-2xl font-bold text-blue-500 ">CONNECT<span className='text-yellow-300'>ED</span></h1>
           {/* Desktop Menu */}
           {!isMobile && (
             <ul className="hidden md:flex space-x-4">
