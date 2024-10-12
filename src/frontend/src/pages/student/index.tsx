@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "@/components/student/Header";
-import UpperContent from "@/components/student/UpperContent";
+import Header from "@/components/student-component/Header";
+import UpperContent from "@/components/student-component/UpperContent";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
 import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard";

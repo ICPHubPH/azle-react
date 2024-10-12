@@ -1,4 +1,4 @@
-import Header from "@/components/student/Header"
+import Header from "@/components/student-component/Header"
 import { Separator } from "@radix-ui/react-dropdown-menu"
 import { useState } from 'react'
 import { Bell, LogOut, Settings, User, Pencil } from "lucide-react"

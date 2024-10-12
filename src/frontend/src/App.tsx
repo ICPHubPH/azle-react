@@ -5,6 +5,7 @@ import Profile from './pages/student/profile';
 import { ThemeProvider } from "@/components/theme-provider";
 import AuthPage from './auth';
 import StudentPage from './pages/student';
+import ProviderPage from './pages/provider';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/student" element={<StudentPage />} />
+          <Route path='/provider' element={<ProviderPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
         </Routes> 
