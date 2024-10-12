@@ -26,6 +26,7 @@ interface PostSummaryCardProps {
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
+  postType: string; // TODO:Update UI added type of post for filtering scholarship || intership
 }
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
@@ -38,6 +39,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postRatingCount,
   postBookmarkCount,
   postCommentCount,
+  postType
 }) => {
   const alt = `@${postAuthorEmail.split("@")[0]}`;
 
@@ -167,6 +169,10 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
 
               <p className="text-xs text-gray-500 max-w-[10rem] truncate md:max-w-[12rem] xl:max-w-[14rem] 2xl:max-w-[18rem]">
                 {postAuthorEmail}
+              </p>
+              <p className="hidden">
+                {/** TODO: post type for filtering currently hidden */}
+                {postType}
               </p>
             </div>
           </div>

@@ -11,6 +11,8 @@ export const dummyPosts = [
     postRatingCount: 150,
     postBookmarkCount: 95,
     postCommentCount: 40,
+    postType: "scholarship"
+
   },
   {
     email: "info@laverdad.edu.ph",
@@ -24,6 +26,7 @@ export const dummyPosts = [
     postRatingCount: 200,
     postBookmarkCount: 120,
     postCommentCount: 55,
+    postType: "scholarship"
   },
   {
     email: "internships@creativeworks.com",
@@ -36,6 +39,7 @@ export const dummyPosts = [
     postRatingCount: 180,
     postBookmarkCount: 105,
     postCommentCount: 38,
+    postType: "scholarship"
   },
 ];
 

@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from "@/components/ui/dialog"; // Import the Dialog components
 
 const Header: React.FC = () => {
