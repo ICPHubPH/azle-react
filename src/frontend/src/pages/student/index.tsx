@@ -34,17 +34,20 @@ const StudentPage: React.FC = () => {
       </div>
 
       {/* Center the top providers */}
-      <div className="container mx-auto px-4">
-        {dummyTopProviders.map((provider, index) => (
-          <TopProviderCard
-            key={index}
-            thumbnail={provider.thumbnail}
-            avatar={provider.avatar}
-            provider={provider.provider}
-            description={provider.description}
-            scholarship={provider.scholarship}
-          />
-        ))}
+      <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
+        <h1 className="text-2xl font-bold">Test Posts</h1>
+        <div className="w-full px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
+          {dummyTopProviders.map((provider, index) => (
+            <TopProviderCard
+              key={index}
+              thumbnail={provider.thumbnail}
+              avatar={provider.avatar}
+              provider={provider.provider}
+              description={provider.description}
+              scholarship={provider.scholarship}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
