@@ -1,41 +1,53 @@
-// src/components/student/UpperContent.tsx
-import React, { useState } from 'react';
-import { Search } from 'lucide-react'; // Importing the search icon from lucide-react
-import CreatePost from '../post-form/CreatePost';
+import React from 'react'
+import CreatePost from '../post-form/CreatePost'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { PlusCircle } from "lucide-react"
 
-
-const UpperContent: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
+export default function UpperContent() {
+  // Replace these with actual user data
+  const userName = "John Doe"
+  const userInitials = "JD"
+  const userAvatarUrl = "/placeholder.svg?height=40&width=40"
 
   return (
-    <div className="flex justify-center py-10  rounded-lg ">
-      <div className='flex flex-col items-center text-center max-w-2xl  '>
-        <h1 className='text-3xl font-bold mb-4 text-slate-900 dark:text-slate-100'>
-          Welcome Providers
-        </h1>
-        <CreatePost/>
-       
-        
-        {/* Search Bar */}
-        <div className="relative w-full max-w-md">
-          <input 
-            type="text"
-            className="w-full px-5 py-3 pl-12 border border-transparent shadow-lg rounded-full text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-400 dark:focus:ring-slate-500 transition-all"
-            placeholder="Search for opportunities..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          {/* Search Icon from Lucide */}
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-slate-500 dark:text-slate-400" />
-          
+    <Card className="w-full max-w mx-auto my-8">
+      <CardHeader>
+        <div className="flex items-center mb-4">
+          <Avatar className="h-16 w-16 mr-4">
+            <AvatarImage src={userAvatarUrl} alt={userName} />
+            <AvatarFallback>{userInitials}</AvatarFallback>
+          </Avatar>
+          <div>
+            <CardTitle className="text-3xl font-bold text-primary">
+              Welcome, {userName}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">Provider</p>
+          </div>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default UpperContent;
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+          <p className="text-muted-foreground">
+            Create and manage your posts to connect with students and share your expertise.
+          </p>
+          <div className="bg-secondary p-6 rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-secondary-foreground">Create a New Post</h2>
+              <CreatePost>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <PlusCircle className="w-4 h-4" />
+                  New Post
+                </Button>
+              </CreatePost>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Click the button above to create a new post. You can add a title, select a scholarship type, upload a thumbnail, and write your content.
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}

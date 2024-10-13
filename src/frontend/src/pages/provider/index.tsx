@@ -39,8 +39,7 @@ const ProviderPage: React.FC = () => {
               postDescription={post.postDescription}
               postRatingCount={post.postRatingCount}
               postBookmarkCount={post.postBookmarkCount}
-              postCommentCount={post.postCommentCount}
-            />
+              postCommentCount={post.postCommentCount} postType={""} postDate={""}            />
           ))}
         </div>
       </div>
