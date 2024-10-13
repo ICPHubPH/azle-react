@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/password-input";
 import { Link } from "react-router-dom";
 import SocialsAuth from "@/components/SocialsAuth";
+import { cn } from "@/lib/utils";
 
 const SignUpPage = () => {
 	return (
@@ -31,7 +32,7 @@ const SignUpPage = () => {
 						Sign up to __ and join our amazing community
 					</p>
 				</div>
-				
+
 				<div className="mt-14 w-full space-y-4 ">
 					{/* TODO: Turn this into a form component */}
 					<div className="space-y-3">
@@ -87,10 +88,15 @@ const SignUpPage = () => {
 					className="absolute inset-0 bg-cover bg-no-repeat bg-[url('person-giving-vegetables.png')]"
 					style={{ backgroundPositionX: "60%" }}
 				/>
-				{/* <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" /> */}
-				{/* <p className="absolute bottom-6 left-6 lg:bottom-12 lg:left-12 w-2/4 lg:w-3/5 xl:w-2/5 text-white font-bold md:text-4xl lg:text-5xl">
+				<div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" />
+				<p
+					className={cn(
+						"absolute bottom-6 left-6 w-3/4 text-white font-bold",
+						"lg:bottom-12 lg:left-12 lg:w-4/5 xl:w-3/5 md:text-4xl lg:text-5xl",
+					)}
+				>
 					Start growing your urban garden today.
-				</p> */}
+				</p>
 			</section>
 		</div>
 	);
