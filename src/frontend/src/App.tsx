@@ -1,12 +1,14 @@
 // src/frontend/src/App.tsx
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/landing';
-import Profile from './pages/student/profile';
 import { ThemeProvider } from "@/components/theme-provider";
-import AuthPage from './auth';
-import StudentPage from './pages/student';
-import ProviderPage from './pages/provider';
-import PostFeed from './pages/feeds/feeds';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AuthPage from "./auth";
+import { Toaster } from "./components/ui/sonner";
+import PostFeed from "./pages/feeds/feeds";
+import Home from "./pages/landing";
+import PostPage from "./pages/post";
+import ProviderPage from "./pages/provider";
+import StudentPage from "./pages/student";
+import Profile from "./pages/student/profile";
 
 function App() {
   return (
@@ -15,12 +17,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/student" element={<StudentPage />} />
-          <Route path='/provider' element={<ProviderPage />} />
+          <Route path="/provider" element={<ProviderPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path='/feed' element={<PostFeed/>}/>
-        </Routes> 
+          <Route path="/feed" element={<PostFeed />} />
+          <Route path="/posts/:postId" element={<PostPage />} />
+        </Routes>
       </Router>
+      <Toaster />
     </ThemeProvider>
   );
 }

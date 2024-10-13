@@ -15,15 +15,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { ImageUp, Plus } from "lucide-react";
-import { ChangeEvent, DragEvent, useEffect, useState, ReactNode } from "react";
+import { ChangeEvent, DragEvent, ReactNode, useEffect, useState } from "react";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-
-import { cn } from "@/lib/utils";
-import ReactQuill from "react-quill";
 import { formats, modules } from "./quill-options";
 import "./quill.css";
 

@@ -1,31 +1,33 @@
 
-interface Mention {
-  id: string;
-  name: string;
-  image: string;
-  email: string;
-}
+// interface Mention {
+//   id: string;
+//   name: string;
+//   image: string;
+//   email: string;
+// }
 
 export const modules = {
     toolbar: [
-      [
-        { size: ["small", false, "large", "huge"] },
-        { header: ["1", "2", "3", "4", "5", "6"] },
-        { font: [] },
-      ],
-      // [{ script: "sub" }, { script: "super" }],
+      // [
+      //   { size: ["small", false, "large", "huge"] },
+      //   { font: [] },
+      // ],
+    [{header: "1"}, {header: "2"}],
+      
+    // [{ script: "sub" }, { script: "super" }],
+      [{ bold: true }, { italic: true }, { underline: true }, { strike: true }, "clean"],
       [{ list: "ordered" }, { list: "bullet" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      [{ bold: true }, { italic: true }, { underline: true }, { strike: true }],
-      [{ color: [] }, { background: [] }],
       [{ align: [] }],
-      [{ direction: "rtl" }], // Text direction
+      [{ indent: "-1" }, { indent: "+1" }],
+    [{ color: [] }, { background: [] }],
+    ["blockquote", "code-block"],
+      // [{ direction: "rtl" }], // Text direction
   
       // Custom items:
-      ["blockquote", "code-block"], // Block quote and code block
-    ["image"], // Image upload
-      ["video"],
-      ["clean"], // Clear formatting
+      ["link", "image", "video"], // Block quote and code block
+    // ["image"], // Image upload
+    //   ["video"],
+    //   ["clean"], // Clear formatting
     ],
   // mention: {
   //   allowedChars: /^[A-Za-z\s\-\_\.]$/,
@@ -64,11 +66,13 @@ export const formats = [
     // "script",
     "blockquote",
     "code-block",
+    "code",
     "list",
     "bullet",
     "indent",
     "direction",
     "align",
   "image",
-    "video"
+  "video",
+    "link"
 ];
