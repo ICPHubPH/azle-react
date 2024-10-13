@@ -1,11 +1,13 @@
 import { Configuration } from './configuration';
-
-/**
- * NOTE: Adding other entities will cause an deployment error.
- * possible cause occurs in the database configurations.
- */
-
+import { Feedback } from './feedback';
+import { Post } from './post';
+import { Rating } from './rating';
+import { User } from './user';
 
 export const ENTITIES = [
     Configuration,
+    User,
+    Post,
+    Feedback,
+    Rating
 ];

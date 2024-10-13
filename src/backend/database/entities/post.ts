@@ -7,22 +7,19 @@ import { User } from "./user";
     name: 'posts',
 })
 export class Post extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @ManyToOne(() => User, user => user.posts, { onDelete: "CASCADE" })
-  user: User;
-
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "varchar" })
   thumbnail: string;
 
-  @Column()
+  @Column({type: "varchar", length: 60})
   title: string;
 
-  @Column()
+  @Column({type: "varchar"})
   type: string;
 
-  @Column("text")
+  @Column({ type: "text" })
   content: string;
 
   @CreateDateColumn()
@@ -31,9 +28,15 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @ManyToOne(() => User, user => user.posts)
+  user: User;
+
+  @OneToMany(() => Feedback, feedback => feedback.post, {
+    cascade: true,
+    onDelete: "CASCADE"
+  })
+  feedbacks: Feedback[];
+
   @OneToMany(() => Rating, rating => rating.post)
   ratings: Rating[];
-
-  @OneToMany(() => Feedback, feedback => feedback.post)
-  feedbacks: Feedback[];
 }
