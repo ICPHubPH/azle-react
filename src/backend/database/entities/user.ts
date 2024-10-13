@@ -7,9 +7,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm";
+import { UserRole } from "../../constants";
 import { Feedback } from "./feedback";
 import { Post } from "./post";
 import { Rating } from "./rating";
+
+type RoleType = 'admin' | 'provider' | 'student';
 
 @Entity({
   name: "users",
@@ -25,10 +28,10 @@ export class User extends BaseEntity {
     unique: true,
     type: "varchar",
     length: 30
-   })
+  })
   username: string;
 
-  @Column({ type: "varchar"})
+  @Column({ type: "varchar" })
   name: string;
 
   @Column({ nullable: true, type: "text" })
@@ -43,11 +46,8 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: "datetime" })
   emailVerifiedAt: Date;
 
-  @Column({
-    type: "enum",
-    enum: ["admin", "provider", "student"],
-  })
-  role: "admin" | "provider" | "student";
+  @Column({type: "text"})
+  role: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -72,4 +72,12 @@ export class User extends BaseEntity {
     onDelete: "CASCADE"
   })
   ratings: Rating[];
+
+  setRole(role: string) {
+      if (UserRole.includes(role)) {
+          this.role = role;
+      } else {
+          throw new Error("Invalid role");
+      }
+  }
 }

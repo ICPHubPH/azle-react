@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PostCategoryType } from "../../constants";
 import { Feedback } from "./feedback";
 import { Rating } from "./rating";
 import { User } from "./user";
@@ -16,7 +17,7 @@ export class Post extends BaseEntity {
   @Column({type: "varchar", length: 60})
   title: string;
 
-  @Column({type: "varchar"})
+  @Column({type: "text"})
   type: string;
 
   @Column({ type: "text" })
@@ -39,4 +40,12 @@ export class Post extends BaseEntity {
 
   @OneToMany(() => Rating, rating => rating.post)
   ratings: Rating[];
+
+  setType(type: string) {
+    if (PostCategoryType.includes(type)) {
+      this.type = type;
+    } else {
+        throw new Error("Invalid post type");
+    }
+  }
 }

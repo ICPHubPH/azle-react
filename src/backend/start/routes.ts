@@ -6,35 +6,6 @@ const Route = Router();
 
 /*
 |--------------------------------------------------------------------------
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
-
-// TODO: Authorize Routes
-// Route.use(AuthMiddleware)
-
-// Route.get('/users', ApisController.user.getAll);
-// Route.get('/user/:id', ApisController.user.findById);
-// Route.put('/user/:id', ApisController.user.updateById);
-// Route.delete('/user/:id', ApisController.user.deleteById);
-
-// Route.get('/posts', ApisController.post.getAll);
-// Route.post('/posts', ApisController.post.create);
-// Route.get('/posts/:id', ApisController.post.findById);
-// Route.put('/posts/:id', ApisController.post.updateById);
-// Route.delete('/posts/:id', ApisController.post.deleteById);
-// Route.get('/post/:id/category', ApisController.post.findByCategory);
-
-// TODO: Feedback Routes
-// Route.get('/feedback/:id', ApisController.feedback.findById);
-// ...
-
-Route.get('/users/test', UserController.test);
-Route.get('/posts/test', PostController.test);
-
-
-/*
-|--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
@@ -45,4 +16,33 @@ Route.post('/configuration/insert', ApisController.insert_configuration)
 Route.post('/configuration/update', ApisController.update_configuration)
 Route.post('/configuration/delete', ApisController.delete_configuration)
 
-export { Route as routes };
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+
+// TODO: Authorize Routes
+// Route.use(AuthMiddleware)
+
+Route.get('/users', UserController.getAll);
+Route.get('/user/:id', UserController.findById);
+Route.put('/user/:id', UserController.updateById);
+Route.delete('/user/:id', UserController.deleteById);
+
+Route.get('/posts', PostController.getAll);
+Route.post('/posts', PostController.create);
+Route.get('/posts/:id', PostController.findById);
+Route.put('/posts/:id', PostController.updateById);
+Route.delete('/posts/:id', PostController.deleteById);
+Route.get('/post/:id/category', PostController.findByCategorytype);
+
+// TODO: Feedback Routes
+// Route.get('/feedback/:id', ApisController.feedback.findById);
+// ...
+
+
+const ApiRoute = Router();
+ApiRoute.use('/api', Route);
+
+export { ApiRoute as routes };

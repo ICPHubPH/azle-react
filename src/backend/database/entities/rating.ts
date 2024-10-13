@@ -9,7 +9,7 @@ export class Rating extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({ type: "number" })
+  @Column({ type: "integer" })
   rate: number;
 
   @CreateDateColumn()
