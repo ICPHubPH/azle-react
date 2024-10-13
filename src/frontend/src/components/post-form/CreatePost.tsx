@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ImageUp, Plus } from "lucide-react";
-import { ChangeEvent, DragEvent, useEffect, useState } from "react";
+import { ChangeEvent, DragEvent, useEffect, useState, ReactNode } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -27,7 +27,11 @@ import ReactQuill from "react-quill";
 import { formats, modules } from "./quill-options";
 import "./quill.css";
 
-export default function CreatePost() {
+interface CreatePostProps {
+  children?: ReactNode; // Allow children to be passed as props
+}
+
+export default function CreatePost({ children }: CreatePostProps) {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailURL, setThumbnailURL] = useState<string | null>(null);
   const [title, setTitle] = useState<string>("");
@@ -90,7 +94,7 @@ export default function CreatePost() {
       }}
     >
       <DialogTrigger>
-        <Plus />
+        {children} {/* Render children here */}
       </DialogTrigger>
       <DialogContent className="overflow-y-auto no-scrollbar rounded-none md:rounded-md max-h-full md:max-h-[90%] w-full md:max-w-[50%]">
         <DialogHeader>
