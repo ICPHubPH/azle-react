@@ -6,9 +6,9 @@ import { Link } from "react-router-dom"
 
 const Header = () => {
   return (
-    <header className="py-4 flex justify-between items-center ">
+    <header className="py-4 w-full grid grid-cols-3 items-center ">
       {/* Logo and Title */}
-      <Link className="flex items-center gap-x-2 w-1/4 cursor-pointer"
+      <Link className="flex items-center gap-x-2 w-fit cursor-pointer"
          to='/'
       >
 					<img className="size-14 " src="Logo.png" alt="logo" />
@@ -25,7 +25,7 @@ const Header = () => {
       </div>
 
       {/* Icons and User Profile */}
-      <div className="flex gap-x-4 items-center justify-end w-1/3">
+      <div className="flex gap-x-4 items-center justify-end">
         <CirclePlus className="cursor-pointer text-lima-500" size={28} />
         <Bell className="cursor-pointer text-lima-500" size={28} /> 
         <UserSetting/>
