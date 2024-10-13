@@ -50,7 +50,7 @@ const LoginPage = () => {
 			{/* Background Image Section */}
 			<section className="hidden md:block size-full relative overflow-hidden">
 				<div
-					className="absolute inset-0 bg-cover bg-no-repeat bg-[url('women.png')]"
+					className="absolute inset-0 bg-cover bg-no-repeat bg-[url('person-looking-at-plants.jpg')]"
 					style={{ backgroundPositionX: "60%" }}
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" />
