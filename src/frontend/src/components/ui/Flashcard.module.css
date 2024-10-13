@@ -1,0 +1,42 @@
+@import url("https://api.fontshare.com/v2/css?f[]=stardom@400&f[]=cabinet-grotesk@200&display=swap");
+
+.flashcard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.front {
+  font-family: "Stardom", sans-serif;
+  background-color: black;
+  color: white;
+}
+
+.back {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 900;
+}
+
+.front,
+.back {
+  height: 90%;
+  width: 30rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: 3px solid rgb(12, 12, 12);
+  border-radius: 25px;
+  font-size: 2.3rem;
+  backface-visibility: hidden;
+}
