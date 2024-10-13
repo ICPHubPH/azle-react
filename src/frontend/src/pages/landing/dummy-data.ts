@@ -1,22 +1,35 @@
-import { Feedback, User } from "@/models/model";
+import { Feedback, Post, User } from "@/types/model";
 
-export const dummyPosts = [
+export const dummyPosts: Post[] = [
   {
     email: "admission.caloocan@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Caloocan",
     avatarSource:
       "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
-    postTitle: "STUDY NOW, PAY NEVER",
+    postTitle: "STUDY NOW, PAY <strike>LATER</strike> NEVER",
     postThumbnailSource:
       "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/273036020_4892115524188494_2590197564223176883_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGrfJduGwytLu1qYLtPMUdvtKOtC7kfAJa0o60LuR8AlmpJ0hg5C808OpWbgYYHUEI00ZL-wJDpXoUr8P4w3Lce&_nc_ohc=NYwQUQVImbUQ7kNvgGplNr4&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=AvW0_V-F1K-DNP2nkseKsJD&oh=00_AYCs9vyTnP8L8Sz0G5m93emdH8YiwtLEYZhC6BZFm4dJSw&oe=670F8870",
-    postDescription: `<p>STUDY NOW, PAY NEVER!</p><p>Quality Education for FREE!</p><p>La Verdad Christian College - Caloocan is NOW OPEN for Application for the FULL SCHOLARSHIP GRANT in College for Academic Year 2022-2023.</p><p>Please click the link for the admission details:</p><p><a href="https://tinyurl.com/OnlineApplicationAY2223?fbclid=IwZXh0bgNhZW0CMTAAAR08KuSH7XAX9r9sqnY4Un5CBIGMqKLCtA8roxtMGO1Kxo13_iQcI4eH90c_aem_53aenhiou2dhfT07tU4q1A" target="_blank" style="color: var(--blue-link);">https://tinyurl.com/OnlineApplicationAY2223</a></p>`,
+    postDescription: `<h1>STUDY NOW, PAY NEVER!</h1><p>Quality Education for FREE!</p><p>La Verdad Christian College - Caloocan is NOW OPEN for Application for the FULL SCHOLARSHIP GRANT in College for Academic Year 2022-2023.</p><p>Please click the link for the admission details:</p><p><a href="https://tinyurl.com/OnlineApplicationAY2223?fbclid=IwZXh0bgNhZW0CMTAAAR08KuSH7XAX9r9sqnY4Un5CBIGMqKLCtA8roxtMGO1Kxo13_iQcI4eH90c_aem_53aenhiou2dhfT07tU4q1A" target="_blank" style="color: var(--blue-link);">https://tinyurl.com/OnlineApplicationAY2223</a></p>`,
     postRatingCount: 150,
     postBookmarkCount: 95,
     postCommentCount: 40,
     postType: "scholarship",
-    postDate: "2023-06-01",
-
-
+    postDate: "June 1, 2023",
+  },
+  {
+    email: "admission.caloocan@laverdad.edu.ph",
+    name: "La Verdad Christian College, Inc. - Caloocan",
+    avatarSource:
+      "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
+    postTitle: "STUDY NOW, PAY <strike>LATER</strike> NEVER",
+    postThumbnailSource:
+      "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/273036020_4892115524188494_2590197564223176883_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGrfJduGwytLu1qYLtPMUdvtKOtC7kfAJa0o60LuR8AlmpJ0hg5C808OpWbgYYHUEI00ZL-wJDpXoUr8P4w3Lce&_nc_ohc=NYwQUQVImbUQ7kNvgGplNr4&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=AvW0_V-F1K-DNP2nkseKsJD&oh=00_AYCs9vyTnP8L8Sz0G5m93emdH8YiwtLEYZhC6BZFm4dJSw&oe=670F8870",
+    postDescription: `<h2>Description</h2><p><span style="color: rgb(187, 187, 187);">The Future Leaders Scholarship is designed to support exceptional students who demonstrate outstanding leadership potential and a commitment to community service. This prestigious award covers full tuition and provides mentorship opportunities to help shape the next generation of visionary leaders.</span></p><p><br></p><h2>Eligibility</h2><ol><li><span style="color: rgb(187, 187, 187);">Minimum GPA of 3.5</span></li><li><span style="color: rgb(187, 187, 187);">Demonstrated leadership experience</span></li><li><span style="color: rgb(187, 187, 187);">Active community involvement</span></li><li><span style="color: rgb(187, 187, 187);">Incoming freshman or transfer student</span></li></ol><p><br></p><h2><span style="color: rgb(255, 255, 255);">Application Process</span></h2><ul><li><span style="color: rgb(187, 187, 187);">Complete online application form</span></li><li><span style="color: rgb(187, 187, 187);">Submit academic transcripts</span></li><li><span style="color: rgb(187, 187, 187);">Provide two letters of recommendations</span></li><li><span style="color: rgb(187, 187, 187);">Write a 500-word personal statement</span></li></ul>`,
+    postRatingCount: 150,
+    postBookmarkCount: 95,
+    postCommentCount: 40,
+    postType: "scholarship",
+    postDate: "June 1, 2023",
   },
   {
     email: "info@laverdad.edu.ph",
@@ -42,6 +55,21 @@ export const dummyPosts = [
     postThumbnailSource: "https://via.placeholder.com/400x200",
     postDescription:
       "<p>Are you passionate about <strong>graphic design</strong> and <code>UX/UI</code>? Join <em>Creative Works</em> for a <a href='www.facebook.com' target='_blank'>6-month internship</a> where you'll work with top designers on real-world projects.</p> <p><strong>Perks:</strong> Remote work, mentorship, and a performance bonus!</p> <a href='https://creativeworks.com/internships' target='_blank'>Apply today</a>",
+    postRatingCount: 180,
+    postBookmarkCount: 105,
+    postCommentCount: 38,
+    postType: "internship",
+    postDate: "2023-06-01",
+
+  },{
+    email: "internships@creativeworks.com",
+    name: "IT Internships",
+    avatarSource: "https://via.placeholder.com/150",
+    postTitle: "Quick Strike Internship Now Open",
+    postThumbnailSource: "https://via.placeholder.com/400x200",
+    postDescription:
+      `<p>Are you passionate about <strong>graphic design</strong> and <pre class="ql-syntax" spellcheck="false">UX/UI
+</pre> Join <em>Creative Works</em> for a <a href='www.facebook.com' target='_blank'>6-month internship</a> where you'll work with top designers on real-world projects.</p> <p><strong>Perks:</strong> Remote work, mentorship, and a performance bonus!</p> <a href='https://creativeworks.com/internships' target='_blank'>Apply today</a>`,
     postRatingCount: 180,
     postBookmarkCount: 105,
     postCommentCount: 38,

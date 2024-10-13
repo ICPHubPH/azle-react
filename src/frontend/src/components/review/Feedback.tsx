@@ -1,13 +1,8 @@
-import { CalendarDays, Star } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Feedback as FeedbackModel, User } from "@/models/model";
 import { getTimeAgo } from "@/lib/helpers";
+import { Feedback as FeedbackModel, User } from "@/types/model";
+import { Star } from "lucide-react";
 import { useState } from "react";
-import {
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-} from "@radix-ui/react-hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface FeedbackProps {
   user: User;
