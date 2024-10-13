@@ -13,7 +13,7 @@ const LandingPage = () => {
 		<div className="mx-[75px] flex flex-col gap-y-12">
 			<header className="p-4 grid grid-cols-3">
 				<div className="flex items-center gap-x-4">
-					<img className="h-14 w-14 bg-primary" src="" alt="logo" />
+					<img className="h-14 w-14 " src="Logo.png" alt="logo" />
 					<h1 className="font-medium text-xl text-foreground">Project Name</h1>
 				</div>
 

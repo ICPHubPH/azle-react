@@ -1,14 +1,14 @@
-import { CategoriesCB } from "@/components/CategoriesCB"
-import { Button } from "@/components/ui/button"
+import { CategoriesCB } from "@/components/catergories-cb"
 import { Input } from "@/components/ui/input"
-import { Bell, ChevronDown, Search, Settings } from "lucide-react"
+import UserSetting from "@/components/user-setting"
+import { Bell, CirclePlus, Search } from "lucide-react"
 
 const Header = () => {
   return (
     <header className="py-4 flex justify-between items-center ">
       {/* Logo and Title */}
       <div className="flex items-center gap-x-2 w-1/4">
-					<img className="h-14 w-14 bg-primary" src="" alt="logo" />
+					<img className="size-14 " src="Logo.png" alt="logo" />
 					<h1 className="font-medium text-lg text-foreground">Project Name</h1>
 			</div>
 
@@ -23,15 +23,9 @@ const Header = () => {
 
       {/* Icons and User Profile */}
       <div className="flex gap-x-4 items-center justify-end w-1/3">
-        <Bell className="cursor-pointer" /> 
-        <Settings className="cursor-pointer" /> 
-        <Button className="flex items-center gap-x-2 bg-lima-500 text-white rounded px-4 py-2">
-          <span className="h-8 w-8 bg-gray-500 rounded-full"></span> 
-          <div className="flex items-center gap-x-2">
-            <span>Darvey Trinidad</span>
-            <ChevronDown />
-          </div>
-        </Button>
+        <CirclePlus className="cursor-pointer text-lima-500" size={28} />
+        <Bell className="cursor-pointer text-lima-500" size={28} /> 
+        <UserSetting/>
       </div>
     </header>
   )
