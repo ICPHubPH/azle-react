@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { Check, ChevronDown } from "lucide-react"
 
@@ -8,6 +7,8 @@ import {
   Command,
   CommandGroup,
   CommandItem,
+  CommandInput,
+  CommandEmpty,
   CommandList,
 } from "@/components/ui/command"
 import {
@@ -64,7 +65,9 @@ export function CategoriesCB() {
       </PopoverTrigger>
       <PopoverContent className="w-[170px] p-0">
         <Command>
+           <CommandInput placeholder="Search category..." />
           <CommandList>
+           <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
               {categories.map((framework) => (
                 <CommandItem
