@@ -16,7 +16,7 @@ import {
 } from "../ui/tooltip";
 import { Button } from "../ui/button";
 
-interface PostSummaryCardProps {
+export interface PostSummaryCardProps {
   postAuthorEmail: string;
   postAuthorName: string;
   postAuthorAvatarSource: string;
@@ -26,6 +26,8 @@ interface PostSummaryCardProps {
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
+  postType: string; // TODO:Update UI added type of post for filtering scholarship || intership
+  postDate: string ; // TODO: Update UI added date for filtering
 }
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
@@ -38,6 +40,8 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postRatingCount,
   postBookmarkCount,
   postCommentCount,
+  postType,
+  postDate
 }) => {
   const alt = `@${postAuthorEmail.split("@")[0]}`;
 
@@ -167,6 +171,11 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
 
               <p className="text-xs text-gray-500 max-w-[10rem] truncate md:max-w-[12rem] xl:max-w-[14rem] 2xl:max-w-[18rem]">
                 {postAuthorEmail}
+              </p>
+              <p className="hidden">
+                {/** TODO: postType & postDate for filtering currently hidden */}
+                {postType}
+                {postDate}
               </p>
             </div>
           </div>

@@ -5,6 +5,7 @@ import Profile from './pages/student/profile';
 import { ThemeProvider } from "@/components/theme-provider";
 import AuthPage from './auth';
 import StudentPage from './pages/student';
+import PostFeed from './pages/feeds/feeds';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/student" element={<StudentPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path='/feed' element={<PostFeed/>}/>
         </Routes> 
       </Router>
     </ThemeProvider>
