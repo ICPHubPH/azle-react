@@ -11,6 +11,10 @@ export const dummyPosts = [
     postRatingCount: 150,
     postBookmarkCount: 95,
     postCommentCount: 40,
+    postType: "scholarship",
+    postDate: "2023-06-01",
+
+
   },
   {
     email: "info@laverdad.edu.ph",
@@ -24,6 +28,9 @@ export const dummyPosts = [
     postRatingCount: 200,
     postBookmarkCount: 120,
     postCommentCount: 55,
+    postType: "scholarship",
+    postDate: "2023-06-01",
+
   },
   {
     email: "internships@creativeworks.com",
@@ -36,6 +43,9 @@ export const dummyPosts = [
     postRatingCount: 180,
     postBookmarkCount: 105,
     postCommentCount: 38,
+    postType: "internship",
+    postDate: "2023-06-01",
+
   },
 ];
 
