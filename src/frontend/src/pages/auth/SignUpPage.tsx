@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/password-input";
 import { Link } from "react-router-dom";
+import SocialsAuth from "@/components/SocialsAuth";
 
 const SignUpPage = () => {
 	return (
@@ -30,10 +31,7 @@ const SignUpPage = () => {
 						Sign up to __ and join our amazing community
 					</p>
 				</div>
-
-				{/* <Form {...form}>
-
-                 </Form> */}
+				
 				<div className="mt-14 w-full space-y-4 ">
 					{/* TODO: Turn this into a form component */}
 					<div className="space-y-3">
@@ -65,7 +63,7 @@ const SignUpPage = () => {
 							Sign Up
 						</Button>
 					</div>
-					
+
 					<div className="text-center">
 						<span>Already have an account?</span>{" "}
 						<Link to={"/login"} className="text-primary hover:underline">
@@ -78,6 +76,8 @@ const SignUpPage = () => {
 						</p>
 						<hr className="absolute top-1/2 w-full h-0.5 bg-gray-300" />
 					</div>
+
+					<SocialsAuth />
 				</div>
 			</section>
 

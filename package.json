@@ -13,8 +13,14 @@
 		"test": "npm test --workspaces --if-present"
 	},
 	"type": "module",
-	"workspaces": ["src/backend", "src/frontend"],
+	"workspaces": [
+		"src/backend",
+		"src/frontend"
+	],
 	"devDependencies": {
 		"@biomejs/biome": "1.9.3"
+	},
+	"dependencies": {
+		"@dfinity/auth-client": "^2.1.2"
 	}
 }
