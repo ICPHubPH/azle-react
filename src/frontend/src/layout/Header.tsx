@@ -1,6 +1,7 @@
 import { CategoriesCB } from "@/components/catergories-cb"
 import { Input } from "@/components/ui/input"
 import UserSetting from "@/components/user-setting"
+import { PageRoutes } from "@/constants/PageRoutes"
 import { Bell, CirclePlus, Search } from "lucide-react"
 import { Link } from "react-router-dom"
 
@@ -9,7 +10,7 @@ const Header = () => {
     <header className="py-4 w-full grid grid-cols-3 items-center ">
       {/* Logo and Title */}
       <Link className="flex items-center gap-x-2 w-fit cursor-pointer"
-         to='/'
+         to={PageRoutes.Home}
       >
 					<img className="size-14 " src="Logo.png" alt="logo" />
 					<h1 className="font-medium text-lg text-foreground">Project Name</h1>

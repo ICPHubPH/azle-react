@@ -9,7 +9,7 @@ type Resource = {
     date: string;
 };
 
-const MainPage: React.FC = () => {
+const HomePage: React.FC = () => {
     const [activeTab, setActiveTab] = useState<string>("Home");
 
     const resources: Resource[] = [
@@ -40,4 +40,4 @@ const MainPage: React.FC = () => {
     );
 };
 
-export default MainPage;
+export default HomePage;

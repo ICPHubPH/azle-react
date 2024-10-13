@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { PageRoutes } from "@/constants/PageRoutes";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const links = [
-	{ id: 1, url: "/", name: "Home" },
+	{ id: 1, url: PageRoutes.Landing, name: "Home" },
 	{ id: 2, url: "/about", name: "About" },
 	{ id: 3, url: "/goals", name: "Goals" },
 ];
@@ -30,10 +31,10 @@ const LandingPage = () => {
 				</nav>
 
 				<div className=" flex justify-end items-center gap-x-4">
-					<Link to="/login">
+					<Link to={PageRoutes.Login}>
 						<Button variant="ghost">Login</Button>
 					</Link>
-					<Link to="/signup">
+					<Link to={PageRoutes.SignUp}>
 						<Button>Sign Up</Button>
 					</Link>
 				</div>

@@ -3,7 +3,7 @@ import Header from "@/layout/Header";
 import { Pencil } from "lucide-react";
 import { FC, useState } from "react";
 
-const AccountPage: FC = () => {
+const ProfilePage: FC = () => {
   const [userProfile, setUserProfile] = useState("https://github.com/shadcn.png");
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -50,4 +50,4 @@ const AccountPage: FC = () => {
   );
 };
 
-export default AccountPage;
+export default ProfilePage;

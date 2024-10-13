@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import Profile from "./avatar";
+import { PageRoutes } from "@/constants/PageRoutes";
 
 const UserSetting = () => {
 	return (
@@ -26,7 +27,7 @@ const UserSetting = () => {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem>
-						<Link to="/account" className="w-full">
+						<Link to={PageRoutes.Profile} className="w-full">
 							<User className="mr-2 size-4 inline" />
 							Profile
 						</Link>
