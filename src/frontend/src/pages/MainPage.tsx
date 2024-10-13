@@ -1,7 +1,7 @@
 import ResourceCard from "@/components/resource-card";
 import Tab from "@/components/tab";
 import Header from "@/layout/Header";
-import { Crown, Home, Star } from "lucide-react";
+import { Home, Star, Trophy } from "lucide-react";
 import { useState } from "react";
 
 type Resource = {
@@ -24,7 +24,7 @@ const MainPage: React.FC = () => {
                 <aside className="flex flex-col gap-y-2 w-1/4">
                     <nav className="flex gap-x-8">
                         <Tab label="Home" icon={Home} isActive={activeTab === "Home"} onClick={() => setActiveTab("Home")} />
-                        <Tab label="Ranking" icon={Crown} isActive={activeTab === "Ranking"} onClick={() => setActiveTab("Ranking")} />
+                        <Tab label="Ranking" icon={Trophy} isActive={activeTab === "Ranking"} onClick={() => setActiveTab("Ranking")} />
                         <Tab label="Favorites" icon={Star} isActive={activeTab === "Favorites"} onClick={() => setActiveTab("Favorites")} />
                     </nav>
                     <section className="p-4 h-full rounded-lg bg-[#ECEDED]">

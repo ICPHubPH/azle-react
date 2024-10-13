@@ -16,21 +16,14 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu" 
 import { Link } from "react-router-dom"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Profile from "./avatar"
 
-  const UserSetting = () => {
+const UserSetting = () => {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
             <Button className="flex items-center gap-x-2 bg-lima-500 text-white rounded px-4">
-                <Avatar>
-                    <AvatarImage 
-                        src="https://github.com/shadcn.png"
-                        alt="user"
-                        className=""
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <Profile userProfile="https://github.com/shadcn.png" />
                 <div className="flex items-center gap-x-2">
                     <span>Darvey Trinidad</span>
                     <ChevronDown />

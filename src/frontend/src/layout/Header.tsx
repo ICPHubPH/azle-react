@@ -2,15 +2,18 @@ import { CategoriesCB } from "@/components/catergories-cb"
 import { Input } from "@/components/ui/input"
 import UserSetting from "@/components/user-setting"
 import { Bell, CirclePlus, Search } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const Header = () => {
   return (
     <header className="py-4 flex justify-between items-center ">
       {/* Logo and Title */}
-      <div className="flex items-center gap-x-2 w-1/4">
+      <Link className="flex items-center gap-x-2 w-1/4 cursor-pointer"
+         to='/'
+      >
 					<img className="size-14 " src="Logo.png" alt="logo" />
 					<h1 className="font-medium text-lg text-foreground">Project Name</h1>
-			</div>
+			</Link>
 
       {/* Search Bar */}
       <div className="relative flex gap-x-3 flex-1">
