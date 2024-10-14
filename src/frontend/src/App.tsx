@@ -6,15 +6,13 @@ import { ThemeProvider } from "@/components/theme-provider";
 import AuthPage from './auth';
 import StudentPage from './pages/student';
 import ProviderPage from './pages/provider';
-
 import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
 import ProvidersFeed from './pages/feeds/AllProvidersFeed';
-
 import ProviderProfile from './pages/provider/ProviderProfile';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
-  return (
+return (  
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Routes>
