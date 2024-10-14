@@ -3,9 +3,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/landing";
 import StudentPage from './pages/student';
-import ProviderPage from './pages/provider';   
 import Profile from "./pages/student/profile";        
 import AuthPage from './auth';    
+import ProviderPage from './pages/provider';
 import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
 import ProvidersFeed from './pages/feeds/AllProvidersFeed';
 import ProviderProfile from './pages/provider/ProviderProfile';
@@ -14,7 +14,7 @@ import PostPage from "./pages/post";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
-  return (
+return (  
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Routes>

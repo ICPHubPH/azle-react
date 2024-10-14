@@ -28,7 +28,7 @@ const StudentPage: React.FC = () => {
               postDescription={post.postDescription}
               postRatingCount={post.postRatingCount}
               postBookmarkCount={post.postBookmarkCount}
-              postCommentCount={post.postCommentCount} postType={""} postDate={""}            />
+              postCommentCount={post.postCommentCount} postType={""} postDate={""} postId={post.id}/>
           ))}
         </div>
       </div>

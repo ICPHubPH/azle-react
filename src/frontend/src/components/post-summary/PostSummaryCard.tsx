@@ -187,8 +187,8 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
           <div className="flex flex-col gap-1 items-center">
             {/* <Badge className="cursor-pointer">Trending</Badge> */}
             <a
-              className="text-blue-500 text-sm hover:underline underline-offset-2"
-              href="#"
+              className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"
+                        
               onClick={() => navigate(`/posts/${postId}`)}
             >
               View post
