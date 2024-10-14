@@ -13,7 +13,7 @@ const ProfilePage: FC = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result as string); // Set the preview state to the uploaded image
-        setUserProfile(reader.result as string); // Update the userProfile state
+        setUserProfile(reader.result as string); 
       };
       reader.readAsDataURL(file); // Convert the image file to base64
     }

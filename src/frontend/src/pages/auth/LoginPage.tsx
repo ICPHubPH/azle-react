@@ -17,6 +17,7 @@ import { z } from "zod";
 import { AuthClient } from "@dfinity/auth-client";
 import { Facebook, Google, InternetComputer } from "@/assets/icons";
 import SocialsAuth from "@/components/SocialsAuth";
+import { PageRoutes } from "@/constants/PageRoutes";
 
 const LoginPage = () => {
 	const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -112,7 +113,7 @@ const LoginPage = () => {
 
 					<div className="text-center">
 						<span>Don't have an account?</span>{" "}
-						<Link to={"/signup"} className="text-primary hover:underline">
+						<Link to={PageRoutes.SignUp} className="text-primary hover:underline">
 							Sign Up
 						</Link>
 					</div>
