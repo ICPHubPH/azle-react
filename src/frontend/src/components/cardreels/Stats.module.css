@@ -1,0 +1,11 @@
+.stats {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: bolder;
+}
+
+@media (max-width: 640px) {
+  .stats {
+    position: absolute;
+    right: 4rem;
+  }
+}
