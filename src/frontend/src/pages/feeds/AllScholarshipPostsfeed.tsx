@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import PostSummaryCard, {
+  PostSummaryCardProps,
+} from "@/components/post-summary/PostSummaryCard";
+import Header from "@/components/student-component/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -11,12 +13,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Search } from "lucide-react";
-import Header from "@/components/student-component/Header";
-import PostSummaryCard, { PostSummaryCardProps } from "@/components/post-summary/PostSummaryCard";
+import { useState } from "react";
 import { dummyPosts } from "../landing/dummy-data";
-
-
 
 export default function ScholarshipsFeed() {
   const [posts, setPosts] = useState<PostSummaryCardProps[]>();
@@ -95,6 +95,7 @@ export default function ScholarshipsFeed() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.map((post) => (
                 <PostSummaryCard
+                  postId={post.id}
                   postAuthorEmail={post.email}
                   postAuthorAvatarSource={post.avatarSource}
                   postTitle={post.postTitle}
@@ -116,18 +117,19 @@ export default function ScholarshipsFeed() {
                 .filter((post) => post.postType === "scholarship")
                 .map((post) => (
                   <PostSummaryCard
-                  postAuthorEmail={post.email}
-                  postAuthorAvatarSource={post.avatarSource}
-                  postTitle={post.postTitle}
-                  postThumbnailSource={post.postThumbnailSource}
-                  postDescription={post.postDescription}
-                  postRatingCount={post.postRatingCount}
-                  postBookmarkCount={post.postBookmarkCount}
-                  postAuthorName={post.name}
-                  postCommentCount={post.postCommentCount}
-                  postType={post.postType}
-                  postDate={post.postDate}
-                />
+                    postId={post.id}
+                    postAuthorEmail={post.email}
+                    postAuthorAvatarSource={post.avatarSource}
+                    postTitle={post.postTitle}
+                    postThumbnailSource={post.postThumbnailSource}
+                    postDescription={post.postDescription}
+                    postRatingCount={post.postRatingCount}
+                    postBookmarkCount={post.postBookmarkCount}
+                    postAuthorName={post.name}
+                    postCommentCount={post.postCommentCount}
+                    postType={post.postType}
+                    postDate={post.postDate}
+                  />
                 ))}
             </div>
           </TabsContent>
@@ -137,18 +139,19 @@ export default function ScholarshipsFeed() {
                 .filter((post) => post.postType === "internship")
                 .map((post) => (
                   <PostSummaryCard
-                  postAuthorEmail={post.email}
-                  postAuthorAvatarSource={post.avatarSource}
-                  postTitle={post.postTitle}
-                  postThumbnailSource={post.postThumbnailSource}
-                  postDescription={post.postDescription}
-                  postRatingCount={post.postRatingCount}
-                  postBookmarkCount={post.postBookmarkCount}
-                  postAuthorName={post.name}
-                  postCommentCount={post.postCommentCount}
-                  postType={post.postType}
-                  postDate={post.postDate}
-                />
+                    postId={post.id}
+                    postAuthorEmail={post.email}
+                    postAuthorAvatarSource={post.avatarSource}
+                    postTitle={post.postTitle}
+                    postThumbnailSource={post.postThumbnailSource}
+                    postDescription={post.postDescription}
+                    postRatingCount={post.postRatingCount}
+                    postBookmarkCount={post.postBookmarkCount}
+                    postAuthorName={post.name}
+                    postCommentCount={post.postCommentCount}
+                    postType={post.postType}
+                    postDate={post.postDate}
+                  />
                 ))}
             </div>
           </TabsContent>
