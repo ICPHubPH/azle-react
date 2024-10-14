@@ -1,8 +1,8 @@
 import { Feedback, Post, User } from "@/types/model";
 
-
 export const dummyPosts: Post[] = [
   {
+    id: "1",
     email: "admission.caloocan@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Caloocan",
     avatarSource:
@@ -18,6 +18,7 @@ export const dummyPosts: Post[] = [
     postDate: "June 1, 2023",
   },
   {
+    id: "2",
     email: "admission.caloocan@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Caloocan",
     avatarSource:
@@ -33,6 +34,7 @@ export const dummyPosts: Post[] = [
     postDate: "June 1, 2023",
   },
   {
+    id: "3",
     email: "info@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Apalit, Pampanga",
     avatarSource:
@@ -46,9 +48,9 @@ export const dummyPosts: Post[] = [
     postCommentCount: 55,
     postType: "scholarship",
     postDate: "2023-06-01",
-
   },
   {
+    id: "4",
     email: "internships@creativeworks.com",
     name: "Internships Reactive",
     avatarSource: "https://via.placeholder.com/150",
@@ -61,22 +63,21 @@ export const dummyPosts: Post[] = [
     postCommentCount: 38,
     postType: "internship",
     postDate: "2023-06-01",
-
-  },{
+  },
+  {
+    id: "5",
     email: "internships@creativeworks.com",
     name: "IT Internships",
     avatarSource: "https://via.placeholder.com/150",
     postTitle: "Quick Strike Internship Now Open",
     postThumbnailSource: "https://via.placeholder.com/400x200",
-    postDescription:
-      `<p>Are you passionate about <strong>graphic design</strong> and <pre class="ql-syntax" spellcheck="false">UX/UI
+    postDescription: `<p>Are you passionate about <strong>graphic design</strong> and <pre class="ql-syntax" spellcheck="false">UX/UI
 </pre> Join <em>Creative Works</em> for a <a href='www.facebook.com' target='_blank'>6-month internship</a> where you'll work with top designers on real-world projects.</p> <p><strong>Perks:</strong> Remote work, mentorship, and a performance bonus!</p> <a href='https://creativeworks.com/internships' target='_blank'>Apply today</a>`,
     postRatingCount: 180,
     postBookmarkCount: 105,
     postCommentCount: 38,
     postType: "internship",
     postDate: "2023-06-01",
-
   },
 ];
 
@@ -128,8 +129,10 @@ export const dummyTopProviders = [
   // Government Entities
   {
     id: "4",
-    thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRECWnkNxlwCYZXtoIUOHMA6PJnow3qBZefag&s",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ5Je-os95EpHZhV2Cx9edtuNybVvP94Wemg&s",
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRECWnkNxlwCYZXtoIUOHMA6PJnow3qBZefag&s",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ5Je-os95EpHZhV2Cx9edtuNybVvP94Wemg&s",
     provider: "Department of Science and Technology (DOST)",
     description: "Promoting scientific advancement in the Philippines.",
     scholarship: "DOST-SEI Scholarship 2024",
@@ -141,8 +144,10 @@ export const dummyTopProviders = [
   },
   {
     id: "5",
-    thumbnail: "https://baguioheraldexpressonline.com/wp-content/uploads/2021/02/ched.jpg",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGF2A38Aolu2u1ML7L1vf9xenlBswT07OhjA&s",
+    thumbnail:
+      "https://baguioheraldexpressonline.com/wp-content/uploads/2021/02/ched.jpg",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGF2A38Aolu2u1ML7L1vf9xenlBswT07OhjA&s",
     provider: "Commission on Higher Education (CHED)",
     description: "Supporting access to quality education.",
     scholarship: "CHED Merit Scholarship Program 2024",
@@ -154,8 +159,10 @@ export const dummyTopProviders = [
   },
   {
     id: "6",
-    thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdcxPpKUymqQvvT1Ci64D4hcnR6GD72K7Vkg&s",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7CPHJwf1tq4sT19BTZMljpFDFDAI_HsoE9Q&s",
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdcxPpKUymqQvvT1Ci64D4hcnR6GD72K7Vkg&s",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7CPHJwf1tq4sT19BTZMljpFDFDAI_HsoE9Q&s",
     provider: "Local Government Unit (LGU) - City of San Fernando",
     description: "Empowering local students through financial aid.",
     scholarship: "LGU Educational Assistance Program 2024",
@@ -171,7 +178,8 @@ export const dummyTopProviders = [
     id: "7",
     thumbnail:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnMyLvEuZJ5vmx-uMaZLmHunXb8rC8NQhcZg&s",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg_HxsW-XPFDH9ZA0c_nYb5UOfTvNYDWpM6A&s",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg_HxsW-XPFDH9ZA0c_nYb5UOfTvNYDWpM6A&s",
     provider: "Sun Life Financial",
     description: "Providing financial support to future leaders.",
     scholarship: "Sun Life Scholarship Program 2024",
@@ -183,8 +191,10 @@ export const dummyTopProviders = [
   },
   {
     id: "8",
-    thumbnail: "https://www.consultancy.asia/illustrations/news/detail/2023-11-08-084519689-Accenture_sustains_hybrid_working_setup_in_the_Philippines.jpg",
-    avatar: "https://yt3.googleusercontent.com/pFaWa7xoV41k485EZBb7nohqSzJwumUKPrZr1fFwYVHrQSXEnHPsEZ9wcbCNqfJhn-UNdd1D7Q=s900-c-k-c0x00ffffff-no-rj",
+    thumbnail:
+      "https://www.consultancy.asia/illustrations/news/detail/2023-11-08-084519689-Accenture_sustains_hybrid_working_setup_in_the_Philippines.jpg",
+    avatar:
+      "https://yt3.googleusercontent.com/pFaWa7xoV41k485EZBb7nohqSzJwumUKPrZr1fFwYVHrQSXEnHPsEZ9wcbCNqfJhn-UNdd1D7Q=s900-c-k-c0x00ffffff-no-rj",
     provider: "Accenture",
     description: "Empowering students through scholarship programs.",
     scholarship: "Accenture Scholarship Program 2024",
@@ -196,8 +206,10 @@ export const dummyTopProviders = [
   },
   {
     id: "9",
-    thumbnail: "https://media.licdn.com/dms/image/v2/D4D1BAQGAZINjqVQGiQ/company-background_10000/company-background_10000/0/1655160170969/synergy_companies_cover?e=2147483647&v=beta&t=s_bpyeouDDOFtvMRgU9mM_ylSIuzXot2jvc_3vbAthw",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx-QvXao7tz6N8DltjvbmnYFWh2jnvuKZIOg&s",
+    thumbnail:
+      "https://media.licdn.com/dms/image/v2/D4D1BAQGAZINjqVQGiQ/company-background_10000/company-background_10000/0/1655160170969/synergy_companies_cover?e=2147483647&v=beta&t=s_bpyeouDDOFtvMRgU9mM_ylSIuzXot2jvc_3vbAthw",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx-QvXao7tz6N8DltjvbmnYFWh2jnvuKZIOg&s",
     provider: "Synergy",
     description: "Offering educational grants to deserving students.",
     scholarship: "Synergy Scholarship Program 2024",
@@ -210,10 +222,13 @@ export const dummyTopProviders = [
   // Additional Entries
   {
     id: "10",
-    thumbnail: "https://upload.wikimedia.org/wikipedia/commons/7/70/0148jfAmang_Rodriguez_Avenue_Manila_Water_Rosario_Ortigas_Avenue_Junction_Pasig_Cityfvf_17.jpg",
-    avatar: "https://media.licdn.com/dms/image/v2/D560BAQGiUsbosN9IHg/company-logo_200_200/company-logo_200_200/0/1689039421706/manilawater_logo?e=2147483647&v=beta&t=bDaeAUbTWvZ9TYv5zTeS-Q5DxQ7wFa4kOYdon3nlQQ0",
+    thumbnail:
+      "https://upload.wikimedia.org/wikipedia/commons/7/70/0148jfAmang_Rodriguez_Avenue_Manila_Water_Rosario_Ortigas_Avenue_Junction_Pasig_Cityfvf_17.jpg",
+    avatar:
+      "https://media.licdn.com/dms/image/v2/D560BAQGiUsbosN9IHg/company-logo_200_200/company-logo_200_200/0/1689039421706/manilawater_logo?e=2147483647&v=beta&t=bDaeAUbTWvZ9TYv5zTeS-Q5DxQ7wFa4kOYdon3nlQQ0",
     provider: "Manila Water Company, Inc.",
-    description: "Contributing to education through various scholarship programs.",
+    description:
+      "Contributing to education through various scholarship programs.",
     scholarship: "Manila Water Scholarship Program 2024",
     type: "Corporate",
     category: "Corporate",
@@ -223,8 +238,10 @@ export const dummyTopProviders = [
   },
   {
     id: "11",
-    thumbnail: "https://i0.wp.com/governmentph.com/wp-content/uploads/2020/11/SM-Scholarship-2021-Application.png?fit=1200%2C630&ssl=1",
-    avatar: "https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/1024px-SM_Supermalls_logo_2022.svg.png",
+    thumbnail:
+      "https://i0.wp.com/governmentph.com/wp-content/uploads/2020/11/SM-Scholarship-2021-Application.png?fit=1200%2C630&ssl=1",
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/1024px-SM_Supermalls_logo_2022.svg.png",
     provider: "SM Foundation",
     description: "Creating opportunities for youth through education.",
     scholarship: "SM Foundation Scholarship Program 2024",
@@ -236,8 +253,10 @@ export const dummyTopProviders = [
   },
   {
     id: "12",
-    thumbnail: "https://scontent.fcrk1-3.fna.fbcdn.net/v/t39.30808-6/279812741_5239365119458931_4183819853255650548_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEZIkypmQrIuleqtaU1_IiBR7G8uo2xTMhHsby6jbFMyHD3LQ_J6jAfZXP9ZXQuUDXj_u0rH1A1kW5vf6u1gBw9&_nc_ohc=83edwSW7qeYQ7kNvgGVYxoU&_nc_ht=scontent.fcrk1-3.fna&_nc_gid=A04YDeS7tF5HDDhZgq9N-3o&oh=00_AYAN-ocTwB_ScW8ytm9K3gv7X586XTxElfCZH6LyDMPhQA&oe=67129476",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVy-CN1OQVMDHdhAVLTEaf06yLdAizfB55-w&s",
+    thumbnail:
+      "https://scontent.fcrk1-3.fna.fbcdn.net/v/t39.30808-6/279812741_5239365119458931_4183819853255650548_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEZIkypmQrIuleqtaU1_IiBR7G8uo2xTMhHsby6jbFMyHD3LQ_J6jAfZXP9ZXQuUDXj_u0rH1A1kW5vf6u1gBw9&_nc_ohc=83edwSW7qeYQ7kNvgGVYxoU&_nc_ht=scontent.fcrk1-3.fna&_nc_gid=A04YDeS7tF5HDDhZgq9N-3o&oh=00_AYAN-ocTwB_ScW8ytm9K3gv7X586XTxElfCZH6LyDMPhQA&oe=67129476",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVy-CN1OQVMDHdhAVLTEaf06yLdAizfB55-w&s",
     provider: "Aboitiz Foundation, Inc.",
     description: "Supporting educational initiatives for the community.",
     scholarship: "Aboitiz Foundation Scholarship Program 2024",
@@ -256,12 +275,12 @@ export const dummyUsers: User[] = [
     name: "Johnmack Faeldonia",
     organizationName: "Doe Enterprises",
     bio: "A passionate entrepreneur.",
-    avatarUrl: "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=nyj-K21CRl8Q7kNvgGHFtoL&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AxNTWZFhCZdA3OBSWam6QD_&oh=00_AYAWq-elKA1RxTQIYt2OvUbsNU1BC78UgYAoOUl34JTN_w&oe=67110D26",
+    avatarUrl:
+      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=nyj-K21CRl8Q7kNvgGHFtoL&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AxNTWZFhCZdA3OBSWam6QD_&oh=00_AYAWq-elKA1RxTQIYt2OvUbsNU1BC78UgYAoOUl34JTN_w&oe=67110D26",
     contactNumber: "+1234567890",
     validIdUrl: "https://example.com/valid-id.jpg",
     createdAt: "2024-01-01T12:00:00Z",
     updatedAt: "2024-09-01T12:00:00Z",
-   
   },
   {
     id: "2",
@@ -269,7 +288,8 @@ export const dummyUsers: User[] = [
     name: "Kurtd Daniel Bigtas",
     organizationName: "Kurtd Daniel Bigtas",
     bio: "Tech enthusiast and problem solver.",
-    avatarUrl: "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/440166746_25371551272492353_7022797428020999409_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeE6YN-LerRQeT9r5QJmhKUTkjRxWwzQgW6SNHFbDNCBbs5Je_9d1VcuTlg6UQQz3Y7v3pPfWBH0ypDLTs6CYgp8&_nc_ohc=r6D8cy67UfcQ7kNvgHXnr5G&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AB8ID44fIEKmsB3Fz3ePKgZ&oh=00_AYCaMhckXWRn1M8-5O8w3C2a2YHpIS6RPT9NDX-Vioj2BQ&oe=67112F0E",
+    avatarUrl:
+      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/440166746_25371551272492353_7022797428020999409_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeE6YN-LerRQeT9r5QJmhKUTkjRxWwzQgW6SNHFbDNCBbs5Je_9d1VcuTlg6UQQz3Y7v3pPfWBH0ypDLTs6CYgp8&_nc_ohc=r6D8cy67UfcQ7kNvgHXnr5G&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AB8ID44fIEKmsB3Fz3ePKgZ&oh=00_AYCaMhckXWRn1M8-5O8w3C2a2YHpIS6RPT9NDX-Vioj2BQ&oe=67112F0E",
     contactNumber: "+0987654321",
     validIdUrl: "https://example.com/valid-id.jpg",
     createdAt: "2024-02-15T12:00:00Z",
@@ -281,7 +301,8 @@ export const dummyUsers: User[] = [
     name: "Raven Dela Rama",
     organizationName: "Raven Dela Rama",
     bio: "Engineer with a love for innovation.",
-    avatarUrl: "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
+    avatarUrl:
+      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
     contactNumber: "+1122334455",
     validIdUrl: "https://example.com/valid-id.jpg",
     createdAt: "2024-03-20T12:00:00Z",
