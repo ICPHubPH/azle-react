@@ -1,4 +1,4 @@
-import createStore from "zustand";
+import { create } from "zustand";
 
 type Card = {
   question: string;
@@ -7,17 +7,18 @@ type Card = {
   id: number;
 };
 
-type Store = {
+type FlashcardStore = {
   cards: Card[];
   incrementRecalledForCount: (id: number) => void;
+  decrementRecalledForCount: (id: number) => void;
 };
 
-const useStore = createStore<Store>((set) => ({
+const useFlashcardStore = create<FlashcardStore>((set) => ({
   cards: [
     {
       question: "What is React?",
       answer: "A library for managing user interfaces",
-      recalledForCount: 0,
+      recalledForCount: 1,
       id: 1,
     },
     {
@@ -29,13 +30,13 @@ const useStore = createStore<Store>((set) => ({
     {
       question: "What is JSX?",
       answer: "A syntax extension for JavaScript",
-      recalledForCount: 0,
+      recalledForCount: 4,
       id: 3,
     },
     {
       question: "What is a component in React?",
       answer: "A reusable piece of UI",
-      recalledForCount: 0,
+      recalledForCount: 1,
       id: 4,
     },
     {
@@ -60,6 +61,14 @@ const useStore = createStore<Store>((set) => ({
           : card
       ),
     })),
+  decrementRecalledForCount: (id: number) =>
+    set((state) => ({
+      cards: state.cards.map((card) =>
+        card.id === id && card.recalledForCount > 0
+          ? { ...card, recalledForCount: card.recalledForCount - 1 }
+          : card
+      ),
+    })),
 }));
 
-export default useCardsStore;
+export default useFlashcardStore;
