@@ -76,8 +76,7 @@ const Home: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship}
-            />
+              scholarship={provider.scholarship} id={""}            />
           ))}
         </div>
       </div>

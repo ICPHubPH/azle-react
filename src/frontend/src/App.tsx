@@ -11,6 +11,7 @@ import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
 import ProvidersFeed from './pages/feeds/AllProvidersFeed';
 
 import ProviderProfile from './pages/provider/ProviderProfile';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
           <Route path='/provider-feed' element={<ProvidersFeed/>} />
           <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
 
         </Routes> 
       </Router>
