@@ -10,7 +10,7 @@ import {
   dummyUsers,
 } from "./dummy-data";
 import CreatePost from "@/components/post-form/CreatePost";
-import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard";
+import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import Review from "@/components/review/Feedback";
 import Feedback from "@/components/review/Feedback";

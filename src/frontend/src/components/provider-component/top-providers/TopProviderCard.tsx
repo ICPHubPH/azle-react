@@ -1,3 +1,4 @@
+// src/frontend/src/components/provider-component/top-providers/TopProviderCard.tsx
 import {
   Card,
   CardContent,
@@ -7,8 +8,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 interface TopProviderCardProps {
+  id: string; 
   thumbnail: string;
   avatar?: string | undefined;
   provider: string;
@@ -17,12 +20,19 @@ interface TopProviderCardProps {
 }
 
 const TopProviderCard: React.FC<TopProviderCardProps> = ({
+  id, // Get the id from props
   thumbnail,
   provider,
   description,
   scholarship,
   avatar,
 }) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleViewProfile = () => {
+    navigate(`/provider-profile/${id}`); // Navigate to the provider profile page
+  };
+
   return (
     <Card className="w-full overflow-hidden">
       <CardHeader className="p-0">
@@ -46,7 +56,9 @@ const TopProviderCard: React.FC<TopProviderCardProps> = ({
           </div>
           {/* <h4 className="text-xl font-bold">{scholarship}</h4> */}
         </div>
-        <Button className="mt-5">View Profile</Button>
+        <Button className="mt-5" onClick={handleViewProfile}> {/* Add onClick handler */}
+          View Profile
+        </Button>
       </CardContent>
     </Card>
   );

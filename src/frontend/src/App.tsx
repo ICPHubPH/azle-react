@@ -6,7 +6,11 @@ import { ThemeProvider } from "@/components/theme-provider";
 import AuthPage from './auth';
 import StudentPage from './pages/student';
 import ProviderPage from './pages/provider';
-import PostFeed from './pages/feeds/AllScholarshipPostsfeed';
+
+import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
+import ProvidersFeed from './pages/feeds/AllProvidersFeed';
+
+import ProviderProfile from './pages/provider/ProviderProfile';
 
 function App() {
   return (
@@ -18,7 +22,10 @@ function App() {
           <Route path='/provider' element={<ProviderPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path='/feed' element={<PostFeed/>}/>
+          <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
+          <Route path='/provider-feed' element={<ProvidersFeed/>} />
+          <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
+
         </Routes> 
       </Router>
     </ThemeProvider>

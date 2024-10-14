@@ -3,11 +3,11 @@ import Header from "@/components/student-component/Header";
 import UpperContent from "@/components/student-component/UpperContent";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
-import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard";
+import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 
 const StudentPage: React.FC = () => {
   return (
-    <div className="">
+    <>
       <Header/>
 
       <div className="container mx-auto px-4">
@@ -43,12 +43,11 @@ const StudentPage: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship}
-            />
+              scholarship={provider.scholarship} id={""}            />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

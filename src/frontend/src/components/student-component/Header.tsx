@@ -38,9 +38,9 @@ const Header: React.FC = () => {
   };
 
   const navItems = [
-    { name: 'Scholarship', path: '/feed' }, // Redirect to feed
-    { name: 'Providers', path: '/providers' }, // Placeholder path
-    { name: 'Terms of Use', path: '/terms' }, // Placeholder path
+    { name: 'Scholarship', path: '/scholarship-feed' }, 
+    { name: 'Providers', path: '/provider-feed' }, 
+    { name: 'Terms of Use', path: '/terms' }, 
   ];
 
   const NavItems = () => (
