@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import AuthPage from './auth';
 import StudentPage from './pages/student';
 import ProviderPage from './pages/provider';
-import PostFeed from './pages/feeds/feeds';
+import PostFeed from './pages/feeds/ScholarshipPostsfeeds';
 
 function App() {
   return (

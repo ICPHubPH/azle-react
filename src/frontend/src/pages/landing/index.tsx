@@ -67,7 +67,7 @@ const Home: React.FC = () => {
       {/* test only for top providers */}
 
       <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
-        <h1 className="text-2xl font-bold">Test Posts</h1>
+        <h1 className="text-2xl font-bold">Providers</h1>
         <div className="w-full px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
           {dummyTopProviders.map((provider, index) => (
             <TopProviderCard
