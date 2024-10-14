@@ -12,11 +12,12 @@ import {
 import CreatePost from "@/components/post-form/CreatePost";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
-import Review from "@/components/review/Feedback";
 import Feedback from "@/components/review/Feedback";
 import Footer from "@/components/footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="scroll-smooth">
       <Header />

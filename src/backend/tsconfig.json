@@ -9,6 +9,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false,
+        "typeRoots": ["./types", "../../node_modules/@types"],
         "paths": {
             "App/*": [
                 "./app/*"
