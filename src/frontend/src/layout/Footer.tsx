@@ -1,10 +1,12 @@
 import Facebook from "@/assets/icons/facebook"
+import { Home, Phone } from "lucide-react"
+
 
 const Footer = () => {
   return (
-    <footer className="py-8 flex items-center justify-center md:mx-[75px]">
+    <footer className="py-8 flex items-center justify-center ">
       <div className="container grid grid-cols-3">
-        <div className="flex flex-col items-center md:items-start ">
+        <div className="flex flex-col items-center gap-y-1 md:items-start ">
           <div className="flex items-center mb-4 ">
             <img
               src="Logo.png"
@@ -13,11 +15,17 @@ const Footer = () => {
             />
             <span className="ml-2 text-lg font-bold">Project Name</span>
           </div>
-          <p className="text-gray-600">University Heights BSU Sarmiento Campus.</p>
-          <p className="text-gray-600">📞 +935 785 0648</p>
+          <p className="text-gray-600 flex items-center gap-x-2">
+            <Home/>
+            <span>University Heights BSU Sarmiento Campus.</span>
+          </p>
+          <p className="text-gray-600 flex items-center gap-x-2">
+            <Phone/> 
+            <span>+935 785 0648</span>
+          </p>
           <div className="flex space-x-4 mt-4">
             <a href="#" aria-label="Facebook">
-               <Facebook />
+               <Facebook color="#111111"/>
             </a>
           </div>
         </div>
