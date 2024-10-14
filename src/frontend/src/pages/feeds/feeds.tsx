@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
-import Header from "@/components/landing/Header";
+import Header from "@/components/student-component/Header";
 import PostSummaryCard, { PostSummaryCardProps } from "@/components/post-summary/PostSummaryCard";
 import { dummyPosts } from "../landing/dummy-data";
 
