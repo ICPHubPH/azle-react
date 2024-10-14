@@ -15,8 +15,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { useNavigate } from "react-router-dom";
 
 export interface PostSummaryCardProps {
+  postId: string;
   postAuthorEmail: string;
   postAuthorName: string;
   postAuthorAvatarSource: string;
@@ -31,6 +33,7 @@ export interface PostSummaryCardProps {
 }
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
+  postId,
   postAuthorEmail,
   postAuthorName,
   postAuthorAvatarSource,
@@ -43,7 +46,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postType,
   postDate,
 }) => {
-  const alt = `@${postAuthorEmail.split("@")[0]}`;
+
+
+  const navigate = useNavigate()
 
   const [ratingsUsers, setRatingsUsers] = useState<string[]>([
     "User1",
@@ -117,9 +122,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
               <AvatarImage
                 className="aspect-square object-cover rounded-full"
                 src={postAuthorAvatarSource}
-                alt={alt}
+                alt={postAuthorName}
               />
-              <AvatarFallback>{alt}</AvatarFallback>
+              <AvatarFallback>{postAuthorName}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-.5">
               <HoverCard>
@@ -141,9 +146,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                       <AvatarImage
                         className="aspect-square object-cover rounded-full"
                         src={postAuthorAvatarSource}
-                        alt={alt}
+                        alt={postAuthorName}
                       />
-                      <AvatarFallback>{alt}</AvatarFallback>
+                      <AvatarFallback>{postAuthorName}</AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">
                       <h3
@@ -184,7 +189,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             <a
               className="text-blue-500 text-sm hover:underline underline-offset-2"
               href="#"
-              onClick={() => alert("Redirect to indiv post screen")}
+              onClick={() => navigate(`/posts/${postId}`)}
             >
               View post
             </a>
@@ -205,7 +210,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
               src={postThumbnailSource}
               alt={`${postTitle} thumbnail`}
               className="w-full rounded-md object-cover max-h-[15rem] min-h-[15rem] cursor-pointer"
-              onClick={() => alert("Redirect to indiv post screen")}
+              onClick={() => navigate(`/posts/${postId}`)}
             />
           </div>
 
