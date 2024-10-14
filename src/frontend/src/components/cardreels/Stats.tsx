@@ -22,19 +22,18 @@ interface StatsProps {
 
 const Stats: React.FC<StatsProps> = ({ recalledForCount, id }) => {
   const [isRecalled, setIsRecalled] = useState<boolean>(false);
-
-  const incrementRecalledForCount = useFlashcardStore(
-    (state) => state.incrementRecalledForCount
-  );
+  const { redo, redoCards } = useFlashcardStore();
 
   const decrementRecalledForCount = useFlashcardStore(
     (state) => state.decrementRecalledForCount
   );
 
-  const getHint = useFlashcardStore((state) => state.getHint(id));
+  const incrementRecalledForCount = useFlashcardStore(
+    (state) => state.incrementRecalledForCount
+  );
 
-  const redo = useFlashcardStore((state) => state.redo);
-  const redoCards = useFlashcardStore((state) => state.redoCards);
+  const getHint = useFlashcardStore((state) => state.getHint(id));
+  const getIsRedo = useFlashcardStore((state) => state.getIsRedo(id));
   const [redoCardsLength, setRedoCardsLength] = useState<number>(
     redoCards.length
   );
@@ -52,9 +51,7 @@ const Stats: React.FC<StatsProps> = ({ recalledForCount, id }) => {
 
   return (
     <IconContext.Provider value={{ color: "black", size: "2.1rem" }}>
-      <div
-        className={`${styles.stats} flex flex-col gap-1 mb-5 absolute right-14 lg:relative md:right-48 lg:right-0 sm:right-21`}
-      >
+      <div className={`${styles.stats} flex flex-col gap-1 mb-5`}>
         <StatsIcon onClick={onClickRecalledForCount}>
           {isRecalled ? <FaSquareCheck /> : <CiSquareCheck />}
           <p className="leading-5 text-sm">
@@ -71,10 +68,12 @@ const Stats: React.FC<StatsProps> = ({ recalledForCount, id }) => {
             <p className="leading-5 text-sm">Hint</p>
           </Modal>
         </StatsIcon>
-        <StatsIcon onClick={(id) => onRedo()}>
-          <CiRedo />
-          <p className="leading-5 text-sm">Redo</p>
-        </StatsIcon>
+        {!getIsRedo ? (
+          <StatsIcon onClick={(id) => onRedo()}>
+            <CiRedo />
+            <p className="leading-5 text-sm">Redo</p>
+          </StatsIcon>
+        ) : null}
         <IconContext.Provider value={{ color: "gray", size: "1.8rem" }}>
           <span className="flex items-center justify-center flex-col align-middle mt-10">
             <PiStackSimpleLight />

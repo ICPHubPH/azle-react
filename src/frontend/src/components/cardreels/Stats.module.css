@@ -2,9 +2,10 @@
   font-family: "Cabinet Grotesk", sans-serif;
   font-weight: bolder;
 }
-/* 
-@media (min-width: 850px) {
+
+@media (max-width: 640px) {
   .stats {
-    right
+    position: absolute;
+    right: 4rem;
   }
-} */
+}

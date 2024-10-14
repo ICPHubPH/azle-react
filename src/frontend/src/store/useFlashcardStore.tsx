@@ -1,4 +1,3 @@
-import { createAlertDialogScope } from "@radix-ui/react-alert-dialog";
 import { create } from "zustand";
 
 type Card = {
@@ -7,6 +6,7 @@ type Card = {
   recalledForCount: number;
   id: number;
   hint: string;
+  isRedo?: boolean;
 };
 
 type FlashcardStore = {
@@ -16,6 +16,7 @@ type FlashcardStore = {
   decrementRecalledForCount: (id: number) => void;
   getHint: (id: number) => string;
   redo: (id: number) => void;
+  getIsRedo: (id: number) => boolean;
 };
 
 const useFlashcardStore = create<FlashcardStore>((set) => ({
@@ -90,11 +91,15 @@ const useFlashcardStore = create<FlashcardStore>((set) => ({
       return {
         cards: state.cards.filter((card) => card.id !== id),
         redoCards: [
-          ...state.redoCards,
           state.cards.find((card) => card.id === id) as Card,
+          ...state.redoCards,
         ].filter((card): card is Card => card !== undefined),
       };
     }),
+  getIsRedo(id) {
+    const card = this.redoCards.find((card) => card.id === id);
+    return card ? true : false;
+  },
 }));
 
 export default useFlashcardStore;
