@@ -82,13 +82,13 @@ const Header: React.FC = () => {
           </h1>
           {/* Desktop Menu */}
 
-          {!isMobile && (
-            <ul className="hidden md:flex space-x-4">
+         
+        </div>
+        {!isMobile && (
+            <ul className="hidden md:flex space-x-4 ">
               <NavItems />
             </ul>
           )}
-        </div>
-
         {/* Mobile Menu */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">

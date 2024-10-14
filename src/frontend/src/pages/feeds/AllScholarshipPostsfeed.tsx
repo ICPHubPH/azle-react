@@ -105,8 +105,7 @@ export default function ScholarshipsFeed() {
                   postAuthorName={post.name}
                   postCommentCount={post.postCommentCount}
                   postType={post.postType}
-                  postDate={post.postDate}
-                />
+                  postDate={post.postDate} postId={post.id}                />
               ))}
             </div>
           </TabsContent>
@@ -116,18 +115,17 @@ export default function ScholarshipsFeed() {
                 .filter((post) => post.postType === "scholarship")
                 .map((post) => (
                   <PostSummaryCard
-                  postAuthorEmail={post.email}
-                  postAuthorAvatarSource={post.avatarSource}
-                  postTitle={post.postTitle}
-                  postThumbnailSource={post.postThumbnailSource}
-                  postDescription={post.postDescription}
-                  postRatingCount={post.postRatingCount}
-                  postBookmarkCount={post.postBookmarkCount}
-                  postAuthorName={post.name}
-                  postCommentCount={post.postCommentCount}
-                  postType={post.postType}
-                  postDate={post.postDate}
-                />
+                    postAuthorEmail={post.email}
+                    postAuthorAvatarSource={post.avatarSource}
+                    postTitle={post.postTitle}
+                    postThumbnailSource={post.postThumbnailSource}
+                    postDescription={post.postDescription}
+                    postRatingCount={post.postRatingCount}
+                    postBookmarkCount={post.postBookmarkCount}
+                    postAuthorName={post.name}
+                    postCommentCount={post.postCommentCount}
+                    postType={post.postType}
+                    postDate={post.postDate} postId={post.id}                />
                 ))}
             </div>
           </TabsContent>
@@ -137,18 +135,17 @@ export default function ScholarshipsFeed() {
                 .filter((post) => post.postType === "internship")
                 .map((post) => (
                   <PostSummaryCard
-                  postAuthorEmail={post.email}
-                  postAuthorAvatarSource={post.avatarSource}
-                  postTitle={post.postTitle}
-                  postThumbnailSource={post.postThumbnailSource}
-                  postDescription={post.postDescription}
-                  postRatingCount={post.postRatingCount}
-                  postBookmarkCount={post.postBookmarkCount}
-                  postAuthorName={post.name}
-                  postCommentCount={post.postCommentCount}
-                  postType={post.postType}
-                  postDate={post.postDate}
-                />
+                    postAuthorEmail={post.email}
+                    postAuthorAvatarSource={post.avatarSource}
+                    postTitle={post.postTitle}
+                    postThumbnailSource={post.postThumbnailSource}
+                    postDescription={post.postDescription}
+                    postRatingCount={post.postRatingCount}
+                    postBookmarkCount={post.postBookmarkCount}
+                    postAuthorName={post.name}
+                    postCommentCount={post.postCommentCount}
+                    postType={post.postType}
+                    postDate={post.postDate} postId={post.id}                />
                 ))}
             </div>
           </TabsContent>
