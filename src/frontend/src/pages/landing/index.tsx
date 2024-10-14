@@ -14,6 +14,7 @@ import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import Review from "@/components/review/Feedback";
 import Feedback from "@/components/review/Feedback";
+import Footer from "@/components/footer/Footer";
 
 const Home: React.FC = () => {
   return (
@@ -93,6 +94,10 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/*test footer */}
+
+      <Footer />
     </div>
   );
 };
