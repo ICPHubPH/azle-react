@@ -1,14 +1,17 @@
 // src/frontend/src/App.tsx
 import { ThemeProvider } from "@/components/theme-provider";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import AuthPage from "./auth";
-import { Toaster } from "./components/ui/sonner";
-import PostFeed from "./pages/feeds/feeds";
 import Home from "./pages/landing";
+import StudentPage from './pages/student';
+import ProviderPage from './pages/provider';   
+import Profile from "./pages/student/profile";        
+import AuthPage from './auth';    
+import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
+import ProvidersFeed from './pages/feeds/AllProvidersFeed';
+import ProviderProfile from './pages/provider/ProviderProfile';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import PostPage from "./pages/post";
-import ProviderPage from "./pages/provider";
-import StudentPage from "./pages/student";
-import Profile from "./pages/student/profile";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   return (
@@ -17,10 +20,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/student" element={<StudentPage />} />
-          <Route path="/provider" element={<ProviderPage />} />
+          <Route path='/provider' element={<ProviderPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/feed" element={<PostFeed />} />
+          <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
+          <Route path='/provider-feed' element={<ProvidersFeed/>} />
+          <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
           <Route path="/posts/:postId" element={<PostPage />} />
         </Routes>
       </Router>

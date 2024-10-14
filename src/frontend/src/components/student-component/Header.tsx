@@ -23,28 +23,43 @@ const Header: React.FC = () => {
   const user = {
     name: 'John Doe',
     email: 'johndoe@example.com',
-    role: 'Student',
+    role: 'Student', // Change role to 'Provider' or 'Student'
     avatarUrl: 'https://github.com/shadcn.png',
   };
 
+  const handleLogoClick = () => {
+    if (user.role === 'Student') {
+      navigate('/student');
+    } else if (user.role === 'Provider') {
+      navigate('/provider');
+    } else {
+      navigate('/'); // Default or fallback route (e.g., index page)
+    }
+  };
+
   const navItems = [
-    { name: 'Scholarship', },
-    { name: 'Providers', },
-    { name: 'Terms of Use', },
+    { name: 'Scholarship', path: '/scholarship-feed' }, 
+    { name: 'Providers', path: '/provider-feed' }, 
+    { name: 'Terms of Use', path: '/terms' }, 
   ];
 
   const NavItems = () => (
     <>
       {navItems.map((item) => (
-        <li key={""}>
+
+        <li key={item.name}>
+
           <Button
             variant="ghost"
             asChild
             className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
           >
             <a
-              
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                navigate(item.path); // Navigate to the correct path
+              }}
+
               className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200 cursor-pointer"
             >
               {item.name}
@@ -59,8 +74,14 @@ const Header: React.FC = () => {
     <header className="border-b z-50 sticky top-0 backdrop-blur-md">
       <div className="container mx-auto flex justify-between items-center h-16 px-4">
         <div className="flex items-center space-x-2">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">ConnectED</h1>
-        {/* Desktop Menu */}
+          <h1
+            className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent cursor-pointer"
+            onClick={handleLogoClick} // Added onClick for the logo
+          >
+            ConnectED
+          </h1>
+          {/* Desktop Menu */}
+
           {!isMobile && (
             <ul className="hidden md:flex space-x-4">
               <NavItems />
@@ -101,14 +122,18 @@ const Header: React.FC = () => {
               <Button
                 variant="ghost"
                 className="w-full justify-start"
-                onClick={() => navigate('')}
+
+                onClick={() => navigate('/profile')} // Replace with actual profile path
+
               >
                 Profile
               </Button>
               <Button
                 variant="ghost"
                 className="w-full justify-start mt-2"
-                onClick={() => navigate('')}
+
+                onClick={() => navigate('/logout')} // Replace with actual logout path
+
               >
                 Logout
               </Button>

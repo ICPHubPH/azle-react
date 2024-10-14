@@ -10,7 +10,7 @@ import {
   dummyUsers,
 } from "./dummy-data";
 import CreatePost from "@/components/post-form/CreatePost";
-import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard";
+import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import Review from "@/components/review/Feedback";
 import Feedback from "@/components/review/Feedback";
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
       {/* test only for top providers */}
 
       <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
-        <h1 className="text-2xl font-bold">Test Posts</h1>
+        <h1 className="text-2xl font-bold">Providers</h1>
         <div className="w-full px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
           {dummyTopProviders.map((provider, index) => (
             <TopProviderCard
@@ -77,8 +77,7 @@ const Home: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship}
-            />
+              scholarship={provider.scholarship} id={""}            />
           ))}
         </div>
       </div>
@@ -99,6 +98,8 @@ const Home: React.FC = () => {
 
       <Footer />
     </div>
+
+    
   );
 };
 

@@ -1,5 +1,6 @@
 import { Feedback, Post, User } from "@/types/model";
 
+
 export const dummyPosts: Post[] = [
   {
     email: "admission.caloocan@laverdad.edu.ph",
@@ -81,15 +82,22 @@ export const dummyPosts: Post[] = [
 
 export const dummyTopProviders = [
   {
+    id: "1",
     thumbnail:
       "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/449449169_447660674809391_692585298774003021_n.jpg?stp=dst-jpg_s960x960&_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFJuJzTCK2Z3odEydsAr1rJYsTexpZPKg1ixN7Glk8qDUu7Q_JCZVw9d4nKgEdy7qKBB_sO2fVWhHEqMiOUNG6T&_nc_ohc=6XaoIN0GI9QQ7kNvgFOZeVG&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=ADYuKfczXQ9LMZkCMLdcZYi&oh=00_AYCeJ0aQh1azc6a-sLBpIsX9rmd4RsjmKNYQ5H9-BVKnww&oe=670F870B",
     avatar:
-      "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYDWiDYri00R4VHU6sWSxhUWZlsmHHjUZRrOSmHJvA3Zpg&oe=670FA3FC",
+      "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA3FC",
     provider: "La Verdad Christian College, Inc. - Apalit, Pampanga",
     description: "Wisdom based on the truth is priceless.",
     scholarship: "Future Tech Leaders Scholarship 2024",
+    type: "School",
+    category: "Education",
+    location: "Apalit, Pampanga",
+    rating: 4.5,
+    reviews: 120,
   },
   {
+    id: "2",
     thumbnail:
       "https://scontent.fcrk4-2.fna.fbcdn.net/v/t39.30808-6/462693785_572297352034208_4072350988270131867_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFxBIb5Ks6pVotefQzSmLg2vtFEeWRvEfG-0UR5ZG8R8UKS6JjidRPX9j7J9h9xwYhQdTNurlH26M6MCoMhw-9i&_nc_ohc=PHe0jc1YwpoQ7kNvgFGQUBI&_nc_zt=23&_nc_ht=scontent.fcrk4-2.fna&_nc_gid=AsqXPYjBH7H6yMKrcvnDH9x&oh=00_AYDyB5P75ExnxfKLuvVtJztyx3M2aJTRK343Pl9kJny8Og&oe=670FADBD",
     avatar:
@@ -97,29 +105,148 @@ export const dummyTopProviders = [
     provider: "La Verdad Christian College, Inc. - Caloocan",
     description: "Wisdom based on the truth is priceless.",
     scholarship: "Future Tech Leaders Scholarship 2024",
+    type: "School",
+    category: "Education",
+    location: "Caloocan",
+    rating: 4.7,
+    reviews: 98,
   },
   {
+    id: "3",
     thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+3",
     avatar:
       "https://scontent.fcrk2-2.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=0aFGsrCXi6EQ7kNvgGeDTFV&_nc_zt=23&_nc_ht=scontent.fcrk2-2.fna&_nc_gid=ANu0xv9z85XR0ENGh62yylc&oh=00_AYBGZKYtxIFtM7UfMbbYyIGbDTDRHZIUjJCb0LPeVAY0kg&oe=670F8366",
     provider: "Johnmack Faeldonia",
     description: "Shori, bosh",
     scholarship: "STEM Leaders Scholarship 2024",
+    type: "School",
+    category: "Education",
+    location: "Not Specified",
+    rating: 4.0,
+    reviews: 55,
   },
-  // {
-  //   thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+4",
-  //   avatar: "https://via.placeholder.com/150?text=Org+4",
-  //   provider: "Innovation for All",
-  //   description: "Creating equal opportunities for future innovators",
-  //   scholarship: "Inclusive Innovation Scholarship 2024",
-  // },
-  // {
-  //   thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+5",
-  //   avatar: "https://via.placeholder.com/150?text=Org+5",
-  //   provider: "NextGen Tech Alliance",
-  //   description: "Fostering next-gen leaders in technology",
-  //   scholarship: "NextGen Tech Scholarship 2024",
-  // },
+  // Government Entities
+  {
+    id: "4",
+    thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRECWnkNxlwCYZXtoIUOHMA6PJnow3qBZefag&s",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ5Je-os95EpHZhV2Cx9edtuNybVvP94Wemg&s",
+    provider: "Department of Science and Technology (DOST)",
+    description: "Promoting scientific advancement in the Philippines.",
+    scholarship: "DOST-SEI Scholarship 2024",
+    type: "Government",
+    category: "Government",
+    location: "Philippines",
+    rating: 4.6,
+    reviews: 30,
+  },
+  {
+    id: "5",
+    thumbnail: "https://baguioheraldexpressonline.com/wp-content/uploads/2021/02/ched.jpg",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGF2A38Aolu2u1ML7L1vf9xenlBswT07OhjA&s",
+    provider: "Commission on Higher Education (CHED)",
+    description: "Supporting access to quality education.",
+    scholarship: "CHED Merit Scholarship Program 2024",
+    type: "Government",
+    category: "Government",
+    location: "Philippines",
+    rating: 4.8,
+    reviews: 45,
+  },
+  {
+    id: "6",
+    thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdcxPpKUymqQvvT1Ci64D4hcnR6GD72K7Vkg&s",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7CPHJwf1tq4sT19BTZMljpFDFDAI_HsoE9Q&s",
+    provider: "Local Government Unit (LGU) - City of San Fernando",
+    description: "Empowering local students through financial aid.",
+    scholarship: "LGU Educational Assistance Program 2024",
+    type: "Government",
+    category: "Government",
+    location: "San Fernando",
+    rating: 4.3,
+    reviews: 25,
+  },
+
+  // Companies Offering Scholarships
+  {
+    id: "7",
+    thumbnail:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnMyLvEuZJ5vmx-uMaZLmHunXb8rC8NQhcZg&s",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg_HxsW-XPFDH9ZA0c_nYb5UOfTvNYDWpM6A&s",
+    provider: "Sun Life Financial",
+    description: "Providing financial support to future leaders.",
+    scholarship: "Sun Life Scholarship Program 2024",
+    type: "Corporate",
+    category: "Corporate",
+    location: "Philippines",
+    rating: 4.5,
+    reviews: 60,
+  },
+  {
+    id: "8",
+    thumbnail: "https://www.consultancy.asia/illustrations/news/detail/2023-11-08-084519689-Accenture_sustains_hybrid_working_setup_in_the_Philippines.jpg",
+    avatar: "https://yt3.googleusercontent.com/pFaWa7xoV41k485EZBb7nohqSzJwumUKPrZr1fFwYVHrQSXEnHPsEZ9wcbCNqfJhn-UNdd1D7Q=s900-c-k-c0x00ffffff-no-rj",
+    provider: "Accenture",
+    description: "Empowering students through scholarship programs.",
+    scholarship: "Accenture Scholarship Program 2024",
+    type: "Corporate",
+    category: "Corporate",
+    location: "Philippines",
+    rating: 4.6,
+    reviews: 40,
+  },
+  {
+    id: "9",
+    thumbnail: "https://media.licdn.com/dms/image/v2/D4D1BAQGAZINjqVQGiQ/company-background_10000/company-background_10000/0/1655160170969/synergy_companies_cover?e=2147483647&v=beta&t=s_bpyeouDDOFtvMRgU9mM_ylSIuzXot2jvc_3vbAthw",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx-QvXao7tz6N8DltjvbmnYFWh2jnvuKZIOg&s",
+    provider: "Synergy",
+    description: "Offering educational grants to deserving students.",
+    scholarship: "Synergy Scholarship Program 2024",
+    type: "Corporate",
+    category: "Corporate",
+    location: "Philippines",
+    rating: 4.4,
+    reviews: 50,
+  },
+  // Additional Entries
+  {
+    id: "10",
+    thumbnail: "https://upload.wikimedia.org/wikipedia/commons/7/70/0148jfAmang_Rodriguez_Avenue_Manila_Water_Rosario_Ortigas_Avenue_Junction_Pasig_Cityfvf_17.jpg",
+    avatar: "https://media.licdn.com/dms/image/v2/D560BAQGiUsbosN9IHg/company-logo_200_200/company-logo_200_200/0/1689039421706/manilawater_logo?e=2147483647&v=beta&t=bDaeAUbTWvZ9TYv5zTeS-Q5DxQ7wFa4kOYdon3nlQQ0",
+    provider: "Manila Water Company, Inc.",
+    description: "Contributing to education through various scholarship programs.",
+    scholarship: "Manila Water Scholarship Program 2024",
+    type: "Corporate",
+    category: "Corporate",
+    location: "Philippines",
+    rating: 4.7,
+    reviews: 30,
+  },
+  {
+    id: "11",
+    thumbnail: "https://i0.wp.com/governmentph.com/wp-content/uploads/2020/11/SM-Scholarship-2021-Application.png?fit=1200%2C630&ssl=1",
+    avatar: "https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/1024px-SM_Supermalls_logo_2022.svg.png",
+    provider: "SM Foundation",
+    description: "Creating opportunities for youth through education.",
+    scholarship: "SM Foundation Scholarship Program 2024",
+    type: "Corporate",
+    category: "Corporate",
+    location: "Philippines",
+    rating: 4.9,
+    reviews: 50,
+  },
+  {
+    id: "12",
+    thumbnail: "https://scontent.fcrk1-3.fna.fbcdn.net/v/t39.30808-6/279812741_5239365119458931_4183819853255650548_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEZIkypmQrIuleqtaU1_IiBR7G8uo2xTMhHsby6jbFMyHD3LQ_J6jAfZXP9ZXQuUDXj_u0rH1A1kW5vf6u1gBw9&_nc_ohc=83edwSW7qeYQ7kNvgGVYxoU&_nc_ht=scontent.fcrk1-3.fna&_nc_gid=A04YDeS7tF5HDDhZgq9N-3o&oh=00_AYAN-ocTwB_ScW8ytm9K3gv7X586XTxElfCZH6LyDMPhQA&oe=67129476",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVy-CN1OQVMDHdhAVLTEaf06yLdAizfB55-w&s",
+    provider: "Aboitiz Foundation, Inc.",
+    description: "Supporting educational initiatives for the community.",
+    scholarship: "Aboitiz Foundation Scholarship Program 2024",
+    type: "Corporate",
+    category: "Corporate",
+    location: "Philippines",
+    rating: 4.8,
+    reviews: 45,
+  },
 ];
 
 export const dummyUsers: User[] = [
@@ -134,6 +261,7 @@ export const dummyUsers: User[] = [
     validIdUrl: "https://example.com/valid-id.jpg",
     createdAt: "2024-01-01T12:00:00Z",
     updatedAt: "2024-09-01T12:00:00Z",
+   
   },
   {
     id: "2",

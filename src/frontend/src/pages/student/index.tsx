@@ -3,12 +3,12 @@ import Header from "@/components/student-component/Header";
 import UpperContent from "@/components/student-component/UpperContent";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
-import TopProviderCard from "@/components/homepage/top-providers/TopProviderCard";
+import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 
 const StudentPage: React.FC = () => {
   return (
-    <div className="">
-      <Header />
+    <>
+      <Header/>
 
       <div className="container mx-auto px-4">
         <UpperContent />
@@ -19,7 +19,7 @@ const StudentPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">
           {dummyPosts.map((post) => (
             <PostSummaryCard
-              key={post.email} 
+              key={post.email}
               postAuthorEmail={post.email}
               postAuthorName={post.name}
               postAuthorAvatarSource={post.avatarSource}
@@ -28,8 +28,7 @@ const StudentPage: React.FC = () => {
               postDescription={post.postDescription}
               postRatingCount={post.postRatingCount}
               postBookmarkCount={post.postBookmarkCount}
-              postCommentCount={post.postCommentCount}
-            />
+              postCommentCount={post.postCommentCount} postType={""} postDate={""}            />
           ))}
         </div>
       </div>
@@ -44,12 +43,11 @@ const StudentPage: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship}
-            />
+              scholarship={provider.scholarship} id={""}            />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

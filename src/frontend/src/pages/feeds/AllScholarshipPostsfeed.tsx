@@ -12,13 +12,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
-import Header from "@/components/landing/Header";
+import Header from "@/components/student-component/Header";
 import PostSummaryCard, { PostSummaryCardProps } from "@/components/post-summary/PostSummaryCard";
 import { dummyPosts } from "../landing/dummy-data";
 
 
 
-export default function PostFeed() {
+export default function ScholarshipsFeed() {
   const [posts, setPosts] = useState<PostSummaryCardProps[]>();
   const [activeTab, setActiveTab] = useState<
     "all" | "scholarship" | "internship"
@@ -49,7 +49,7 @@ export default function PostFeed() {
       <Header />
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Feed</h1>
+          <h1 className="text-2xl font-bold">Scholarship Feed</h1>
           <Button onClick={handleCreatePost}>
             <PlusCircle className="mr-2 h-4 w-4" /> Create Post
           </Button>
