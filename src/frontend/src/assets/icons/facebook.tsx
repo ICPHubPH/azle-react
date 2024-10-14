@@ -7,7 +7,7 @@ const Facebook = (props: SVGProps<SVGSVGElement>) => {
 			width="32"
 			height="32"
 			viewBox="0 0 256 256"
-      {...props}
+      		{...props}
 		>
 			<path
 				fill="#1877F2"

@@ -1,14 +1,13 @@
 import Facebook from "@/assets/icons/facebook"
 import { Home, Phone } from "lucide-react"
 
-
 const Footer = () => {
   return (
-    <footer className="py-8 flex items-center justify-center ">
+    <footer className="py-8 flex items-center justify-center md:mx-[75px]">
       <div className="container grid grid-cols-3">
-        <div className="flex flex-col items-center gap-y-1 md:items-start ">
+        <div className="flex flex-col items-center gap-y-1 md:items-start">
           <div className="flex items-center mb-4 ">
-            <img
+            <img  
               src="Logo.png"
               alt="Logo"
               className="h-10 w-10" 

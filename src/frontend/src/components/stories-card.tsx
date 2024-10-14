@@ -23,11 +23,11 @@ const StoriesCard: React.FC<StoriesCardProps> = ({ ...params }) => {
                     width={800}
                     src={params.storyImg}
                     alt="story"
-                />
+                /> 
             </CardHeader>
             <CardContent className="text-center p-2">
                 <CardTitle className="font-bold text-lg text-gray-800 mb-2">{params.projectName}</CardTitle>
-                <CardDescription className="text-gray-600">{params.description}</CardDescription>
+                <CardDescription className="text-gray-600 text-ellipsis">{params.description}</CardDescription>
             </CardContent>
             <CardFooter className="p-4 border-t">
                 <a
@@ -40,7 +40,6 @@ const StoriesCard: React.FC<StoriesCardProps> = ({ ...params }) => {
                 </a>
             </CardFooter>
         </Card>
-
     );
 }
 

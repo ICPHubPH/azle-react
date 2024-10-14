@@ -12,7 +12,7 @@ const links = [
 
 const LandingPage = () => {
 	return (
-		<div className="flex flex-col gap-y-12 ">
+		<div className="flex flex-col gap-y-8">
 			<header className="p-4 grid grid-cols-3 mx-[75px] ">
 				<div className="flex items-center gap-x-4">
 					<img className="h-14 w-14 " src="Logo.png" alt="logo" />
