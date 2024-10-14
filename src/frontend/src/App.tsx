@@ -1,15 +1,17 @@
 // src/frontend/src/App.tsx
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/landing';
-import Profile from './pages/student/profile';
 import { ThemeProvider } from "@/components/theme-provider";
-import AuthPage from './auth';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Home from "./pages/landing";
 import StudentPage from './pages/student';
+import Profile from "./pages/student/profile";        
+import AuthPage from './auth';    
 import ProviderPage from './pages/provider';
 import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
 import ProvidersFeed from './pages/feeds/AllProvidersFeed';
 import ProviderProfile from './pages/provider/ProviderProfile';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import PostPage from "./pages/post";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
 return (  
@@ -25,9 +27,10 @@ return (
           <Route path='/provider-feed' element={<ProvidersFeed/>} />
           <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
           <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
-
-        </Routes> 
+          <Route path="/posts/:postId" element={<PostPage />} />
+        </Routes>
       </Router>
+      <Toaster />
     </ThemeProvider>
   );
 }

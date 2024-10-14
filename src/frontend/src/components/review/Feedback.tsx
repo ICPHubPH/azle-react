@@ -1,13 +1,8 @@
-import { CalendarDays, Star } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Feedback as FeedbackModel, User } from "@/models/model";
 import { getTimeAgo } from "@/lib/helpers";
+import { Feedback as FeedbackModel, User } from "@/types/model";
+import { Star } from "lucide-react";
 import { useState } from "react";
-import {
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-} from "@radix-ui/react-hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface FeedbackProps {
   user: User;
@@ -53,11 +48,9 @@ const Feedback: React.FC<FeedbackProps> = (FeedbackProps) => {
                 </div>
                 <div className="flex gap-2.5 items-center">
                   <p className="text-xs text-gray-500 flex gap-[.25rem]">
-                    <Star className="fill-blue-500 text-blue-500 w-4"></Star>
-                    <Star className="fill-blue-500 text-blue-500 w-4"></Star>
-                    <Star className="fill-blue-500 text-blue-500 w-4"></Star>
-                    <Star className="fill-blue-500 text-blue-500 w-4"></Star>
-                    <Star className="fill-blue-500 text-blue-500 w-4"></Star>
+                    {Array.from(Array(feedback.rating)).map((_) => (
+                      <Star className="fill-blue-500 text-blue-500 w-4"></Star>
+                    ))}
                   </p>
                   <h3 className="font-bold ">{feedback.rating}.0</h3>
                 </div>

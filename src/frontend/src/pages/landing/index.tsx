@@ -14,6 +14,7 @@ import TopProviderCard from "@/components/provider-component/top-providers/TopPr
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import Review from "@/components/review/Feedback";
 import Feedback from "@/components/review/Feedback";
+import Footer from "@/components/footer/Footer";
 
 const Home: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const Home: React.FC = () => {
         <div className="px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
           {dummyPosts.map((post) => (
             <PostSummaryCard
+              postId={post.id}
               postAuthorEmail={post.email}
               postAuthorAvatarSource={post.avatarSource}
               postTitle={post.postTitle}
@@ -76,7 +78,9 @@ const Home: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship} id={""}            />
+              scholarship={provider.scholarship}
+              id={""}
+            />
           ))}
         </div>
       </div>
@@ -92,9 +96,11 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
-    </div>
 
-    
+      {/*test footer */}
+
+      <Footer />
+    </div>
   );
 };
 

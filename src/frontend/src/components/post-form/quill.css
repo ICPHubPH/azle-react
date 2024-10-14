@@ -5,7 +5,7 @@
   }
 
   .custom-ql .ql-container {
-    @apply max-h-80 overflow-y-auto border border-slate-500 rounded-b-lg hover:border-gray-300; /* Limit the editor height and make it scrollable */
+    @apply h-80 w-full max-h-full overflow-y-auto border border-slate-500 rounded-b-lg hover:border-gray-300; /* Limit the editor height and make it scrollable */
   }
 
   .custom-ql .ql-editor::before {

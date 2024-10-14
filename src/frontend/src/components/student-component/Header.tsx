@@ -46,7 +46,9 @@ const Header: React.FC = () => {
   const NavItems = () => (
     <>
       {navItems.map((item) => (
+
         <li key={item.name}>
+
           <Button
             variant="ghost"
             asChild
@@ -57,6 +59,7 @@ const Header: React.FC = () => {
                 setIsMobileMenuOpen(false);
                 navigate(item.path); // Navigate to the correct path
               }}
+
               className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200 cursor-pointer"
             >
               {item.name}
@@ -78,6 +81,7 @@ const Header: React.FC = () => {
             ConnectED
           </h1>
           {/* Desktop Menu */}
+
           {!isMobile && (
             <ul className="hidden md:flex space-x-4">
               <NavItems />
@@ -118,14 +122,18 @@ const Header: React.FC = () => {
               <Button
                 variant="ghost"
                 className="w-full justify-start"
+
                 onClick={() => navigate('/profile')} // Replace with actual profile path
+
               >
                 Profile
               </Button>
               <Button
                 variant="ghost"
                 className="w-full justify-start mt-2"
+
                 onClick={() => navigate('/logout')} // Replace with actual logout path
+
               >
                 Logout
               </Button>

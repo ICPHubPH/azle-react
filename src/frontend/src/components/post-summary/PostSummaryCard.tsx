@@ -1,22 +1,24 @@
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Bookmark, CalendarDays, Forward, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
-import { Bookmark, CalendarDays, Forward, Star } from "lucide-react";
-import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 export interface PostSummaryCardProps {
+  postId: string;
   postAuthorEmail: string;
   postAuthorName: string;
   postAuthorAvatarSource: string;
@@ -26,11 +28,12 @@ export interface PostSummaryCardProps {
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
-  postType: string; // TODO:Update UI added type of post for filtering scholarship || intership
-  postDate: string ; // TODO: Update UI added date for filtering
+  postType?: string; // TODO:Update UI added type of post for filtering scholarship || intership
+  postDate?: string; // TODO: Update UI added date for filtering
 }
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
+  postId,
   postAuthorEmail,
   postAuthorName,
   postAuthorAvatarSource,
@@ -41,9 +44,11 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postBookmarkCount,
   postCommentCount,
   postType,
-  postDate
+  postDate,
 }) => {
-  const alt = `@${postAuthorEmail.split("@")[0]}`;
+
+
+  const navigate = useNavigate()
 
   const [ratingsUsers, setRatingsUsers] = useState<string[]>([
     "User1",
@@ -117,9 +122,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
               <AvatarImage
                 className="aspect-square object-cover rounded-full"
                 src={postAuthorAvatarSource}
-                alt={alt}
+                alt={postAuthorName}
               />
-              <AvatarFallback>{alt}</AvatarFallback>
+              <AvatarFallback>{postAuthorName}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-.5">
               <HoverCard>
@@ -141,9 +146,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                       <AvatarImage
                         className="aspect-square object-cover rounded-full"
                         src={postAuthorAvatarSource}
-                        alt={alt}
+                        alt={postAuthorName}
                       />
-                      <AvatarFallback>{alt}</AvatarFallback>
+                      <AvatarFallback>{postAuthorName}</AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">
                       <h3
@@ -182,9 +187,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
           <div className="flex flex-col gap-1 items-center">
             {/* <Badge className="cursor-pointer">Trending</Badge> */}
             <a
-              className="text-blue-500 text-sm hover:underline underline-offset-2"
-              href="#"
-              onClick={() => alert("Redirect to indiv post screen")}
+              className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"
+                        
+              onClick={() => navigate(`/posts/${postId}`)}
             >
               View post
             </a>
@@ -205,7 +210,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
               src={postThumbnailSource}
               alt={`${postTitle} thumbnail`}
               className="w-full rounded-md object-cover max-h-[15rem] min-h-[15rem] cursor-pointer"
-              onClick={() => alert("Redirect to indiv post screen")}
+              onClick={() => navigate(`/posts/${postId}`)}
             />
           </div>
 

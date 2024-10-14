@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PostCategoryType } from "../../constants";
 import { Feedback } from "./feedback";
 import { Rating } from "./rating";
 import { User } from "./user";
@@ -7,22 +8,19 @@ import { User } from "./user";
     name: 'posts',
 })
 export class Post extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @ManyToOne(() => User, user => user.posts, { onDelete: "CASCADE" })
-  user: User;
-
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "varchar" })
   thumbnail: string;
 
-  @Column()
+  @Column({type: "varchar", length: 60})
   title: string;
 
-  @Column()
+  @Column({type: "text"})
   type: string;
 
-  @Column("text")
+  @Column({ type: "text" })
   content: string;
 
   @CreateDateColumn()
@@ -31,9 +29,23 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @ManyToOne(() => User, user => user.posts)
+  user: User;
+
+  @OneToMany(() => Feedback, feedback => feedback.post, {
+    cascade: true,
+    onDelete: "CASCADE"
+  })
+  feedbacks: Feedback[];
+
   @OneToMany(() => Rating, rating => rating.post)
   ratings: Rating[];
 
-  @OneToMany(() => Feedback, feedback => feedback.post)
-  feedbacks: Feedback[];
+  setType(type: string) {
+    if (PostCategoryType.includes(type)) {
+      this.type = type;
+    } else {
+        throw new Error("Invalid post type");
+    }
+  }
 }

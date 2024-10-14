@@ -5,40 +5,49 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
-import { Account } from "./account";
+import { UserRole } from "../../constants";
 import { Feedback } from "./feedback";
 import { Post } from "./post";
 import { Rating } from "./rating";
+
+type RoleType = 'admin' | 'provider' | 'student';
 
 @Entity({
   name: "users",
 })
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "varchar" })
   avatarUrl: string;
 
-  @Column({ unique: true })
+  @Column({
+    unique: true,
+    type: "varchar",
+    length: 30
+  })
   username: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   name: string;
 
-  @Column("text", { nullable: true })
+  @Column({ nullable: true, type: "text" })
   bio: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: "varchar" })
   email: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "varchar", length: "30" })
+  password: string;
+
+  @Column({ nullable: true, type: "datetime" })
   emailVerifiedAt: Date;
 
-  @Column()
-  role: "provider" | "student";
+  @Column({type: "text"})
+  role: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -46,15 +55,29 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Account, (account) => account.user)
-  account: Account[];
-
-  @OneToMany(() => Post, (post) => post.user)
+  @OneToMany(() => Post, post => post.user, {
+    cascade: true,
+    onDelete: "CASCADE"
+  })
   posts: Post[];
 
-  @OneToMany(() => Rating, (rating) => rating.user)
+  @OneToMany(() => Feedback, feedback => feedback.user, {
+    cascade: true,
+    onDelete: "CASCADE"
+  })
+  feedbacks: Feedback[];
+
+  @OneToMany(() => Rating, rating => rating.user, {
+    cascade: true,
+    onDelete: "CASCADE"
+  })
   ratings: Rating[];
 
-  @OneToMany(() => Feedback, (feedback) => feedback.user)
-  feedbacks: Feedback[];
+  setRole(role: string) {
+      if (UserRole.includes(role)) {
+          this.role = role;
+      } else {
+          throw new Error("Invalid role");
+      }
+  }
 }

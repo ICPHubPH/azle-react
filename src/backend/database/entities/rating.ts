@@ -6,16 +6,10 @@ import { User } from "./user";
     name: "ratings"
 })
 export class Rating extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @ManyToOne(() => Post, post => post.ratings, { onDelete: "CASCADE" })
-  post: Post;
-
-  @ManyToOne(() => User, user => user.ratings, { onDelete: "CASCADE" })
-  user: User;
-
-  @Column()
+  @Column({ type: "integer" })
   rate: number;
 
   @CreateDateColumn()
@@ -23,4 +17,10 @@ export class Rating extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => User, user => user.ratings)
+  user: User;
+
+  @ManyToOne(() => Post, post => post.ratings)
+  post: Post;
 }

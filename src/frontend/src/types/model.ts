@@ -19,3 +19,18 @@ export interface Feedback {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Post {
+  id: string;
+  email: string;
+  name: string;
+  avatarSource: string;
+  postTitle: string;
+  postThumbnailSource: string;
+  postDescription: string;
+  postRatingCount: number;
+  postBookmarkCount: number;
+  postCommentCount: number;
+  postType: string;
+  postDate: string;
+}
