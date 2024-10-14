@@ -12,8 +12,6 @@ import { Feedback } from "./feedback";
 import { Post } from "./post";
 import { Rating } from "./rating";
 
-type RoleType = 'admin' | 'provider' | 'student';
-
 @Entity({
   name: "users",
 })
@@ -23,13 +21,6 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true, type: "varchar" })
   avatarUrl: string;
-
-  @Column({
-    unique: true,
-    type: "varchar",
-    length: 30
-  })
-  username: string;
 
   @Column({ type: "varchar" })
   name: string;
@@ -77,7 +68,7 @@ export class User extends BaseEntity {
       if (UserRole.includes(role)) {
           this.role = role;
       } else {
-          throw new Error("Invalid role");
+        return "Invalid user role!";
       }
   }
 }

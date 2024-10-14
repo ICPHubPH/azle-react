@@ -13,7 +13,13 @@ export default class PostController {
                 id: true,
                 title: true,
                 thumbnail: true,
-                createdAt: true
+                createdAt: true,
+                user: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    avatarUrl: true,
+                }
             },
             skip,
             take
@@ -43,7 +49,13 @@ export default class PostController {
                 id: true,
                 title: true,
                 thumbnail: true,
-                createdAt: true
+                createdAt: true,
+                user: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    avatarUrl: true
+                }
             }
         });
 
@@ -65,7 +77,9 @@ export default class PostController {
                 id: true,
                 user: {
                     id: true,
-                    name: true
+                    name: true,
+                    email: true,
+                    avatarUrl: true
                 },
                 title: true,
                 thumbnail: true,
@@ -90,19 +104,20 @@ export default class PostController {
         });
     }
 
+    // TODO: Thumbnail upload
     static async create(request: Request, response: Response) {
-        const { userId, title, thumbnail, type, content } = request.body;
+        const { title, thumbnail, type, content } = request.body;
 
-        const userExists = await User.findOneBy({ id: userId });
+        const userExists = await User.findOneBy({ id: request.user });
 
-        if (!userExists) {
+        if (!userExists || userExists.role == "student") {
             return response.status(401).json({
                 status: 1,
                 message: "Unauthorized!"
             });
         }
 
-        const newPost = await Post.create({
+        const data = await Post.create({
             title,
             content,
             thumbnail,
@@ -110,50 +125,95 @@ export default class PostController {
             user: userExists
         });
 
-        await Post.save(newPost);
+        await Post.save(data);
 
         response.status(201).json({
             status: 1,
+            data,
             message: "New post created!"
         });
     }
 
+    // TODO: thumbnail upload and deletion
     static async updateById(request: Request, response: Response) {
-        // TODO: thumbnail upload and deletion
         const id = request.params.id;
         const { title, type, content } = request.body;
-        const exists = await Post.findBy({ id });
 
-        if (!exists) {
+        const isPostExist = await Post.findOne({ 
+            where: {
+                id
+            }, 
+            select: {
+                user: {
+                    id: true,
+                    role: true
+                }
+            }
+         });
+
+        if (!isPostExist) {
             response.status(404).json({
                 status: 0,
+                data: null,
                 message: "Post not found!"
+            });
+        }
+
+        if (isPostExist?.user.id != request.user && isPostExist?.user.role == "admin") {
+            response.status(403).json({
+                status: 0,
+                data: null,
+                message: "Unauthorized!"
             });
         }
 
         await Post.update({ id }, { title, type, content });
 
         response.status(200).json({
-            status: 1,
+            success: 1,
+            data: null,
             message: "Post has been updated!"
         });
     }
-
+    
+    // TODO: thumbnail deletion
     static async deleteById(request: Request, response: Response) {
-        // TODO: thumbnail deletion
         const id = request.params.id;
 
-        const data = await Post.delete({ id });
-        
-        if (!data.affected || data.affected == 0) {
-            response.status(400).json({
-                status: 0,
+        const isPostExist = await Post.findOne({
+            where: {
+                id
+            },
+            select: {
+                id: true,
+                user: {
+                    id: true,
+                    role: true
+                }
+            }
+        });
+
+        if (!isPostExist) {
+            response.status(404).json({
+                success: 0,
+                data: null,
                 message: "Post doesn't exist!"
             });
         }
 
+        if (isPostExist?.user.id != request.user && isPostExist?.user.role != "admin") {
+            response.status(403).json({
+                success: 0,
+                data: null,
+                message: "Forbidden!"
+            });
+        }
+
+        const data = await Post.delete({ id });
+
         response.status(200).json({
-            status: 1,
+            success: 1,
+            data,
             message: "Post has been deleted!"
         });
     }
