@@ -12,6 +12,7 @@ import ProviderProfile from './pages/provider/ProviderProfile';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PostPage from "./pages/post";
 import { Toaster } from "./components/ui/sonner";
+import TermsAndConditions from "./pages/TermsOfUse";
 
 function App() {
 return (  
@@ -26,8 +27,9 @@ return (
           <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
           <Route path='/provider-feed' element={<ProvidersFeed/>} />
           <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
-          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
           <Route path="/posts/:postId" element={<PostPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+          <Route path='/terms-and-conditions' element={<TermsAndConditions/>} />
         </Routes>
       </Router>
       <Toaster />

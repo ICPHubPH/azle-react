@@ -40,7 +40,7 @@ const Header: React.FC = () => {
   const navItems = [
     { name: 'Scholarship', path: '/scholarship-feed' }, 
     { name: 'Providers', path: '/provider-feed' }, 
-    { name: 'Terms of Use', path: '/terms' }, 
+    { name: 'Terms of Use', path: '/terms-and-conditions' }, 
   ];
 
   const NavItems = () => (
