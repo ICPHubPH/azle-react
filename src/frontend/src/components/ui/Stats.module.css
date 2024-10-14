@@ -1,0 +1,10 @@
+.stats {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: bolder;
+}
+/* 
+@media (min-width: 850px) {
+  .stats {
+    right
+  }
+} */

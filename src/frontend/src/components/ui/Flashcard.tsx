@@ -24,7 +24,7 @@ const Flashcard: React.FC<FlashcardProps> = ({
         initial={{ rotateY: 180 }}
         animate={{ rotateY: flipCard ? 0 : 360 }}
         transition={{ duration: 0.8, type: "spring" }}
-        className={`${flipCard ? styles.front : styles.back}`}
+        className={`${flipCard ? styles.front : styles.back} shadow-[rgba(0,_0,_0,_0.5)_0px_0px_8px] text-lg sm:text-lg lg:text-3xl w-5/6 sm:w-4/6 md:w-2/3`}
         onClick={() => setFlipCard(!flipCard)}
       >
         {flipCard ? back : front}

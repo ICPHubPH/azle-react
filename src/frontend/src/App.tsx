@@ -1,10 +1,13 @@
+import { AnimatePresence } from "framer-motion";
 import Reels from "./components/pages/Reels";
 
 function App() {
   return (
-    <div>
-      <Reels />
-    </div>
+    <AnimatePresence>
+      <div>
+        <Reels />
+      </div>
+    </AnimatePresence>
   );
 }
 

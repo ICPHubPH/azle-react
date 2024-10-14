@@ -6,7 +6,7 @@
   height: 100%;
   scroll-snap-align: start;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   text-align: center;
   justify-content: center;
   font-size: 1.2rem;
@@ -16,7 +16,8 @@
 }
 
 .front {
-  font-family: "Stardom", sans-serif;
+  /* font-family: "Stardom", sans-serif; */
+  font-family: "Cabinet Grotesk", sans-serif;
   background-color: black;
   color: white;
 }
@@ -29,14 +30,26 @@
 .front,
 .back {
   height: 100%;
-  width: calc(56.25vh - 54px);
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
-  padding: 0.5rem;
-  border: 3px solid rgb(12, 12, 12);
-  border-radius: 25px;
-  font-size: 2.3rem;
+  padding: 0.5rem 2.5rem;
   backface-visibility: hidden;
+  border: 2px solid black;
+  top: 5px;
+}
+
+@media (min-width: 800px) {
+  .front,
+  .back {
+    width: 70%;
+  }
+}
+
+@media (min-width: 850px) {
+  .front,
+  .back {
+    width: calc(56.25vh - 54px);
+  }
 }
