@@ -43,7 +43,7 @@ Route.put('/post/:id', AuthMiddleware.authorize, PostController.updateById);
 Route.delete('/post/:id', AuthMiddleware.authorize, PostController.deleteById);
 Route.get('/post/:id/category', PostController.findByCategorytype);
 
-
+Route.get('/test-route', UserController.test)
 // TODO: Feedback Routes
 // Route.get('/feedback/:id', ApisController.feedback.findById);
 // ...

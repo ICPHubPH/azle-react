@@ -168,4 +168,10 @@ export default class UserController {
             message: "Users deleted."
         });
     }
+
+    static async test(request: Request, response: Response) {
+        response.json({
+            message: "User controller is working correctly!"
+        })
+    }
 }
