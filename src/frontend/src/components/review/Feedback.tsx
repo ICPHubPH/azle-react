@@ -16,7 +16,7 @@ const Feedback: React.FC<FeedbackProps> = (FeedbackProps) => {
   return (
     <>
       <div
-        className="w-full flex flex-col gap-1 border p-3.5 rounded-lg hover:bg-primary-foreground cursor-pointer"
+        className="w-full flex flex-col gap-1 border p-3.5 rounded-lg hover:bg-primary-foreground cursor-pointer  "
         onClick={() => alert("open modal for solo feedback")}
       >
         <div className="flex justify-between items-center w-full">
