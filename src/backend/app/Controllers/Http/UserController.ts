@@ -1,5 +1,6 @@
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+
 export default class UserController {
     static async getAll(request: Request, response: Response) {
         const page = request.query.page ? Number(request.query.page) : 1;
@@ -10,8 +11,9 @@ export default class UserController {
             select: {
                 id: true,
                 name: true,
-                username: true,
                 avatarUrl: true,
+                bio: true,
+                email: true,
                 role: true
             },
             skip,
@@ -20,7 +22,8 @@ export default class UserController {
 
         response.status(200).json({
             status: 1,
-            data,
+            data: data[0],
+            count: data[1],
             message: null
         });
     }
@@ -46,28 +49,29 @@ export default class UserController {
         });
     }
 
+    // TODO: avatar, banner, valid ID
     static async updateById(request: Request, response: Response) {
         const id = request.params.id;
-        const { name, bio, username } = request.body;
-        const exists = await User.findBy({ id });
+        const { name, bio } = request.body;
+        const isUserExists = await User.findOneBy({ id });
 
-        if (!exists) {
-            response.status(404).json({
-                status: 0,
+        if (!isUserExists) {
+            return response.status(404).json({
+                success: 0,
+                data: null,
                 message: "User not found!"
             });
         }
 
-        const uniqueUsername = await User.findOneBy({ username });
-
-        if (uniqueUsername) {
-            response.status(400).json({
-                status: 0,
-                message: "Username already in use!"
+        if (request.user != id && isUserExists.role != "admin") {
+            return response.status(403).json({
+                success: 0,
+                data: null,
+                message: "Forbidden"
             });
         }
 
-        await User.update({ id }, { name, bio, username });
+        await User.update({ id }, { name, bio });
 
         response.status(200).json({
             status: 1,
@@ -75,8 +79,26 @@ export default class UserController {
         });
     }
 
+    // delete account
     static async deleteById(request: Request, response: Response) {
         const id = request.params.id;
+        const isUserExists = await User.findOneBy({ id });
+
+        if (!isUserExists) {
+            return response.status(404).json({
+                success: 0,
+                data: null,
+                message: "User not found!"
+            });
+        }
+
+        if (request.user != id && isUserExists.role != "admin") {
+            return response.status(403).json({
+                success: 0,
+                data: null,
+                message: "Forbidden!"
+            });
+        }
 
         const data = await User.delete({ id });
         
@@ -93,9 +115,57 @@ export default class UserController {
         });
     }
 
-    static async test(request: Request, response: Response) {
-        response.json({
-            status: 1
+    // for test
+    static async create(request: Request, response: Response) {
+        const { avatarUrl, email, password, name, bio, role } = request.body;
+
+        try {
+            const user = new User();
+
+            user.name = name;
+            user.email = email;
+            user.avatarUrl = avatarUrl;
+            user.password = password;
+            user.emailVerifiedAt = new Date();
+            user.bio = bio;
+            const isInvalidRole = user.setRole(role);
+
+            if (isInvalidRole) {
+                return response.status(400).json({
+                    status: 0,
+                    message: isInvalidRole
+                });
+            }
+
+            const data = await User.save(user);
+
+            return response.status(201).json({
+                status: 1,
+                data: {
+                    id: data.id,
+                    avatarUrl: data.avatarUrl,
+                    name: data.name,
+                    email: data.email,
+                    bio: data.bio,
+                    role: data.role
+                },
+                message: "User created."
+            });
+        } catch(e) {
+            response.status(400).json({
+                status: 0,
+                error: e,
+                message: "Bad request!"
+            });
+        }
+    }
+
+    // for test
+    static async deleteMany(request: Request, response: Response) {
+        await User.clear();
+        response.status(200).json({
+            status: 1,
+            message: "Users deleted."
         });
     }
 }
