@@ -1,20 +1,20 @@
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Bookmark, CalendarDays, Forward, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
-import { Bookmark, CalendarDays, Forward, Star } from "lucide-react";
-import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Button } from "../ui/button";
 
 export interface PostSummaryCardProps {
   postAuthorEmail: string;
@@ -26,8 +26,8 @@ export interface PostSummaryCardProps {
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
-  postType: string; // TODO:Update UI added type of post for filtering scholarship || intership
-  postDate: string ; // TODO: Update UI added date for filtering
+  postType?: string; // TODO:Update UI added type of post for filtering scholarship || intership
+  postDate?: string; // TODO: Update UI added date for filtering
 }
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
@@ -41,7 +41,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postBookmarkCount,
   postCommentCount,
   postType,
-  postDate
+  postDate,
 }) => {
   const alt = `@${postAuthorEmail.split("@")[0]}`;
 

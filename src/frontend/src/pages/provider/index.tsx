@@ -4,7 +4,9 @@ import UpperContent from "@/components/provider-component/UpperContent";
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import CreatePost from "@/components/post-form/CreatePost";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
+
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
+
 // import { useAuth } from "@/context/AuthContext"; 
 
 const ProviderPage: React.FC = () => {
@@ -54,7 +56,8 @@ const ProviderPage: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship} id={""}            />
+              scholarship={provider.scholarship} id={""}            
+              />
           ))}
         </div>
       </div>

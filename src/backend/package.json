@@ -6,7 +6,7 @@
     "dependencies": {
         "azle": "^0.21.1",
         "express": "^4.19.2",
-        "sql.js": "^1.10.3",
+        "sql.js": "^1.11.0",
         "typeorm": "^0.3.20"
     },
     "devDependencies": {
