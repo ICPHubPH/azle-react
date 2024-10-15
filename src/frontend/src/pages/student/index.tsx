@@ -7,6 +7,7 @@ import TopProviderCard from "@/components/provider-component/top-providers/TopPr
 import RightCardSide from "@/components/student-component/RightCardSide";
 import { ArrowUp } from "lucide-react";
 import LeftCardSide from "@/components/student-component/LeftCardSide";
+import PostForm from "@/components/provider-component/FormPost";
 
 const StudentPage: React.FC = () => {
   // State to track visibility of the "Go to Top" button
@@ -51,6 +52,10 @@ const StudentPage: React.FC = () => {
           <div className="container mx-auto px-4">
             <UpperContent />
           </div>
+          <div className="container mx-auto px-4">
+            <PostForm />
+          </div>
+          
 
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 justify-center items-center ">

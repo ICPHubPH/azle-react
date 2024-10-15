@@ -1,6 +1,6 @@
 import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import Header from "@/components/provider-component/Header";
-import UpperContent from "@/components/provider-component/UpperContent";
+import FormPost from "@/components/provider-component/FormPost";
 import React from "react";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
 
@@ -16,7 +16,7 @@ const ProviderPage: React.FC = () => {
       <Header />
 
       <div className="container mx-auto px-4">
-        <UpperContent />
+        <FormPost />
       </div>
 
       {/* Conditional rendering for providers to create posts */}

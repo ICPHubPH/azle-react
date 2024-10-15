@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlusCircle } from "lucide-react"
 
-export default function UpperContent() {
+export default function PostForm() {
   // Replace these with actual user data
   const userName = "John Doe"
   const userInitials = "JD"
