@@ -19,11 +19,11 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Sample user data (You can replace this with actual state or context data)
+
   const user = {
     name: 'John Doe',
     email: 'johndoe@example.com',
-    role: 'Student', // Change role to 'Provider' or 'Student'
+    role: 'Student',
     avatarUrl: 'https://github.com/shadcn.png',
   };
 
@@ -33,15 +33,14 @@ const Header: React.FC = () => {
     } else if (user.role === 'Provider') {
       navigate('/provider');
     } else {
-      navigate('/'); // Default or fallback route (e.g., index page)
+      navigate('/'); 
     }
   };
 
   const navItems = [
-    { name: 'Home', path: '/student' }, // Add Home link here
+    { name: 'Home', path: '/student' },
     { name: 'Scholarship', path: '/scholarship-feed' }, 
-    { name: 'Providers', path: '/provider-feed' }, 
-    { name: 'Terms of Use', path: '/terms-and-conditions' }, 
+    { name: 'Providers', path: '/provider-feed' },  
   ];
 
   const NavItems = () => (
