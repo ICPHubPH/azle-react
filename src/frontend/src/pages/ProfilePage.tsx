@@ -1,5 +1,5 @@
 import Profile from "@/components/avatar";
-import Header from "@/layout/Header";
+import Header from "@/layout/HomeLayout/Header";
 import { Pencil } from "lucide-react";
 import { FC, useState } from "react";
 

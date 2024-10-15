@@ -13,7 +13,7 @@ const Header = () => {
          to={PageRoutes.Home}
       >
 					<img className="size-14 " src="Logo.png" alt="logo" />
-					<h1 className="font-medium text-lg text-foreground">Project Name</h1>
+					<h1 className="font-medium text-lg text-foreground">Plantaria</h1>
 			</Link>
 
       {/* Search Bar */}

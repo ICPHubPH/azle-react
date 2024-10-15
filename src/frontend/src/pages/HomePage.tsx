@@ -1,8 +1,8 @@
 import ResourceCard from "@/components/stories-card";
 import Tab from "@/components/tab";
 import Footer from "@/layout/Footer";
-import Header from "@/layout/Header";
-import HomeContent from "@/layout/Home";
+import Header from "@/layout/HomeLayout/Header";
+import HomeContent from "@/layout/HomeLayout/Home";
 import { Home, Star, Trophy } from "lucide-react";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ type Stories = {
     description: string;
 };
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
     const [activeTab, setActiveTab] = useState<string>("Home");
 
     const resources: Stories[] = [
@@ -44,15 +44,16 @@ const HomePage: React.FC = () => {
                         </div>
                     </section>
                 </aside>
+
                 {/* CONTENT */}
                 <section className="flex-1">
-                 {activeTab === "Home" ? (
-                     <HomeContent/>
-                 ) : activeTab === "Ranking" ? (
-                   <p>Rankings</p>
-                 ) : activeTab === "Favorites" ? (
-                   <p>Favorites</p>
-                 ) : null }  
+                    {activeTab === "Home" ? (
+                        <HomeContent />
+                    ) : activeTab === "Ranking" ? (
+                        <p>Rankings</p>
+                    ) : activeTab === "Favorites" ? (
+                        <p>Favorites</p>
+                    ) : null}
                 </section>
             </div>
             <Footer />

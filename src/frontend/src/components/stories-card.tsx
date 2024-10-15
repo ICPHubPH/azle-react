@@ -29,7 +29,7 @@ const StoriesCard: React.FC<StoriesCardProps> = ({ ...params }) => {
                 <CardTitle className="font-bold text-lg text-gray-800 mb-2">{params.projectName}</CardTitle>
                 <CardDescription className="text-gray-600 text-ellipsis">{params.description}</CardDescription>
             </CardContent>
-            <CardFooter className="p-4 border-t">
+            <CardFooter className="p-4 border-t flex justify-center">
                 <a
                     href="/"
                     aria-label="more"
