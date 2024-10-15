@@ -1,16 +1,15 @@
-import React from "react";
+import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
 import Header from "@/components/provider-component/Header";
 import UpperContent from "@/components/provider-component/UpperContent";
-import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
-import CreatePost from "@/components/post-form/CreatePost";
+import React from "react";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
 
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 
-// import { useAuth } from "@/context/AuthContext"; 
+// import { useAuth } from "@/context/AuthContext";
 
 const ProviderPage: React.FC = () => {
-//   const { user } = useAuth(); // Access user info to check role
+  //   const { user } = useAuth(); // Access user info to check role
 
   return (
     <div className="">
@@ -33,6 +32,7 @@ const ProviderPage: React.FC = () => {
           {dummyPosts.map((post) => (
             <PostSummaryCard
               key={post.email}
+              postId={post.id}
               postAuthorEmail={post.email}
               postAuthorName={post.name}
               postAuthorAvatarSource={post.avatarSource}
@@ -41,7 +41,10 @@ const ProviderPage: React.FC = () => {
               postDescription={post.postDescription}
               postRatingCount={post.postRatingCount}
               postBookmarkCount={post.postBookmarkCount}
-              postCommentCount={post.postCommentCount} postType={""} postDate={""}            />
+              postCommentCount={post.postCommentCount}
+              postType={""}
+              postDate={""}
+            />
           ))}
         </div>
       </div>
@@ -56,8 +59,9 @@ const ProviderPage: React.FC = () => {
               avatar={provider.avatar}
               provider={provider.provider}
               description={provider.description}
-              scholarship={provider.scholarship} id={""}            
-              />
+              scholarship={provider.scholarship}
+              id={""}
+            />
           ))}
         </div>
       </div>

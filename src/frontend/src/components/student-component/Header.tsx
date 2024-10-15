@@ -40,7 +40,7 @@ const Header: React.FC = () => {
   const navItems = [
     { name: 'Scholarship', path: '/scholarship-feed' }, 
     { name: 'Providers', path: '/provider-feed' }, 
-    { name: 'Terms of Use', path: '/terms' }, 
+    { name: 'Terms of Use', path: '/terms-and-conditions' }, 
   ];
 
   const NavItems = () => (
@@ -82,13 +82,13 @@ const Header: React.FC = () => {
           </h1>
           {/* Desktop Menu */}
 
-          {!isMobile && (
-            <ul className="hidden md:flex space-x-4">
+         
+        </div>
+        {!isMobile && (
+            <ul className="hidden md:flex space-x-4 ">
               <NavItems />
             </ul>
           )}
-        </div>
-
         {/* Mobile Menu */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">

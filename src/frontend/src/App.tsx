@@ -1,18 +1,20 @@
 // src/frontend/src/App.tsx
 import { ThemeProvider } from "@/components/theme-provider";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./pages/landing";
-import StudentPage from './pages/student';
-import ProviderPage from './pages/provider';   
-import Profile from "./pages/student/profile";        
-import AuthPage from './auth';    
-import ScholarshipFeed from './pages/feeds/AllScholarshipPostsfeed';
-import ProvidersFeed from './pages/feeds/AllProvidersFeed';
-import ProviderProfile from './pages/provider/ProviderProfile';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import PostPage from "./pages/post";
+import AuthPage from "./auth";
 import { Toaster } from "./components/ui/sonner";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ProvidersFeed from "./pages/feeds/AllProvidersFeed";
+import ScholarshipFeed from "./pages/feeds/AllScholarshipPostsfeed";
+import Home from "./pages/landing";
+import PostPage from "./pages/post";
 import AdminUserManagement from "./pages/admin/admin-page";
+import ProviderPage from "./pages/provider";
+import ProviderProfile from "./pages/provider/ProviderProfile";
+import StudentPage from "./pages/student";
+import Profile from "./pages/student/profile";
+import TermsAndConditions from "./pages/TermsOfUse";
+
 
 function App() {
   return (
@@ -21,16 +23,20 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/student" element={<StudentPage />} />
-          <Route path='/provider' element={<ProviderPage />} />
+          <Route path="/provider" element={<ProviderPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
           <Route path='/provider-feed' element={<ProvidersFeed/>} />
           <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
-          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+          <Route path="/scholarship-feed" element={<ScholarshipFeed />} />
+          <Route path="/provider-feed" element={<ProvidersFeed />} />
+          <Route path="/provider-profile/:id" element={<ProviderProfile />} />
           <Route path="/posts/:postId" element={<PostPage />} />
           <Route path="/admin" element={<AdminUserManagement/>} />
-          
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+          <Route path='/terms-and-conditions' element={<TermsAndConditions/>} />
+
         </Routes>
       </Router>
       <Toaster />
