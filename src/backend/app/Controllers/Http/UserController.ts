@@ -15,6 +15,7 @@ export default class UserController {
         email: true,
         role: true,
         validIdUrl: true,
+        bannerUrl: true
       },
       skip,
       take,
@@ -209,6 +210,8 @@ export default class UserController {
     }
   }
 
+  // Just for testing
+  // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadAvatarUrl(request: Request, response: Response) {
     try {
       const { avatarUrl, id } = request.body;
@@ -240,6 +243,46 @@ export default class UserController {
       });
     } catch (error: any) {
       console.log("LN226", error);
+      response.status(500).json({
+        status: 0,
+        message: "Server error",
+      });
+    }
+  }
+
+  // Just for testing
+  // Need to replace ID with the actual user ID coming from the request (req.user)
+  static async uploadBannerUrl(request: Request, response: Response) {
+    try {
+      const { bannerUrl, id } = request.body;
+
+      if (!bannerUrl) {
+        return response.status(400).json({
+          status: 0,
+          message: "Invalid banner URL!",
+        });
+      }
+
+      const user = await User.findOneBy({
+        id,
+      });
+
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!",
+        });
+      }
+
+      user.bannerUrl = bannerUrl;
+      await User.save(user);
+      response.status(200).json({
+        status: 1,
+        message: "Banner URL updated.",
+        user,
+      });
+    } catch (error: any) {
+      console.log("LN280", error);
       response.status(500).json({
         status: 0,
         message: "Server error",
