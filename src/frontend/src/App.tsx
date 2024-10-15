@@ -12,6 +12,7 @@ import ProviderProfile from './pages/provider/ProviderProfile';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PostPage from "./pages/post";
 import { Toaster } from "./components/ui/sonner";
+import AdminUserManagement from "./pages/admin/admin-page";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
           <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
           <Route path="/posts/:postId" element={<PostPage />} />
+          <Route path="/admin" element={<AdminUserManagement/>} />
+          
         </Routes>
       </Router>
       <Toaster />
