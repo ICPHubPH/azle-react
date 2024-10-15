@@ -106,7 +106,8 @@ export default function ScholarshipsFeed() {
                   postAuthorName={post.name}
                   postCommentCount={post.postCommentCount}
                   postType={post.postType}
-                  postDate={post.postDate}         />
+                  postDate={post.postDate}            />
+
               ))}
             </div>
           </TabsContent>

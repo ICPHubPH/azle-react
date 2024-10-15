@@ -10,11 +10,13 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"; // Import the Dialog components
+import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog
 
+  const navigate = useNavigate();
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "Testimonies", href: "#testimonies" },
@@ -25,10 +27,10 @@ const Header: React.FC = () => {
     // Redirect logic based on the role selected
     if (role === "student") {
       // redirect to student route
-      window.location.href = "/student";
+      navigate("/student");
     } else if (role === "provider") {
       // redirect to provider route
-      window.location.href = "/provider";
+      navigate("/provider");
     }
   };
 
@@ -37,7 +39,9 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4">
         <nav className="flex justify-between items-center h-16">
           <div className="flex items-center">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">ConnectED</h1>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
+              ConnectED
+            </h1>
           </div>
           {/* Desktop Menu */}
           <ul className="hidden md:flex space-x-4">
