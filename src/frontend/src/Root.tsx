@@ -4,9 +4,8 @@ import ToggleSwitch from './components/ui/ToggleSwitch';
 const Layout = () => {
   return (
     <div className="h-screen">
-      <header>
-        <h1>My App</h1>
-        <nav>
+      <header className=" min-h-12 flex items-center justify-center">
+        <nav className="flex gap-5">
           <a href="/">Home</a>
           <a href="/create">Create</a>
           <a href="/login">Login</a>
@@ -14,12 +13,9 @@ const Layout = () => {
           <ToggleSwitch />
         </nav>
       </header>
-      <main>
+      <main className="min-h-[calc(100vh-3rem)]">
         <Outlet />
       </main>
-      <footer>
-        <p>© 2023 My App</p>
-      </footer>
     </div>
   );
 };
