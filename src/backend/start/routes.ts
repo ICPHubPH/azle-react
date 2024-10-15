@@ -35,9 +35,10 @@ Route.post("/users", AuthMiddleware.authorize, UserController.create);
 Route.get("/user/:id", UserController.findById);
 Route.post("/user/:id", AuthMiddleware.authorize, UserController.updateById); // UPDATE
 Route.post("/user/:id", AuthMiddleware.authorize, UserController.deleteById); // DELETE
-Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl);
+Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl); // TODO - add a middleware that verifies if the user is a provider
 Route.post("/@self/upload/avatar", UserController.uploadAvatarUrl);
 Route.post("/@self/upload/banner", UserController.uploadBannerUrl);
+Route.post("/@self/change-password", UserController.changePassword);
 
 Route.get("/posts", PostController.getAll);
 Route.post("/posts", AuthMiddleware.authorize, PostController.create);

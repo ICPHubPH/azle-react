@@ -1,5 +1,7 @@
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+import bcryptjs from "bcryptjs";
+
 export default class UserController {
   static async getAll(request: Request, response: Response) {
     const page = request.query.page ? Number(request.query.page) : 1;
@@ -15,7 +17,7 @@ export default class UserController {
         email: true,
         role: true,
         validIdUrl: true,
-        bannerUrl: true
+        bannerUrl: true,
       },
       skip,
       take,
@@ -284,6 +286,60 @@ export default class UserController {
     } catch (error: any) {
       console.log("LN280", error);
       response.status(500).json({
+        status: 0,
+        message: "Server error",
+      });
+    }
+  }
+
+  // Just for testing
+  // Need to replace ID with the actual user ID coming from the request (req.user)
+  static async changePassword(request: Request, response: Response) {
+    try {
+      const { oldPassword, newPassword, confirmPassword, id } = request.body;
+
+      if (!oldPassword || !newPassword || !confirmPassword) {
+        return response.status(400).json({
+          status: 0,
+          message: "Missing required fields!",
+        });
+      }
+
+      const user = await User.findOneBy({ id });
+
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!",
+        });
+      }
+
+      const isMatch = await bcryptjs.compare(oldPassword, user.password);
+
+      if (!isMatch) {
+        return response.status(400).json({
+          status: 0,
+          message: "Incorrect old password!",
+        });
+      }
+
+      if (newPassword !== confirmPassword) {
+        return response.status(400).json({
+          status: 0,
+          message: "Passwords do not match!",
+        });
+      }
+
+      user.password = await bcryptjs.hash(newPassword, 5);
+      await User.save(user);
+      response.status(200).json({
+        status: 1,
+        message: "Password updated.",
+        user,
+      });
+    } catch (error: any) {
+      console.log("LN350", error);
+      return response.status(500).json({
         status: 0,
         message: "Server error",
       });
