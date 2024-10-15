@@ -85,8 +85,11 @@ const SignUpPage = () => {
 			{/* Background Image Section */}
 			<section className="hidden md:block size-full relative overflow-hidden">
 				<div
-					className="absolute inset-0 bg-cover bg-no-repeat bg-[url('person-giving-vegetables.jpg')]"
-					style={{ backgroundPositionX: "60%" }}
+					className="absolute inset-0 bg-cover bg-no-repeat"
+					style={{
+						backgroundPositionX: "60%",
+						backgroundImage: "url('person-giving-vegetables.jpg')",
+					}}
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" />
 				<p

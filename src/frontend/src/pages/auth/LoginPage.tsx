@@ -51,8 +51,11 @@ const LoginPage = () => {
 			{/* Background Image Section */}
 			<section className="hidden md:block size-full relative overflow-hidden">
 				<div
-					className="absolute inset-0 bg-cover bg-no-repeat bg-[url('person-looking-at-plants.jpg')]"
-					style={{ backgroundPositionX: "60%" }}
+					className="absolute inset-0 bg-cover bg-no-repeat "
+					style={{
+						backgroundPositionX: "60%",
+						backgroundImage: "url('person-looking-at-plants.jpg')",
+					}}
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" />
 				<p className="absolute bottom-6 right-6 lg:bottom-12 lg:right-12 w-2/4 lg:w-3/5 xl:w-2/5 text-white font-bold md:text-4xl lg:text-5xl text-right">
@@ -113,7 +116,10 @@ const LoginPage = () => {
 
 					<div className="text-center">
 						<span>Don't have an account?</span>{" "}
-						<Link to={PageRoutes.SignUp} className="text-primary hover:underline">
+						<Link
+							to={PageRoutes.SignUp}
+							className="text-primary hover:underline"
+						>
 							Sign Up
 						</Link>
 					</div>
@@ -125,7 +131,7 @@ const LoginPage = () => {
 						<hr className="absolute top-1/2 w-full h-0.5 bg-gray-300" />
 					</div>
 
-                    <SocialsAuth />
+					<SocialsAuth />
 				</div>
 			</section>
 		</div>

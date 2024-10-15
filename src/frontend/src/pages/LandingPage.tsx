@@ -18,7 +18,7 @@ const LandingPage = () => {
               <span>World</span>
             </div>
           </div>
-          <Button className="flex items-center bg-lima-600 font-medium rounded-full shadow-md transition-transform transform hover:scale-105">
+          <Button className="flex items-center gap-1 bg-lima-600 font-medium rounded-full shadow-md transition-transform transform hover:scale-105">
             <span className="text-sm text-white">Visit us</span>
             <ArrowUpRight className="bg-white p-1 rounded-full text-black" size={20} />
           </Button>
