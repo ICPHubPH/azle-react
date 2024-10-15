@@ -18,6 +18,7 @@ Route.post('/user/register', /* isAuth, */ UsersController.register);
 */
 
 Route.get("/greet", ApisController.greet);
+Route.get('/user/test', UsersController.test);
 Route.get("/configurations", ApisController.configurations);
 Route.post("/configuration/insert", ApisController.insert_configuration);
 Route.post("/configuration/update", ApisController.update_configuration);

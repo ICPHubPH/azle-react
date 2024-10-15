@@ -6,7 +6,7 @@ import { DatabaseStorage } from "./database/storage";
 import { CreateServer } from "./server";
 
 const databaseOptions: DatabaseOptions = {
-	sincronize: false,
+	sincronize: process.env.NODE_ENV === "development",
 	migrationsRun: true,
 	storage: new DatabaseStorage({
 		key: "DATABASE",
