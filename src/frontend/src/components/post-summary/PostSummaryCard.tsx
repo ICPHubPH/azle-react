@@ -1,21 +1,17 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Bookmark, CalendarDays, Forward, Star } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
-import { useNavigate } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
+import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } from "lucide-react";
 
 export interface PostSummaryCardProps {
   postId: string;
@@ -28,8 +24,8 @@ export interface PostSummaryCardProps {
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
-  postType?: string; // TODO:Update UI added type of post for filtering scholarship || intership
-  postDate?: string; // TODO: Update UI added date for filtering
+  postType?: string;
+  postDate?: string;
 }
 
 const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
@@ -46,9 +42,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   postType,
   postDate,
 }) => {
-
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [ratingsUsers, setRatingsUsers] = useState<string[]>([
     "User1",
@@ -80,8 +74,10 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
     "Commenter7",
     "Commenter8",
   ]);
-
-  const [isTouchDevice, setIsTouchDevice] = useState<boolean>();
+  
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+  const [ratingValue, setRatingValue] = useState(0);
+  const [ratingComment, setRatingComment] = useState('');
 
   const fetchRatingsUsers = async () => {
     const response = await fetch("/api/v1");
@@ -110,10 +106,40 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
     }
   }, []);
 
+  const handleRating = () => {
+    // Here you would typically send the rating to your backend
+    console.log(`Submitted rating ${ratingValue} for post ${postId} with comment: ${ratingComment}`);
+    toast({
+      title: "Rating Submitted",
+      description: "Thank you for your feedback!",
+    });
+  };
+
+  const handleBookmark = () => {
+    // Here you would typically toggle the bookmark status in your backend
+    toast({
+      title: "Bookmark Added",
+      description: "This post has been bookmarked.",
+    });
+  };
+
+  const handleShare = (type: 'copy' | 'facebook') => {
+    if (type === 'copy') {
+      navigator.clipboard.writeText(`https://yourwebsite.com/posts/${postId}`);
+      toast({
+        title: "Link Copied",
+        description: "Post link has been copied to clipboard.",
+      });
+    } else if (type === 'facebook') {
+      // Here you would typically open a Facebook share dialog
+      console.log(`Sharing post ${postId} on Facebook`);
+    }
+  };
+
   return (
     <Card className="bg-primary-foreground">
       <CardHeader className="py-4">
-        <div className="w-full flex justify-between items-center">
+      <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <Avatar
               className="w-10 h-10 cursor-pointer"
@@ -197,7 +223,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
         </div>
       </CardHeader>
       <Separator className="mb-4" />
-      <CardContent className="pb-4 ">
+      <CardContent className="pb-4">
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex flex-col gap-1">
             <div className="flex justify-between items-center">
@@ -223,100 +249,127 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
         </div>
       </CardContent>
 
-      {!isTouchDevice ? (
-        <div className="w-full h-12 flex justify-between items-center px-4 border-b">
+      <div className="w-full h-12 flex justify-between items-center px-4 border-b">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
+                <small>{postRatingCount} ratings</small>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <ul>
+                {ratingsUsers.slice(0, 7).map((user, index) => (
+                  <li key={index}>{user}</li>
+                ))}
+                {ratingsUsers.length > 7 && (
+                  <li>{ratingsUsers.length - 7} more</li>
+                )}
+              </ul>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <div className="flex gap-2 items-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                  <small>{postRatingCount} ratings</small>
+                  <small>{postBookmarkCount} bookmarks</small>
                 </div>
               </TooltipTrigger>
-              <TooltipContent className="min-w-[6rem]">
+              <TooltipContent>
                 <ul>
-                  {ratingsUsers.slice(0, 7).map((user, index) => (
+                  {bookmarksUsers.slice(0, 7).map((user, index) => (
                     <li key={index}>{user}</li>
                   ))}
-                  {ratingsUsers.length > 7 && (
-                    <li>{ratingsUsers.length - 7} more</li>
+                  {bookmarksUsers.length > 7 && (
+                    <li>{bookmarksUsers.length - 7} more</li>
                   )}
                 </ul>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-
-          <div className="flex gap-2 items-center">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                    <small>{postBookmarkCount} bookmarks</small>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="min-w-[6rem]">
-                  <ul>
-                    {bookmarksUsers.slice(0, 7).map((user, index) => (
-                      <li key={index}>{user}</li>
-                    ))}
-                    {bookmarksUsers.length > 7 && (
-                      <li>{bookmarksUsers.length - 7} more</li>
-                    )}
-                  </ul>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                    <small>{postCommentCount} comments</small>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="min-w-[6rem]">
-                  <ul>
-                    {commentsUsers.slice(0, 7).map((user, index) => (
-                      <li key={index}>{user}</li>
-                    ))}
-                    {commentsUsers.length > 7 && (
-                      <li>{commentsUsers.length - 7} more</li>
-                    )}
-                  </ul>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
+                  <small>{postCommentCount} comments</small>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <ul>
+                  {commentsUsers.slice(0, 7).map((user, index) => (
+                    <li key={index}>{user}</li>
+                  ))}
+                  {commentsUsers.length > 7 && (
+                    <li>{commentsUsers.length - 7} more</li>
+                  )}
+                </ul>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
-      ) : (
-        <div className="w-full h-12 flex justify-between items-center px-4 border-b">
-          <div className="flex items-center hover:underline underline-offset-2">
-            <small>{postRatingCount} ratings</small>
-          </div>
-
-          <div className="flex gap-2 items-center">
-            <div className="flex items-center hover:underline underline-offset-2">
-              <small>{postBookmarkCount} bookmarks</small>
-            </div>
-
-            <div className="flex items-center hover:underline underline-offset-2">
-              <small>{postCommentCount} comments</small>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
 
       <div className="w-full flex gap-1 items-center p-2">
-        <Button className="w-full px-2" variant="ghost">
-          {" "}
-          <Star className="mr-0.5 h-4" /> Rate
-        </Button>
-        <Button className="w-full px-2" variant="ghost">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="w-full px-2" variant="ghost">
+              <Star className="mr-0.5 h-4" /> Rate
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Rate this Post</DialogTitle>
+              <DialogDescription>
+                Share your experience with this post.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex justify-center space-x-1 my-4">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Button
+                  key={star}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setRatingValue(star)}
+                >
+                  <Star className={`h-6 w-6 ${ratingValue >= star ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+                </Button>
+              ))}
+            </div>
+            <Input
+              placeholder="Leave a comment (optional)"
+              value={ratingComment}
+              onChange={(e) => setRatingComment(e.target.value)}
+            />
+            <DialogFooter>
+              <Button onClick={handleRating}>Submit Rating</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Button className="w-full px-2" variant="ghost" onClick={handleBookmark}>
           <Bookmark className="mr-0.5 h-4" />
           Bookmark
         </Button>
-        <Button className="w-full px-2" variant="ghost">
-          <Forward className="mr-0.5 h-4" />
-          Share
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="w-full px-2" variant="ghost">
+              <Forward className="mr-0.5 h-4" />
+              Share
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onSelect={() => handleShare('copy')}>
+              <LinkIcon className="mr-2 h-4 w-4" />
+              <span>Copy link</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => handleShare('facebook')}>
+              <Facebook className="mr-2 h-4 w-4" />
+              <span>Share on Facebook</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </Card>
   );
