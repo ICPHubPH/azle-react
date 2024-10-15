@@ -23,7 +23,7 @@ export default function PostSection() {
 
 function PostFrontGroup({ post }: { post: Post }) {
   return (
-    <div className="relative w-full h-full  ">
+    <div className="relative w-full h-full   ">
       <img
         src={post.postThumbnailSource}
         alt={post.postTitle}
