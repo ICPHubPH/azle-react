@@ -1,8 +1,8 @@
-import Flashcard from "../cardreels/Flashcard";
+import Flashcard from "../Flashcard/Flashcard";
 import styles from "./Reels.module.css";
-import useFlashcardStore from "../../store/useFlashcardStore";
+import useFlashcardStore from "../../../../store/useFlashcardStore";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { Button } from "@/components/common/button";
+import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 
 function Reels() {
