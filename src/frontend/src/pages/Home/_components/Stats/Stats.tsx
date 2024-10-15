@@ -1,19 +1,15 @@
-// interaction buttons
 import {
   CiRedo,
-  CiCircleMore,
   CiCircleQuestion,
   CiSquareCheck,
 } from "react-icons/ci";
 import { PiStackSimpleLight } from "react-icons/pi";
 import { FaSquareCheck } from "react-icons/fa6";
 import { IconContext } from "react-icons";
-import "./Stats.module.css";
 import useFlashcardStore from "@/store/useFlashcardStore";
 import StatsIcon from "./StatIcon";
-import styles from "./Stats.module.css";
-import { useState } from "react";
 import Modal from "./Modal";
+import { useState } from "react";
 
 interface StatsProps {
   recalledForCount: number;
@@ -50,50 +46,43 @@ const Stats: React.FC<StatsProps> = ({ recalledForCount, id }) => {
   }
 
   return (
-    <IconContext.Provider value={{ color: "black", size: "2.1rem" }}>
-      <div className={`${styles.stats} flex flex-col gap-1 mb-5`}>
+    <IconContext.Provider value={{ color: "gray", size: "2.1rem" }}>
+      <div className=" flex flex-col gap-2 mb-5 font-bold font-sans ">
         <StatsIcon onClick={onClickRecalledForCount}>
           {isRecalled ? <FaSquareCheck /> : <CiSquareCheck />}
           <p className="leading-5 text-sm">
-            Recalled <br></br>
-            {recalledForCount}x
+            Recalled <br /> {recalledForCount}x
           </p>
         </StatsIcon>
         <StatsIcon>
-          <Modal
-            content={getHint}
-            title="Hint"
-          >
+          <Modal content={getHint} title="Hint">
             <CiCircleQuestion />
             <p className="leading-5 text-sm">Hint</p>
           </Modal>
         </StatsIcon>
         {!getIsRedo ? (
-          <StatsIcon onClick={(id) => onRedo()}>
+          <StatsIcon onClick={() => onRedo()}>
             <CiRedo />
             <p className="leading-5 text-sm">Redo</p>
           </StatsIcon>
         ) : null}
         <IconContext.Provider value={{ color: "gray", size: "1.8rem" }}>
-          <span className="flex items-center justify-center flex-col align-middle mt-10">
+          <span className="flex items-center justify-center flex-col mt-10">
             <PiStackSimpleLight />
             <p className="leading-5 text-sm text-slate-500">
               ({redoCards.length}){" "}
               {redoCards.length <= 1 ? (
                 <>
-                  Redo<br></br>Card
+                  Redo<br />Card
                 </>
               ) : (
                 <>
-                  Redo<br></br>Cards
+                  Redo<br />Cards
                 </>
               )}
             </p>
           </span>
         </IconContext.Provider>
-        {/* <StatsIcon>
-          <CiCircleMore />
-        </StatsIcon> */}
       </div>
     </IconContext.Provider>
   );
