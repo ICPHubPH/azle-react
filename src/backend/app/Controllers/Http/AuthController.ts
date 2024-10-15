@@ -137,9 +137,10 @@ export default class AuthController {
             })
         }
 
-        const hashedPassword = await bcryptjs.compare(password, user.password);
+        
+        const passwordCorrect = await bcryptjs.compare(password, user.password);
 
-        if (!hashedPassword) {
+        if (!passwordCorrect) {
             return response.json({
                 success: 0,
                 message: "Invalid password"

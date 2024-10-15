@@ -5,7 +5,6 @@ export interface User {
   organizationName?: string;
   bio?: string;
   avatarUrl?: string;
-  contactNumber?: string;
   validIdUrl?: string;
   createdAt: string;
   updatedAt: string;
