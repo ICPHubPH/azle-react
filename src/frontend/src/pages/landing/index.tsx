@@ -16,6 +16,10 @@ import Feedback from "@/components/review/Feedback";
 import Footer from "@/components/footer/Footer";
 import { useNavigate } from "react-router-dom";
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Briefcase, Users, Smile, Zap, TrendingUp, UserPlus } from "lucide-react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   return (
@@ -32,71 +36,114 @@ const Home: React.FC = () => {
           </span>
         </h1>
         <p className="text-lg text-gray-800 dark:text-gray-200">
-          Connecting students and providers for quality education.
+          Your Trusted Gateway to Scholarships and Internships.
         </p>
       </div>
       <Separator />
-      <div className="container mx-auto px-4" id="testimonies">
-        <Testimonies />
-      </div>
-      <Separator />
-      <div className="container mx-auto px-4" id="providers">
-        <Providers />
-      </div>
-
+      
       {/** TEST POST ONLY */}
       <div className="flex flex-col gap-4 items-center container mx-auto">
-        <h1 className="text-2xl font-bold">Test Posts</h1>
-        <div className="px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
-          {dummyPosts.map((post) => (
-            <PostSummaryCard
-              postId={post.id}
-              postAuthorEmail={post.email}
-              postAuthorAvatarSource={post.avatarSource}
-              postTitle={post.postTitle}
-              postThumbnailSource={post.postThumbnailSource}
-              postDescription={post.postDescription}
-              postRatingCount={post.postRatingCount}
-              postBookmarkCount={post.postBookmarkCount}
-              postAuthorName={post.name}
-              postCommentCount={post.postCommentCount}
-              postType={post.postType}
-              postDate={post.postDate}
-            />
-          ))}
-        </div>
+      <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
+              What&apos;s different about ConnectEd?
+            </h2>
+            <div className="grid gap-6 lg:grid-cols-3">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Centralized Platform for Scholarships and Internships</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>ConnectED brings together a wide range of scholarships and internships 
+                    in one place, making it easier than ever to explore, compare, and discover 
+                    the opportunities that are right for you.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Verified Opportunities</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>
+                  Focus on applying with confidence, knowing that every opportunity 
+                  on our platform is authentic.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Empowering Organizations to Reach the Right Candidates</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p> ConnectED makes it easy to reach qualified candidates. 
+                    With verified student profiles and a targeted user base, 
+                    your opportunities will get in front of the people who matter.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Advanced Solutions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>Supports remote work policies while improving team collaboration.</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
       </div>
 
       {/* test only for top providers */}
 
       <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
-        <h1 className="text-2xl font-bold">Providers</h1>
-        <div className="w-full px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
-          {dummyTopProviders.map((provider, index) => (
-            <TopProviderCard
-              key={index}
-              thumbnail={provider.thumbnail}
-              avatar={provider.avatar}
-              provider={provider.provider}
-              description={provider.description}
-              scholarship={provider.scholarship}
-              id={""}
-            />
-          ))}
-        </div>
+      <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
+              What We Have to Offer?
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                { icon: Briefcase, title: "Flexibility at Your Fingertips" },
+                { icon: Users, title: "Boosted Collaboration" },
+                { icon: Smile, title: "Employee Satisfaction" },
+                { icon: Zap, title: "Technology-Driven Process" },
+                { icon: TrendingUp, title: "Improved Productivity" },
+                { icon: UserPlus, title: "Efficient Onboarding Process" },
+              ].map((item, index) => (
+                <Card key={index}>
+                  <CardHeader>
+                    <item.icon className="h-6 w-6 mb-2" />
+                    <CardTitle>{item.title}</CardTitle>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
+          </div>
       </div>
 
       <CreatePost />
 
       {/* TEST FEEDBACKS */}
-      <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
-        <h1 className="text-2xl font-bold">Test Feedbacks</h1>
-        <div className="w-full px-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8 lg:grid-cols-3">
-          {dummyFeedbacks.map((feedback, index) => (
-            <Feedback user={dummyUsers[index]} feedback={feedback} />
-          ))}
-        </div>
+      <div className="flex flex-col gap-4 items-center container mx-auto mt-6 pb-10">
+        <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
+              Still have questions?
+            </h2>
+            <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
+              {[
+                { question: "What is ConnectEd?", answer: "ConnectEd is a workspace management system designed to facilitate flexible and efficient use of office spaces." },
+                { question: "How does ConnectEd work?", answer: "ConnectEd allows employees to book desks, meeting rooms, and other resources through an intuitive interface, while providing administrators with tools to manage and optimize workspace utilization." },
+                { question: "Can I customize my workspace?", answer: "Yes, ConnectEd offers customization options to tailor the system to your organization's specific needs and branding." },
+                { question: "Is ConnectEd free?", answer: "ConnectEd offers various pricing tiers, including a free trial. Please contact our sales team for detailed pricing information." },
+              ].map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
       </div>
+      <Separator />
 
       {/*test footer */}
 
