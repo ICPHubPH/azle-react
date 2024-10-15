@@ -4,66 +4,84 @@ import { Request, Response } from "express";
 
 export default class PostController {
     static async getAll(request: Request, response: Response) {
-        const page = request.query.page ? Number(request.query.page) : 1;
-        const take = request.query.take ? Number(request.query.take) : 10;
-        const skip = (page - 1) * take;
-
-        const data = await Post.findAndCount({
-            select: {
-                id: true,
-                title: true,
-                thumbnail: true,
-                createdAt: true,
-                user: {
+        try {
+            const skip = request.skip;
+            const take = request.limit;
+            
+            const data = await Post.findAndCount({
+                select: {
                     id: true,
-                    name: true,
-                    email: true,
-                    avatarUrl: true,
-                }
-            },
-            skip,
-            take
-        });
+                    title: true,
+                    content: true,
+                    type: true,
+                    thumbnail: true,
+                    createdAt: true,
+                    user: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        avatarUrl: true,
+                    }
+                },
+                skip,
+                take
+            });
 
-        response.status(200).json({
-            status: 1,
-            data,
-            message: null
-        });
+            response.status(200).json({
+                success: 1,
+                data,
+                message: null
+            });
+        } catch (error) {
+            response.status(500).json({
+                success: 0,
+                error,
+                message: "Internal server error!"
+            })
+        }
     }
 
     static async findByCategorytype(request: Request, response: Response) {
-        const page = request.query.page ? Number(request.query.page) : 1;
-        const take = request.query.take ? Number(request.query.take) : 10;
-        const skip = (page - 1) * take;
+        try {
+            const skip = request.skip;
+            const take = request.limit;
 
-        const type = request.params.type; // post scholarship type
+            const type = request.params.type; // post scholarship type
 
-        const data = await Post.findAndCount({
-            where: {
-                type
-            },
-            skip,
-            take,
-            select: {
-                id: true,
-                title: true,
-                thumbnail: true,
-                createdAt: true,
-                user: {
+            const data = await Post.findAndCount({
+                where: {
+                    type
+                },
+                skip,
+                take,
+                select: {
                     id: true,
-                    name: true,
-                    email: true,
-                    avatarUrl: true
+                    title: true,
+                    content: true,
+                    type: true,
+                    thumbnail: true,
+                    createdAt: true,
+                    user: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        avatarUrl: true
+                    }
                 }
-            }
-        });
+            });
 
-        response.status(200).json({
-            status: 1,
-            data,
-            message: null
-        });
+            response.status(200).json({
+                success: 1,
+                data,
+                message: null
+            });
+        } catch (error) {
+            response.status(500).json({
+                success: 0,
+                error,
+                message: "Internal server error!"
+            });
+        }
     }
 
     static async findById(request: Request, response: Response) {
@@ -98,7 +116,7 @@ export default class PostController {
         }
         
         response.status(200).json({
-            status: 1,
+            success: 1,
             data,
             message: null
         });
@@ -106,32 +124,39 @@ export default class PostController {
 
     // TODO: Thumbnail upload
     static async create(request: Request, response: Response) {
-        const { title, thumbnail, type, content } = request.body;
+        try {
+            const { title, thumbnail, type, content } = request.body;
+            const userExists = await User.findOneBy({ id: request.user });
 
-        const userExists = await User.findOneBy({ id: request.user });
+            if (!userExists || userExists.role == "student") {
+                return response.status(401).json({
+                    status: 1,
+                    message: "Unauthorized!"
+                });
+            }
 
-        if (!userExists || userExists.role == "student") {
-            return response.status(401).json({
-                status: 1,
-                message: "Unauthorized!"
+            const data = await Post.create({
+                title,
+                content,
+                thumbnail,
+                type,
+                user: userExists
             });
+
+            await Post.save(data);
+
+            return response.status(201).json({
+                status: 1,
+                data,
+                message: "New post created!"
+            });
+        } catch (error) {
+            response.status(500).json({
+                success: 0,
+                error,
+                message: "Internal server error!"
+            })
         }
-
-        const data = await Post.create({
-            title,
-            content,
-            thumbnail,
-            type,
-            user: userExists
-        });
-
-        await Post.save(data);
-
-        response.status(201).json({
-            status: 1,
-            data,
-            message: "New post created!"
-        });
     }
 
     // TODO: thumbnail upload and deletion

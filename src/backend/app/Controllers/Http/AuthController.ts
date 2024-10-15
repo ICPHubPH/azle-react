@@ -49,6 +49,9 @@ export default class AuthController {
 
         await User.save(user);
 
+        // for testing
+        request.user = user.id;
+
         // const token = await jwt.sign({
         //     id: user.id,
         //     email: user.email
@@ -152,6 +155,8 @@ export default class AuthController {
         // }, process.env.JWT_SECRET!, {
         //     expiresIn: "7d"
         // });
+
+        request.user = user.id;
 
         return response.status(200).json({
             success: 1,

@@ -1,9 +1,12 @@
-import ApisController from "App/Controllers/Http/ApisController";
-import AuthController from "App/Controllers/Http/AuthController";
-import PostController from "App/Controllers/Http/PostController";
-import UserController from "App/Controllers/Http/UserController";
-import AuthMiddleware from "App/Middlewares/AuthMiddleware";
-import { Router } from "express";
+import ApisController from 'App/Controllers/Http/ApisController';
+import AuthController from 'App/Controllers/Http/AuthController';
+import BookmarkController from 'App/Controllers/Http/BookmarkController';
+import FeedbackController from 'App/Controllers/Http/FeedbackController';
+import PostController from 'App/Controllers/Http/PostController';
+import UserController from 'App/Controllers/Http/UserController';
+import AuthMiddleware from 'App/Middlewares/Auth';
+import Pagination from 'App/Middlewares/Pagination';
+import { Router } from 'express';
 const Route = Router();
 
 /*
@@ -30,25 +33,30 @@ Route.post("/auth/verify", AuthController.verify);
 |--------------------------------------------------------------------------
 */
 
-Route.get("/users", UserController.getAll);
-Route.post("/users", AuthMiddleware.authorize, UserController.create);
-Route.get("/user/:id", UserController.findById);
-Route.post("/user/:id", AuthMiddleware.authorize, UserController.updateById); // UPDATE
-Route.post("/user/:id", AuthMiddleware.authorize, UserController.deleteById); // DELETE
+// NOTE: Added convention /remove for delete endpoint to prevent conflicts with other routes.
+
+Route.get("/users", Pagination.paginate, UserController.getAll);
+Route.post("/users", AuthMiddleware.authTest, UserController.create);
+Route.get("/users/:id", UserController.findById);
+Route.post("/users/:id", AuthMiddleware.authTest, UserController.updateById); // UPDATE
+Route.post("/users/:id/remove", AuthMiddleware.authTest, UserController.deleteById); // DELETE
 Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl); // TODO - add a middleware that verifies if the user is a provider
 Route.post("/@self/upload/avatar", UserController.uploadAvatarUrl);
 Route.post("/@self/upload/banner", UserController.uploadBannerUrl);
 Route.post("/@self/change-password", UserController.changePassword);
 
-Route.get("/posts", PostController.getAll);
-Route.post("/posts", AuthMiddleware.authorize, PostController.create);
-Route.get("/post/:id", AuthMiddleware.authorize, PostController.findById);
-Route.post("/post/:id", AuthMiddleware.authorize, PostController.updateById); // UPDATE
-Route.post("/post/:id", AuthMiddleware.authorize, PostController.deleteById); // DELETE
-Route.get("/post/:id/category", PostController.findByCategorytype);
+Route.get('/users/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
 
-// TODO: Feedback Routes
-// Route.get('/feedback/:id', ApisController.feedback.findById);
-// ...
+Route.get('/posts', Pagination.paginate, PostController.getAll);
+Route.post('/posts', AuthMiddleware.authTest, PostController.create);
+Route.get('/posts/:id', AuthMiddleware.authTest, PostController.findById);
+Route.post('/posts/:id', AuthMiddleware.authTest, PostController.updateById);
+Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById); // DELETE
+Route.get('/posts/:id/category', PostController.findByCategorytype);
+
+Route.post('/feedbacks', FeedbackController.createFeedback); // CREATE
+Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
+Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback); // DELETE
 
 export { Route as routes };
+

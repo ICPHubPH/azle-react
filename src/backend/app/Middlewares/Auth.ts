@@ -33,4 +33,16 @@ export default class AuthMiddleware {
             })
         }
     }
+
+    static async authTest(request: Request, response: Response, next: NextFunction) {
+        if (!request.user) {
+            return response.status(401).json({
+                success: 0,
+                data: null,
+                message: "Unauthorized!"
+            });
+        }
+
+        next();
+    }
 }
