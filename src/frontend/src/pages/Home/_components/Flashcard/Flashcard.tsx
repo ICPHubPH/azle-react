@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "./Flashcard.module.css";
-import Stats from "./Stats";
+import Stats from "../Stats/Stats";
 
 interface FlashcardProps {
   front: string;

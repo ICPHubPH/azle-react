@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/common/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 interface ModalProps {
   children: React.ReactNode;
