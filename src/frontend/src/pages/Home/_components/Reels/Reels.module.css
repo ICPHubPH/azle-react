@@ -5,13 +5,13 @@ html {
 .app {
   display: grid;
   place-items: center;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
 .cards {
   position: relative;
-  height: 100vh;
+  height: 100%;
   background-color: white;
   width: 100%;
   overflow: scroll;
