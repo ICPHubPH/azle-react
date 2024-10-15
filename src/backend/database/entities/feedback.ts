@@ -9,7 +9,10 @@ export class Feedback extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({ type: "text" })
+  @Column({ type: "integer" })
+  rate: number;
+
+  @Column({ nullable: true, type: "text" })
   content: string;
 
   @CreateDateColumn()

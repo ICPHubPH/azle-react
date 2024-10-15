@@ -8,9 +8,9 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { UserRole } from "../../constants";
+import { Bookmark } from "./bookmark";
 import { Feedback } from "./feedback";
 import { Post } from "./post";
-import { Rating } from "./rating";
 
 @Entity({
   name: "users",
@@ -43,6 +43,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: "datetime" })
   emailVerifiedAt: Date;
 
+  @Column({ nullable: true, type: "datetime" })
+  providerVerifiedAt: Date;
+
   @Column({ type: "text" })
   role: string;
 
@@ -51,6 +54,9 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true, type: "datetime" })
+  archivedAt: Date;
 
   @OneToMany(() => Post, (post) => post.user, {
     cascade: true,
@@ -64,12 +70,9 @@ export class User extends BaseEntity {
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Rating, (rating) => rating.user, {
-    cascade: true,
-    onDelete: "CASCADE",
-  })
-  ratings: Rating[];
-
+  @OneToMany(() => Bookmark, bookmark => bookmark.user)
+  bookmarks: Bookmark[];
+  
   setRole(role: string) {
     if (UserRole.includes(role)) {
       this.role = role;

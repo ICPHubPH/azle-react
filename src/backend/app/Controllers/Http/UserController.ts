@@ -1,33 +1,40 @@
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 export default class UserController {
-  static async getAll(request: Request, response: Response) {
-    const page = request.query.page ? Number(request.query.page) : 1;
-    const take = request.query.take ? Number(request.query.take) : 10;
-    const skip = (page - 1) * take;
+    static async getAll(request: Request, response: Response) {
+        try {
+            const skip = request.skip;
+            const take = request.limit;
 
-    const data = await User.findAndCount({
-      select: {
-        id: true,
-        name: true,
-        avatarUrl: true,
-        bio: true,
-        email: true,
-        role: true,
-        validIdUrl: true,
-        bannerUrl: true
-      },
-      skip,
-      take,
-    });
+            const data = await User.findAndCount({
+            select: {
+                id: true,
+                name: true,
+                avatarUrl: true,
+                bio: true,
+                email: true,
+                role: true,
+                validIdUrl: true,
+                bannerUrl: true
+            },
+            skip,
+            take,
+            });
 
-    response.status(200).json({
-      status: 1,
-      data: data[0],
-      count: data[1],
-      message: null,
-    });
-  }
+            return response.status(200).json({
+                status: 1,
+                data: data[0],
+                count: data[1],
+                message: null
+            });
+        } catch (error) {
+            response.status(500).json({
+                success: 0,
+                error,
+                message: "Internal server error!"
+            });
+        }
+    }
 
   static async findById(request: Request, response: Response) {
     const id = request.params.id;
