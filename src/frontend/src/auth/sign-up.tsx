@@ -32,7 +32,7 @@ const SignUp: React.FC = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "",
+      role: "student",
     },
   });
 
@@ -113,8 +113,8 @@ const SignUp: React.FC = () => {
                         <SelectValue placeholder="Select your role" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Student">Student</SelectItem>
-                        <SelectItem value="Provider">Provider</SelectItem>
+                        <SelectItem value="student">Student</SelectItem>
+                        <SelectItem value="provider">Provider</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
