@@ -12,6 +12,7 @@ import ProviderPage from "./pages/provider";
 import ProviderProfile from "./pages/provider/ProviderProfile";
 import StudentPage from "./pages/student";
 import Profile from "./pages/student/profile";
+import TermsAndConditions from "./pages/TermsOfUse";
 
 function App() {
   return (
@@ -23,11 +24,16 @@ function App() {
           <Route path="/provider" element={<ProviderPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
+          <Route path='/provider-feed' element={<ProvidersFeed/>} />
+          <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
           <Route path="/scholarship-feed" element={<ScholarshipFeed />} />
           <Route path="/provider-feed" element={<ProvidersFeed />} />
           <Route path="/provider-profile/:id" element={<ProviderProfile />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/posts/:postId" element={<PostPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+          <Route path='/terms-and-conditions' element={<TermsAndConditions/>} />
         </Routes>
       </Router>
       <Toaster />
