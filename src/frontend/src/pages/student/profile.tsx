@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Bell, LogOut, Settings, User, Pencil, Shield, Mail, AlertTriangle, Key } from "lucide-react";
+import Header from "@/components/student-component/Header";
+import { Separator } from "@/components/ui/separator";
+import { FormEvent, useState } from "react";
+import { Bell, LogOut, Settings, User, Pencil, Shield, Mail, AlertTriangle, EyeOff, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,10 +16,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import Header from "@/components/student-component/Header";
 
-export default function Profile() {
+
+
+const Profile: React.FC = () => {
+  const [showOldPassword, setShowOldPassword] = useState(false);
+const [showNewPassword, setShowNewPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+const toggleShowOldPassword = () => setShowOldPassword(!showOldPassword);
+const toggleShowNewPassword = () => setShowNewPassword(!showNewPassword);
+const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
+
   const [user, setUser] = useState({
     name: "Jireh Belen",
     email: "jirehbelen@student.laverdad.edu.ph",
@@ -41,159 +52,200 @@ export default function Profile() {
     }
   };
 
+  function handleChangePassword(event: FormEvent<HTMLFormElement>): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <Header/>
-      </header>
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
-          <aside>
-            <Card>
-              <CardHeader>
-                <Avatar className="h-24 w-24 mx-auto">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <CardTitle className="text-center">{user.name}</CardTitle>
-                <CardDescription className="text-center">{user.email}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <nav className="flex flex-col space-y-1">
-                  <Button variant="ghost" className="justify-start">
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </Button>
-                  <Button variant="ghost" className="justify-start">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
-                  </Button>
-                  <Button variant="ghost" className="justify-start">
-                    <Shield className="mr-2 h-4 w-4" />
-                    Privacy
-                  </Button>
-                </nav>
-              </CardContent>
-            </Card>
-          </aside>
-          <div>
-            <Tabs defaultValue="saved">
-              <TabsList className="mb-6">
-                <TabsTrigger value="saved">Saved Bookmarks</TabsTrigger>
-                <TabsTrigger value="settings">Account Settings</TabsTrigger>
-              </TabsList>
-              <TabsContent value="saved">
-                <h2 className="text-2xl font-bold mb-4">Saved Scholarships</h2>
-                <div className="grid gap-4">
-                  {savedScholarships.map((scholarship) => (
-                    <Card key={scholarship.id}>
-                      <CardHeader>
-                        <CardTitle>{scholarship.title}</CardTitle>
-                        <CardDescription>{scholarship.provider}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground">
-                          Deadline: {scholarship.deadline}
-                        </p>
-                      </CardContent>
-                      <CardFooter>
-                        <Button>View Details</Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-              <TabsContent value="settings">
-                <h2 className="text-2xl font-bold mb-6">Account Settings</h2>
-                <div className="space-y-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Personal Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="fullName">Full Name</Label>
-                        <Input id="fullName" defaultValue={user.name} />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" defaultValue={user.email} />
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button>Save Changes</Button>
-                    </CardFooter>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Change Password</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="currentPassword">Current Password</Label>
-                        <Input id="currentPassword" type="password" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="newPassword">New Password</Label>
-                        <Input id="newPassword" type="password" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                        <Input id="confirmPassword" type="password" />
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button>Update Password</Button>
-                    </CardFooter>
-                  </Card>
-                  <Card className="border-destructive">
-                    <CardHeader>
-                      <CardTitle className="text-destructive">Danger Zone</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Once you delete your account, there is no going back. Please be certain.
-                      </p>
-                      <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-                        <DialogTrigger asChild>
-                          <Button variant="destructive">Delete Account</Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Delete Account</DialogTitle>
-                            <DialogDescription>
-                              This action is irreversible. All your data will be permanently removed.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="py-4">
-                            <Input
-                              value={deleteConfirmation}
-                              onChange={(e) => setDeleteConfirmation(e.target.value)}
-                              placeholder={`Type "${user.name}" to confirm`}
-                            />
-                          </div>
-                          <DialogFooter>
-                            <Button variant="secondary" onClick={() => setIsDeleteModalOpen(false)}>
-                              Cancel
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              onClick={handleDeleteAccount}
-                              disabled={deleteConfirmation !== user.name}
-                            >
-                              Delete Account
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-            </Tabs>
+    <div className="scroll-smooth">
+      <Header />
+      <Separator />
+      <div className="container mx-auto">
+        <main className="flex-1 py-12">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col md:flex-row gap-6 ">
+              <aside className="">
+                <Card className="border-none shadow-none">
+                  <CardHeader>
+                    <Avatar className="h-60 w-60 md:h-36 md:w-36 lg:h-60 lg:w-60  mx-auto ">
+                      <AvatarImage src={user.avatar} alt={user.name} className="" />
+                      <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <CardTitle className="text-4xl md:text-2xl font-bold text-center md:text-start  ">
+                      {user.name}
+                    </CardTitle>
+                    <CardDescription className="text-center md:text-start">
+                      {user.email}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <nav className="flex flex-col space-y-1 ">
+                      <Button variant="ghost" className="justify-start font-normal ">
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Edit
+                      </Button>
+                      <Button variant="ghost" className="justify-start font-normal">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        className="justify-start text-red-500 hover:text-red-600 hover:bg-red-100 font-normal"
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Log out
+                      </Button>
+                    </nav>
+                  </CardContent>
+                </Card>
+              </aside>
+              <div className="flex-1 md:right-10  ">
+                <Tabs defaultValue="saved">
+                  <TabsList className="mb-4">
+                    <TabsTrigger value="saved">Saved Scholarships</TabsTrigger>
+                    <TabsTrigger value="settings">Account Settings</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="saved">
+                    <h2 className="text-2xl font-bold mb-4">Saved Scholarships</h2>
+                    {savedScholarships.map((scholarship) => (
+                      <Card key={scholarship.id} className="mb-4">
+                        <CardHeader>
+                          <CardTitle>{scholarship.title}</CardTitle>
+                          <CardDescription>{scholarship.provider}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">
+                            Deadline: {scholarship.deadline}
+                          </p>
+                        </CardContent>
+                        <CardFooter>
+                          <Button>View Details</Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                  </TabsContent>
+
+                  
+                  <TabsContent value="settings">
+                  <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="text-lg">Personal Information</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="fullName">Full Name</Label>
+            <Input id="fullName" defaultValue={user.name} />
           </div>
-        </div>
-      </main>
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" defaultValue={user.email} />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button>Save Changes</Button>
+        </CardFooter>
+      </Card>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="text-lg">Change Password</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <div className="space-y-2 relative">
+              <Label htmlFor="oldPassword">Old Password</Label>
+              <Input id="oldPassword" type={showOldPassword ? "text" : "password"} required />
+              <button
+                type="button"
+                onClick={toggleShowOldPassword}
+                className="absolute right-3 top-8 focus:outline-none"
+              >
+                {showOldPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            <div className="space-y-2 relative">
+              <Label htmlFor="newPassword">New Password</Label>
+              <Input id="newPassword" type={showNewPassword ? "text" : "password"} required />
+              <button
+                type="button"
+                onClick={toggleShowNewPassword}
+                className="absolute right-3 top-8 focus:outline-none"
+              >
+                {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            <div className="space-y-2 relative">
+              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} required />
+              <button
+                type="button"
+                onClick={toggleShowConfirmPassword}
+                className="absolute right-3 top-8 focus:outline-none"
+              >
+                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            <Button type="submit">Change Password</Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-6 border-red-600">
+        <CardHeader>
+          <CardTitle className="text-lg text-red-600">Danger Zone</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-4">
+            Once you delete your account, there is no going back. Please be certain.
+          </p>
+          <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-red-600 text-white">Delete Account</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[400px]">
+              <DialogHeader>
+                <AlertTriangle className="h-6 w-6 text-red-500 mb-2" />
+                <DialogTitle>Delete Account</DialogTitle>
+                <DialogDescription>
+                  This action is irreversible. All your data will be permanently removed.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4">
+                <Input
+                  value={deleteConfirmation}
+                  onChange={(e) => setDeleteConfirmation(e.target.value)}
+                  placeholder={`Type "${user.name}" to confirm`}
+                  className="w-full"
+                />
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsDeleteModalOpen(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={handleDeleteAccount}
+                  disabled={deleteConfirmation !== user.name}
+                >
+                  Delete Account
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
+    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
-}
+};
+
+export default Profile;

@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { dummyTopProviders } from '../landing/dummy-data'
 import { Star, MapPin, Book, Users, Calendar, ExternalLink, ArrowLeft } from 'lucide-react'
+import Header from '@/components/student-component/Header'
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -9,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
-import Header from '@/components/student-component/Header'
+
 
 export default function ProviderProfile() {
   const { id } = useParams()
