@@ -1,5 +1,5 @@
-"use client";
 
+"use client";
 import PostSummaryCard, {
   PostSummaryCardProps,
 } from "@/components/post-summary/PostSummaryCard";
