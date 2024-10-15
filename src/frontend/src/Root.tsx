@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 import ToggleSwitch from './components/ui/ToggleSwitch';
 
 const Layout = () => {
   return (
-    <div>
+    <div className="h-screen">
       <header>
         <h1>My App</h1>
         <nav>
