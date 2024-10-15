@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "server": "json-server --watch src/data/cards.json --port 8000",
     "setup": "npm i && dfx canister create backend && dfx generate backend && dfx deploy",
     "start": "vite --port 3000",
     "prebuild": "dfx generate",
@@ -23,6 +24,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^11.11.8",
+    "json-server": "^1.0.0-beta.3",
     "lucide-react": "^0.446.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
