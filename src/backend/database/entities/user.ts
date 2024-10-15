@@ -21,6 +21,9 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true, type: "varchar" })
   avatarUrl: string;
+  
+  @Column({ nullable: true, type: "varchar" })
+  bannerUrl: string;
 
   @Column({ nullable: true, type: "varchar" })
   validIdUrl: string;
