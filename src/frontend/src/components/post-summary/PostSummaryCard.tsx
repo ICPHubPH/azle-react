@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } from "lucide-react";
+import { Textarea } from '../ui/textarea';
 
 export interface PostSummaryCardProps {
   postId: string;
@@ -326,7 +327,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                 Share your experience with this post.
               </DialogDescription>
             </DialogHeader>
-            <div className="flex justify-center space-x-1 my-4">
+            <div className="flex justify-center space-x-1 my-5">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Button
                   key={star}
@@ -338,7 +339,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                 </Button>
               ))}
             </div>
-            <Input
+            <Textarea
               placeholder="Leave a comment (optional)"
               value={ratingComment}
               onChange={(e) => setRatingComment(e.target.value)}
