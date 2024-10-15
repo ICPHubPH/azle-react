@@ -11,12 +11,10 @@ function Home() {
   }, [getCards]);
 
   return (
-    <div>
-      <Reels
-        cards={cards}
-        redoCards={redoCards}
-      />
-    </div>
+    <Reels
+      cards={cards}
+      redoCards={redoCards}
+    />
   );
 }
 
