@@ -10,6 +10,7 @@ import Header from "@/components/student-component/Header";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import { dummyTopProviders } from "../landing/dummy-data";
 
+
 export default function ProvidersFeed() {
   const [activeTab, setActiveTab] = useState<"all" | "school" | "corporate" | "government">("all");
   const [searchQuery, setSearchQuery] = useState("");
