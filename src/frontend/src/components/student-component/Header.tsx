@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import UserDropdown from '../dropdowns/UserDropdown';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
+  const location = useLocation(); // Use location to detect current path
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -38,6 +38,7 @@ const Header: React.FC = () => {
   };
 
   const navItems = [
+    { name: 'Home', path: '/student' }, // Add Home link here
     { name: 'Scholarship', path: '/scholarship-feed' }, 
     { name: 'Providers', path: '/provider-feed' }, 
     { name: 'Terms of Use', path: '/terms-and-conditions' }, 
@@ -46,9 +47,7 @@ const Header: React.FC = () => {
   const NavItems = () => (
     <>
       {navItems.map((item) => (
-
         <li key={item.name}>
-
           <Button
             variant="ghost"
             asChild
@@ -56,10 +55,14 @@ const Header: React.FC = () => {
           >
             <a
               onClick={() => {
-                setIsMobileMenuOpen(false);
-                navigate(item.path); // Navigate to the correct path
+                if (location.pathname === item.path) {
+                  // If the user is on the same page, scroll to the top smoothly
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  setIsMobileMenuOpen(false);
+                  navigate(item.path); // Navigate to the correct path
+                }
               }}
-
               className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200 cursor-pointer"
             >
               {item.name}
@@ -71,24 +74,24 @@ const Header: React.FC = () => {
   );
 
   return (
-    <header className="border-b z-50 sticky top-0 backdrop-blur-md">
+    <header className="border-b z-[1000] sticky top-0 backdrop-blur-md">
       <div className="container mx-auto flex justify-between items-center h-16 px-4">
         <div className="flex items-center space-x-2">
           <h1
             className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent cursor-pointer"
-            onClick={handleLogoClick} // Added onClick for the logo
+            onClick={handleLogoClick}
           >
             ConnectED
           </h1>
-          {/* Desktop Menu */}
-
-         
         </div>
+
+        {/* Desktop Menu */}
         {!isMobile && (
-            <ul className="hidden md:flex space-x-4 ">
-              <NavItems />
-            </ul>
-          )}
+          <ul className="hidden md:flex space-x-4">
+            <NavItems />
+          </ul>
+        )}
+
         {/* Mobile Menu */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">
@@ -96,9 +99,11 @@ const Header: React.FC = () => {
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[250px] sm:w-[300px]">
+
+          {/* Fixed z-index for mobile menu */}
+          <SheetContent side="right" className="w-[250px] sm:w-[300px] z-[1100]">
             {/* User Info in Mobile Menu */}
-            <div className="px-4 py-3 flex items-center gap-3 border-b mb-2 ">
+            <div className="px-4 py-3 flex items-center gap-3 border-b mb-2">
               <Avatar className="w-12 h-12">
                 <AvatarImage src={user.avatarUrl} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
@@ -110,9 +115,9 @@ const Header: React.FC = () => {
               </div>
             </div>
 
+            {/* Mobile Navigation Items */}
             <nav className="flex flex-col gap-4">
               <ul className="flex flex-col gap-2">
-                {/* Render NavItems only in mobile view */}
                 {isMobile && <NavItems />}
               </ul>
             </nav>
@@ -122,18 +127,14 @@ const Header: React.FC = () => {
               <Button
                 variant="ghost"
                 className="w-full justify-start"
-
-                onClick={() => navigate('/profile')} // Replace with actual profile path
-
+                onClick={() => navigate('/profile')}
               >
                 Profile
               </Button>
               <Button
                 variant="ghost"
                 className="w-full justify-start mt-2"
-
-                onClick={() => navigate('/logout')} // Replace with actual logout path
-
+                onClick={() => navigate('/logout')}
               >
                 Logout
               </Button>
@@ -141,10 +142,10 @@ const Header: React.FC = () => {
           </SheetContent>
         </Sheet>
 
+        {/* Desktop User Dropdown */}
         {!isMobile && (
           <div className="hidden md:flex items-center space-x-4">
             <ModeToggle />
-            {/* Use the UserDropdown component here */}
             <UserDropdown user={user} />
           </div>
         )}

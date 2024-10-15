@@ -88,7 +88,7 @@ export const dummyTopProviders = [
       "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/449449169_447660674809391_692585298774003021_n.jpg?stp=dst-jpg_s960x960&_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFJuJzTCK2Z3odEydsAr1rJYsTexpZPKg1ixN7Glk8qDUu7Q_JCZVw9d4nKgEdy7qKBB_sO2fVWhHEqMiOUNG6T&_nc_ohc=6XaoIN0GI9QQ7kNvgFOZeVG&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=ADYuKfczXQ9LMZkCMLdcZYi&oh=00_AYCeJ0aQh1azc6a-sLBpIsX9rmd4RsjmKNYQ5H9-BVKnww&oe=670F870B",
     avatar:
       "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA3FC",
-    provider: "La Verdad Christian College, Inc. - Apalit, Pampanga",
+    provider: "La Verdad Christian College",
     description: "Wisdom based on the truth is priceless.",
     scholarship: "Future Tech Leaders Scholarship 2024",
     type: "School",
@@ -114,11 +114,11 @@ export const dummyTopProviders = [
   },
   {
     id: "3",
-    thumbnail: "https://via.placeholder.com/400x200?text=Scholarship+3",
+    thumbnail: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570/ss_d0f973ce376ca5b6c08e081cb035e86ced105fa9.1920x1080.jpg?t=1727827653",
     avatar:
       "https://scontent.fcrk2-2.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=0aFGsrCXi6EQ7kNvgGeDTFV&_nc_zt=23&_nc_ht=scontent.fcrk2-2.fna&_nc_gid=ANu0xv9z85XR0ENGh62yylc&oh=00_AYBGZKYtxIFtM7UfMbbYyIGbDTDRHZIUjJCb0LPeVAY0kg&oe=670F8366",
     provider: "Johnmack Faeldonia",
-    description: "Shori, bosh",
+    description: "Promoting scientific advancement in the Philippines.",
     scholarship: "STEM Leaders Scholarship 2024",
     type: "School",
     category: "Education",
@@ -163,7 +163,7 @@ export const dummyTopProviders = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdcxPpKUymqQvvT1Ci64D4hcnR6GD72K7Vkg&s",
     avatar:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7CPHJwf1tq4sT19BTZMljpFDFDAI_HsoE9Q&s",
-    provider: "Local Government Unit (LGU) - City of San Fernando",
+    provider: "Local Government Unit (LGU)",
     description: "Empowering local students through financial aid.",
     scholarship: "LGU Educational Assistance Program 2024",
     type: "Government",

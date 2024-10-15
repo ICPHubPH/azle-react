@@ -33,8 +33,8 @@ const TopProviderCard: React.FC<TopProviderCardProps> = ({
     navigate(`/provider-profile/${id}`); // Navigate to the provider profile page
   };
 
-  return (
-    <Card className="w-full overflow-hidden">
+  return ( 
+    <Card className="w-full overflow-hidden bg-primary-foreground  ">
       <CardHeader className="p-0">
         <div className="relative h-48">
           <img

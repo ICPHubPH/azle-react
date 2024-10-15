@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ navItems, user }) => {
   );
 
   return (
-    <header className="border-b z-50 sticky top-0 backdrop-blur-md">
+    <header className="border-b z-[1000] sticky top-0 backdrop-blur-md">
       <div className="container mx-auto flex justify-between items-center h-16 px-4">
         <div className="flex items-center space-x-2">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">ConnectED</h1>
