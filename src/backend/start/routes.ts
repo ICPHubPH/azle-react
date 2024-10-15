@@ -1,4 +1,5 @@
 import { ApisController } from "App/Controllers/Http/ApisController";
+import { UsersController } from "App/Controllers/Http/UsersController";
 import { Router } from "express";
 const Route = Router();
 
@@ -7,6 +8,8 @@ const Route = Router();
 | Authenticated Routes
 |--------------------------------------------------------------------------
 */
+
+Route.post('/user/register', /* isAuth, */ UsersController.register);
 
 /*
 |--------------------------------------------------------------------------
