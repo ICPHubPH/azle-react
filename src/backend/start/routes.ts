@@ -35,10 +35,8 @@ Route.post("/users", AuthMiddleware.authorize, UserController.create);
 Route.get("/user/:id", UserController.findById);
 Route.post("/user/:id", AuthMiddleware.authorize, UserController.updateById); // UPDATE
 Route.post("/user/:id", AuthMiddleware.authorize, UserController.deleteById); // DELETE
-Route.post(
-  "/@self/upload-valid-id",
-  UserController.uploadValidIdUrl
-);
+Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl);
+Route.post("/@self/upload/avatar", UserController.uploadAvatarUrl);
 
 Route.get("/posts", PostController.getAll);
 Route.post("/posts", AuthMiddleware.authorize, PostController.create);

@@ -14,6 +14,7 @@ export default class UserController {
         bio: true,
         email: true,
         role: true,
+        validIdUrl: true,
       },
       skip,
       take,
@@ -168,9 +169,19 @@ export default class UserController {
     });
   }
 
+  // Just for testing
+  // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadValidIdUrl(request: Request, response: Response) {
     try {
       const { validIdUrl, id } = request.body;
+
+      if (!validIdUrl) {
+        return response.status(400).json({
+          status: 0,
+          message: "Invalid ID URL!",
+        });
+      }
+
       const user = await User.findOneBy({
         id,
       });
@@ -191,6 +202,44 @@ export default class UserController {
       });
     } catch (error: any) {
       console.log("LN176", error);
+      response.status(500).json({
+        status: 0,
+        message: "Server error",
+      });
+    }
+  }
+
+  static async uploadAvatarUrl(request: Request, response: Response) {
+    try {
+      const { avatarUrl, id } = request.body;
+
+      if (!avatarUrl) {
+        return response.status(400).json({
+          status: 0,
+          message: "Invalid avatar URL!",
+        });
+      }
+
+      const user = await User.findOneBy({
+        id,
+      });
+
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!",
+        });
+      }
+
+      user.avatarUrl = avatarUrl;
+      await User.save(user);
+      response.status(200).json({
+        status: 1,
+        message: "Avatar URL updated.",
+        user,
+      });
+    } catch (error: any) {
+      console.log("LN226", error);
       response.status(500).json({
         status: 0,
         message: "Server error",
