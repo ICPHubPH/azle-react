@@ -33,15 +33,16 @@ Route.post('/auth/verify', AuthController.verify);
 Route.get('/users', UserController.getAll);
 Route.post('/users', AuthMiddleware.authorize, UserController.create);
 Route.get('/user/:id', UserController.findById);
-Route.put('/user/:id', AuthMiddleware.authorize, UserController.updateById);
-Route.delete('/user/:id', AuthMiddleware.authorize, UserController.deleteById);
+Route.post('/user/:id', AuthMiddleware.authorize, UserController.updateById); // UPDATE
+Route.post('/user/:id', AuthMiddleware.authorize, UserController.deleteById); // DELETE
 
 Route.get('/posts', PostController.getAll);
 Route.post('/posts', AuthMiddleware.authorize, PostController.create);
 Route.get('/post/:id', AuthMiddleware.authorize, PostController.findById);
-Route.put('/post/:id', AuthMiddleware.authorize, PostController.updateById);
-Route.delete('/post/:id', AuthMiddleware.authorize, PostController.deleteById);
+Route.post('/post/:id', AuthMiddleware.authorize, PostController.updateById); // UPDATE
+Route.post('/post/:id', AuthMiddleware.authorize, PostController.deleteById); // DELETE
 Route.get('/post/:id/category', PostController.findByCategorytype);
+
 
 Route.get('/test-route', UserController.test)
 // TODO: Feedback Routes
