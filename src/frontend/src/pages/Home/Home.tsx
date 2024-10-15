@@ -12,14 +12,10 @@ function Home() {
 
   return (
     <div>
-<<<<<<< Updated upstream
-      <Reels />
-=======
       <Reels
         cards={cards}
         redoCards={redoCards}
       />
->>>>>>> Stashed changes
     </div>
   );
 }
