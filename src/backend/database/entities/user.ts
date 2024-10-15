@@ -5,7 +5,7 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { UserRole } from "../../constants";
 import { Feedback } from "./feedback";
@@ -22,6 +22,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: "varchar" })
   avatarUrl: string;
 
+  @Column({ nullable: true, type: "varchar" })
+  validIdUrl: string;
+
   @Column({ type: "varchar" })
   name: string;
 
@@ -37,7 +40,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: "datetime" })
   emailVerifiedAt: Date;
 
-  @Column({type: "text"})
+  @Column({ type: "text" })
   role: string;
 
   @CreateDateColumn()
@@ -46,29 +49,29 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Post, post => post.user, {
+  @OneToMany(() => Post, (post) => post.user, {
     cascade: true,
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
   })
   posts: Post[];
 
-  @OneToMany(() => Feedback, feedback => feedback.user, {
+  @OneToMany(() => Feedback, (feedback) => feedback.user, {
     cascade: true,
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Rating, rating => rating.user, {
+  @OneToMany(() => Rating, (rating) => rating.user, {
     cascade: true,
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
   })
   ratings: Rating[];
 
   setRole(role: string) {
-      if (UserRole.includes(role)) {
-          this.role = role;
-      } else {
-        return "Invalid user role!";
-      }
+    if (UserRole.includes(role)) {
+      this.role = role;
+    } else {
+      return "Invalid user role!";
+    }
   }
 }
