@@ -88,7 +88,7 @@ const Profile: React.FC = () => {
               <div className="flex-1 md:right-10  ">
                 <Tabs defaultValue="saved">
                   <TabsList className="mb-4">
-                    <TabsTrigger value="saved">Saved Scholarships</TabsTrigger>
+                    <TabsTrigger value="saved">Saved Bookmarks</TabsTrigger>
                     <TabsTrigger value="settings">Account Settings</TabsTrigger>
                   </TabsList>
                   <TabsContent value="saved">

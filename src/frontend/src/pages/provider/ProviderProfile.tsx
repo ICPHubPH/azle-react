@@ -9,6 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
+import Header from '@/components/student-component/Header'
+
 export default function ProviderProfile() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -23,6 +25,11 @@ export default function ProviderProfile() {
   }
 
   return (
+    <div >
+      
+      <Header/>
+      
+      
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <Button
         variant="ghost"
@@ -106,6 +113,7 @@ export default function ProviderProfile() {
           </Button>
         </CardFooter>
       </Card>
+    </div>
     </div>
   )
 }

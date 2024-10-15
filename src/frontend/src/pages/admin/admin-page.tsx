@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Header from "@/components/provider-component/Header"; // TODO: Update header for admin
+import Header from "@/components/student-component/Header";
 import { DataTable } from "@/components/tables/data-table";
 import { providersColumns, studentsColumns } from "@/components/tables/columns";
 import { userProviders } from "@/components/tables/dummyData";
