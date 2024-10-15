@@ -34,21 +34,21 @@ Route.post("/auth/verify", AuthController.verify);
 */
 
 Route.get("/users", Pagination.paginate, UserController.getAll);
-Route.post("/users", AuthMiddleware.authorize, UserController.create);
+Route.post("/users", AuthMiddleware.authTest, UserController.create);
 Route.get("/user/:id", UserController.findById);
-Route.post("/user/:id", AuthMiddleware.authorize, UserController.updateById); // UPDATE
-Route.post("/user/:id", AuthMiddleware.authorize, UserController.deleteById); // DELETE
+Route.post("/user/:id", AuthMiddleware.authTest, UserController.updateById); // UPDATE
+Route.post("/user/:id", AuthMiddleware.authTest, UserController.deleteById); // DELETE
 Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl);
 Route.post("/@self/upload/avatar", UserController.uploadAvatarUrl);
 Route.post("/@self/upload/banner", UserController.uploadBannerUrl);
 
-Route.get('/user/:id/bookmarks', AuthMiddleware.authorize, Pagination.paginate, BookmarkController.getUserBookmarks);
+Route.get('/user/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
 
 Route.get('/posts', Pagination.paginate, PostController.getAll);
-Route.post('/posts', AuthMiddleware.authorize, PostController.create);
-Route.get('/post/:id', AuthMiddleware.authorize, PostController.findById);
-Route.put('/post/:id', AuthMiddleware.authorize, PostController.updateById);
-Route.delete('/post/:id', AuthMiddleware.authorize, PostController.deleteById);
+Route.post('/posts', AuthMiddleware.authTest, PostController.create);
+Route.get('/post/:id', AuthMiddleware.authTest, PostController.findById);
+Route.put('/post/:id', AuthMiddleware.authTest, PostController.updateById);
+Route.delete('/post/:id', AuthMiddleware.authTest, PostController.deleteById);
 Route.get('/post/:id/category', PostController.findByCategorytype);
 
 
