@@ -43,7 +43,7 @@ export default class BookmarkController {
         }
     }
 
-    static async addBookmark(request: Request, response: Response) {
+    static async createBookmark(request: Request, response: Response) {
         try {
             const { postId } = request.body;
 
@@ -69,4 +69,6 @@ export default class BookmarkController {
             });
         }
     }
+
+    // TO DO: delete handler
 }
