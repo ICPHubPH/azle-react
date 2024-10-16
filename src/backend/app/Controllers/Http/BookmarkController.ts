@@ -29,14 +29,21 @@ export default class BookmarkController {
                 take
             });
 
+            if (!data) {
+                return response.status(401).json({
+                    status: 0,
+                    message: "Unauthorized!"
+                });
+            }
+
             return response.status(200).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             })
@@ -45,7 +52,22 @@ export default class BookmarkController {
 
     static async createBookmark(request: Request, response: Response) {
         try {
+            const user = await User.findOneBy({ id: request.user });
             const { postId } = request.body;
+
+            if (!user) {
+                return response.status(401).json({
+                    status: 0,
+                    message: "Unauthorized!"
+                });
+            }
+
+            if (user.role == "admin") {
+                return response.status(403).json({
+                    status: 0,
+                    message: "Forbidden!"
+                });
+            }
 
             const data = await Bookmark.insert({
                 post: {
@@ -57,13 +79,13 @@ export default class BookmarkController {
             });
 
             return response.status(201).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             });
@@ -73,32 +95,49 @@ export default class BookmarkController {
     static async deleteBookmark(request: Request, response: Response) {
         try {
             const user = await User.findOneBy({ id: request.user });
-            const id = request.params.id;
-            const bookmark = await Bookmark.findOneBy({ id });
 
             if (!user) {
                 return response.status(401).json({
-                    success: 0,
+                    status: 0,
                     message: "Unauthorized!"
                 });
             }
 
+            const id = request.params.id;
+            const bookmark = await Bookmark.findOne({ 
+                where: {
+                    id
+                },
+                select: {
+                    user: {
+                        id: true
+                    }
+                }
+             });
+
             if (!bookmark) {
                 return response.status(404).json({
-                    success: 0,
+                    status: 0,
                     message: "Bookmarked post not found!"
+                });
+            }
+
+            if (id != bookmark.user.id && user.role == "admin") {
+                return response.status(403).json({
+                    status: 0,
+                    message: "Forbidden!"
                 });
             }
 
             await Bookmark.delete({ id });
 
             return response.status(200).json({
-                success: 1,
+                status: 1,
                 message: "Bookmark deleted"
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 message: "Server error!"
             })
         }

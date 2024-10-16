@@ -28,13 +28,13 @@ export default class PostController {
             });
 
             response.status(200).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             })
@@ -71,13 +71,13 @@ export default class PostController {
             });
 
             response.status(200).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             });
@@ -116,7 +116,7 @@ export default class PostController {
         }
         
         response.status(200).json({
-            success: 1,
+            status: 1,
             data,
             message: null
         });
@@ -126,16 +126,16 @@ export default class PostController {
     static async create(request: Request, response: Response) {
         try {
             const { title, thumbnail, type, content } = request.body;
-            const userExists = await User.findOneBy({ id: request.user });
+            const user = await User.findOneBy({ id: request.user });
 
-            if (!userExists) {
+            if (!user) {
                 return response.status(401).json({
                     status: 0,
                     message: "Unauthorized!"
                 });
             }
 
-            if (userExists.role == "student") {
+            if (user.role != "provider") {
                 return response.status(403).json({
                     status: 0,
                     message: "Forbidden!"
@@ -147,7 +147,7 @@ export default class PostController {
                 content,
                 thumbnail,
                 type,
-                user: userExists
+                user
             });
 
             await Post.save(data);
@@ -159,56 +159,51 @@ export default class PostController {
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             })
         }
     }
 
-    // TODO: thumbnail upload and deletion
     static async updateById(request: Request, response: Response) {
-        const id = request.params.id;
-        const { title, type, content } = request.body;
-
-        const isPostExist = await Post.findOne({ 
-            where: {
-                id
-            }, 
-            select: {
-                user: {
-                    id: true,
-                    role: true
-                }
+        try {
+            const id = request.params.id;
+            const { thumbnail, title, type, content } = request.body;
+    
+            const post = await Post.findOneBy({ id });
+    
+            if (!post) {
+                response.status(404).json({
+                    status: 0,
+                    data: null,
+                    message: "Post not found!"
+                });
             }
-         });
-
-        if (!isPostExist) {
-            response.status(404).json({
-                status: 0,
-                data: null,
-                message: "Post not found!"
+    
+            if (post?.user.id != request.user && post?.user.role == "admin") {
+                response.status(403).json({
+                    status: 0,
+                    data: null,
+                    message: "Unauthorized!"
+                });
+            }
+    
+            const data = await Post.update({ id }, { thumbnail, title, type, content });
+    
+            return response.status(200).json({
+                status: 1,
+                data,
+                message: "Post has been updated!"
             });
-        }
-
-        if (isPostExist?.user.id != request.user && isPostExist?.user.role == "admin") {
-            response.status(403).json({
+        } catch (error) {
+            return response.status(500).json({
                 status: 0,
-                data: null,
-                message: "Unauthorized!"
-            });
+                message: "Server error"
+            })
         }
-
-        await Post.update({ id }, { title, type, content });
-
-        response.status(200).json({
-            success: 1,
-            data: null,
-            message: "Post has been updated!"
-        });
     }
     
-    // TODO: thumbnail deletion
     static async deleteById(request: Request, response: Response) {
         const id = request.params.id;
 
@@ -227,7 +222,7 @@ export default class PostController {
 
         if (!isPostExist) {
             response.status(404).json({
-                success: 0,
+                status: 0,
                 data: null,
                 message: "Post doesn't exist!"
             });
@@ -235,7 +230,7 @@ export default class PostController {
 
         if (isPostExist?.user.id != request.user && isPostExist?.user.role != "admin") {
             response.status(403).json({
-                success: 0,
+                status: 0,
                 data: null,
                 message: "Forbidden!"
             });
@@ -244,7 +239,7 @@ export default class PostController {
         const data = await Post.delete({ id });
 
         response.status(200).json({
-            success: 1,
+            status: 1,
             data,
             message: "Post has been deleted!"
         });

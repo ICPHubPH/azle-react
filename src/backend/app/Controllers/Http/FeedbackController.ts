@@ -35,13 +35,13 @@ export default class FeedbackController {
             });
 
             response.status(200).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             });
@@ -64,13 +64,13 @@ export default class FeedbackController {
             });
 
             return response.status(201).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             })
@@ -95,7 +95,7 @@ export default class FeedbackController {
 
             if (!isFeedbackExist) {
                 return response.status(404).json({
-                    success: 0,
+                    status: 0,
                     data: null,
                     message: "Feedback not found!"
                 });
@@ -103,7 +103,7 @@ export default class FeedbackController {
 
             if (isFeedbackExist?.user.id != request.user) {
                 return response.status(403).json({
-                    success: 0,
+                    status: 0,
                     data: null,
                     message: "Forbidden!"
                 });
@@ -117,13 +117,13 @@ export default class FeedbackController {
             });
 
             return response.status(200).json({
-                success: 1,
+                status: 1,
                 data,
                 message: null
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             });
@@ -140,22 +140,30 @@ export default class FeedbackController {
                 },
                 select: {
                     user: {
-                        id: true
+                        id: true,
+                        role: true
                     }
                 }
             });
 
             if (!feedback) {
                 return response.status(404).json({
-                    success: 0,
+                    status: 0,
                     data: null,
                     message: "Feedback not found!"
                 });
             }
 
-            if (feedback?.user.id != request.user) {
+            if (!feedback.user) {
+                return response.status(401).json({
+                    status: 0,
+                    message: "User not found!"
+                });
+            }
+
+            if (feedback?.user.id != request.user && feedback.user.role != "student") {
                 return response.status(403).json({
-                    success: 0,
+                    status: 0,
                     data: null,
                     message: "Forbidden!"
                 });
@@ -164,13 +172,12 @@ export default class FeedbackController {
             await Feedback.delete({ id: feedback.id });
 
             response.status(200).json({
-                success: 1,
-                data: null,
-                message: null
+                status: 1,
+                message: "Feedback deleted."
             });
         } catch (error) {
             response.status(500).json({
-                success: 0,
+                status: 0,
                 error,
                 message: "Internal server error!"
             })

@@ -26,7 +26,7 @@ export class User extends BaseEntity {
   bannerUrl: string | null;
 
   @Column({ nullable: true, type: "varchar" })
-  validIdUrl: string;
+  validIdUrl: string | null;
 
   @Column({ type: "varchar" })
   name: string;
