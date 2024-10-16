@@ -54,7 +54,7 @@ Route.post('/posts/:id', AuthMiddleware.authTest, PostController.updateById);
 Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById);
 Route.get('/posts/:id/category', PostController.findByCategorytype);
 
-Route.post('/feedbacks', FeedbackController.createFeedback);
+Route.post('/feedbacks', AuthMiddleware.authTest, FeedbackController.createFeedback);
 Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
 Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback);
 

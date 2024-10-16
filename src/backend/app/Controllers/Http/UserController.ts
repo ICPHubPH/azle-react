@@ -63,45 +63,83 @@ export default class UserController {
 
   // delete account
   static async deleteById(request: Request, response: Response) {
-    const id = request.params.id;
-    const isUserExists = await User.findOneBy({ id });
-
-    if (!isUserExists) {
-      return response.status(404).json({
+    try {
+      const user = await User.findOne({ 
+        where: {
+          id: request.user
+        },
+        select: {
+          role: true
+        }
+      });
+  
+      if (!user) {
+        return response.status(401).json({
+          success: 0,
+          message: "Unauthorized!"
+        });
+      }
+      
+      const id = request.params.id;
+      const isUserExists = await User.findOneBy({ id });
+  
+      if (!isUserExists) {
+        return response.status(404).json({
+          success: 0,
+          data: null,
+          message: "User not found!",
+        });
+      }
+  
+      const data = await User.delete({ id });
+  
+      if (isUserExists.id != request.user && user.role != "admin") {
+        return response.status(403).json({
+          success: 0,
+          data: null,
+          message: "Forbidden!",
+        });
+      }
+  
+      if (!data.affected || data.affected == 0) {
+        response.status(400).json({
+          status: 0,
+          message: "User doesn't exist!",
+        });
+      }
+  
+      response.status(200).json({
+        status: 1,
+        message: "User has been deleted!",
+      });
+    } catch (error) {
+      return response.status(500).json({
         success: 0,
-        data: null,
-        message: "User not found!",
+        message: "Server error!"
       });
     }
-
-    if (request.user != id && isUserExists.role != "admin") {
-      return response.status(403).json({
-        success: 0,
-        data: null,
-        message: "Forbidden!",
-      });
-    }
-
-    const data = await User.delete({ id });
-
-    if (!data.affected || data.affected == 0) {
-      response.status(400).json({
-        status: 0,
-        message: "User doesn't exist!",
-      });
-    }
-
-    response.status(200).json({
-      status: 1,
-      message: "User has been deleted!",
-    });
   }
 
   // admin's user management purpose.
   static async create(request: Request, response: Response) {
-    const { avatarUrl, email, password, name, bio, role } = request.body;
-
     try {
+      const currentUser = await User.findOneBy({ id: request.user });
+
+      if (!currentUser) {
+        return response.status(401).json({
+          success: 0,
+          message: "Unauthorized!"
+        });
+      }
+
+      if (currentUser.role != "admin") {
+        return response.status(403).json({
+          success: 0,
+          message: "Forbidden!"
+        });
+      }
+
+      const { avatarUrl, email, password, name, bio, role } = request.body;
       const user = new User();
 
       user.name = name;
@@ -155,7 +193,7 @@ export default class UserController {
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadValidIdUrl(request: Request, response: Response) {
     try {
-      const { validIdUrl, id } = request.body;
+      const { validIdUrl } = request.body;
 
       if (!validIdUrl) {
         return response.status(400).json({
@@ -165,7 +203,7 @@ export default class UserController {
       }
 
       const user = await User.findOneBy({
-        id,
+        id: request.user,
       });
 
       if (!user) {
@@ -175,7 +213,7 @@ export default class UserController {
         });
       }
 
-      if (user.role !== "provider") {
+      if (user.role != "provider") {
         return response.status(403).json({
           status: 0,
           message: "Only providers can upload ID URLs.",
@@ -202,7 +240,7 @@ export default class UserController {
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadAvatarUrl(request: Request, response: Response) {
     try {
-      const { avatarUrl, id } = request.body;
+      const { avatarUrl } = request.body;
 
       if (!avatarUrl) {
         return response.status(400).json({
@@ -212,7 +250,7 @@ export default class UserController {
       }
 
       const user = await User.findOneBy({
-        id,
+        id: request.user,
       });
 
       if (!user) {
@@ -244,7 +282,7 @@ export default class UserController {
     try {
       console.log("req.user", request.user);
 
-      const { bannerUrl, id } = request.body;
+      const { bannerUrl } = request.body;
 
       if (!bannerUrl) {
         return response.status(400).json({
@@ -254,7 +292,7 @@ export default class UserController {
       }
 
       const user = await User.findOneBy({
-        id,
+        id: request.user,
       });
 
       if (!user) {
@@ -284,7 +322,7 @@ export default class UserController {
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async changePassword(request: Request, response: Response) {
     try {
-      const { oldPassword, newPassword, confirmPassword, id } = request.body;
+      const { oldPassword, newPassword, confirmPassword } = request.body;
 
       if (!oldPassword || !newPassword || !confirmPassword) {
         return response.status(400).json({
@@ -293,7 +331,7 @@ export default class UserController {
         });
       }
 
-      const user = await User.findOneBy({ id });
+      const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
         return response.status(404).json({
@@ -338,9 +376,9 @@ export default class UserController {
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async updateSelf(request: Request, response: Response) {
     try {
-      const { name, bio, id } = request.body;
+      const { name, bio } = request.body;
 
-      const user = await User.findOneBy({ id });
+      const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
         return response.status(404).json({
