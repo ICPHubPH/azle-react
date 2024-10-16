@@ -32,4 +32,5 @@ export interface Post {
   postCommentCount: number;
   postType: string;
   postDate: string;
+  archivedAt?: string; // Added this for posts status
 }

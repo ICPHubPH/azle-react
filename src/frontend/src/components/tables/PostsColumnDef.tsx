@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Checkbox } from "../ui/checkbox";
+import { Badge } from "../ui/badge";
 
 export const postsColumnDefs: ColumnDef<Post>[] = [
   {
@@ -37,7 +38,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
   },
   {
     accessorKey: "id",
-    header: "Account",
+    header: "Provider",
     cell: ({ row }) => (
       <div className="flex flex-row items-center gap-2 sm:gap-3">
         <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
@@ -61,17 +62,32 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     accessorKey: "postTitle",
     header: "Post Title",
     cell: ({ row }) => (
-      <p dangerouslySetInnerHTML={{ __html: row.original.postTitle }}>
-      </p>
+      <p
+        dangerouslySetInnerHTML={{ __html: row.original.postTitle }}
+        className="truncate "
+      ></p>
     ),
   },
   {
-    accessorKey:"postType",
-    header:"Post Type"
+    accessorKey: "postType",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.original.postType;
+      return (
+        <Badge variant={status === "internship" ? "default" : "destructive"}>
+          {status === "internship" ? "Active" : "Archived"}
+        </Badge>
+      );
+    },
   },
   {
-    accessorKey:"postDate",
-    header:"Date Posted"
+    accessorKey: "postType",
+    header: "Post Type",
+  },
+  {
+    accessorKey: "postDate",
+    header: "Date Posted",
+    cell: ({ row }) => <div className="truncate">{row.original.postDate}</div>,
   },
   {
     accessorKey: "postThumbnailSource",
@@ -82,14 +98,18 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
           View Thumbnail
         </DialogTrigger>
         <DialogContent className="w-full max-w-lg">
-          <img className="w-full" src={row.original.postThumbnailSource} alt="id" />
+          <img
+            className="w-full"
+            src={row.original.postThumbnailSource}
+            alt="id"
+          />
         </DialogContent>
       </Dialog>
     ),
   },
   {
     id: "actions",
-    header:"Actions",
+    header: "Actions",
     cell: ({ row }) => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
