@@ -61,12 +61,14 @@ Route.post('/posts/:id', AuthMiddleware.authTest, PostController.updateById);
 Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById);
 Route.get('/posts/:id/category', PostController.findByCategorytype);
 
-// path to be modified
+// Admin: path to be modified
 Route.post('/admin/posts/:id/archive', AuthMiddleware.authTest, PostController.archiveById);
 Route.post('/admin/posts/:id/unarchive', AuthMiddleware.authTest, PostController.unarchiveById);
+Route.post('/admin/providers/:id/verify', AuthMiddleware.authTest, UserController.verifyProvider);
 
 Route.post('/feedbacks', AuthMiddleware.authTest, FeedbackController.createFeedback);
 Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
+Route.post('/feedbacks/:id', AuthMiddleware.authTest, FeedbackController.updateFeedback);
 Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback);
 
 // testing email sending, change recipient in the controller

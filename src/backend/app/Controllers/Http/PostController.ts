@@ -1,6 +1,7 @@
 import { Post } from "Database/entities/post";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+import { IsNull } from "typeorm";
 
 export default class PostController {
     static async getAll(request: Request, response: Response) {
@@ -9,6 +10,9 @@ export default class PostController {
             const take = request.limit;
             
             const data = await Post.findAndCount({
+                where: {
+                    archivedAt: IsNull()
+                },
                 select: {
                     id: true,
                     title: true,
@@ -50,7 +54,8 @@ export default class PostController {
 
             const data = await Post.findAndCount({
                 where: {
-                    type
+                    type,
+                    archivedAt: IsNull()
                 },
                 skip,
                 take,
@@ -89,7 +94,8 @@ export default class PostController {
         
         const data = await Post.findOne({
             where: {
-                id
+                id,
+                archivedAt: IsNull()
             },
             select: {
                 id: true,
@@ -135,7 +141,7 @@ export default class PostController {
                 });
             }
 
-            if (user.role != "provider") {
+            if (user.role != "provider" || !user.providerVerifiedAt) {
                 return response.status(403).json({
                     status: 0,
                     message: "Forbidden!"
@@ -171,21 +177,38 @@ export default class PostController {
             const id = request.params.id;
             const { thumbnail, title, type, content } = request.body;
     
-            const post = await Post.findOneBy({ id });
+            const post = await Post.findOne({ 
+                where: {
+                    id,
+                    archivedAt: IsNull()
+                },
+                select: {
+                    user: {
+                        id: true,
+                        role: true,
+                        archivedAt: true
+                    }
+                }
+             });
     
             if (!post) {
-                response.status(404).json({
+                return response.status(404).json({
                     status: 0,
-                    data: null,
                     message: "Post not found!"
                 });
             }
-    
-            if (post?.user.id != request.user && post?.user.role == "admin") {
-                response.status(403).json({
+            
+            if (post?.user.id != request.user && post?.user.role != "admin") {
+                return response.status(403).json({
                     status: 0,
-                    data: null,
-                    message: "Unauthorized!"
+                    message: "Forbidden!"
+                });
+            }
+
+            if (!post?.user.providerVerifiedAt) {
+                return response.status(403).json({
+                    status: 0,
+                    message: "Forbidden!"
                 });
             }
     
@@ -199,6 +222,7 @@ export default class PostController {
         } catch (error) {
             return response.status(500).json({
                 status: 0,
+                error,
                 message: "Server error"
             })
         }
@@ -207,7 +231,7 @@ export default class PostController {
     static async deleteById(request: Request, response: Response) {
         const id = request.params.id;
 
-        const isPostExist = await Post.findOne({
+        const post = await Post.findOne({
             where: {
                 id
             },
@@ -220,25 +244,32 @@ export default class PostController {
             }
         });
 
-        if (!isPostExist) {
-            response.status(404).json({
+        if (!post) {
+            return response.status(404).json({
                 status: 0,
                 data: null,
                 message: "Post doesn't exist!"
             });
         }
 
-        if (isPostExist?.user.id != request.user && isPostExist?.user.role != "admin") {
-            response.status(403).json({
+        if (post?.user.id != request.user && post?.user.role != "admin") {
+            return response.status(403).json({
                 status: 0,
                 data: null,
                 message: "Forbidden!"
             });
         }
 
+        if (!post?.user.providerVerifiedAt) {
+            return response.status(403).json({
+                status: 0,
+                message: "Forbidden!"
+            });
+        }
+
         const data = await Post.delete({ id });
 
-        response.status(200).json({
+        return response.status(200).json({
             status: 1,
             data,
             message: "Post has been deleted!"
@@ -248,45 +279,45 @@ export default class PostController {
     // admin user management
     static async archiveById(request: Request, response: Response) {
         try {
-        const currentUser = await User.findOneBy({ id: request.user });
+            const currentUser = await User.findOneBy({ id: request.user });
 
-        // check if auth user exists
-        if (!currentUser) {
-            return response.status(401).json({
-            status: 0,
-            message: "Unauthorized!"
+            // check if auth user exists
+            if (!currentUser) {
+                return response.status(401).json({
+                status: 0,
+                message: "Unauthorized!"
+                });
+            }
+
+            // check if user role is admin
+            if (currentUser.role != "admin") {
+                return response.status(403).json({
+                status: 0,
+                message: "Forbidden!"
+                });
+            }
+
+            const id = request.params.id;
+            const post = await Post.findOneBy({ id });
+
+            
+            // check if post exists
+            if (!post) {
+                return response.status(404).json({
+                status: 0,
+                message: "Post not found!"
+                });
+            }
+
+            if (!post.archivedAt) {
+                post.archivedAt = new Date();
+                post.save();
+            }
+
+            return response.status(201).json({
+                status: 0,
+                message: "Post archived."
             });
-        }
-
-        // check if user role is admin
-        if (currentUser.role != "admin") {
-            return response.status(403).json({
-            status: 0,
-            message: "Forbidden!"
-            });
-        }
-
-        const id = request.params.id;
-        const post = await Post.findOneBy({ id });
-
-        
-        // check if post exists
-        if (!post) {
-            return response.status(404).json({
-            status: 0,
-            message: "User not found!"
-            });
-        }
-
-        if (!post.archivedAt) {
-            post.archivedAt = new Date();
-            post.save();
-        }
-
-        return response.status(500).json({
-            status: 0,
-            message: "User archived."
-        });
         } catch (error) {
         return response.status(500).json({
             status: 0,
@@ -319,7 +350,7 @@ export default class PostController {
           if (!post) {
             return response.status(404).json({
               status: 0,
-              message: "User not found!"
+              message: "Post not found!"
             });
           }
     
@@ -339,4 +370,6 @@ export default class PostController {
           });
         }
       }
+
+    // TODO: get archived posts
 }

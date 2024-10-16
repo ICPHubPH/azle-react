@@ -1,21 +1,9 @@
 import * as bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+import { loginSchema, registerSchema } from "Helpers/zod-schemas";
 import { signToken } from "Helpers/jwt";
 import { xFetch } from "Helpers/x-fetch";
-import z from "zod";
-
-const registerSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string().min(8).max(30),
-  role: z.enum(["admin", "provider", "student"]),
-});
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(30),
-});
 
 export default class AuthController {
   static async register(request: Request, response: Response) {
@@ -32,8 +20,8 @@ export default class AuthController {
       if (!success) {
         return response.status(400).json({
           status: 0,
-          error,
-          message: "Bad request!",
+          error: error.errors,
+          message: "Bad request!"
         });
       }
 
@@ -103,14 +91,14 @@ export default class AuthController {
       //   email: string;
       // };
 
-      // const user = await User.findOneBy({ id: decode.id });
+      const user = await User.findOneBy({ email: token });
 
-      // if (!user) {
-      //   return response.status(404).json({
-      //     status: 0,
-      //     message: "User not found!"
-      //   });
-      // }
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!"
+        });
+      }
 
       // if (user.email != decode.email) {
       //   return response.status(400).json({
@@ -119,8 +107,8 @@ export default class AuthController {
       //   });
       // }
 
-      // user.emailVerifiedAt = new Date();
-      // await User.save(user);
+      user.emailVerifiedAt = new Date();
+      await User.save(user);
 
       return response.status(200).json({
         status: 1,
@@ -136,8 +124,6 @@ export default class AuthController {
 
   static async login(request: Request, response: Response) {
     try {
-      const { email, password } = request.body;
-
       if (request.user) {
         return response.json({
           status: 0,
@@ -145,23 +131,35 @@ export default class AuthController {
         });
       }
 
-      if (!email || !password) {
-        return response.json({
+      const { data, success, error } = loginSchema.safeParse(request.body);
+
+      if (!success) {
+        return response.status(400).json({
           status: 0,
-          message: "Required credentials!",
+          error: error.errors,
+          message: "Bad request!"
         });
       }
 
-      const user = await User.findOneBy({ email });
+      const user = await User.findOneBy({ email: data.email });
 
       if (!user) {
-        return response.json({
+        return response.status(400).json({
           status: 0,
           message: "Invalid email!",
         });
       }
 
-      const passwordCorrect = await bcryptjs.compare(password, user.password);
+      if (!user.emailVerifiedAt) {
+        // NOTE: sending verification email can be done here
+        // ...
+        return response.status(403).json({
+          status: 0,
+          message: "Please verify your email!"
+        });
+      }
+
+      const passwordCorrect = await bcryptjs.compare(data.password, user.password);
 
       if (!passwordCorrect) {
         return response.json({
