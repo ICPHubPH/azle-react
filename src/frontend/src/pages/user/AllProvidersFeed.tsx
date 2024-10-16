@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Import useEffect
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,13 +8,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PlusCircle, Search } from "lucide-react";
 import Header from "@/components/header/UserHeader";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
+import { SkeletonCard } from "@/components/ui/skeleton"; // Import your SkeletonCard
 import { dummyTopProviders } from "../landing/dummy-data";
-
 
 export default function ProvidersFeed() {
   const [activeTab, setActiveTab] = useState<"all" | "school" | "corporate" | "government">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
+  const [loading, setLoading] = useState(true); // Loading state
 
   const filteredProviders = dummyTopProviders
     .filter((provider) => activeTab === "all" || provider.type.toLowerCase() === activeTab)
@@ -23,6 +24,15 @@ export default function ProvidersFeed() {
         provider.provider.toLowerCase().includes(searchQuery.toLowerCase()) ||
         provider.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+  // Simulate loading data
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading to false after 2 seconds
+    }, 2000);
+
+    return () => clearTimeout(timer); // Cleanup
+  }, []);
 
   return (
     <>
@@ -63,71 +73,87 @@ export default function ProvidersFeed() {
 
           <TabsContent value="all" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProviders.map((provider) => (
-                <TopProviderCard
-                  key={provider.id}
-                  thumbnail={provider.thumbnail}
-                  avatar={provider.avatar}
-                  provider={provider.provider}
-                  description={provider.description}
-                  scholarship={provider.scholarship}
-                  id={provider.id}
-                />
-              ))}
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => ( // Display 6 skeletons
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders.map((provider) => (
+                    <TopProviderCard
+                      key={provider.id}
+                      thumbnail={provider.thumbnail}
+                      avatar={provider.avatar}
+                      provider={provider.provider}
+                      description={provider.description}
+                      scholarship={provider.scholarship}
+                      id={provider.id}
+                    />
+                  ))}
             </div>
           </TabsContent>
 
           <TabsContent value="school" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProviders
-                .filter((provider) => provider.type.toLowerCase() === "school")
-                .map((provider) => (
-                  <TopProviderCard
-                    key={provider.id}
-                    thumbnail={provider.thumbnail}
-                    avatar={provider.avatar}
-                    provider={provider.provider}
-                    description={provider.description}
-                    scholarship={provider.scholarship}
-                    id={provider.id}
-                  />
-                ))}
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders
+                    .filter((provider) => provider.type.toLowerCase() === "school")
+                    .map((provider) => (
+                      <TopProviderCard
+                        key={provider.id}
+                        thumbnail={provider.thumbnail}
+                        avatar={provider.avatar}
+                        provider={provider.provider}
+                        description={provider.description}
+                        scholarship={provider.scholarship}
+                        id={provider.id}
+                      />
+                    ))}
             </div>
           </TabsContent>
 
           <TabsContent value="corporate" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProviders
-                .filter((provider) => provider.type.toLowerCase() === "corporate")
-                .map((provider) => (
-                  <TopProviderCard
-                    key={provider.id}
-                    thumbnail={provider.thumbnail}
-                    avatar={provider.avatar}
-                    provider={provider.provider}
-                    description={provider.description}
-                    scholarship={provider.scholarship}
-                    id={provider.id}
-                  />
-                ))}
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders
+                    .filter((provider) => provider.type.toLowerCase() === "corporate")
+                    .map((provider) => (
+                      <TopProviderCard
+                        key={provider.id}
+                        thumbnail={provider.thumbnail}
+                        avatar={provider.avatar}
+                        provider={provider.provider}
+                        description={provider.description}
+                        scholarship={provider.scholarship}
+                        id={provider.id}
+                      />
+                    ))}
             </div>
           </TabsContent>
 
           <TabsContent value="government" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProviders
-                .filter((provider) => provider.type.toLowerCase() === "government")
-                .map((provider) => (
-                  <TopProviderCard
-                    key={provider.id}
-                    thumbnail={provider.thumbnail}
-                    avatar={provider.avatar}
-                    provider={provider.provider}
-                    description={provider.description}
-                    scholarship={provider.scholarship}
-                    id={provider.id}
-                  />
-                ))}
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders
+                    .filter((provider) => provider.type.toLowerCase() === "government")
+                    .map((provider) => (
+                      <TopProviderCard
+                        key={provider.id}
+                        thumbnail={provider.thumbnail}
+                        avatar={provider.avatar}
+                        provider={provider.provider}
+                        description={provider.description}
+                        scholarship={provider.scholarship}
+                        id={provider.id}
+                      />
+                    ))}
             </div>
           </TabsContent>
         </Tabs>
