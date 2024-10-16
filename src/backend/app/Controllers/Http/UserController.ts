@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
-import { UserRole } from "../../../constants";
+import { EmailMessage, sendEmail } from "Helpers/mailer";
 
 export default class UserController {
   static async getAll(request: Request, response: Response) {
@@ -397,6 +397,40 @@ export default class UserController {
     } catch (error: any) {
       console.log("LN392", error);
       return response.status(500).json({
+        status: 0,
+        message: "Server error",
+      });
+    }
+  }
+
+  static async test(request: Request, response: Response) {
+    try {
+      const emailMessage: EmailMessage = {
+        body: {
+          name: "Kurtd Daniel Bigtas",
+          intro: "Test ulit gamit dfx deploy",
+          action: {
+            instructions: "To get started with Mailgen, please click here:",
+            button: {
+              color: "#22BC66",
+              text: "click kung baliw ka",
+              link: "https://mailgen.js/confirm?s=d9729feb74992cc3482b350163a1a010",
+            },
+          },
+          outro:
+            "Need help, or have questions? Just reply to this email, we'd love to help.",
+        },
+      };
+
+      await sendEmail(emailMessage, "kurtddbigtas@gmail.com", "TEST EMAIL FROM IC (1)")
+
+      return response.status(200).json({
+        status: 1,
+        message: "Test successful.",
+      });
+    } catch (error) {
+      console.log("LN415", error);
+      response.status(500).json({
         status: 0,
         message: "Server error",
       });

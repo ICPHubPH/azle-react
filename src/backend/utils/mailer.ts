@@ -1,9 +1,53 @@
+export interface EmailMessage {
+  body: {
+    name: string;
+    intro: string;
+    outro: string;
+    action?: {
+      instructions: string;
+      button: {
+        text: string;
+        link: string;
+        color: string;
+      };
+    };
+  };
+}
+
+export const sendEmail = async (
+  emailMessage: EmailMessage,
+  recipientEmail: string,
+  subject: string
+) => {
+  const XCONNECTED_API_URL = "https://xconnected.onrender.com";
+  const XCONNECTED_API_KEY =
+    "0d9f22e26bba9e7caa2963447f6dabf50d2f5e8b9e2936b08831cef6794cb029";
+  try {
+    const requestBody = {
+      emailMessage,
+      recipientEmail,
+      subject,
+      connectEDApiKey: XCONNECTED_API_KEY,
+    };
+
+    const response = await fetch(`${XCONNECTED_API_URL}/connectED/send-email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};
 /**
  * NOTE: nodemailer is not for canister environment?
  * according to chatgpt.
  */
-
-
 
 // import Mailgen from "mailgen";
 // import * as nodemailer from "nodemailer";
@@ -22,9 +66,9 @@
 //         rejectUnauthorized: false,
 //       },
 //     };
-  
+
 //     let transporter = nodemailer.createTransport(config);
-  
+
 //     let mailGenerator = new Mailgen({
 //       theme: "default",
 //       product: {
@@ -32,10 +76,10 @@
 //         link,
 //       },
 //     });
-  
+
 //     return { transporter, mailGenerator };
 // };
-  
+
 // const sendVerificationLink = async (data: {
 //     name: string;
 //     id: string;
@@ -44,35 +88,34 @@
 // }) => {
 //     let { mailGenerator } = setupTransporterAndMailGen();
 //     const { name, id, token, email } = data;
-  
+
 //     const hashedEmail = await hasher(email);
 //     var emailMessage = {
 //       body: {
 //         name,
-//         intro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">We are excited to have you join our community. To complete your registration and start exploring all the amazing features Whisper has to offer, please verify your email address by clicking the button below. This link will expire after 5 minutes, please use it accordingly.</p> 
-          
+//         intro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">We are excited to have you join our community. To complete your registration and start exploring all the amazing features Whisper has to offer, please verify your email address by clicking the button below. This link will expire after 5 minutes, please use it accordingly.</p>
+
 //           <a style="padding: 0.5rem 1.5rem; color: white; background-color:#3b82f6; text-decoration:none; border-radius: 6px; border: 1px solid #3B82F6; width: max-content;display: block;margin-bottom: 1rem !important;" href="${link}/auth/verify?t=${token}&i=${id}&e=${hashedEmail}" target="_blank">Verify now</a>
 //           `,
 //         outro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">If you have any questions, please feel free to contact me at <a href="mailto:kurtddbigtas@gmail.com">kurtddaniel@gmail.com</a></p>`,
 //       },
 //     };
-  
+
 //     let mail = mailGenerator.generate(emailMessage);
-  
+
 //     let message = {
 //       from: process.env.nmEMAIL!,
 //       to: email,
 //       subject: "[ConnectED] Email Verification",
 //       html: mail,
 //     };
-  
+
 //     try {
 //       await sendEmail(message);
 //     } catch (err) {
 //       throw new Error("An error occurred: " + err);
 //     }
 // };
-  
 
 // const sendEmail = async (message: {
 //     html: any;
@@ -95,37 +138,37 @@
 //     token: string;
 // }) => {
 //     let { mailGenerator } = setupTransporterAndMailGen();
-  
+
 //     const { name, id, email, token } = data;
-  
+
 //     var emailMessage = {
 //       body: {
 //         name,
-//         intro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">You recently requested a password reset for your account. Please click the button shown below to reset your password. If you don’t use this link within 10 minutes, it will expire. To get a new password reset link, visit: <a href="${link}/auth/forgot_password">${link}/auth/forgot_password</a></p> 
-          
+//         intro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">You recently requested a password reset for your account. Please click the button shown below to reset your password. If you don’t use this link within 10 minutes, it will expire. To get a new password reset link, visit: <a href="${link}/auth/forgot_password">${link}/auth/forgot_password</a></p>
+
 //           <a style="padding: 0.5rem 1.5rem; color: white; background-color:#3b82f6; text-decoration:none; border-radius: 6px; border: 1px solid #3B82F6; width: max-content;display: block;margin-bottom: 1rem !important;" href="${link}/auth/reset_password/${token}/${id}" target="_blank">Reset Password</a>
-  
+
 //           `,
 //         outro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">If you did not initiate this request or have any concerns, please contact me immediately at <a href="mailto:kurtddbigtas@gmail.com">kurtddaniel@gmail.com</a></p>`,
 //       },
 //     };
-  
+
 //     let mail = mailGenerator.generate(emailMessage);
-  
+
 //     let message = {
 //       from: process.env.nmEMAIL!,
 //       to: email,
 //       subject: "[ConnectED] Reset Password",
 //       html: mail,
 //     };
-  
+
 //     try {
 //       await sendEmail(message);
 //     } catch (err) {
 //       throw new Error("An error occurred: " + err);
 //     }
 // };
-  
+
 // const sendPasswordResetSuccess = async (data: {
 //     name: string;
 //     email: string;
@@ -140,23 +183,23 @@
 //         outro: `<p style="font-size: 14px; color: #24292e; margin-bottom: 1rem !important;">If you have any questions, please feel free to contact me at <a href="mailto:kurtddbigtas@gmail.com">kurtddaniel@gmail.com</a></p>`,
 //       },
 //     };
-  
+
 //     let mail = mailGenerator.generate(emailMessage);
-  
+
 //     let message = {
 //       from: process.env.nmEMAIL!,
 //       to: email,
 //       subject: "[Whisper] Password Changed",
 //       html: mail,
 //     };
-  
+
 //     try {
 //       await sendEmail(message);
 //     } catch (err) {
 //       throw new Error("An error occurred: " + err);
 //     }
 // };
-  
+
 // export {
 //   sendPasswordResetSuccess, sendResetPasswordLink, sendVerificationLink
 // };

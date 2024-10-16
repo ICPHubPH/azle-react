@@ -59,5 +59,8 @@ Route.post('/feedbacks', FeedbackController.createFeedback); // CREATE
 Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
 Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback); // DELETE
 
+// testing email sending, change recipient in the controller
+Route.post('/test', UserController.test )
+
 export { Route as routes };
 
