@@ -1,30 +1,26 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
+"use client"
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { signUpSchema } from "@/lib/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { Button } from "@/components/ui/button"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const SignUp: React.FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+const signUpSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+  confirmPassword: z.string().min(8),
+  role: z.enum(["provider", "student"]),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+})
+
+export default function SignUp() {
+  const [isLoading, setIsLoading] = useState(false)
 
   const signUpForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -32,76 +28,84 @@ const SignUp: React.FC = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      role: "student",
     },
-  });
+  })
+
   const onSignUp = async (values: z.infer<typeof signUpSchema>) => {
-    setIsLoading(true);
-    // TODO: Implement sign-in logic
-    console.log("Sign in", values);
-    setIsLoading(false);
-  };
+    setIsLoading(true)
+    // TODO: Implement sign-up logic
+    console.log("Sign up", values)
+    setIsLoading(false)
+  }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Sign Up</CardTitle>
-        <CardDescription>
-          Welcome to Iskolar PH! <br />
-          Create a new account to get started.
-        </CardDescription>
-      </CardHeader>
-      <Form {...signUpForm}>
-        <form onSubmit={signUpForm.handleSubmit(onSignUp)}>
-          <CardContent className="space-y-2">
-            <FormField
-              control={signUpForm.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <Label>Email</Label>
-                  <FormControl>
-                    <Input placeholder="m@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={signUpForm.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <Label>Password</Label>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={signUpForm.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <Label>Confirm Password</Label>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Signing up..." : "Sign Up"}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
-    </Card>
-  );
-};
-
-export default SignUp;
+    <Form {...signUpForm}>
+      <form onSubmit={signUpForm.handleSubmit(onSignUp)} className="space-y-4">
+        <FormField
+          control={signUpForm.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="m@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={signUpForm.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={signUpForm.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={signUpForm.control}
+          name="role"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Role</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a role" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="student">Student</SelectItem>
+                  <SelectItem value="provider">Provider</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Signing up..." : "Sign Up"}
+        </Button>
+      </form>
+    </Form>
+  )
+}
