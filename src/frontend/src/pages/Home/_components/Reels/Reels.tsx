@@ -1,12 +1,22 @@
 import Flashcard from "../Flashcard/Flashcard";
 import styles from "./Reels.module.css";
-import useFlashcardStore from "../../../../store/useFlashcardStore";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 
-function Reels() {
-  const { cards, redoCards } = useFlashcardStore();
+interface Card {
+  question: string;
+  answer: string;
+  id: number;
+  recalledForCount: number;
+}
+
+interface ReelsProps {
+  cards: Card[];
+  redoCards: Card[];
+}
+
+function Reels({ cards, redoCards }: ReelsProps) {
   const [redo, setRedo] = useState<boolean>(false);
   const firstRedoCardRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +33,16 @@ function Reels() {
   return (
     <div className={`select-none ${styles.app}`}>
       <div className={styles.cards}>
-        {redo ? (
+        {!cards.length && !redoCards.length ? (
+          <div
+            className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
+          >
+            <p className="text-base ">There are no cards to display.</p>
+            <Button className="mt-5 bg-white text-black font-black text-base lg:text-lg hover:brightness-200 active:scale-90 ease-in-out duration-150">
+              Create cards
+            </Button>
+          </div>
+        ) : redo ? (
           <>
             {redoCards.map(
               ({ question, answer, id, recalledForCount }, index) => (
@@ -85,16 +104,6 @@ function Reels() {
               ) : null}
             </div>
           </>
-        )}
-        {!cards.length && !redoCards.length && (
-          <div
-            className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
-          >
-            <p className="text-base ">There are no cards to display.</p>
-            <Button className="mt-5 bg-white text-black font-black text-base lg:text-lg hover:brightness-200 active:scale-90 ease-in-out duration-150">
-              Create cards
-            </Button>
-          </div>
         )}
       </div>
     </div>
