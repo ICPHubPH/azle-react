@@ -11,6 +11,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog"; // Import the Dialog components
 import { useNavigate } from "react-router-dom";
+import { RainbowButton } from "../ui/rainbow-button";
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -100,7 +101,9 @@ const Header: React.FC = () => {
             <ModeToggle />
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline">Sign In</Button>
+                <RainbowButton>
+                  Sign In
+                </RainbowButton>
               </DialogTrigger>
               <DialogContent>
                 <DialogTitle>Select Your Role</DialogTitle>
