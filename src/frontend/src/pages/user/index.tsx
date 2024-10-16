@@ -9,7 +9,7 @@ import { ArrowUp } from "lucide-react";
 import LeftCardSide from "@/components/student-component/LeftCardSide";
 import PostForm from "@/components/post/FormPost";
 
-const StudentPage: React.FC = () => {
+const User: React.FC = () => {
   // State to track visibility of the "Go to Top" button
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
@@ -115,4 +115,4 @@ const StudentPage: React.FC = () => {
   );
 };
 
-export default StudentPage;
+export default User;

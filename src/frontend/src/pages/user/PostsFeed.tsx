@@ -19,7 +19,7 @@ import { PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 import { dummyPosts } from "../landing/dummy-data";
 
-export default function ScholarshipsFeed() {
+export default function PostsFeed() {
   const [posts, setPosts] = useState<PostSummaryCardProps[]>();
   const [activeTab, setActiveTab] = useState<
     "all" | "scholarship" | "internship"
