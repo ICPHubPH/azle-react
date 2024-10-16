@@ -34,6 +34,7 @@ export const sendEmail = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "XC-API-Key": XCONNECTED_API_KEY,
       },
       body: JSON.stringify(requestBody),
     });
