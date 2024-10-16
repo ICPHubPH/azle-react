@@ -445,4 +445,100 @@ export default class UserController {
       });
     }
   }
+
+  // admin user management
+  static async archiveById(request: Request, response: Response) {
+    try {
+      const currentUser = await User.findOneBy({ id: request.user });
+
+      // check if auth user exists
+      if (!currentUser) {
+        return response.status(401).json({
+          status: 0,
+          message: "Unauthorized!"
+        });
+      }
+
+      // check if user role is admin
+      if (currentUser.role != "admin") {
+        return response.status(403).json({
+          status: 0,
+          message: "Forbidden!"
+        });
+      }
+
+      const id = request.params.id;
+      const user = await User.findOneBy({ id });
+
+      
+      // check if user exists
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!"
+        });
+      }
+
+      if (!user.archivedAt) {
+        user.archivedAt = new Date();
+        user.save();
+      }
+
+      return response.status(500).json({
+        status: 0,
+        message: "User archived."
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 0,
+        message: "Server error"
+      });
+    }
+  }
+
+  // admin user management
+  static async unarchiveById(request: Request, response: Response) {
+    try {
+      const currentUser = await User.findOneBy({ id: request.user });
+
+      if (!currentUser) {
+        return response.status(401).json({
+          status: 0,
+          message: "Unauthorized!"
+        });
+      }
+
+      if (currentUser.role != "admin") {
+        return response.status(403).json({
+          status: 0,
+          message: "Forbidden!"
+        });
+      }
+
+      const id = request.params.id;
+      const user = await User.findOneBy({ id });
+
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!"
+        });
+      }
+
+      if (user.archivedAt) {
+        user.archivedAt = null;
+        user.save();
+      }
+
+      return response.status(500).json({
+        status: 0,
+        message: "User archived."
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 0,
+        message: "Server error"
+      });
+    }
+  }
 }

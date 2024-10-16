@@ -5,14 +5,14 @@ import { Feedback } from "./feedback";
 import { User } from "./user";
 
 @Entity({
-    name: 'posts',
+  name: 'posts',
 })
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ nullable: true, type: "varchar" })
-  thumbnail: string;
+  thumbnail: string | null;
 
   @Column({type: "varchar", length: 60})
   title: string;
@@ -30,7 +30,7 @@ export class Post extends BaseEntity {
   updatedAt: Date;
 
   @Column({ nullable: true, type: "datetime" })
-  archivedAt: Date;
+  archivedAt: Date | null;
 
   @ManyToOne(() => User, user => user.posts)
   user: User;

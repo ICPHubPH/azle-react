@@ -249,4 +249,99 @@ export default class PostController {
             message: "Post has been deleted!"
         });
     }
+
+    // admin user management
+    static async archiveById(request: Request, response: Response) {
+        try {
+        const currentUser = await User.findOneBy({ id: request.user });
+
+        // check if auth user exists
+        if (!currentUser) {
+            return response.status(401).json({
+            status: 0,
+            message: "Unauthorized!"
+            });
+        }
+
+        // check if user role is admin
+        if (currentUser.role != "admin") {
+            return response.status(403).json({
+            status: 0,
+            message: "Forbidden!"
+            });
+        }
+
+        const id = request.params.id;
+        const post = await Post.findOneBy({ id });
+
+        
+        // check if post exists
+        if (!post) {
+            return response.status(404).json({
+            status: 0,
+            message: "User not found!"
+            });
+        }
+
+        if (!post.archivedAt) {
+            post.archivedAt = new Date();
+            post.save();
+        }
+
+        return response.status(500).json({
+            status: 0,
+            message: "User archived."
+        });
+        } catch (error) {
+        return response.status(500).json({
+            status: 0,
+            message: "Server error"
+        });
+        }
+    }
+
+    static async unarchiveById(request: Request, response: Response) {
+        try {
+          const currentUser = await User.findOneBy({ id: request.user });
+    
+          if (!currentUser) {
+            return response.status(401).json({
+              status: 0,
+              message: "Unauthorized!"
+            });
+          }
+    
+          if (currentUser.role != "admin") {
+            return response.status(403).json({
+              status: 0,
+              message: "Forbidden!"
+            });
+          }
+    
+          const id = request.params.id;
+          const post = await Post.findOneBy({ id });
+    
+          if (!post) {
+            return response.status(404).json({
+              status: 0,
+              message: "User not found!"
+            });
+          }
+    
+          if (post.archivedAt) {
+            post.archivedAt = null;
+            post.save();
+          }
+    
+          return response.status(500).json({
+            status: 0,
+            message: "User archived."
+          });
+        } catch (error) {
+          return response.status(500).json({
+            status: 0,
+            message: "Server error"
+          });
+        }
+      }
 }
