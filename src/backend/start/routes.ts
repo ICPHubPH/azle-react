@@ -46,6 +46,8 @@ Route.post("/@self/change-password", AuthMiddleware.authTest, UserController.cha
 Route.post('/@self/update', AuthMiddleware.authTest, UserController.updateSelf)
 
 Route.get('/users/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
+Route.post('/bookmarks', AuthMiddleware.authTest, BookmarkController.createBookmark);
+Route.post('/bookmarks/:id/remove', AuthMiddleware.authTest, BookmarkController.deleteBookmark);
 
 Route.get('/posts', Pagination.paginate, PostController.getAll);
 Route.post('/posts', AuthMiddleware.authTest, PostController.create);
