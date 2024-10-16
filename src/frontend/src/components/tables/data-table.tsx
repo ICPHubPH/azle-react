@@ -33,6 +33,7 @@ export function DataTable<TData, TValue>({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState<string>("");
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -43,10 +44,12 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
-      globalFilter
+      globalFilter,
+      rowSelection,
     },
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: "includesString"
+    globalFilterFn: "includesString",
+    onRowSelectionChange: setRowSelection,
   });
 
   return (
@@ -59,14 +62,17 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <div className="rounded-md border overflow-x-auto">
+      <div className="rounded-md border overflow-x-auto ">
         <Table>
-          <TableHeader>
+          <TableHeader className="hidden md:table-header-group">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="px-2 py-3 first:pl-4 last:pr-4">
+                    <TableHead
+                      key={header.id}
+                      className="px-2 py-3 first:pl-4 last:pr-4"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -87,7 +93,10 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-2 py-3 first:pl-4 last:pr-4">
+                    <TableCell
+                      key={cell.id}
+                      className="px-2  py-3 first:pl-4 last:pr-4"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -110,6 +119,10 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
         <Button
           variant="outline"
           size="sm"

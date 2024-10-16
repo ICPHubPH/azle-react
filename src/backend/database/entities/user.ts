@@ -8,9 +8,9 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { UserRole } from "../../constants";
+import { Bookmark } from "./bookmark";
 import { Feedback } from "./feedback";
 import { Post } from "./post";
-import { Rating } from "./rating";
 
 @Entity({
   name: "users",
@@ -20,10 +20,10 @@ export class User extends BaseEntity {
   id: string;
 
   @Column({ nullable: true, type: "varchar" })
-  avatarUrl: string;
+  avatarUrl: string | null;
   
   @Column({ nullable: true, type: "varchar" })
-  bannerUrl: string;
+  bannerUrl: string | null;
 
   @Column({ nullable: true, type: "varchar" })
   validIdUrl: string;
@@ -32,7 +32,7 @@ export class User extends BaseEntity {
   name: string;
 
   @Column({ nullable: true, type: "text" })
-  bio: string;
+  bio: string | null;
 
   @Column({ unique: true, type: "varchar" })
   email: string;
@@ -41,7 +41,10 @@ export class User extends BaseEntity {
   password: string;
 
   @Column({ nullable: true, type: "datetime" })
-  emailVerifiedAt: Date;
+  emailVerifiedAt: Date | null;
+
+  @Column({ nullable: true, type: "datetime" })
+  providerVerifiedAt: Date | null;
 
   @Column({ type: "text" })
   role: string;
@@ -51,6 +54,9 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true, type: "datetime" })
+  archivedAt: Date | null;
 
   @OneToMany(() => Post, (post) => post.user, {
     cascade: true,
@@ -64,12 +70,9 @@ export class User extends BaseEntity {
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Rating, (rating) => rating.user, {
-    cascade: true,
-    onDelete: "CASCADE",
-  })
-  ratings: Rating[];
-
+  @OneToMany(() => Bookmark, bookmark => bookmark.user)
+  bookmarks: Bookmark[];
+  
   setRole(role: string) {
     if (UserRole.includes(role)) {
       this.role = role;

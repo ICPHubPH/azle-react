@@ -1,23 +1,23 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { PostCategoryType } from "../../constants";
+import { Bookmark } from "./bookmark";
 import { Feedback } from "./feedback";
-import { Rating } from "./rating";
 import { User } from "./user";
 
 @Entity({
-    name: 'posts',
+  name: 'posts',
 })
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ nullable: true, type: "varchar" })
-  thumbnail: string;
+  thumbnail: string | null;
 
   @Column({type: "varchar", length: 60})
   title: string;
 
-  @Column({type: "text"})
+  @Column({ type: "text" })
   type: string;
 
   @Column({ type: "text" })
@@ -29,6 +29,9 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Column({ nullable: true, type: "datetime" })
+  archivedAt: Date | null;
+
   @ManyToOne(() => User, user => user.posts)
   user: User;
 
@@ -38,8 +41,8 @@ export class Post extends BaseEntity {
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Rating, rating => rating.post)
-  ratings: Rating[];
+  @OneToMany(() => Bookmark, bookmark => bookmark.post)
+  bookmarks: Bookmark[];
 
   setType(type: string) {
     if (PostCategoryType.includes(type)) {

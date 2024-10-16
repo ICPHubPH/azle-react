@@ -15,11 +15,11 @@ export default class AuthMiddleware {
         const token = authorization.split(' ')[1];
     
         try {
-            // NOTE: jsonwebtoken is not supported by IC environment
+            // NOTE: external api service for token verification
             const isValid = await jwt.verify(token, process.env.JWT_SECRET!);
 
             if (!isValid) return response.status(401).json({
-                success: 0,
+                status: 0,
                 message: "Unauthorized!"
             });
 
@@ -32,5 +32,22 @@ export default class AuthMiddleware {
                 message: "Forbidden!"
             })
         }
+    }
+
+    static async authTest(request: Request, response: Response, next: NextFunction) {
+        const authorization = request.headers["authorization"];
+        const token = authorization?.split(" ")[1];
+        console.log(token);
+
+        if (token?.length == 0) {
+            return response.status(401).json({
+                status: 0,
+                message: "Unauthorized!"
+            });
+        }
+
+        request.user = token;
+
+        next();
     }
 }

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import Header from "@/components/student-component/Header";
 
 export default function PostPage() {
   const navigate = useNavigate(); // Initialize navigate
@@ -15,8 +16,9 @@ export default function PostPage() {
     toast.info("Back to feed"); // Show toast notification
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+  return (<>
+  <Header/>
+     <div className="flex flex-col items-center justify-center min-h-screen pt-4">
       <div className="flex justify-start w-full px-36 mb-4">
         <Button
           variant={null}
@@ -33,5 +35,7 @@ export default function PostPage() {
         <ReviewSection />
       </div>
     </div>
+  </>
+   
   );
 }

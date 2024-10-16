@@ -7,6 +7,18 @@ declare global {
        * Authorized user ID.
        */
       user?: string;
+      /**
+       * Current page.
+       */
+      page?: number;
+      /**
+       * Pagination item count.
+       */
+      limit?: number;
+      /**
+       * Pagination skipped item counts.
+       */
+      skip?: number;
     }
   }
 }
