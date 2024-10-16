@@ -6,6 +6,9 @@ import Footer from "@/components/footer/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Briefcase, Users, Smile, Zap, TrendingUp, UserPlus } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import BlurFade from "@/components/ui/blur-fade";
+import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+
 
 const Home: React.FC = () => {
   return (
@@ -15,19 +18,25 @@ const Home: React.FC = () => {
         className="flex flex-col items-center justify-center h-screen"
         id="home"
       >
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold">
-          Welcome to{" "}
-          <span className="text-7xl font-bold dark:text--200 bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
-            ConnectED
-          </span>
-        </h1>
-        <p className="text-lg text-gray-800 dark:text-gray-200">
-          Your Trusted Gateway to Scholarships and Internships.
-        </p>
+        <BlurFade delay={0.25} inView >
+          <NeonGradientCard>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold">
+              Welcome to{" "}
+              <span className="text-7xl font-bold dark:text--200 bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
+                  ConnectED  
+              </span>
+            </h1>
+          </NeonGradientCard>
+          
+        </BlurFade>
+        <BlurFade delay={0.25 * 2}>
+          <p className="text-lg text-gray-800 dark:text-gray-200">
+            Your Trusted Gateway to Scholarships and Internships.
+          </p>
+        </BlurFade>
+        
       </div>
       <Separator />
-      
-      {/** TEST POST ONLY */}
       <div className="flex flex-col gap-4 items-center container mx-auto">
       <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
