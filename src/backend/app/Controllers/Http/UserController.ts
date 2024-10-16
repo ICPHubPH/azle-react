@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
+import { IsNull, Not } from "typeorm";
 
 export default class UserController {
   static async getAll(request: Request, response: Response) {
@@ -12,6 +13,10 @@ export default class UserController {
       console.log("ln12", request.user);
 
       const data = await User.findAndCount({
+        where: {
+          archivedAt: IsNull(),
+          emailVerifiedAt: Not(IsNull())
+        },
         select: {
           id: true,
           name: true,
@@ -46,6 +51,8 @@ export default class UserController {
 
     const data = await User.findOneBy({
       id,
+      archivedAt: IsNull(),
+      emailVerifiedAt: Not(IsNull())
     });
 
     if (!data) {
@@ -61,6 +68,10 @@ export default class UserController {
       message: null,
     });
   }
+
+  // TODO:
+  // get archived users
+  // get non email verified users
 
   // delete account
   static async deleteById(request: Request, response: Response) {
@@ -92,8 +103,6 @@ export default class UserController {
         });
       }
 
-      const data = await User.delete({ id });
-
       if (isUserExists.id != request.user && user.role != "admin") {
         return response.status(403).json({
           success: 0,
@@ -101,6 +110,8 @@ export default class UserController {
           message: "Forbidden!",
         });
       }
+
+      const data = await User.delete({ id });
 
       if (!data.affected || data.affected == 0) {
         response.status(400).json({
@@ -190,7 +201,6 @@ export default class UserController {
     });
   }
 
-  // Just for testing
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadValidIdUrl(request: Request, response: Response) {
     try {
@@ -237,7 +247,6 @@ export default class UserController {
     }
   }
 
-  // Just for testing
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadAvatarUrl(request: Request, response: Response) {
     try {
@@ -277,7 +286,6 @@ export default class UserController {
     }
   }
 
-  // Just for testing
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadBannerUrl(request: Request, response: Response) {
     try {
@@ -319,7 +327,6 @@ export default class UserController {
     }
   }
 
-  // Just for testing
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async changePassword(request: Request, response: Response) {
     try {
@@ -373,7 +380,6 @@ export default class UserController {
     }
   }
 
-  // Just for testing
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async updateSelf(request: Request, response: Response) {
     try {
@@ -445,6 +451,8 @@ export default class UserController {
       });
     }
   }
+
+  // TODO: separate admin management from user controller (maybe admin controller)
 
   // admin user management
   static async archiveById(request: Request, response: Response) {
@@ -537,6 +545,59 @@ export default class UserController {
     } catch (error) {
       return response.status(500).json({
         status: 0,
+        message: "Server error"
+      });
+    }
+  }
+
+  // admin
+  static async verifyProvider(request: Request, response: Response) {
+    try {
+      const user = await User.findOneBy({ id: request.user });
+
+      if (!user) {
+        return response.status(401).json({
+          status: 0,
+          message: "Unauthorized!"
+        });
+      }
+
+      if (user.role != "admin") {
+        return response.status(403).json({
+          status: 0,
+          message: "Forbidden!"
+        });
+      }
+
+      const id = request.params.id;
+      const provider = await User.findOne({
+        where: {
+          id,
+          archivedAt: IsNull(),
+          providerVerifiedAt: IsNull(),
+          role: "provider"
+        }
+      });
+
+      if (!provider) {
+        return response.status(404).json({
+          status: 0,
+          message: "Provider not found!"
+        });
+      }
+
+      provider.providerVerifiedAt = new Date();
+      await provider.save();
+
+      return response.status(200).json({
+        status: 1,
+        data: provider,
+        message: "Provider has been verified!"
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 0,
+        error,
         message: "Server error"
       });
     }

@@ -1,4 +1,5 @@
 import { Feedback } from "Database/entities/feedback";
+import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 
 export default class FeedbackController {
@@ -50,11 +51,27 @@ export default class FeedbackController {
 
     static async createFeedback(request: Request, response: Response) {
         try {
+            const user = await User.findOneBy({ id: request.user });
+
+            if (!user || !user.emailVerifiedAt) {
+                return response.status(401).json({
+                    status: 0,
+                    message: "Unauthorized!"
+                });
+            }
+
+            if (user.role != "student") {
+                return response.status(403).json({
+                    status: 0,
+                    message: "Forbidden!"
+                });
+            }
+
             const { postId, rate, content } = request.body;
 
             const data = await Feedback.insert({
                 user: {
-                    id: request.user,
+                    id: user.id,
                 },
                 post: {
                     id: postId
@@ -77,8 +94,8 @@ export default class FeedbackController {
         }
     }
 
-    static async updatedFeedback(request: Request, response: Response) {
-        try { 
+    static async updateFeedback(request: Request, response: Response) {
+        try {
             const { content, rate } = request.body;
             const id = request.params.id;
 
@@ -96,7 +113,6 @@ export default class FeedbackController {
             if (!isFeedbackExist) {
                 return response.status(404).json({
                     status: 0,
-                    data: null,
                     message: "Feedback not found!"
                 });
             }
@@ -104,7 +120,6 @@ export default class FeedbackController {
             if (isFeedbackExist?.user.id != request.user) {
                 return response.status(403).json({
                     status: 0,
-                    data: null,
                     message: "Forbidden!"
                 });
             }
@@ -119,7 +134,7 @@ export default class FeedbackController {
             return response.status(200).json({
                 status: 1,
                 data,
-                message: null
+                message: "Feedback updated."
             });
         } catch (error) {
             response.status(500).json({
@@ -140,8 +155,7 @@ export default class FeedbackController {
                 },
                 select: {
                     user: {
-                        id: true,
-                        role: true
+                        id: true
                     }
                 }
             });
@@ -161,7 +175,7 @@ export default class FeedbackController {
                 });
             }
 
-            if (feedback?.user.id != request.user && feedback.user.role != "student") {
+            if (feedback?.user.id != request.user) {
                 return response.status(403).json({
                     status: 0,
                     data: null,

@@ -122,7 +122,7 @@ export default class BookmarkController {
                 });
             }
 
-            if (id != bookmark.user.id && user.role == "admin") {
+            if (user.id != bookmark.user.id && user.role == "admin") {
                 return response.status(403).json({
                     status: 0,
                     message: "Forbidden!"
