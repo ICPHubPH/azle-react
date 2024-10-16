@@ -31,8 +31,10 @@ function Reels({ cards, redoCards }: ReelsProps) {
   }, [redo, redoCards]);
 
   return (
-    <div className={`select-none ${styles.app}`}>
-      <div className={styles.cards}>
+    <div className={`select-none flex flex-1 ${styles.app}`}>
+      <div
+        className={`p-0 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 relative h-full  w-full overflow-scroll snap-y snap-mandatory py-0 sm:py-2 cards ${styles.cards}`}
+      >
         {!cards.length && !redoCards.length ? (
           <div
             className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
