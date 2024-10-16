@@ -65,25 +65,25 @@ export default class UserController {
   // delete account
   static async deleteById(request: Request, response: Response) {
     try {
-      const user = await User.findOne({ 
+      const user = await User.findOne({
         where: {
-          id: request.user
+          id: request.user,
         },
         select: {
-          role: true
-        }
+          role: true,
+        },
       });
-  
+
       if (!user) {
         return response.status(401).json({
           success: 0,
-          message: "Unauthorized!"
+          message: "Unauthorized!",
         });
       }
-      
+
       const id = request.params.id;
       const isUserExists = await User.findOneBy({ id });
-  
+
       if (!isUserExists) {
         return response.status(404).json({
           success: 0,
@@ -91,9 +91,9 @@ export default class UserController {
           message: "User not found!",
         });
       }
-  
+
       const data = await User.delete({ id });
-  
+
       if (isUserExists.id != request.user && user.role != "admin") {
         return response.status(403).json({
           success: 0,
@@ -101,14 +101,14 @@ export default class UserController {
           message: "Forbidden!",
         });
       }
-  
+
       if (!data.affected || data.affected == 0) {
         response.status(400).json({
           status: 0,
           message: "User doesn't exist!",
         });
       }
-  
+
       response.status(200).json({
         status: 1,
         message: "User has been deleted!",
@@ -116,7 +116,7 @@ export default class UserController {
     } catch (error) {
       return response.status(500).json({
         success: 0,
-        message: "Server error!"
+        message: "Server error!",
       });
     }
   }
@@ -129,14 +129,14 @@ export default class UserController {
       if (!currentUser) {
         return response.status(401).json({
           success: 0,
-          message: "Unauthorized!"
+          message: "Unauthorized!",
         });
       }
 
       if (currentUser.role != "admin") {
         return response.status(403).json({
           success: 0,
-          message: "Forbidden!"
+          message: "Forbidden!",
         });
       }
 
@@ -430,12 +430,13 @@ export default class UserController {
         },
       };
 
-      await sendEmail(emailMessage, "kurtddbigtas@gmail.com", "TEST EMAIL FROM IC (1)")
+      const jsonData = await sendEmail(
+        emailMessage,
+        "kurtddbigtas@gmail.com",
+        "TEST EMAIL FROM IC (1)"
+      );
 
-      return response.status(200).json({
-        status: 1,
-        message: "Test successful.",
-      });
+      return response.json(jsonData);
     } catch (error) {
       console.log("LN415", error);
       response.status(500).json({
