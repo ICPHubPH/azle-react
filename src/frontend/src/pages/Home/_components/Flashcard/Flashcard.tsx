@@ -7,7 +7,6 @@ interface FlashcardProps {
   back: string;
   recalledForCount: number;
   id: number;
-  ref?: any;
 }
 
 const Flashcard: React.FC<FlashcardProps> = ({
