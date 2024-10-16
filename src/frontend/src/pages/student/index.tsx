@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Header from "@/components/student-component/Header";
 import UpperContent from "@/components/student-component/UpperContent";
-import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
+import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import RightCardSide from "@/components/student-component/RightCardSide";
 import { ArrowUp } from "lucide-react";
 import LeftCardSide from "@/components/student-component/LeftCardSide";
-import PostForm from "@/components/provider-component/FormPost";
+import PostForm from "@/components/post/FormPost";
 
 const StudentPage: React.FC = () => {
   // State to track visibility of the "Go to Top" button

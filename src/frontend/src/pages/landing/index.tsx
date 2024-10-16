@@ -9,9 +9,9 @@ import {
   dummyTopProviders,
   dummyUsers,
 } from "./dummy-data";
-import CreatePost from "@/components/post-form/CreatePost";
+import CreatePost from "@/components/post/post-form/CreatePost";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
-import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
+import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
 import Feedback from "@/components/review/Feedback";
 import Footer from "@/components/footer/Footer";
 import { useNavigate } from "react-router-dom";
