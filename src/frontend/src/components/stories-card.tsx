@@ -16,7 +16,7 @@ type StoriesCardProps = {
 const StoriesCard: React.FC<StoriesCardProps> = ({ ...params }) => {
     return (
         <Card className="rounded-lg shadow-lg overflow-hidden">
-            <CardHeader className="p-4">
+            <CardHeader>
                 <img
                     className="bg-slate-400 rounded-t-lg object-cover"
                     height={500}

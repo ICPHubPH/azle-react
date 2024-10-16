@@ -1,10 +1,11 @@
-import ResourceCard from "@/components/stories-card";
+import StoriesCard from "@/components/stories-card";
 import Tab from "@/components/tab";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/HomeLayout/Header";
 import HomeContent from "@/layout/HomeLayout/Home";
 import { Home, Star, Trophy } from "lucide-react";
 import { useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Stories = {
     storyImg: string;
@@ -18,6 +19,13 @@ const HomePage = () => {
     const resources: Stories[] = [
         { storyImg: "", projectName: "Project Name", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." },
         { storyImg: "", projectName: "Project Name", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." },
+        { storyImg: "", projectName: "Project Name", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." },
+
+        { storyImg: "", projectName: "Project Name", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." },
+
+        { storyImg: "", projectName: "Project Name", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." },
+
+        { storyImg: "", projectName: "Project Name", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." },
     ];
 
     return (
@@ -30,18 +38,20 @@ const HomePage = () => {
                         <Tab label="Ranking" icon={Trophy} isActive={activeTab === "Ranking"} onClick={() => setActiveTab("Ranking")} />
                         <Tab label="Favorites" icon={Star} isActive={activeTab === "Favorites"} onClick={() => setActiveTab("Favorites")} />
                     </nav>
-                    <section className="p-4 h-full rounded-lg bg-[#ECEDED]">
+                    <section className="p-4 h-full rounded-lg bg-[#ECEDED] shadow-md">
                         <h2 className="text-xl font-semibold mb-4">Stories</h2>
-                        <div className="flex flex-col gap-y-4">
-                            {resources.map((resource, index) => (
-                                <ResourceCard
-                                    key={index}
-                                    storyImg={resource.storyImg}
-                                    projectName={resource.projectName}
-                                    description={resource.description}
-                                />
-                            ))}
-                        </div>
+                        <ScrollArea className="h-[40vh] lg:h-[54rem]">
+                            <div className="flex flex-col gap-y-4 px-2">
+                                {resources.map((resource, index) => (
+                                    <StoriesCard
+                                        key={index}
+                                        storyImg={resource.storyImg}
+                                        projectName={resource.projectName}
+                                        description={resource.description}
+                                    />
+                                ))}
+                            </div>
+                        </ScrollArea>
                     </section>
                 </aside>
 

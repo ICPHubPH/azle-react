@@ -22,7 +22,6 @@ const SignUpPage = () => {
 			<section className="w-full flex flex-col items-center md:block p-6 md:p-12 overflow-y-scroll">
 				<div className="w-full text-center md:text-left xl:w-2/3">
 					<img className="h-8" src="plantaria-logo.png" alt="plantaria-logo" />
-
 					<h1 className="mt-4 leading-normal lg:leading-relaxed text-3xl md:text-4xl lg:text-5xl text-primary">
 						Start growing your
 						<span className="block md:inline"> urban garden today</span>

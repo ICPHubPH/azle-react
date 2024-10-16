@@ -1,8 +1,10 @@
 import Profile from "@/components/avatar";
+import TutorialCard from "@/components/tutorial-card";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/HomeLayout/Header";
 import { Pencil, UserRoundPen } from "lucide-react";
 import { FC, useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ProfilePage: FC = () => {
   const [userProfile, setUserProfile] = useState("https://github.com/shadcn.png");
@@ -86,9 +88,90 @@ const ProfilePage: FC = () => {
         </div>
 
         {/* Timeline */}
-        <div className="border border-gray-200 shadow-lg h-96 rounded-xl p-6 bg-white">
-           <h1 className="text-2xl font-bold text-lime-700 mb-6">Timeline</h1>
+        <div className="border border-gray-200 shadow-lg h-[30rem] rounded-xl p-6 bg-white">
+          <h1 className="text-2xl font-bold text-lime-700 mb-4">Timeline</h1>
+          <ScrollArea className="h-96">
+            <div className="grid grid-cols-4 gap-4 px-2.5">
+              {
+                [
+                  {
+                    id: 1,
+                    tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+                    profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+                    profileName: "John Doe",
+                    title: "Intro to Urban Farming",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+                 },
+                 {
+                  id: 2,
+                  tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+                  profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+                  profileName: "John Doe",
+                  title: "Intro to Urban Farming",
+                  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+                 },
+                 {
+                  id: 3,
+                  tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+                  profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+                  profileName: "John Doe",
+                  title: "Intro to Urban Farming",
+                  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+               },
+               {
+                id: 4,
+                tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+                profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+                profileName: "John Doe",
+                title: "Intro to Urban Farming",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+               },
+               {
+                id: 5,
+                tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+                profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+                profileName: "John Doe",
+                title: "Intro to Urban Farming",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+             },
+             {
+              id: 6,
+              tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+              profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+              profileName: "John Doe",
+              title: "Intro to Urban Farming",
+              description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+             },
+             {
+              id: 7,
+              tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+              profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+              profileName: "John Doe",
+              title: "Intro to Urban Farming",
+              description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+              },
+              {
+                id: 8,
+                tutorialImage: "https://oneacrefund.org/sites/default/files/styles/banner_large_desktop/public/2024-04/TZN_0819.jpg?h=2e5cdddf&itok=ExHuaX_n",
+                profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRybsd7cw9VxpeBObuBE90Al3a1OB0kgPhyHg&s",
+                profileName: "John Doe",
+                title: "Intro to Urban Farming",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laboriosam ut eos labore sit in sint."
+              },
+               ].map(value => (
+                  <TutorialCard
+                    key={value.id}
+                    tutorialImage={value.tutorialImage}
+                    profileImage={value.profileImage}
+                    profileName={value.profileName}
+                    title={value.title}
+                    description={value.description}
+                  />
+                ))
+              }
 
+            </div>
+          </ScrollArea>
         </div>
       </div>
       <Footer />
