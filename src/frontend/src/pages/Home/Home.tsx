@@ -1,16 +1,15 @@
 import useFlashcardStore from "@/store/useFlashcardStore";
 import Reels from "./_components/Reels/Reels";
+import { Navigation } from "../../Navigation";
 
 function Home() {
   const { cards, redoCards } = useFlashcardStore();
 
   return (
-    <div className="h-screen">
-      <Reels
-        cards={cards}
-        redoCards={redoCards}
-      />
-    </div>
+    <Reels
+      cards={cards}
+      redoCards={redoCards}
+    />
   );
 }
 

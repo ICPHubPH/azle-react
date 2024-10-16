@@ -16,7 +16,7 @@ html {
   width: 100%;
   overflow: scroll;
   scroll-snap-type: y mandatory;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
 .cards::-webkit-scrollbar {

@@ -18,7 +18,7 @@ const Flashcard: React.FC<FlashcardProps> = ({
   const [flipCard, setFlipCard] = useState<boolean>(false);
 
   return (
-    <div className="relative w-full h-full snap-start flex items-end justify-center text-center text-lg gap-4 p-0 sm:p-3 bg-background ">
+    <div className="relative w-full h-full snap-start flex items-end justify-center text-center text-lg gap-4 py-0 sm:p-3 bg-background">
       <motion.div
         initial={{ rotateY: 180 }}
         animate={{ rotateY: flipCard ? 0 : 180 }}
