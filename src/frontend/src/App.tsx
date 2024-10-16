@@ -1,45 +1,57 @@
 // src/frontend/src/App.tsx
+
 import { ThemeProvider } from "@/components/theme-provider";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import AuthPage from "./pages/auth";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import ProvidersFeed from "./pages/feeds/AllProvidersFeed";
-import ScholarshipFeed from "./pages/feeds/AllScholarshipPostsfeed";
+
+// Pages
 import Home from "./pages/landing";
-import PostPage from "./pages/post";
-import ProviderPage from "./pages/provider";
-import ProviderProfile from "./pages/provider/ProviderProfile";
-import StudentPage from "./pages/student";
-import Profile from "./pages/student/profile";
-import TermsAndConditions from "./pages/TermsOfUse";
+import AuthPage from "./pages/auth";
 import NotFoundPage from "./pages/NotFoundPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsOfUse";
+
+// User Pages
+import User from "./pages/user";
+import Profile from "./pages/user/Profile";
+import ProvidersFeed from "./pages/user/AllProvidersFeed";
+import PostsFeed from "./pages/user/PostsFeed";
+import ProviderProfile from "./pages/user/ProviderProfile";
+
+// Post Pages
+import PostPage from "./pages/post";
+
+// Admin Page
 import AdminPage from "./pages/admin/admin-page";
-
-
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Routes>
+          {/* Landing and Auth */}
           <Route path="/" element={<Home />} />
-          <Route path="/student" element={<StudentPage />} />
-          <Route path="/provider" element={<ProviderPage />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path='/scholarship-feed' element={<ScholarshipFeed/>}/>
-          <Route path='/provider-feed' element={<ProvidersFeed/>} />
-          <Route path="/provider-profile/:id" element={<ProviderProfile />} /> 
-          <Route path="/scholarship-feed" element={<ScholarshipFeed />} />
-          <Route path="/provider-feed" element={<ProvidersFeed />} />
-          <Route path="/provider-profile/:id" element={<ProviderProfile />} />
-          <Route path="/posts/:postId" element={<PostPage />} />
-          <Route path="/admin" element={<AdminPage/>} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
-          <Route path='/terms-and-conditions' element={<TermsAndConditions/>} />
-          <Route path='*' element={<NotFoundPage/>} />
 
+          {/* User Pages */}
+          <Route path="/home" element={<User />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/provider-feed" element={<ProvidersFeed />} />
+          <Route path="/posts-feed" element={<PostsFeed />} />
+          <Route path="/provider-profile/:id" element={<ProviderProfile />} />
+          
+          {/* Post Pages */}
+          <Route path="/posts/:postId" element={<PostPage />} />
+
+          {/* Admin Page */}
+          <Route path="/admin" element={<AdminPage />} />
+
+          {/* Legal Pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
       <Toaster />

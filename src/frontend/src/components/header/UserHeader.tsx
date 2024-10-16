@@ -29,17 +29,17 @@ const Header: React.FC = () => {
 
   const handleLogoClick = () => {
     if (user.role === 'Student') {
-      navigate('/student');
+      navigate('/home');
     } else if (user.role === 'Provider') {
-      navigate('/provider');
+      navigate('/home');
     } else {
       navigate('/'); 
     }
   };
 
   const navItems = [
-    { name: 'Home', path: '/student' },
-    { name: 'Scholarship', path: '/scholarship-feed' }, 
+    { name: 'Home', path: '/home' },
+    { name: 'Posts', path: '/posts-feed' }, 
     { name: 'Providers', path: '/provider-feed' },  
   ];
 
