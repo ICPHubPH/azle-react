@@ -28,10 +28,10 @@ const Header: React.FC = () => {
     // Redirect logic based on the role selected
     if (role === "student") {
       // redirect to student route
-      navigate("/student");
+      navigate("/home");
     } else if (role === "provider") {
       // redirect to provider route
-      navigate("/provider");
+      navigate("/home");
     }
   };
 
