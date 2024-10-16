@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Briefcase, Home, Search, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import Header from '@/components/student-component/Header'
+import Header from '@/components/header/UserHeader'
 import Footer from '@/components/footer/Footer'
 
 export default function NotFoundPage() {

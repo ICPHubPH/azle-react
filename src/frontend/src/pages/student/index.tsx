@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "@/components/student-component/Header";
+import Header from "@/components/header/UserHeader";
 import UpperContent from "@/components/student-component/UpperContent";
 import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
