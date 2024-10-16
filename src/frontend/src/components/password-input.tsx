@@ -1,4 +1,3 @@
-import React from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { forwardRef, useState } from "react";
 import { Input, type InputProps } from "./ui/input";
