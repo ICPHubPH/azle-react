@@ -23,9 +23,9 @@ export interface Post {
   id: string;
   email: string;
   name: string;
-  avatarSource: string;
+  avatarSource: string; //TODO: Need to update to avatarUrl
   postTitle: string;
-  postThumbnailSource: string;
+  postThumbnailSource: string; // TODO: need to update to postThumbnailUrl
   postDescription: string;
   postRatingCount: number;
   postBookmarkCount: number;
