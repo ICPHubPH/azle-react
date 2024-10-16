@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Header from '@/components/student-component/Header'
+import Header from '@/components/header/UserHeader'
 
 export default function TermsAndConditions() {
   return (

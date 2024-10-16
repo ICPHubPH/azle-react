@@ -1,4 +1,4 @@
-import Header from "@/components/student-component/Header";
+import Header from "@/components/header/UserHeader";
 import { Separator } from "@/components/ui/separator";
 import { FormEvent, useState } from "react";
 import {

@@ -1,27 +1,13 @@
 import React from "react";
 import { Separator } from "@/components/ui/separator";
-import Testimonies from "@/components/landing/testimonies/Testimonies";
-import Providers from "@/components/landing/donor/Providers";
-import Header from "@/components/landing/Header";
-import {
-  dummyFeedbacks,
-  dummyPosts,
-  dummyTopProviders,
-  dummyUsers,
-} from "./dummy-data";
+import Header from "@/components/header/LandingHeader";
 import CreatePost from "@/components/post/post-form/CreatePost";
-import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
-import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
-import Feedback from "@/components/review/Feedback";
 import Footer from "@/components/footer/Footer";
-import { useNavigate } from "react-router-dom";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Briefcase, Users, Smile, Zap, TrendingUp, UserPlus } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 const Home: React.FC = () => {
-  const navigate = useNavigate();
   return (
     <div className="scroll-smooth">
       <Header />

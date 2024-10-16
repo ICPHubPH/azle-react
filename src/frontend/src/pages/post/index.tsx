@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import Header from "@/components/student-component/Header";
+import Header from "@/components/header/UserHeader";
 
 export default function PostPage() {
   const navigate = useNavigate(); // Initialize navigate
