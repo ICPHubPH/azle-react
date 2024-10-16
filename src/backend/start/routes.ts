@@ -35,7 +35,7 @@ Route.post("/auth/verify", AuthController.verify);
 
 // NOTE: Added convention /remove for delete endpoint to prevent conflicts with other routes.
 
-Route.get("/users", Pagination.paginate, UserController.getAll);
+Route.get("/users", Pagination.paginate, AuthMiddleware.authorize, UserController.getAll);
 Route.post("/users", AuthMiddleware.authTest, UserController.create);
 Route.get("/users/:id", UserController.findById);
 Route.post("/users/:id/remove", AuthMiddleware.authTest, UserController.deleteById);

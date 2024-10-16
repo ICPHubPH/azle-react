@@ -2,6 +2,8 @@ import * as bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { loginSchema, registerSchema } from "Helpers/zod-schemas";
+import { signToken } from "Helpers/jwt";
+import { xFetch } from "Helpers/x-fetch";
 
 export default class AuthController {
   static async register(request: Request, response: Response) {
@@ -24,7 +26,7 @@ export default class AuthController {
       }
 
       const isEmailExist = await User.findOneBy({
-        email: data?.email
+        email: data?.email,
       });
 
       if (isEmailExist) {
@@ -78,7 +80,7 @@ export default class AuthController {
       if (!token) {
         return response.status(400).json({
           status: 0,
-          message: "Bad request!"
+          message: "Bad request!",
         });
       }
 
@@ -166,13 +168,21 @@ export default class AuthController {
         });
       }
 
-
       // TODO: external api for generating access token
+
+      const jsonData = await signToken(user.id);
+
+      if (!jsonData) {
+        return response.status(500).json({
+          status: 0,
+          message: "Internal server error. Failed to sign token.",
+        });
+      }
 
       return response.status(200).json({
         status: 1,
         data: {
-          // accessToken
+          accessToken: jsonData.data.token,
         },
         message: "Signed in",
       });
@@ -180,7 +190,7 @@ export default class AuthController {
       return response.status(500).json({
         status: 0,
         error,
-        message: "Server error"
+        message: "Server error",
       });
     }
   }

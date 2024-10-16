@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
-import Header from "@/components/student-component/Header";
+import Header from "@/components/header/UserHeader";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import { dummyTopProviders } from "../landing/dummy-data";
 

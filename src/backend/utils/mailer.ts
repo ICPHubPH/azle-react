@@ -1,3 +1,5 @@
+import { xFetch } from "./x-fetch";
+
 export interface EmailMessage {
   body: {
     name: string;
@@ -19,25 +21,16 @@ export const sendEmail = async (
   recipientEmail: string,
   subject: string
 ) => {
-  const XCONNECTED_API_URL = "https://xconnected.onrender.com";
-  const XCONNECTED_API_KEY =
-    "0d9f22e26bba9e7caa2963447f6dabf50d2f5e8b9e2936b08831cef6794cb029";
+  const endpoint = "/connectED/send-email";
+
   try {
     const requestBody = {
       emailMessage,
       recipientEmail,
       subject,
-      connectEDApiKey: XCONNECTED_API_KEY,
     };
 
-    const response = await fetch(`${XCONNECTED_API_URL}/connectED/send-email`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "XC-API-Key": XCONNECTED_API_KEY,
-      },
-      body: JSON.stringify(requestBody),
-    });
+    const response = await xFetch(endpoint, requestBody);
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
