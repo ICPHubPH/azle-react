@@ -1,4 +1,5 @@
-import ApisController from 'App/Controllers/Http/ApisController';
+import CardController from 'App/Controllers/Http/CardController';
+import UserController from 'App/Controllers/Http/UserController';
 import { Router } from 'express';
 const Route = Router();
 
@@ -14,14 +15,20 @@ const Route = Router();
 |--------------------------------------------------------------------------
 */
 
-Route.post('/add_user', ApisController.add_user);
-Route.get('/get_users', ApisController.get_users);
-Route.post('/update_user', ApisController.update_user);
-Route.post('/delete_user', ApisController.delete_user);
 
-// Route.get('/greet',ApisController.greet)
-// Route.get('/configurations',ApisController.configurations)
-// Route.post('/configuration/insert', ApisController.insert_configuration)
-// Route.post('/configuration/update', ApisController.update_configuration)
-// Route.post('/configuration/delete', ApisController.delete_configuration)
+/* User */
+Route.get('/app/users', UserController.users);
+Route.get('/app/get_user', UserController.get_user);
+Route.post('/app/create_user', UserController.create_user);
+Route.post('/app/update_user', UserController.update_user);
+Route.post('/app/delete_user', UserController.delete_user);
+
+/* Card */
+Route.get('/app/cards', CardController.cards);
+Route.get('/app/get_card', CardController.get_card);
+Route.post('/app/create_card', CardController.create_card);
+Route.post('/app/update_card', CardController.update_card);
+Route.post('/app/delete_card', CardController.delete_card);
+
+
 export { Route as routes };
