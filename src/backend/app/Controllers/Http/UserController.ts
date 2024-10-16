@@ -364,4 +364,42 @@ export default class UserController {
       });
     }
   }
+
+  // Just for testing
+  // Need to replace ID with the actual user ID coming from the request (req.user)
+  static async updateSelf(request: Request, response: Response) {
+    try {
+      const { name, bio, id } = request.body;
+
+      const user = await User.findOneBy({ id });
+
+      if (!user) {
+        return response.status(404).json({
+          status: 0,
+          message: "User not found!",
+        });
+      }
+
+      user.name = name ?? user.name;
+
+      if (bio === "") {
+        user.bio = null;
+      } else if (bio) {
+        user.bio = bio;
+      }
+
+      await User.save(user);
+      response.status(200).json({
+        status: 1,
+        message: "User updated.",
+        user,
+      });
+    } catch (error: any) {
+      console.log("LN392", error);
+      return response.status(500).json({
+        status: 0,
+        message: "Server error",
+      });
+    }
+  }
 }

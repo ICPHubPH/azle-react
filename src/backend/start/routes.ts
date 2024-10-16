@@ -44,6 +44,7 @@ Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl); // TODO -
 Route.post("/@self/upload/avatar", UserController.uploadAvatarUrl);
 Route.post("/@self/upload/banner", UserController.uploadBannerUrl);
 Route.post("/@self/change-password", UserController.changePassword);
+Route.post('/@self/update', UserController.updateSelf)
 
 Route.get('/users/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
 
