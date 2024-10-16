@@ -1,4 +1,3 @@
-import { User } from "Database/entities/user";
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 
@@ -51,55 +50,5 @@ export default class AuthMiddleware {
         request.user = token;
 
         next();
-    }
-
-    static async isProvider(request: Request, response: Response, next: NextFunction) {
-        try {
-            const id = request.user;
-            const user = await User.findOne({ 
-                where: {
-                    id
-                },
-                select: {
-                    role: true
-                }
-             });
-
-            if (!user || user?.role != "provider") {
-                throw new Error();
-            }
-
-            next();
-        } catch (error) {
-            response.status(403).json({
-                success: 0,
-                message: "Forbidden!"
-            });
-        }
-    }
-
-    static async isAdmin(request: Request, response: Response, next: NextFunction) {
-        try {
-            const id = request.user;
-            const user = await User.findOne({ 
-                where: {
-                    id
-                },
-                select: {
-                    role: true
-                }
-             });
-
-            if (!user || user?.role != "admin") {
-                throw new Error();
-            }
-
-            next();
-        } catch (error) {
-            response.status(403).json({
-                success: 0,
-                message: "Forbidden!"
-            });
-        }
     }
 }

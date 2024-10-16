@@ -7,7 +7,7 @@ import { User } from './user';
 })
 export class Bookmark extends BaseEntity {
   @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
     
     @ManyToOne(() => User, user => user.bookmarks)
     user: User;

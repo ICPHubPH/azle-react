@@ -46,6 +46,8 @@ Route.post("/@self/change-password", AuthMiddleware.authTest, UserController.cha
 Route.post('/@self/update', AuthMiddleware.authTest, UserController.updateSelf)
 
 Route.get('/users/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
+Route.post('/bookmarks', AuthMiddleware.authTest, BookmarkController.createBookmark);
+Route.post('/bookmarks/:id/remove', AuthMiddleware.authTest, BookmarkController.deleteBookmark);
 
 Route.get('/posts', Pagination.paginate, PostController.getAll);
 Route.post('/posts', AuthMiddleware.authTest, PostController.create);
@@ -54,7 +56,7 @@ Route.post('/posts/:id', AuthMiddleware.authTest, PostController.updateById);
 Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById);
 Route.get('/posts/:id/category', PostController.findByCategorytype);
 
-Route.post('/feedbacks', FeedbackController.createFeedback);
+Route.post('/feedbacks', AuthMiddleware.authTest, FeedbackController.createFeedback);
 Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
 Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback);
 
