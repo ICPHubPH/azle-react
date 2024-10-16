@@ -36,12 +36,8 @@ const SignUpPage = () => {
 					{/* TODO: Turn this into a form component */}
 					<div className="space-y-3">
 						<div className="space-y-2">
-							<Label htmlFor="first-name">First Name</Label>
-							<Input id="first-name" />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="last-name">Last Name</Label>
-							<Input id="last-name" />
+							<Label htmlFor="name">Name</Label>
+							<Input id="name" />
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="location">Location</Label>

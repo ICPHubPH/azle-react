@@ -1,5 +1,4 @@
 import UserRegisterValidator from "App/Validators/UserRegisterValidator";
-import { dataCertificate } from "azle/src/lib/ic/data_certificate";
 import { User } from "Database/entities/user";
 import type { Response, Request } from "express";
 
@@ -18,13 +17,12 @@ export namespace UsersController {
       });
     }
 
-    const { email, password, first_name, last_name, location, principal } = data;
+    const { email, password, name, location, principal } = data;
 
     const userData: Partial<User> = {
       email,
       password_hash: /* hash(password) */ password,
-      first_name,
-      last_name,
+      name,
       location,
       principal_id: principal,
     };

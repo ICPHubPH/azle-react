@@ -18,10 +18,7 @@ export class User extends BaseEntity {
   principal_id: string
 
   @Column({ type: "text" })
-  first_name: string
-
-  @Column({ type: "text", nullable: true })
-  last_name: string
+  name: string
 
   @Column({ type: "text", nullable: true })
   location: string
