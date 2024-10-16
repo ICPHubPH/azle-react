@@ -20,10 +20,10 @@ export class User extends BaseEntity {
   id: string;
 
   @Column({ nullable: true, type: "varchar" })
-  avatarUrl: string;
+  avatarUrl: string | null;
   
   @Column({ nullable: true, type: "varchar" })
-  bannerUrl: string;
+  bannerUrl: string | null;
 
   @Column({ nullable: true, type: "varchar" })
   validIdUrl: string;
@@ -41,10 +41,10 @@ export class User extends BaseEntity {
   password: string;
 
   @Column({ nullable: true, type: "datetime" })
-  emailVerifiedAt: Date;
+  emailVerifiedAt: Date | null;
 
   @Column({ nullable: true, type: "datetime" })
-  providerVerifiedAt: Date;
+  providerVerifiedAt: Date | null;
 
   @Column({ type: "text" })
   role: string;
@@ -56,7 +56,7 @@ export class User extends BaseEntity {
   updatedAt: Date;
 
   @Column({ nullable: true, type: "datetime" })
-  archivedAt: Date;
+  archivedAt: Date | null;
 
   @OneToMany(() => Post, (post) => post.user, {
     cascade: true,

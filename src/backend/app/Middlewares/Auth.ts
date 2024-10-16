@@ -19,7 +19,7 @@ export default class AuthMiddleware {
             const isValid = await jwt.verify(token, process.env.JWT_SECRET!);
 
             if (!isValid) return response.status(401).json({
-                success: 0,
+                status: 0,
                 message: "Unauthorized!"
             });
 
@@ -41,8 +41,7 @@ export default class AuthMiddleware {
 
         if (token?.length == 0) {
             return response.status(401).json({
-                success: 0,
-                data: null,
+                status: 0,
                 message: "Unauthorized!"
             });
         }
