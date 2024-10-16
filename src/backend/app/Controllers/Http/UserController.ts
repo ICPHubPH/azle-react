@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+import { UserRole } from "../../../constants";
 
 export default class UserController {
   static async getAll(request: Request, response: Response) {
@@ -8,8 +9,7 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
-
-      console.log('ln12', request.user)
+      console.log("ln12", request.user);
 
       const data = await User.findAndCount({
         select: {
@@ -203,6 +203,13 @@ export default class UserController {
         return response.status(404).json({
           status: 0,
           message: "User not found!",
+        });
+      }
+
+      if (user.role !== "provider") {
+        return response.status(403).json({
+          status: 0,
+          message: "Only providers can upload ID URLs.",
         });
       }
 
