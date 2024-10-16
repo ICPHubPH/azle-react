@@ -1,7 +1,7 @@
 // src/frontend/src/App.tsx
 import { ThemeProvider } from "@/components/theme-provider";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import AuthPage from "./auth";
+import AuthPage from "./pages/auth";
 import { Toaster } from "./components/ui/sonner";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ProvidersFeed from "./pages/feeds/AllProvidersFeed";
