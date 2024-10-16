@@ -1,6 +1,5 @@
 import { dummyFeedbacks, dummyUsers } from "@/pages/landing/dummy-data";
-import Feedback from "../review/Feedback";
-
+import Feedback from "@/components/review/Feedback";
 export default function ReviewSection() {
   return (
     <div className="min-h-96 h-full w-full md:w-full lg:w-96 flex flex-col gap-2 ">

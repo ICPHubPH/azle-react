@@ -1,6 +1,6 @@
-import PostSummaryCard from "@/components/post-summary/PostSummaryCard";
+import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
 import Header from "@/components/provider-component/Header";
-import FormPost from "@/components/provider-component/FormPost";
+import FormPost from "@/components/post/FormPost";
 import React from "react";
 import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
 

@@ -1,5 +1,4 @@
-import React from 'react'
-import CreatePost from '../post-form/CreatePost'
+import CreatePost from './post-form/CreatePost'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

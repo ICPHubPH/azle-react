@@ -1,7 +1,6 @@
-import PostSection from "@/components/post-components/PostSection";
-import ReviewSection from "@/components/post-components/ReviewSection";
-import ProviderHeader from "@/components/provider-component/Header";
-import StudentHeader from "@/components/student-component/Header";
+
+import PostSection from "@/components/post/post-components/PostSection";
+import ReviewSection from "@/components/post/post-components/ReviewSection";
 import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
 import { toast } from "sonner";

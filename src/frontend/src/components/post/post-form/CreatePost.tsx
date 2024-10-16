@@ -21,9 +21,9 @@ import { ImageUp, Plus } from "lucide-react";
 import { ChangeEvent, DragEvent, ReactNode, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { formats, modules } from "./quill-options";
 import "./quill.css";
 

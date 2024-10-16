@@ -2,7 +2,8 @@
 "use client";
 import PostSummaryCard, {
   PostSummaryCardProps,
-} from "@/components/post-summary/PostSummaryCard";
+} from "@/components/post/post-summary/PostSummaryCard";
+
 import Header from "@/components/student-component/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

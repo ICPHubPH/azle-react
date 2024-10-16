@@ -4,8 +4,8 @@ import { Post } from "@/types/model";
 import parse from "html-react-parser";
 import { Mail } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
 import CustomHtmlParser from "./CustomHTMLParser";
+import { Button } from "@/components/ui/button";
 
 export default function PostSection() {
   const post = dummyPosts[0];
