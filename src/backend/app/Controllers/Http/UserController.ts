@@ -3,40 +3,43 @@ import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 
 export default class UserController {
-    static async getAll(request: Request, response: Response) {
-        try {
-            const skip = request.skip;
-            const take = request.limit;
+  static async getAll(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
 
-            const data = await User.findAndCount({
-            select: {
-                id: true,
-                name: true,
-                avatarUrl: true,
-                bio: true,
-                email: true,
-                role: true,
-                validIdUrl: true,
-                bannerUrl: true
-            },
-            skip,
-            take,
-            });
 
-            return response.status(200).json({
-                status: 1,
-                data: data[0],
-                count: data[1],
-                message: null
-            });
-        } catch (error) {
-            response.status(500).json({
-                success: 0,
-                error,
-                message: "Internal server error!"
-            });
-        }
+      console.log('ln12', request.user)
+
+      const data = await User.findAndCount({
+        select: {
+          id: true,
+          name: true,
+          avatarUrl: true,
+          bio: true,
+          email: true,
+          role: true,
+          validIdUrl: true,
+          bannerUrl: true,
+        },
+        skip,
+        take,
+      });
+
+      return response.status(200).json({
+        status: 1,
+        data: data[0],
+        count: data[1],
+        message: null,
+      });
+    } catch (error) {
+      response.status(500).json({
+        success: 0,
+        error,
+        message: "Internal server error!",
+      });
     }
+  }
 
   static async findById(request: Request, response: Response) {
     const id = request.params.id;
@@ -263,6 +266,8 @@ export default class UserController {
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadBannerUrl(request: Request, response: Response) {
     try {
+      console.log("req.user", request.user);
+
       const { bannerUrl, id } = request.body;
 
       if (!bannerUrl) {

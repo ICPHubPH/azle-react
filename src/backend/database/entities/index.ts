@@ -1,3 +1,4 @@
+import { Bookmark } from './bookmark';
 import { Configuration } from './configuration';
 import { Feedback } from './feedback';
 import { Post } from './post';
@@ -7,5 +8,6 @@ export const ENTITIES = [
     Configuration,
     User,
     Post,
-    Feedback
+    Feedback,
+    Bookmark
 ];
