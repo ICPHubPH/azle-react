@@ -38,25 +38,30 @@ Route.post("/auth/verify", AuthController.verify);
 Route.get("/users", Pagination.paginate, UserController.getAll);
 Route.post("/users", AuthMiddleware.authTest, UserController.create);
 Route.get("/users/:id", UserController.findById);
-Route.post("/users/:id", AuthMiddleware.authTest, UserController.updateById); // UPDATE
-Route.post("/users/:id/remove", AuthMiddleware.authTest, UserController.deleteById); // DELETE
-Route.post("/@self/upload/valid-id", UserController.uploadValidIdUrl); // TODO - add a middleware that verifies if the user is a provider
-Route.post("/@self/upload/avatar", UserController.uploadAvatarUrl);
-Route.post("/@self/upload/banner", UserController.uploadBannerUrl);
-Route.post("/@self/change-password", UserController.changePassword);
+Route.post("/users/:id/remove", AuthMiddleware.authTest, UserController.deleteById);
+Route.post("/@self/upload/valid-id", AuthMiddleware.authTest, UserController.uploadValidIdUrl); // TODO - add a middleware that verifies if the user is a provider
+Route.post("/@self/upload/avatar", AuthMiddleware.authTest, UserController.uploadAvatarUrl);
+Route.post("/@self/upload/banner", AuthMiddleware.authTest, UserController.uploadBannerUrl);
+Route.post("/@self/change-password", AuthMiddleware.authTest, UserController.changePassword);
+Route.post('/@self/update', AuthMiddleware.authTest, UserController.updateSelf)
 
 Route.get('/users/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
+Route.post('/bookmarks', AuthMiddleware.authTest, BookmarkController.createBookmark);
+Route.post('/bookmarks/:id/remove', AuthMiddleware.authTest, BookmarkController.deleteBookmark);
 
 Route.get('/posts', Pagination.paginate, PostController.getAll);
 Route.post('/posts', AuthMiddleware.authTest, PostController.create);
 Route.get('/posts/:id', AuthMiddleware.authTest, PostController.findById);
 Route.post('/posts/:id', AuthMiddleware.authTest, PostController.updateById);
-Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById); // DELETE
+Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById);
 Route.get('/posts/:id/category', PostController.findByCategorytype);
 
-Route.post('/feedbacks', FeedbackController.createFeedback); // CREATE
+Route.post('/feedbacks', AuthMiddleware.authTest, FeedbackController.createFeedback);
 Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
-Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback); // DELETE
+Route.post('/feedbacks/:id/remove', AuthMiddleware.authTest, FeedbackController.deleteFeedback);
+
+// testing email sending, change recipient in the controller
+Route.post('/test', UserController.test )
 
 export { Route as routes };
 

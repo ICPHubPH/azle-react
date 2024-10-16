@@ -70,5 +70,37 @@ export default class BookmarkController {
         }
     }
 
-    // TO DO: delete handler
+    static async deleteBookmark(request: Request, response: Response) {
+        try {
+            const user = await User.findOneBy({ id: request.user });
+            const id = request.params.id;
+            const bookmark = await Bookmark.findOneBy({ id });
+
+            if (!user) {
+                return response.status(401).json({
+                    success: 0,
+                    message: "Unauthorized!"
+                });
+            }
+
+            if (!bookmark) {
+                return response.status(404).json({
+                    success: 0,
+                    message: "Bookmarked post not found!"
+                });
+            }
+
+            await Bookmark.delete({ id });
+
+            return response.status(200).json({
+                success: 1,
+                message: "Bookmark deleted"
+            });
+        } catch (error) {
+            response.status(500).json({
+                success: 0,
+                message: "Server error!"
+            })
+        }
+    }
 }

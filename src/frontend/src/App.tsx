@@ -8,12 +8,12 @@ import ProvidersFeed from "./pages/feeds/AllProvidersFeed";
 import ScholarshipFeed from "./pages/feeds/AllScholarshipPostsfeed";
 import Home from "./pages/landing";
 import PostPage from "./pages/post";
-import AdminUserManagement from "./pages/admin/admin-page";
 import ProviderPage from "./pages/provider";
 import ProviderProfile from "./pages/provider/ProviderProfile";
 import StudentPage from "./pages/student";
 import Profile from "./pages/student/profile";
 import TermsAndConditions from "./pages/TermsOfUse";
+import AdminPage from "./pages/admin/admin-page";
 
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
           <Route path="/provider-feed" element={<ProvidersFeed />} />
           <Route path="/provider-profile/:id" element={<ProviderProfile />} />
           <Route path="/posts/:postId" element={<PostPage />} />
-          <Route path="/admin" element={<AdminUserManagement/>} />
+          <Route path="/admin" element={<AdminPage/>} />
           <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
           <Route path='/terms-and-conditions' element={<TermsAndConditions/>} />
 

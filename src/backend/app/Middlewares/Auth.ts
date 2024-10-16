@@ -35,13 +35,19 @@ export default class AuthMiddleware {
     }
 
     static async authTest(request: Request, response: Response, next: NextFunction) {
-        if (!request.user) {
+        const authorization = request.headers["authorization"];
+        const token = authorization?.split(" ")[1];
+        console.log(token);
+
+        if (token?.length == 0) {
             return response.status(401).json({
                 success: 0,
                 data: null,
                 message: "Unauthorized!"
             });
         }
+
+        request.user = token;
 
         next();
     }

@@ -1,7 +1,18 @@
 import Header from "@/components/student-component/Header";
 import { Separator } from "@/components/ui/separator";
 import { FormEvent, useState } from "react";
-import { Bell, LogOut, Settings, User, Pencil, Shield, Mail, AlertTriangle, EyeOff, Eye } from "lucide-react";
+import {
+  Bell,
+  LogOut,
+  Settings,
+  User,
+  Pencil,
+  Shield,
+  Mail,
+  AlertTriangle,
+  EyeOff,
+  Eye,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,29 +26,47 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import UploadValidId from "../provider/UploadValidId";
 
 const Profile: React.FC = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
-const [showNewPassword, setShowNewPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-const toggleShowOldPassword = () => setShowOldPassword(!showOldPassword);
-const toggleShowNewPassword = () => setShowNewPassword(!showNewPassword);
-const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
-
+  const toggleShowOldPassword = () => setShowOldPassword(!showOldPassword);
+  const toggleShowNewPassword = () => setShowNewPassword(!showNewPassword);
+  const toggleShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   const [user, setUser] = useState({
     name: "Jireh Belen",
     email: "jirehbelen@student.laverdad.edu.ph",
-    avatar: 'https://res.cloudinary.com/dihmqs39z/image/upload/v1719380300/lmsblt2fx20tv1szowiy.jpg',
+    avatar:
+      "https://res.cloudinary.com/dihmqs39z/image/upload/v1719380300/lmsblt2fx20tv1szowiy.jpg",
   });
 
   const savedScholarships = [
-    { id: 4, title: "Environmental Studies Award", provider: "Green Earth Foundation", deadline: "2024-10-15" },
-    { id: 5, title: "Future Entrepreneurs Scholarship", provider: "Business Leaders of Tomorrow", deadline: "2024-11-30" },
+    {
+      id: 4,
+      title: "Environmental Studies Award",
+      provider: "Green Earth Foundation",
+      deadline: "2024-10-15",
+    },
+    {
+      id: 5,
+      title: "Future Entrepreneurs Scholarship",
+      provider: "Business Leaders of Tomorrow",
+      deadline: "2024-11-30",
+    },
   ];
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -68,7 +97,11 @@ const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassw
                 <Card className="border-none shadow-none">
                   <CardHeader>
                     <Avatar className="h-60 w-60 md:h-36 md:w-36 lg:h-60 lg:w-60  mx-auto ">
-                      <AvatarImage src={user.avatar} alt={user.name} className="" />
+                      <AvatarImage
+                        src={user.avatar}
+                        alt={user.name}
+                        className=""
+                      />
                       <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <CardTitle className="text-4xl md:text-2xl font-bold text-center md:text-start  ">
@@ -80,11 +113,17 @@ const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassw
                   </CardHeader>
                   <CardContent>
                     <nav className="flex flex-col space-y-1 ">
-                      <Button variant="ghost" className="justify-start font-normal ">
+                      <Button
+                        variant="ghost"
+                        className="justify-start font-normal "
+                      >
                         <Pencil className="mr-2 h-4 w-4" />
                         Edit
                       </Button>
-                      <Button variant="ghost" className="justify-start font-normal">
+                      <Button
+                        variant="ghost"
+                        className="justify-start font-normal"
+                      >
                         <Settings className="mr-2 h-4 w-4" />
                         Settings
                       </Button>
@@ -106,12 +145,16 @@ const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassw
                     <TabsTrigger value="settings">Account Settings</TabsTrigger>
                   </TabsList>
                   <TabsContent value="saved">
-                    <h2 className="text-2xl font-bold mb-4">Saved Scholarships</h2>
+                    <h2 className="text-2xl font-bold mb-4">
+                      Saved Scholarships
+                    </h2>
                     {savedScholarships.map((scholarship) => (
                       <Card key={scholarship.id} className="mb-4">
                         <CardHeader>
                           <CardTitle>{scholarship.title}</CardTitle>
-                          <CardDescription>{scholarship.provider}</CardDescription>
+                          <CardDescription>
+                            {scholarship.provider}
+                          </CardDescription>
                         </CardHeader>
                         <CardContent>
                           <p className="text-sm text-muted-foreground">
@@ -125,118 +168,172 @@ const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassw
                     ))}
                   </TabsContent>
 
-                  
                   <TabsContent value="settings">
-                  <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-lg">Personal Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name</Label>
-            <Input id="fullName" defaultValue={user.name} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" defaultValue={user.email} />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button>Save Changes</Button>
-        </CardFooter>
-      </Card>
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold mb-4">
+                        Account Settings
+                      </h2>
+                      {/**Upload ID */}
+                      <UploadValidId/>
+                      <Card className="mb-6">
+                        <CardHeader>
+                          <CardTitle className="text-lg">
+                            Personal Information
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="fullName">Full Name</Label>
+                            <Input id="fullName" defaultValue={user.name} />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                              id="email"
+                              type="email"
+                              defaultValue={user.email}
+                            />
+                          </div>
+                        </CardContent>
+                        <CardFooter>
+                          <Button>Save Changes</Button>
+                        </CardFooter>
+                      </Card>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-lg">Change Password</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleChangePassword} className="space-y-4">
-            <div className="space-y-2 relative">
-              <Label htmlFor="oldPassword">Old Password</Label>
-              <Input id="oldPassword" type={showOldPassword ? "text" : "password"} required />
-              <button
-                type="button"
-                onClick={toggleShowOldPassword}
-                className="absolute right-3 top-8 focus:outline-none"
-              >
-                {showOldPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-              </button>
-            </div>
-            <div className="space-y-2 relative">
-              <Label htmlFor="newPassword">New Password</Label>
-              <Input id="newPassword" type={showNewPassword ? "text" : "password"} required />
-              <button
-                type="button"
-                onClick={toggleShowNewPassword}
-                className="absolute right-3 top-8 focus:outline-none"
-              >
-                {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-              </button>
-            </div>
-            <div className="space-y-2 relative">
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
-              <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} required />
-              <button
-                type="button"
-                onClick={toggleShowConfirmPassword}
-                className="absolute right-3 top-8 focus:outline-none"
-              >
-                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-              </button>
-            </div>
-            <Button type="submit">Change Password</Button>
-          </form>
-        </CardContent>
-      </Card>
+                      <Card className="mb-6">
+                        <CardHeader>
+                          <CardTitle className="text-lg">
+                            Change Password
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <form
+                            onSubmit={handleChangePassword}
+                            className="space-y-4"
+                          >
+                            <div className="space-y-2 relative">
+                              <Label htmlFor="oldPassword">Old Password</Label>
+                              <Input
+                                id="oldPassword"
+                                type={showOldPassword ? "text" : "password"}
+                                required
+                              />
+                              <button
+                                type="button"
+                                onClick={toggleShowOldPassword}
+                                className="absolute right-3 top-8 focus:outline-none"
+                              >
+                                {showOldPassword ? (
+                                  <EyeOff className="h-5 w-5" />
+                                ) : (
+                                  <Eye className="h-5 w-5" />
+                                )}
+                              </button>
+                            </div>
+                            <div className="space-y-2 relative">
+                              <Label htmlFor="newPassword">New Password</Label>
+                              <Input
+                                id="newPassword"
+                                type={showNewPassword ? "text" : "password"}
+                                required
+                              />
+                              <button
+                                type="button"
+                                onClick={toggleShowNewPassword}
+                                className="absolute right-3 top-8 focus:outline-none"
+                              >
+                                {showNewPassword ? (
+                                  <EyeOff className="h-5 w-5" />
+                                ) : (
+                                  <Eye className="h-5 w-5" />
+                                )}
+                              </button>
+                            </div>
+                            <div className="space-y-2 relative">
+                              <Label htmlFor="confirmPassword">
+                                Confirm New Password
+                              </Label>
+                              <Input
+                                id="confirmPassword"
+                                type={showConfirmPassword ? "text" : "password"}
+                                required
+                              />
+                              <button
+                                type="button"
+                                onClick={toggleShowConfirmPassword}
+                                className="absolute right-3 top-8 focus:outline-none"
+                              >
+                                {showConfirmPassword ? (
+                                  <EyeOff className="h-5 w-5" />
+                                ) : (
+                                  <Eye className="h-5 w-5" />
+                                )}
+                              </button>
+                            </div>
+                            <Button type="submit">Change Password</Button>
+                          </form>
+                        </CardContent>
+                      </Card>
 
-      <Card className="mb-6 border-red-600">
-        <CardHeader>
-          <CardTitle className="text-lg text-red-600">Danger Zone</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground mb-4">
-            Once you delete your account, there is no going back. Please be certain.
-          </p>
-          <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-red-600 text-white">Delete Account</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[400px]">
-              <DialogHeader>
-                <AlertTriangle className="h-6 w-6 text-red-500 mb-2" />
-                <DialogTitle>Delete Account</DialogTitle>
-                <DialogDescription>
-                  This action is irreversible. All your data will be permanently removed.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="py-4">
-                <Input
-                  value={deleteConfirmation}
-                  onChange={(e) => setDeleteConfirmation(e.target.value)}
-                  placeholder={`Type "${user.name}" to confirm`}
-                  className="w-full"
-                />
-              </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsDeleteModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={handleDeleteAccount}
-                  disabled={deleteConfirmation !== user.name}
-                >
-                  Delete Account
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </CardContent>
-      </Card>
-    </div>
+                      <Card className="mb-6 border-red-600">
+                        <CardHeader>
+                          <CardTitle className="text-lg text-red-600">
+                            Danger Zone
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground mb-4">
+                            Once you delete your account, there is no going
+                            back. Please be certain.
+                          </p>
+                          <Dialog
+                            open={isDeleteModalOpen}
+                            onOpenChange={setIsDeleteModalOpen}
+                          >
+                            <DialogTrigger asChild>
+                              <Button className="bg-red-600 text-white">
+                                Delete Account
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[400px]">
+                              <DialogHeader>
+                                <AlertTriangle className="h-6 w-6 text-red-500 mb-2" />
+                                <DialogTitle>Delete Account</DialogTitle>
+                                <DialogDescription>
+                                  This action is irreversible. All your data
+                                  will be permanently removed.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="py-4">
+                                <Input
+                                  value={deleteConfirmation}
+                                  onChange={(e) =>
+                                    setDeleteConfirmation(e.target.value)
+                                  }
+                                  placeholder={`Type "${user.name}" to confirm`}
+                                  className="w-full"
+                                />
+                              </div>
+                              <DialogFooter>
+                                <Button
+                                  variant="outline"
+                                  onClick={() => setIsDeleteModalOpen(false)}
+                                >
+                                  Cancel
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  onClick={handleDeleteAccount}
+                                  disabled={deleteConfirmation !== user.name}
+                                >
+                                  Delete Account
+                                </Button>
+                              </DialogFooter>
+                            </DialogContent>
+                          </Dialog>
+                        </CardContent>
+                      </Card>
+                    </div>
                   </TabsContent>
                 </Tabs>
               </div>
