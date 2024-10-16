@@ -128,10 +128,17 @@ export default class PostController {
             const { title, thumbnail, type, content } = request.body;
             const userExists = await User.findOneBy({ id: request.user });
 
-            if (!userExists || userExists.role == "student") {
+            if (!userExists) {
                 return response.status(401).json({
-                    status: 1,
+                    status: 0,
                     message: "Unauthorized!"
+                });
+            }
+
+            if (userExists.role == "student") {
+                return response.status(403).json({
+                    status: 0,
+                    message: "Forbidden!"
                 });
             }
 

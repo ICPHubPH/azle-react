@@ -1,7 +1,6 @@
 import bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
-import { UserRole } from "../../../constants";
 
 export default class UserController {
   static async getAll(request: Request, response: Response) {
@@ -62,36 +61,6 @@ export default class UserController {
     });
   }
 
-  // TODO: avatar, banner, valid ID
-  static async updateById(request: Request, response: Response) {
-    const id = request.params.id;
-    const { name, bio } = request.body;
-    const isUserExists = await User.findOneBy({ id });
-
-    if (!isUserExists) {
-      return response.status(404).json({
-        success: 0,
-        data: null,
-        message: "User not found!",
-      });
-    }
-
-    if (request.user != id && isUserExists.role != "admin") {
-      return response.status(403).json({
-        success: 0,
-        data: null,
-        message: "Forbidden",
-      });
-    }
-
-    await User.update({ id }, { name, bio });
-
-    response.status(200).json({
-      status: 1,
-      message: "User has been updated!",
-    });
-  }
-
   // delete account
   static async deleteById(request: Request, response: Response) {
     const id = request.params.id;
@@ -128,7 +97,7 @@ export default class UserController {
     });
   }
 
-  // for test
+  // admin's user management purpose.
   static async create(request: Request, response: Response) {
     const { avatarUrl, email, password, name, bio, role } = request.body;
 

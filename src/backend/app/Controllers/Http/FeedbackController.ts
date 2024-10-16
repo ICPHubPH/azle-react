@@ -20,6 +20,12 @@ export default class FeedbackController {
                     content: true,
                     createdAt: true,
                     updatedAt: true,
+                    user: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        avatarUrl: true
+                    },
                     post: {
                         id: true
                     }
