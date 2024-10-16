@@ -13,7 +13,7 @@ export class Feedback extends BaseEntity {
   rate: number;
 
   @Column({ nullable: true, type: "text" })
-  content: string;
+  content: string | null;
 
   @CreateDateColumn()
   createdAt: Date;
