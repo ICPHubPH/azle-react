@@ -6,11 +6,10 @@ const Footer = () => {
 	return (
 		<footer className="py-8 px-4 md:px-8 flex justify-center">
 			<div className="container grid grid-cols-1 md:grid-cols-3 gap-8">
-				<div className="flex flex-col items-center md:items-start gap-y-4">
+				<div className="flex flex-col items-center md:items-start gap-y-2">
 					<div className="flex items-center mb-4 gap-x-2">
-						<img src="Logo.png" alt="Logo" className="h-10 w-10" />
 						<img
-							className="h-4"
+							className="h-6"
 							src="plantaria-logo.png"
 							alt="plantaria-logo"
 						/>
