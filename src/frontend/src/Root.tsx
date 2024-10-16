@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ToggleSwitch from './components/ui/ToggleSwitch';
+import ToggleSwitch from "./components/ui/ToggleSwitch";
 
 const Layout = () => {
   return (

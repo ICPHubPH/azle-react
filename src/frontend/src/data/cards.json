@@ -1,46 +1,58 @@
 {
   "react-cards": [
     {
-      "question": "What is React?",
-      "answer": "A library for managing user interfaces",
-      "recalledForCount": 1,
-      "id": 1,
-      "hint": "A ______ for managing ______"
+      "card_id": 1,
+      "deck_id": 1,
+      "card_question": "What is React?",
+      "card_answer": "A library for managing user interfaces",
+      "card_recalledForCount": 1,
+      "card_hint": "A ______ for managing ______",
+      "card_createdAt": "2020-01-01T00:00:00Z"
     },
     {
-      "question": "Where do you make Ajax requests in React?",
-      "answer": "The componentDidMount lifecycle event",
-      "recalledForCount": 0,
-      "id": 2,
-      "hint": "The ______ event"
+      "card_id": 2,
+      "deck_id": 2,
+      "card_question": "Where do you make Ajax requests in React?",
+      "card_answer": "The componentDidMount lifecycle event",
+      "card_recalledForCount": 0,
+      "card_hint": "The ______ event",
+      "card_createdAt": "2020-01-01T00:00:00Z"
     },
     {
-      "question": "What is JSX?",
-      "answer": "A syntax extension for JavaScript",
-      "recalledForCount": 4,
-      "id": 3,
-      "hint": "A ______ JavaScript"
+      "card_id": 3,
+      "deck_id": 3,
+      "card_question": "What is JSX?",
+      "card_answer": "A syntax extension for JavaScript",
+      "card_recalledForCount": 4,
+      "card_hint": "A ______ JavaScript",
+      "card_createdAt": "2020-01-01T00:00:00Z"
     },
     {
-      "question": "What is a component in React?",
-      "answer": "A reusable piece of UI",
-      "recalledForCount": 1,
-      "id": 4,
-      "hint": "A ______ UI"
+      "card_id": 4,
+      "deck_id": 4,
+      "card_question": "What is a component in React?",
+      "card_answer": "A reusable piece of UI",
+      "card_recalledForCount": 1,
+      "card_hint": "A ______ UI",
+      "card_createdAt": "2020-01-01T00:00:00Z"
     },
     {
-      "question": "What is state in React?",
-      "answer": "An object that determines how that component renders & behaves",
-      "recalledForCount": 0,
-      "id": 5,
-      "hint": "No hint available"
+      "card_id": 5,
+      "deck_id": 5,
+      "card_question": "What is state in React?",
+      "card_answer": "An object that determines how that component renders & behaves",
+      "card_recalledForCount": 0,
+      "card_hint": "No hint available",
+      "card_createdAt": "2020-01-01T00:00:00Z"
     },
     {
-      "question": "What are props in React?",
-      "answer": "Inputs to a React component that allow data to be passed from one component to another",
-      "recalledForCount": 0,
-      "id": 6,
-      "hint": "No hint available"
+      "card_id": 6,
+      "deck_id": 6,
+      "card_question": "What are props in React?",
+      "card_answer": "Inputs to a React component that allow data to be passed from one component to another",
+      "card_recalledForCount": 0,
+      "card_hint": "No hint available",
+      "card_createdAt": "2020-01-01T00:00:00Z"
     }
   ]
 }
