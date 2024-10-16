@@ -15,7 +15,7 @@ export default class AuthMiddleware {
         const token = authorization.split(' ')[1];
     
         try {
-            // NOTE: jsonwebtoken is not supported by IC environment
+            // NOTE: external api service for token verification
             const isValid = await jwt.verify(token, process.env.JWT_SECRET!);
 
             if (!isValid) return response.status(401).json({

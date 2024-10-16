@@ -45,6 +45,11 @@ Route.post("/@self/upload/banner", AuthMiddleware.authTest, UserController.uploa
 Route.post("/@self/change-password", AuthMiddleware.authTest, UserController.changePassword);
 Route.post('/@self/update', AuthMiddleware.authTest, UserController.updateSelf)
 
+
+// path to be modified
+Route.post('/admin/users/:id/archive', AuthMiddleware.authTest, UserController.archiveById);
+Route.post('/admin/users/:id/unarchive', AuthMiddleware.authTest, UserController.unarchiveById);
+
 Route.get('/users/:id/bookmarks', AuthMiddleware.authTest, Pagination.paginate, BookmarkController.getUserBookmarks);
 Route.post('/bookmarks', AuthMiddleware.authTest, BookmarkController.createBookmark);
 Route.post('/bookmarks/:id/remove', AuthMiddleware.authTest, BookmarkController.deleteBookmark);
@@ -55,6 +60,10 @@ Route.get('/posts/:id', AuthMiddleware.authTest, PostController.findById);
 Route.post('/posts/:id', AuthMiddleware.authTest, PostController.updateById);
 Route.post('/posts/:id/remove', AuthMiddleware.authTest, PostController.deleteById);
 Route.get('/posts/:id/category', PostController.findByCategorytype);
+
+// path to be modified
+Route.post('/admin/posts/:id/archive', AuthMiddleware.authTest, PostController.archiveById);
+Route.post('/admin/posts/:id/unarchive', AuthMiddleware.authTest, PostController.unarchiveById);
 
 Route.post('/feedbacks', AuthMiddleware.authTest, FeedbackController.createFeedback);
 Route.get('/posts/:id/feedbacks', Pagination.paginate, FeedbackController.getPostFeedbacks);
