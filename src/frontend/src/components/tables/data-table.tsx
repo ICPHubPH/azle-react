@@ -6,6 +6,8 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -34,18 +36,22 @@ export function DataTable<TData, TValue>({
   );
   const [globalFilter, setGlobalFilter] = React.useState<string>("");
   const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(), 
+    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
     state: {
       columnFilters,
       globalFilter,
       rowSelection,
+      sorting,
     },
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: "includesString",
@@ -64,7 +70,7 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="rounded-md border overflow-x-auto ">
         <Table>
-          <TableHeader className="hidden md:table-header-group">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {

@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
@@ -39,7 +39,7 @@ export const providersColumns: ColumnDef<User>[] = [
     accessorKey: "id",
     header: "Account",
     cell: ({ row }) => (
-      <div className="flex flex-row items-center gap-2 sm:gap-3">
+      <div className="flex flex-row items-center gap-2 sm:gap-3 truncate">
         <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
           <AvatarImage src={row.original.avatarUrl} />
           <AvatarFallback>P</AvatarFallback>
@@ -50,19 +50,27 @@ export const providersColumns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "email",
-    header: "Email",
-    cell: ({ row }) => (
-      <p className="text-sm sm:text-base truncate max-w-[150px] sm:max-w-none">
-        {row.original.email}
-      </p>
-    ),
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0 hover:bg-none"
+        >
+          Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    sortingFn: "alphanumeric",
+    cell: ({ row }) => <p className="text-sm min-w-[100px] sm:min-w-none ">{row.original.email}</p>,
   },
   {
     accessorKey: "validIdUrl",
     header: "Valid Id",
     cell: ({ row }) => (
       <Dialog>
-        <DialogTrigger className="text-sm sm:text-base underline text-blue-600">
+        <DialogTrigger className="text-sm sm:text-base underline text-blue-600 min-w[100px] truncate">
           View ID
         </DialogTrigger>
         <DialogContent className="w-full max-w-lg">
@@ -70,6 +78,24 @@ export const providersColumns: ColumnDef<User>[] = [
         </DialogContent>
       </Dialog>
     ),
+  },
+  {
+    accessorKey: "createdAt",
+    sortingFn: "datetime",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0"
+        >
+          Date Joined
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (<p className="text-sm min-w-[100px]  truncate sm:min-w-none ">{row.original.createdAt}</p>),
+
   },
   {
     id: "actions",

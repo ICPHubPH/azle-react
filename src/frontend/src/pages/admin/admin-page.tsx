@@ -1,7 +1,7 @@
-import Header from "@/components/student-component/Header";
 
 import AdminUserManagement from "@/components/admin/AdminUsersTable";
 import AdminPostsManagement from "@/components/admin/AdminPostsTable";
+import Header from "@/components/student-component/Header";
 
 export default function AdminPage() {
   return (

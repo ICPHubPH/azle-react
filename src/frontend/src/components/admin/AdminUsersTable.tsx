@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Header from "@/components/student-component/Header";
 import { DataTable } from "@/components/tables/data-table";
 import {
   providersColumns,
