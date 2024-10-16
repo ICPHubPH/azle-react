@@ -6,12 +6,12 @@ import { ModeToggle } from "./components/ui/mode-toggle";
 const Layout = () => {
   return (
     <div className="h-screen">
-      <Navigation>
         <Outlet />
         <div className="fixed bottom-5 right-5">
           <ModeToggle />
         </div>
-      </Navigation>
+      {/* <Navigation>
+      </Navigation> */}
     </div>
   );
 };
