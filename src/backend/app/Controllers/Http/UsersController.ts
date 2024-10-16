@@ -1,6 +1,7 @@
 import UserRegisterValidator from "App/Validators/UserRegisterValidator";
 import { User } from "Database/entities/user";
 import type { Response, Request } from "express";
+import { hash } from "Helpers/hashing";
 
 export namespace UsersController {
   export async function register(request: Request, response: Response) {
@@ -19,9 +20,11 @@ export namespace UsersController {
 
     const { email, password, name, location, principal } = data;
 
+    const passwordHash = password ? await hash(password) : undefined;
+
     const userData: Partial<User> = {
       email,
-      password_hash: /* hash(password) */ password,
+      password_hash: passwordHash,
       name,
       location,
       principal_id: principal,
@@ -56,9 +59,12 @@ export namespace UsersController {
   }
 
   export async function test(request: Request, response: Response) {
+    const users = await User.find();
+
     return response.json({
       status: 1,
       message: "Test success!",
+      data: users,
     });
   }
 }
