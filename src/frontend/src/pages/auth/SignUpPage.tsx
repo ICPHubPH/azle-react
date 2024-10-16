@@ -21,15 +21,14 @@ const SignUpPage = () => {
 			{/* Sign In Section */}
 			<section className="w-full flex flex-col items-center md:block p-6 md:p-12 overflow-y-scroll">
 				<div className="w-full text-center md:text-left xl:w-2/3">
-					<h1 className="font-light text-2xl lg:text-3xl">
-						Website <span className="text-primary">Name</span>
-					</h1>
+					<img className="h-8" src="plantaria-logo.png" alt="plantaria-logo" />
+
 					<h1 className="mt-4 leading-normal lg:leading-relaxed text-3xl md:text-4xl lg:text-5xl text-primary">
 						Start growing your
 						<span className="block md:inline"> urban garden today</span>
 					</h1>
 					<p className="mt-1 text-gray-500 text-sm md:text-base">
-						Sign up to __ and join our amazing community
+						Sign up to <span className="text-lima-700 font-medium">plantaria</span> and join our amazing community
 					</p>
 				</div>
 

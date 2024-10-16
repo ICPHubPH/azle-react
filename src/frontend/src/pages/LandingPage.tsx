@@ -56,7 +56,7 @@ const LandingPage = () => {
               src="couple-checking-plants.png"
               alt="Couple checking plants"
               className="h-full w-full object-cover rounded-3xl"
-            />	
+            />
           </div>
         </div>
       </section>
@@ -134,23 +134,26 @@ const LandingPage = () => {
         className="h-auto md:h-[39rem] md:mx-[75px] flex flex-col items-center gap-y-6 py-8"
       >
         <h1 className="text-3xl sm:text-5xl font-bold text-center">About Us</h1>
-        <div className="flex flex-col md:flex-row h-full items-center md:space-x-6">
-          <div className="w-full md:w-1/2 p-4">
-            <p className="text-2xl max-md:text-center">
-              <span className="text-4xl font-medium text-lima-500">Plantaria</span>{" "}
-              is your gateway to urban farming and sustainable food solutions. Inspired
-              by the United Nations' Zero Hunger goal, we empower individuals to grow
-              their own food through expert guidance, community support, and practical
-              tools for sustainable farming—right in the city.
-            </p>
+        <div className="flex flex-col md:flex-row h-full md:space-x-6 items-center ">
+
+          <div className="flex-1 md:w-1/2 p-4">
+              <p className="text-2xl max-md:text-center">
+                <span className="text-4xl font-medium text-lima-500">Plantaria</span>{" "}
+                is your gateway to urban farming and sustainable food solutions. Inspired
+                by the United Nations' Zero Hunger goal, we empower individuals to grow
+                their own food through expert guidance, community support, and practical
+                tools for sustainable farming—right in the city.
+              </p>
           </div>
-          <div className="w-full md:w-1/2 h-full p-4 flex justify-center">
+
+          <div className="w-full md:w-1/3	h-full p-4 flex justify-center">
             <img
               src="person-holding-a-plant.png"
               alt="Person holding a small plant"
-              className="h-full w-full object-fit"
+              className="object-scale-down"
             />
           </div>
+
         </div>
       </section>
       <Footer />

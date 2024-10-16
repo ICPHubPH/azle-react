@@ -12,12 +12,12 @@ const Header = () => {
         { id: 2, url: "#goals", name: "Goals" },
         { id: 3, url: "#about", name: "About" },
     ];
-    
+
     return (
         <header className="p-4 grid grid-cols-3 max-md:grid-cols-2 md:mx-[75px] px-6 items-center">
-            <div className="flex items-center gap-x-4">
-                <img className="h-14 w-14" src="Logo.png" alt="logo" />
-                <h1 className="font-medium text-xl text-foreground max-md:text-xl">Plantaria</h1>
+            <div className="flex items-center gap-x-2">
+                <img className="h-14 w-14 object-contain" src="Logo.png" alt="logo" />
+                <img className="h-6" src="plantaria-logo.png" alt="plantaria-logo" />
             </div>
 
             <nav className="hidden md:flex justify-evenly items-center">
