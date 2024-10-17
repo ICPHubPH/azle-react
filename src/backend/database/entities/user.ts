@@ -39,9 +39,6 @@ export class User extends BaseEntity {
   @Column({ unique: true, type: "varchar" })
   email: string;
 
-  @Column({ type: "varchar" })
-  password: string;
-
   @Column({ nullable: true, type: "datetime" })
   emailVerifiedAt: Date | null;
 

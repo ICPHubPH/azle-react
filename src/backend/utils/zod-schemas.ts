@@ -17,13 +17,11 @@ const changePasswordSchema = z.object({
 const registerSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  password: z.string().min(8).max(30),
   role: z.enum(["admin", "provider", "student"]),
 });
 
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8).max(30),
 });
 
 export {
