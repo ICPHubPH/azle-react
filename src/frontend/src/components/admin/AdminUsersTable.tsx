@@ -6,9 +6,13 @@ import {
   studentsColumns,
 } from "@/components/tables/UsersColumnDef";
 import { userProviders } from "@/components/tables/dummyData";
+import { useUsers } from "@/hooks/useUserData";
 
 export default function AdminUserManagement() {
   const [activeTab, setActiveTab] = useState("providers");
+  const {data, isLoading, error} = useUsers()
+
+  
 
   return (
     <div className="container mx-auto p-4 space-y-4 flex-grow">
