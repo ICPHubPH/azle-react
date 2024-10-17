@@ -43,25 +43,4 @@ export default class AuthMiddleware {
       });
     }
   }
-
-  static async authTest(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    const authorization = request.headers["authorization"];
-    const token = authorization?.split(" ")[1];
-    console.log(token);
-
-    if (token?.length == 0) {
-      return response.status(401).json({
-        status: 0,
-        message: "Unauthorized!",
-      });
-    }
-
-    request.user = token;
-
-    next();
-  }
 }
