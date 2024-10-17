@@ -30,7 +30,7 @@ export const verifyPassword = (password: string, hash: string, salt: string): bo
 };
 
 // Usage example
-const { salt, hash } = generatePasswordHash('mysecretpassword');
+export const { salt, hash } = generatePasswordHash('mysecretpassword');
 console.log('Salt:', salt);
 console.log('Hash:', hash);
 

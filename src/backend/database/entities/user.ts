@@ -7,7 +7,6 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   user_id: number;
   
-
   @Column({ type: "varchar", length: 255 })
   user_username: string;
 
@@ -17,6 +16,9 @@ export class User extends BaseEntity {
 
   @Column({ type: "varchar", length: 255 })
   user_password: string;
+
+  @Column({ type: "varchar", length: 255 })
+  user_salt: string;
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   user_createdAt: Date;
