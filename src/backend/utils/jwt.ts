@@ -2,9 +2,13 @@ import { xFetch } from "./x-fetch";
 
 export const verifyToken = async (token: string) => {
   try {
-    const response = await xFetch("/connectED/verify-jwt", {}, {
-      Authorization: `Bearer ${token}`,
-    });
+    const response = await xFetch(
+      "/connectED/verify-jwt",
+      {},
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
     console.log(response, "ln6jwt");
     const jsonData = await response.json();
     return jsonData;
@@ -14,12 +18,16 @@ export const verifyToken = async (token: string) => {
   }
 };
 
-export const signToken = async (id: string, expiresIn: string = "7d") => {
+export const signToken = async (
+  payload: any = {},
+  expiresIn: string = "7d"
+) => {
   try {
-    const response = await xFetch("/connectED/sign-jwt", {
-      id,
+    const requestBody = {
+      payload,
       expiresIn,
-    });
+    };
+    const response = await xFetch("/connectED/sign-jwt", requestBody);
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {

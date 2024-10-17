@@ -27,7 +27,7 @@ export default class AuthController {
       if (isEmailExist) {
         return response.json({
           status: 0,
-          message: "Email already used",
+          message: "This email is already associated with another account",
         });
       }
 
@@ -42,7 +42,7 @@ export default class AuthController {
       await User.save(user);
 
       // TODO: sign token and send verification email
-      const { data: {token} } = await signToken(user.id, '5m');
+      const { data: {token} } = await signToken({id: user.id, email: user.email}, '5m');
       const emailMessage: EmailMessage = {
         body: {
           name: user.name,
@@ -52,7 +52,7 @@ export default class AuthController {
             button: {
               color: "#22BC66",
               text: "Verify account",
-              link: `${getCanisterLink()}/icp/auth/verify?t=${token}`, // must change to frontend url
+              link: `${getCanisterLink()}/auth/verify?t=${token}`, // must change to frontend url
             },
           },
           outro:
