@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Index, BaseEntity } from "typeorm";
 import { Class } from "./class";
-import { Folder } from "./folder";
 import { Deck } from "./deck";
 
 @Entity({ name: "users" })
@@ -26,9 +25,6 @@ export class User extends BaseEntity{
 
   @OneToMany(() => Class, (classEntity) => classEntity.user)
   classes: Class[];
-
-  @OneToMany(() => Folder, (folder) => folder.user)
-  folders: Folder[];
 
   @OneToMany(() => Deck, (deck) => deck.user)
   decks: Deck[];

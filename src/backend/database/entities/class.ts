@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity } from "typeorm";
 import { User } from "./user";
-import { Folder } from "./folder";
 import { Deck } from "./deck";
 
 @Entity({ name: "classes" })
@@ -20,9 +19,6 @@ export class Class extends BaseEntity {
   @ManyToOne(() => User, (user) => user.classes, { eager: true })
   user: User;
 
-  @OneToMany(() => Folder, (folder) => folder.classEntity)
-  folders: Folder[];
-
-  @OneToMany(() => Deck, (deck) => deck.classEntity)
+  @OneToMany(() => Deck, (deck) => deck.classEntities)
   decks: Deck[];
 }

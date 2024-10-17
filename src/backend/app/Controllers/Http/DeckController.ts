@@ -3,12 +3,11 @@ import { Deck } from 'Database/entities/deck';
 import { Card } from 'Database/entities/card';
 import { User } from 'Database/entities/user';
 import { Class } from 'Database/entities/class';
-import { Folder } from 'Database/entities/folder';
 
 export default class DeckController {
     // Create Deck
     static async create_deck(req: Request, res: Response){
-        const { deck_name, deck_description, user_id, class_ids, folder_ids, cards } = req.body;
+        const { deck_name, deck_description, user_id, class_ids, cards } = req.body;
 
         try {
             if (!cards || cards.length < 3) {
@@ -23,17 +22,12 @@ export default class DeckController {
             if (class_ids && classes.length !== class_ids.length) {
                 throw new Error("One or more classes not found");
             } 
-            const folders = await Folder.findBy(folder_ids || []);
-            if (folder_ids && folders.length !== folder_ids.length) {
-                throw new Error("One or more folders not found");
-            }
 
             const deck = new Deck();
             deck.deck_name = deck_name;
             deck.deck_description = deck_description;
             deck.user = user;
             deck.classEntities = classes;
-            deck.folders = folders;
 
             await Deck.save(deck);
 
@@ -46,7 +40,7 @@ export default class DeckController {
             });
 
             const savedCards = await Promise.all(cardPromises);
-            return res.status(201).json({ message: "Success in creating decks", ...deck, cards: savedCards });
+            return res.status(201).json({ message: "Success in creating decks", payload: {...deck, cards: savedCards} });
 
         } catch (error) {
             return res.status(400).json({ message: "Error creating deck", error })
@@ -72,24 +66,46 @@ export default class DeckController {
     // Update Deck
     static update_deck = async (req: Request, res: Response) => {
         const deck_id = parseInt(req.params.id);
-        const { deck_name, deck_description, class: classEntity, folder } = req.body;
+        const { deck_name, deck_description, user_id, class_ids, cards } = req.body;
 
         try {
-            const deck = await Deck.findOneBy({deck_id});
-            if (!deck) {
-                return res.status(404).json({ message: "Deck not found" });
+            if (!cards || cards.length < 3) {
+                return res.status(400).json({ message: 'A deck must contain at least 3 cards.' });
             }
 
-            // Update fields
+            const deck = await Deck.findOneBy({deck_id});
+            if (!deck) {
+                throw new Error("Deck not found");
+            }
+            const user = await User.findOneBy({ user_id });
+            if (!user) {
+                throw new Error("User not found");
+            }
+            const classes = await Class.findBy(class_ids || []);
+            if (class_ids && classes.length !== class_ids.length) {
+                throw new Error("One or more classes not found");
+            } 
+
             deck.deck_name = deck_name;
             deck.deck_description = deck_description;
-            // deck.classEntity = classEntity;
-            // deck.folder = folder;
+            deck.user = user;
+            deck.classEntities = classes;
 
             await Deck.save(deck);
-            return res.status(200).json(deck);
+
+            const cardPromises = cards.map((cardData: any) => {
+                const card = new Card();
+                card.card_term = cardData.card_term;
+                card.card_definition = cardData.card_definition;
+                card.deck = deck;
+                return Card.save(card);
+            });
+
+            const savedCards = await Promise.all(cardPromises);
+            return res.status(201).json({ message: "Success in updating decks", payload: {...deck, cards: savedCards}});
+
         } catch (error) {
-            return res.status(500).json({ message: "Error updating deck", error });
+            return res.status(400).json({ message: "Error creating deck", error })
         }
     };
 

@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity, ManyToMany, JoinTable} from "typeorm";
 import { User } from "./user";
 import { Class } from "./class";
-import { Folder } from "./folder";
 import { Card } from "./card";
 
 @Entity({ name: "decks" })
@@ -24,10 +23,6 @@ export class Deck extends BaseEntity {
   @ManyToMany(() => Class, (classEntity) => classEntity.decks)
   @JoinTable()  // This creates the linking table for many-to-many
   classEntities: Class[];
-
-  @ManyToMany(() => Folder, (folder) => folder.decks)
-  @JoinTable()  // This creates the linking table for many-to-many
-  folders: Folder[];
 
   @OneToMany(() => Card, (card) => card.deck)
   cards: Card[];
