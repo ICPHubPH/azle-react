@@ -9,7 +9,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Root from "./Root";
 import FrontPage from "./pages/Front/FrontPage";
-import Deck from "./pages/Deck/Decks";
+import Deck from "./pages/Deck/Deck";
 import { Navigation } from "./Navigation";
 import Flashcard from "./pages/Flashcard/Flashcards";
 import Profile from "./pages/Profile/Profile";
