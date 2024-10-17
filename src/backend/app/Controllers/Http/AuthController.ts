@@ -5,6 +5,7 @@ import { getCanisterLink } from "Helpers/helpers";
 import { signToken, verifyToken } from "Helpers/jwt";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { loginSchema, registerSchema } from "Helpers/zod-schemas";
+import { IsNull } from "typeorm";
 
 export default class AuthController {
   static async register(request: Request, response: Response) {
@@ -91,19 +92,17 @@ export default class AuthController {
           message: "Bad request!",
         });
       }
-
-      // TODO: external api to verify verification token
-
+      
       const t = await verifyToken(token as string);
 
-      if (!t) {
+      if (!t?.decoded) {
         return response.status(400).json({
           status: 0,
           message: "Invalid token!"
         });
       }
 
-      const user = await User.findOneBy({ id: t.id });
+      const user = await User.findOneBy({ id: t.decoded.id, archivedAt: IsNull() });
 
       if (!user) {
         return response.status(404).json({
@@ -149,7 +148,7 @@ export default class AuthController {
         });
       }
 
-      const user = await User.findOneBy({ email: data.email });
+      const user = await User.findOneBy({ email: data.email, archivedAt: IsNull() });
 
       if (!user) {
         return response.status(400).json({
