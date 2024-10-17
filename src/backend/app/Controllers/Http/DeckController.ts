@@ -33,8 +33,8 @@ export default class DeckController {
 
             const cardPromises = cards.map((cardData: any) => {
                 const card = new Card();
-                card.card_term = cardData.card_term;
-                card.card_definition = cardData.card_definition;
+                card.card_answer = cardData.card_answer;
+                card.card_question = cardData.card_question;
                 card.deck = deck;
                 return Card.save(card);
             });
@@ -95,8 +95,8 @@ export default class DeckController {
 
             const cardPromises = cards.map((cardData: any) => {
                 const card = new Card();
-                card.card_term = cardData.card_term;
-                card.card_definition = cardData.card_definition;
+                card.card_answer = cardData.card_answer;
+                card.card_question = cardData.card_question;
                 card.deck = deck;
                 return Card.save(card);
             });
