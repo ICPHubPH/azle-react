@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
-import Header from "@/components/header/UserHeader";
+import Header from "@/components/header/user-header/Header";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import { SkeletonCard } from "@/components/ui/skeleton"; // Import your SkeletonCard
-import { dummyTopProviders } from "../landing/dummy-data";
+import { dummyTopProviders } from "../../components/data/dummy-data";
 
 export default function ProvidersFeed() {
   const [activeTab, setActiveTab] = useState<"all" | "school" | "corporate" | "government">("all");

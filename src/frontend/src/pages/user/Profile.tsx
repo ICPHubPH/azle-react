@@ -1,4 +1,4 @@
-import Header from "@/components/header/UserHeader";
+import Header from "@/components/header/user-header/Header";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

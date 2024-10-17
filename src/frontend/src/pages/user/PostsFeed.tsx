@@ -4,7 +4,7 @@ import PostSummaryCard, {
   PostSummaryCardProps,
 } from "@/components/post/post-summary/PostSummaryCard";
 
-import Header from "@/components/header/UserHeader";
+import Header from "@/components/header/user-header/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,7 +17,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
-import { dummyPosts } from "../landing/dummy-data";
+import { dummyPosts } from "../../components/data/dummy-data";
 
 export default function PostsFeed() {
   const [posts, setPosts] = useState<PostSummaryCardProps[]>();

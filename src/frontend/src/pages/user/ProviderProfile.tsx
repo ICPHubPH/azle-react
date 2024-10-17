@@ -1,8 +1,8 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { dummyTopProviders } from '../landing/dummy-data'
+import { dummyTopProviders } from '../../components/data/dummy-data'
 import { Star, MapPin, Book, Users, Calendar, ExternalLink, ArrowLeft } from 'lucide-react'
-import Header from '@/components/header/UserHeader'
+import Header from '@/components/header/user-header/Header'
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"

@@ -1,7 +1,7 @@
 
 import AdminUserManagement from "@/components/admin/AdminUsersTable";
 import AdminPostsManagement from "@/components/admin/AdminPostsTable";
-import Header from "@/components/header/UserHeader";
+import Header from "@/components/header/user-header/Header";
 
 export default function AdminPage() {
   return (
