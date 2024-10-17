@@ -1,5 +1,3 @@
-// src/components/header/user-header.tsx
-
 import React, { useState, useEffect } from 'react';
 import { ModeToggle } from "../../mode-toggle";
 import UserDropdown from '../../dropdowns/UserDropdown';
@@ -28,7 +26,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className={`border-b ${isMobileMenuOpen ? '' : 'z-[10]'} sticky top-0 backdrop-blur-md`}>
+    <header className={`border-b ${isMobileMenuOpen ? '' : 'z-[10]'} sticky top-0 backdrop-blur-lg`}>
       <div className="container mx-auto flex justify-between items-center h-16 px-4">
         <div className="flex items-center space-x-2">
           <h1
@@ -39,7 +37,8 @@ const Header: React.FC = () => {
           </h1>
         </div>
 
-        <ul className={`md:flex hidden space-x-4`}>
+        {/* Desktop Nav Items */}
+        <ul className="md:flex hidden space-x-4">
           <NavItems
             onNavigate={() => { }}
             isMobileMenuOpen={isMobileMenuOpen}
@@ -47,12 +46,16 @@ const Header: React.FC = () => {
           />
         </ul>
 
-        <MobileMenu
-          isMobileMenuOpen={isMobileMenuOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-          user={user}
-        />
+        {/* Conditionally render MobileMenu based on screen size */}
+        {isMobile && (
+          <MobileMenu
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+            user={user}
+          />
+        )}
 
+        {/* Desktop Mode Toggle and User Dropdown */}
         <div className="hidden md:flex items-center space-x-4">
           <ModeToggle />
           <UserDropdown user={user} />

@@ -32,7 +32,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isMobileMenuOpen, setIsMobileMe
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-[250px] z-[1200] md:hidden lg:hidden">
+      <SheetContent side="right" className="w-[250px] z-[1200] md:hidden lg:hidden  ">
         <div className="py-8 flex items-center gap-3 border-b mb-2">
           <UserAvatar user={user} />
           <div className="flex justify-start flex-col w-full">
