@@ -1,5 +1,3 @@
-// src/frontend/src/App.tsx
-
 import { ThemeProvider } from "@/components/theme-provider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner";

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Header from "@/components/header/user-header/Header";
-import UpperContent from "@/components/student-component/UpperContent";
+import UpperContent from "@/components/user/UpperContent";
 import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
 import { dummyPosts, dummyTopProviders } from "../../components/data/dummy-data";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
-import RightCardSide from "@/components/student-component/RightCardSide";
+import RightCardSide from "@/components/user/RightCardSide";
 import { ArrowUp } from "lucide-react";
-import LeftCardSide from "@/components/student-component/LeftCardSide";
+import LeftCardSide from "@/components/user/LeftCardSide";
 import PostForm from "@/components/post/FormPost";
 
 const User: React.FC = () => {
@@ -17,7 +17,7 @@ const User: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop = document.documentElement.scrollTop;
       const clientHeight = document.documentElement.clientHeight;
 
       // Check if user has scrolled near the bottom (10% threshold)
