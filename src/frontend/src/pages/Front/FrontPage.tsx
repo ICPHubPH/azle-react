@@ -25,7 +25,7 @@ const icons = [
 const FrontPage = () => {
 
   // TODO: Replace with actual value
-  let isSignedIn = true;
+  let isSignedIn = false;
 
 
   return (

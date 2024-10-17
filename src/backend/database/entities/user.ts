@@ -6,9 +6,7 @@ import { Deck } from "./deck";
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   user_id: number;
-
-  @Column({ type: "varchar", length: 255 })
-  user_name: string;
+  
 
   @Column({ type: "varchar", length: 255 })
   user_username: string;

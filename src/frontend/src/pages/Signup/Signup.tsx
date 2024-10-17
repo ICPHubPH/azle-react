@@ -6,7 +6,6 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,9 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { TrackPreviousIcon } from "@radix-ui/react-icons";
 import { ArrowLeft } from "lucide-react";
-// import { FormInputIcon } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -31,7 +28,6 @@ const formSchema = z.object({
 });
 
 function Signup() {
-  const [greeting, setGreeting] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,17 +38,28 @@ function Signup() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { username, email, password } = values;
 
-    console.log(values);
+    const url = `${import.meta.env.VITE_CANISTER_URL}/app/create_user`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_username: username, user_email: email, user_password: password }),
+    });
+    
+    const data = await response.json();
+    console.log("Data:", data);
+    console.log("Values:", values);
   }
 
   return (
     <div className="flex items-center justify-center h-full w-full relative">
       {/* //TODO: Pakihanap nalang actual size */}
       <Button asChild className="fixed top-5 left-5">
-        <Link to="/"> <span><ArrowLeft size={15}/> </span>Back</Link>
+        <Link to="/"> <span><ArrowLeft size={15} /> </span>Back</Link>
       </Button>
       <Form {...form}>
         <form
