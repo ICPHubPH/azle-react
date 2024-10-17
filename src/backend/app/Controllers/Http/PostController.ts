@@ -141,10 +141,17 @@ export default class PostController {
                 });
             }
 
-            if (user.role != "provider" || !user.providerVerifiedAt) {
+            if (user.role != "provider") {
                 return response.status(403).json({
                     status: 0,
                     message: "Forbidden!"
+                });
+            }
+
+            if (!user.providerVerifiedAt) {
+                return response.status(403).json({
+                    status: 0,
+                    message: "You must be a verified provider!"
                 });
             }
 
