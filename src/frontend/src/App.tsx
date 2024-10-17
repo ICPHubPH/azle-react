@@ -21,6 +21,7 @@ import PostPage from "./pages/post";
 
 // Admin Page
 import AdminPage from "./pages/admin/admin-page";
+import VerifyAuth from "./components/auth/VerifyAuth";
 
 function App() {
   return (
@@ -30,7 +31,9 @@ function App() {
           {/* Landing and Auth */}
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/auth/verify" element={<VerifyAuth />} />
 
+          
           {/* User Pages */}
           <Route path="/home" element={<User />} />
           <Route path="/profile" element={<Profile />} />
