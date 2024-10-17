@@ -6,15 +6,23 @@ import { generateOTP } from "Helpers/helpers";
 import { signToken, verifyToken } from "Helpers/jwt";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { loginSchema, registerSchema } from "Helpers/zod-schemas";
-import { IsNull, MoreThanOrEqual } from "typeorm";
+import { IsNull } from "typeorm";
 import {
   httpResponseError,
   httpResponseSuccess,
 } from "../../../utils/response";
 import crypto, { verify } from "crypto";
-import { date } from "zod";
 
 export default class AuthController {
+  static async getTokenAndOtp() {
+    const otp = await generateOTP(6);
+    const token = crypto.randomBytes(32).toString("hex");
+    const hashedToken = await bcryptjs.hash(token, 5);
+    const hashedOtp = await bcryptjs.hash(otp, 5);
+
+    return { otp, token, hashedToken, hashedOtp };
+  }
+
   static async register(request: Request, response: Response) {
     try {
       const { data, success, error } = registerSchema.safeParse(request.body);
@@ -36,17 +44,15 @@ export default class AuthController {
         );
       }
 
+      const { otp, token, hashedToken, hashedOtp } =
+        await AuthController.getTokenAndOtp();
+
       const user = new User();
       user.name = data?.name;
       user.email = data?.email;
       user.setRole(data?.role);
 
       await User.save(user);
-
-      const otp = await generateOTP(6);
-      const token = crypto.randomBytes(32).toString("hex");
-      const hashedToken = await bcryptjs.hash(token, 5);
-      const hashedOtp = await bcryptjs.hash(otp, 5);
 
       await VerificationCode.insert({
         code: hashedOtp,
@@ -63,15 +69,16 @@ export default class AuthController {
             `Here is your One-Time Password (OTP) for account verification: `,
             `<h1 style="color: blue">${otp}<h1/>`,
           ],
-          outro:
+          outro: [
             "Need help, or have questions? Just reply to this email, we'd love to help.",
+          ],
         },
       };
 
       await sendEmail(
         emailMessage,
         user.email,
-        "[ConnectED] Your One-Time Password"
+        "[ConnectED] Email Verification"
       );
 
       httpResponseSuccess(
@@ -247,11 +254,7 @@ export default class AuthController {
       const { data, success, error } = loginSchema.safeParse(request.body);
 
       if (!success) {
-        return response.status(400).json({
-          status: 0,
-          error: error.errors,
-          message: "Bad request!",
-        });
+        return httpResponseError(response, null, "Bad request", 400);
       }
 
       const user = await User.findOneBy({
@@ -259,34 +262,42 @@ export default class AuthController {
       });
 
       if (!user) {
-        return response.status(400).json({
-          status: 0,
-          message: "Invalid email!",
-        });
+        return httpResponseError(response, null, "User not found", 404);
       }
 
-      const jsonData = await signToken(user.id, "1m");
+      const { otp, token, hashedToken, hashedOtp } =
+        await AuthController.getTokenAndOtp();
 
-      if (!jsonData) {
-        return response.status(500).json({
-          status: 0,
-          message: "Internal server error. Failed to sign token.",
-        });
-      }
+      await VerificationCode.insert({
+        code: hashedOtp,
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+        user: user,
+        token: hashedToken,
+      });
 
-      return response.status(200).json({
-        status: 1,
-        data: {
-          accessToken: jsonData.data.token,
+      const emailMessage: EmailMessage = {
+        body: {
+          name: user.name,
+          intro: [
+            "Welcome to ConnectED",
+            `Here is your One-Time Password (OTP) to continue: `,
+            `<h1 style="color: blue">${otp}<h1/>`,
+          ],
+          outro: [
+            "Need help, or have questions? Just reply to this email, we'd love to help.",
+          ],
         },
-        message: "Signed in",
-      });
+      };
+
+      await sendEmail(
+        emailMessage,
+        user.email,
+        "[ConnectED] Your One-Time Password"
+      );
+
+      httpResponseSuccess(response, { user, token });
     } catch (error) {
-      return response.status(500).json({
-        status: 0,
-        error,
-        message: "Server error",
-      });
+      return httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 }
