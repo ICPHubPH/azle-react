@@ -7,8 +7,9 @@ export const getUserById = async (id: string) => {
 };
 
 //GET all user
-export const getAllUsers = async (id: string) => {
+export const getAllUsers = async () => {
   const response = await axiosInstance.get(`/users`);
+  return response.data
 };
 
 //Change Password
@@ -46,4 +47,15 @@ export const updateSelf = async (name: string, bio: string) => {
 export const deleteAccount = async (id:string): Promise<void> => {
     const response = await axiosInstance.post(`/users/${id}/remove`)
     return response.data
+}
+
+//Archive user
+export const archiveUserById = async (id: string) => {
+  const response = await axiosInstance.post(`/protected/users/${id}/archive`)
+  return response.data
+}
+//Reomove archive status
+export const unArchiveUserById = async (id: string) => {
+  const response = await axiosInstance.post(`/protected/users/${id}/unarchive`)
+  return response.data
 }
