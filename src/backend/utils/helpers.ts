@@ -1,3 +1,5 @@
+import { VerificationCode } from "Database/entities/verification-code";
+
 export const getCanisterLink = () => {
   let backendCanisterUrl;
   const backendCanisterId = process.env.CANISTER_ID;
@@ -10,4 +12,25 @@ export const getCanisterLink = () => {
 
   console.log("URL from helpers.ts:", backendCanisterUrl);
   return backendCanisterUrl;
+};
+
+export const generateOTP = async (length: number) => {
+  let result = "";
+  const characters = "0123456789";
+  let codeExist;
+
+  do {
+    result = "";
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    codeExist = await VerificationCode.findOne({
+      where: {
+        code: result,
+      },
+    });
+  } while (codeExist); 
+
+  return result;
 };
