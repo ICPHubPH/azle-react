@@ -28,6 +28,9 @@ Route.post("/auth/verify", AuthController.verify);
 
 Route.get("/users/:id", UserController.findById);
 Route.get("/users", Pagination.paginate, UserController.getAll);
+Route.get('/providers', Pagination.paginate, UserController.getProviders);
+Route.get('/non-verified-providers', Pagination.paginate, UserController.getNonVerifiedProviders);
+Route.get('/students', Pagination.paginate, UserController.getStudents);
 
 Route.get('/posts', Pagination.paginate, PostController.getAll);
 Route.get('/posts/:id', PostController.findById);
@@ -49,7 +52,6 @@ Route.post("/users/:id/remove", AuthMiddleware.authorize, UserController.deleteB
 Route.post("/@self/upload/valid-id", AuthMiddleware.authorize, UserController.uploadValidIdUrl); // TODO - add a middleware that verifies if the user is a provider
 Route.post("/@self/upload/avatar", AuthMiddleware.authorize, UserController.uploadAvatarUrl);
 Route.post("/@self/upload/banner", AuthMiddleware.authorize, UserController.uploadBannerUrl);
-Route.post("/@self/change-password", AuthMiddleware.authorize, UserController.changePassword);
 Route.post('/@self/update', AuthMiddleware.authorize, UserController.updateSelf);
 
 Route.post('/users/:id/bookmarks', AuthMiddleware.authorize, Pagination.paginate, BookmarkController.getUserBookmarks);
