@@ -23,14 +23,14 @@ export interface Post {
   id: string;
   email: string;
   name: string;
-  avatarSource: string; //TODO: Need to update to avatarUrl
+  avatarUrl: string; 
   postTitle: string;
-  postThumbnailSource: string; // TODO: need to update to postThumbnailUrl
+  postThumbnailSource: string; 
   postDescription: string;
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
   postType: string;
   postDate: string;
-  archivedAt?: string; // Added this for posts status
+  archivedAt?: string; 
 }

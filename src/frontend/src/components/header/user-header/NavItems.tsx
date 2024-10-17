@@ -1,15 +1,24 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { useLocation, useNavigate } from 'react-router-dom';
+// src/components/header/NavItems.tsx
 
-interface NavItem {
-  name: string;
-  path: string;
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { useNavigate, useLocation } from 'react-router-dom';
+
+interface NavItemsProps {
+  onNavigate: () => void;
+  isMobileMenuOpen: boolean;
+  closeMobileMenu: () => void;
 }
 
-const NavItems: React.FC<{ navItems: NavItem[]; closeMenu?: () => void }> = ({ navItems, closeMenu }) => {
+const NavItems: React.FC<NavItemsProps> = ({ onNavigate, isMobileMenuOpen, closeMobileMenu }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const navItems = [
+    { name: 'Home', path: '/home' },
+    { name: 'Posts', path: '/posts-feed' },
+    { name: 'Providers', path: '/provider-feed' },
+  ];
 
   return (
     <>
@@ -18,14 +27,14 @@ const NavItems: React.FC<{ navItems: NavItem[]; closeMenu?: () => void }> = ({ n
           <Button
             variant="ghost"
             asChild
-            className="w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
+            className="w-full justify-start  hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
           >
             <a
               onClick={() => {
                 if (location.pathname === item.path) {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
-                  closeMenu && closeMenu();
+                  closeMobileMenu(); // Close menu when clicked on mobile
                   navigate(item.path);
                 }
               }}

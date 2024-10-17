@@ -5,7 +5,7 @@ export const dummyPosts: Post[] = [
     id: "1",
     email: "admission.caloocan@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Caloocan",
-    avatarSource:
+    avatarUrl:
       "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
     postTitle: "STUDY NOW, PAY <strike>LATER</strike> NEVER",
     postThumbnailSource:
@@ -21,7 +21,7 @@ export const dummyPosts: Post[] = [
     id: "2",
     email: "admission.caloocan@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Caloocan",
-    avatarSource:
+    avatarUrl:
       "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
     postTitle: "STUDY NOW, PAY <strike>LATER</strike> NEVER",
     postThumbnailSource:
@@ -37,7 +37,7 @@ export const dummyPosts: Post[] = [
     id: "3",
     email: "info@laverdad.edu.ph",
     name: "La Verdad Christian College, Inc. - Apalit, Pampanga",
-    avatarSource:
+    avatarUrl:
       "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYDWiDYri00R4VHU6sWSxhUWZlsmHHjUZRrOSmHJvA3Zpg&oe=670FA3FC",
     postTitle: "STUDY NOW, PAY <s>LATER</s> NEVER",
     postThumbnailSource:
@@ -53,7 +53,7 @@ export const dummyPosts: Post[] = [
     id: "4",
     email: "internships@creativeworks.com",
     name: "Internships Reactive",
-    avatarSource: "https://via.placeholder.com/150",
+    avatarUrl: "https://via.placeholder.com/150",
     postTitle: "Creative Works Design Internship Blabla",
     postThumbnailSource: "https://via.placeholder.com/400x200",
     postDescription:
@@ -68,7 +68,7 @@ export const dummyPosts: Post[] = [
     id: "5",
     email: "internships@creativeworks.com",
     name: "IT Internships",
-    avatarSource: "https://via.placeholder.com/150",
+    avatarUrl: "https://via.placeholder.com/150",
     postTitle: "Quick Strike Internship Now Open",
     postThumbnailSource: "https://via.placeholder.com/400x200",
     postDescription: `<p>Are you passionate about <strong>graphic design</strong> and <pre class="ql-syntax" spellcheck="false">UX/UI
