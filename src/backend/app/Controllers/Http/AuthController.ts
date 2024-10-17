@@ -7,6 +7,10 @@ import { signToken, verifyToken } from "Helpers/jwt";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { loginSchema, registerSchema } from "Helpers/zod-schemas";
 import { IsNull } from "typeorm";
+import {
+  httpResponseError,
+  httpResponseSuccess,
+} from "../../../utils/response";
 
 export default class AuthController {
   static async register(request: Request, response: Response) {
@@ -14,11 +18,7 @@ export default class AuthController {
       const { data, success, error } = registerSchema.safeParse(request.body);
 
       if (!success) {
-        return response.status(400).json({
-          status: 0,
-          error: error.errors,
-          message: "Bad request!",
-        });
+        return httpResponseError(response, null, "Bad request", 400);
       }
 
       const isEmailExist = await User.findOneBy({
@@ -26,10 +26,12 @@ export default class AuthController {
       });
 
       if (isEmailExist) {
-        return response.json({
-          status: 0,
-          message: "This email is already associated with another account",
-        });
+        return httpResponseError(
+          response,
+          null,
+          "This email is already associated with another account",
+          400
+        );
       }
 
       const hashedPassword = await bcryptjs.hash(data?.password!, 5);
@@ -69,18 +71,10 @@ export default class AuthController {
         "[ConnectED] Your One-Time Password"
       );
 
-      response.status(201).json({
-        status: 1,
-        data: { user },
-        message: "Please verify your email.",
-      });
+      httpResponseSuccess(response, { user }, "Please verify your email");
     } catch (error: any) {
       console.log("ln76", error);
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      httpResponseError(response, null, "Internal server error!", 500);
     }
   }
 
@@ -166,35 +160,10 @@ export default class AuthController {
       }
 
       if (!user.emailVerifiedAt) {
-        const {
-          data: { token },
-        } = await signToken(user.id, "5m");
-
-        const emailMessage: EmailMessage = {
-          body: {
-            name: user.name,
-            intro: "Welcome to ConnectED",
-            action: {
-              instructions: "To verify your account, please click here:",
-              button: {
-                color: "#22BC66",
-                text: "Verify account",
-                link: `${getCanisterLink()}/icp/auth/verify?t=${token}`, // must change to frontend url
-              },
-            },
-            outro:
-              "Need help, or have questions? Just reply to this email, we'd love to help.",
-          },
-        };
-
-        await sendEmail(
-          emailMessage,
-          user.email,
-          "ConnectED Account Verification"
-        );
         return response.status(403).json({
           status: 0,
           message: "Please verify your email!",
+          otp: true,
         });
       }
 
@@ -206,7 +175,7 @@ export default class AuthController {
       if (!passwordCorrect) {
         return response.json({
           status: 0,
-          message: "Invalid password",
+          message: "Invalid credentials",
         });
       }
 
