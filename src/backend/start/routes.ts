@@ -26,6 +26,7 @@ Route.post("/auth/register", AuthController.register);
 Route.post("/auth/login", AuthController.login);
 Route.post("/auth/verify", AuthController.verify);
 Route.post('/auth/verify-register', AuthController.verifyFromRegister)
+Route.post('/auth/verify-login', AuthController.verifyFromLogin);
 
 Route.get("/users/:id", UserController.findById);
 Route.get("/users", Pagination.paginate, UserController.getAll);

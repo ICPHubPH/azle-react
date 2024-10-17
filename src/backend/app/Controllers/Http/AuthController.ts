@@ -172,6 +172,10 @@ export default class AuthController {
         return httpResponseError(response, null, "User not found", 404);
       }
 
+      if (user.emailVerifiedAt) {
+        return httpResponseError(response, null, "Email already verified", 400);
+      }
+
       const verificationCode = await VerificationCode.findOne({
         where: {
           user: {
@@ -262,7 +266,7 @@ export default class AuthController {
       });
 
       if (!user) {
-        return httpResponseError(response, null, "User not found", 404);
+        return httpResponseError(response, null, "We couldn't find your account", 404);
       }
 
       const { otp, token, hashedToken, hashedOtp } =
@@ -298,6 +302,103 @@ export default class AuthController {
       httpResponseSuccess(response, { user, token });
     } catch (error) {
       return httpResponseError(response, null, "Internal Server Error", 500);
+    }
+  }
+
+  static async verifyFromLogin(request: Request, response: Response) {
+    try {
+      const { token, otp, email } = request.body;
+
+      if (!token || !otp || !email) {
+        return httpResponseError(
+          response,
+          null,
+          "Missing required fields",
+          400
+        );
+      }
+
+      const user = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (!user) {
+        return httpResponseError(response, null, "User not found", 404);
+      }
+
+      const verificationCode = await VerificationCode.findOne({
+        where: {
+          user: {
+            id: user.id,
+          },
+        },
+      });
+
+      if (!verificationCode) {
+        return httpResponseError(
+          response,
+          null,
+          "Verification code not found",
+          404
+        );
+      }
+
+      const isOtpExpired =
+        new Date(verificationCode?.expiresAt as Date) < new Date();
+
+      if (isOtpExpired) {
+        return httpResponseError(
+          response,
+          null,
+          "Verification code expired",
+          400
+        );
+      }
+
+      const isOtpEqual = await bcryptjs.compare(
+        otp,
+        verificationCode?.code as string
+      );
+
+      if (!isOtpEqual) {
+        return httpResponseError(
+          response,
+          null,
+          "Invalid verification code",
+          400
+        );
+      }
+
+      const isTokenEqual = await bcryptjs.compare(
+        token,
+        verificationCode?.token as string
+      );
+
+      if (!isTokenEqual) {
+        return httpResponseError(response, null, "Invalid token", 400);
+      }
+
+      await VerificationCode.delete(verificationCode.id);
+
+      const jsonData = await signToken({ id: user.id }, "7d");
+
+      if (!jsonData.data) {
+        return httpResponseError(
+          response,
+          null,
+          "Internal server error. Failed to sign token.",
+          500
+        );
+      }
+
+      return httpResponseSuccess(response, {
+        user,
+        accessToken: jsonData.data.token,
+      });
+    } catch (error) {
+      return httpResponseError(response, null, "Internal server error!", 500);
     }
   }
 }
