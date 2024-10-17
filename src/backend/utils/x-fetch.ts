@@ -6,8 +6,7 @@ export const xFetch = async (
   try {
     const defaultHeaders = {
       "Content-Type": "application/json",
-      "XC-API-Key":
-        "0d9f22e26bba9e7caa2963447f6dabf50d2f5e8b9e2936b08831cef6794cb029",
+      "XC-API-Key": process.env.XC_API_KEY,
     };
 
     const headers = { ...defaultHeaders, ...customHeaders };
