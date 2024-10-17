@@ -7,7 +7,10 @@
       "build": "npx azle --native-compilation backend",
       "wasm": ".azle/backend/backend.wasm",
       "gzip": true,
-      "assets": [["src/frontend/dist", "dist"]],
+      "assets": [
+        ["src/frontend/dist", "dist"],
+        ["./.env", ".env"] 
+      ],
       "build_assets": "npm run build",
       "metadata": [
         {
