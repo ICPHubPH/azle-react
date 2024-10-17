@@ -25,11 +25,20 @@ import { Input } from "../ui/input";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  page: number;
+  pageSize: number;
+  totalRows: number;
+  onPageChange: (newPage: number) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  page,
+  pageSize,
+  totalRows,
+  onPageChange,
+  
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -132,16 +141,16 @@ export function DataTable<TData, TValue>({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={() => onPageChange(page - 1)}
+          disabled={page === 0}
         >
           Previous
         </Button>
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={() => onPageChange(page + 1)}
+          disabled={(page + 1) * pageSize >= totalRows}
         >
           Next
         </Button>

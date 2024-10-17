@@ -19,7 +19,7 @@ export const useAllPost = (skip: number, take: number) => {
 };
 
 // get ONE post
-export const useOnePost = (id: string) => {
+export const usePostById = (id: string) => {
   return useQuery({
     queryKey: ["post", id],
     queryFn: () => getPostById(id),

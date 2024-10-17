@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DataTable } from "@/components/tables/data-table";
-import {
-  providersColumns,
-  studentsColumns,
-} from "@/components/tables/UsersColumnDef";
-import { userProviders } from "@/components/tables/dummyData";
-import { useUsers } from "@/hooks/useUserData";
+import StudentsTable from "./StudentsTable";
+import ProvidersTable from "./ProvidersTable";
 
 export default function AdminUserManagement() {
   const [activeTab, setActiveTab] = useState("providers");
-  const {data, isLoading, error} = useUsers()
-
-  
 
   return (
     <div className="container mx-auto p-4 space-y-4 flex-grow">
@@ -27,10 +19,10 @@ export default function AdminUserManagement() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="providers" className="mt-4">
-          <DataTable columns={providersColumns} data={userProviders} />
+          <ProvidersTable/>
         </TabsContent>
         <TabsContent value="students" className="mt-4">
-          <DataTable columns={studentsColumns} data={userProviders} />
+          <StudentsTable />
         </TabsContent>
       </Tabs>
     </div>
