@@ -25,7 +25,7 @@ Route.post('/app/update_user', UserController.update_user);
 Route.post('/app/delete_user', UserController.delete_user);
 
 /* Card */
-Route.get('/app/cards', CardController.cards);
+Route.get('/app/:deck_id/cards', CardController.cards);
 Route.get('/app/get_card', CardController.get_card);
 Route.post('/app/create_card', CardController.create_card);
 Route.post('/app/update_card', CardController.update_card);

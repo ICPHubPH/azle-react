@@ -1,18 +1,17 @@
 import { Request, Response } from 'express';
 import { Deck } from 'Database/entities/deck';
-import { Card } from 'Database/entities/card';
 import { User } from 'Database/entities/user';
 import { Class } from 'Database/entities/class';
 
 export default class DeckController {
     // Create Deck
     static async create_deck(req: Request, res: Response){
-        const { deck_name, deck_description, user_id, class_ids, cards } = req.body;
+        const { deck_name, deck_description, user_id, class_ids } = req.body;
 
         try {
-            if (!cards || cards.length < 3) {
-                return res.status(400).json({ message: 'A deck must contain at least 3 cards.' });
-            }
+            // if (!cards || cards.length < 3) {
+            //     return res.status(400).json({ message: 'A deck must contain at least 3 cards.' });
+            // }
 
             const user = await User.findOneBy({ user_id });
             if (!user) {
@@ -31,17 +30,16 @@ export default class DeckController {
 
             await Deck.save(deck);
 
-            const cardPromises = cards.map((cardData: any) => {
-                const card = new Card();
-                card.card_answer = cardData.card_answer;
-                card.card_question = cardData.card_question;
-                card.deck = deck;
-                return Card.save(card);
-            });
+            // const cardPromises = cards.map((cardData: any) => {
+            //     const card = new Card();
+            //     card.card_answer = cardData.card_answer;
+            //     card.card_question = cardData.card_question;
+            //     card.deck = deck;
+            //     return Card.save(card);
+            // });
 
-            const savedCards = await Promise.all(cardPromises);
-            return res.status(201).json({ message: "Success in creating decks", payload: {...deck, cards: savedCards} });
-
+            // const savedCards = await Promise.all(cardPromises);
+            return res.status(200).json({ message: "Success in creating decks", payload: {deck} });
         } catch (error) {
             return res.status(400).json({ message: "Error creating deck", error })
         }
@@ -66,17 +64,13 @@ export default class DeckController {
     // Update Deck
     static update_deck = async (req: Request, res: Response) => {
         const deck_id = parseInt(req.params.id);
-        const { deck_name, deck_description, user_id, class_ids, cards } = req.body;
+        const {  user_id, class_ids, ...deckData } = req.body;
 
         try {
-            if (!cards || cards.length < 3) {
-                return res.status(400).json({ message: 'A deck must contain at least 3 cards.' });
-            }
+            // if (!cards || cards.length < 3) {
+            //     return res.status(400).json({ message: 'A deck must contain at least 3 cards.' });
+            // }
 
-            const deck = await Deck.findOneBy({deck_id});
-            if (!deck) {
-                throw new Error("Deck not found");
-            }
             const user = await User.findOneBy({ user_id });
             if (!user) {
                 throw new Error("User not found");
@@ -86,26 +80,20 @@ export default class DeckController {
                 throw new Error("One or more classes not found");
             } 
 
-            deck.deck_name = deck_name;
-            deck.deck_description = deck_description;
-            deck.user = user;
-            deck.classEntities = classes;
+            await Deck.update({deck_id}, {user, classes, ...deckData});
 
-            await Deck.save(deck);
+            // const cardPromises = cards.map((cardData: any) => {
+            //     const card = new Card();
+            //     card.card_answer = cardData.card_answer;
+            //     card.card_question = cardData.card_question;
+            //     card.deck = deck;
+            //     return Card.save(card);
+            // });
 
-            const cardPromises = cards.map((cardData: any) => {
-                const card = new Card();
-                card.card_answer = cardData.card_answer;
-                card.card_question = cardData.card_question;
-                card.deck = deck;
-                return Card.save(card);
-            });
-
-            const savedCards = await Promise.all(cardPromises);
-            return res.status(201).json({ message: "Success in updating decks", payload: {...deck, cards: savedCards}});
-
+            // const savedCards = await Promise.all(cardPromises);
+            return res.status(200).json({ message: "Success in updating deck" });
         } catch (error) {
-            return res.status(400).json({ message: "Error creating deck", error })
+            return res.status(400).json({ message: "Error updating deck", error })
         }
     };
 
