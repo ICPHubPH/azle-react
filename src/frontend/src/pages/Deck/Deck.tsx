@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, BookOpen, Edit } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Mock data for the decks
 const decks = [
@@ -95,13 +96,7 @@ export default function FlashcardDecks() {
   );
 
   return (
-    <div
-      className="w-full px-4 overflow-y-auto [&::-webkit-scrollbar]:w-2
-    [&::-webkit-scrollbar-track]:bg-gray-100
-    [&::-webkit-scrollbar-thumb]:bg-gray-300
-    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
-    >
+    <div className="container-page">
       <h1 className="text-2xl font-bold py-6 px-4">Programming 101</h1>
 
       <div className="relative">
@@ -120,7 +115,7 @@ export default function FlashcardDecks() {
           No decks found. Try a different search term.
         </p>
       ) : (
-        <div className="grid grid-cols-1 my-6 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 mt-6 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredDecks.map((deck) => (
             <Card
               key={deck.id}
@@ -146,13 +141,16 @@ export default function FlashcardDecks() {
                   <Edit className="w-4 h-4 mr-2" />
                   Edit
                 </Button>
-                <Button
-                  className="font-bold"
-                  size="sm"
-                >
-                  <BookOpen className=" w-4 h-4 mr-2" />
-                  Study
-                </Button>
+
+                <Link to="/flashcards">
+                  <Button
+                    className="font-bold"
+                    size="sm"
+                  >
+                    <BookOpen className=" w-4 h-4 mr-2" />
+                    Study
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           ))}

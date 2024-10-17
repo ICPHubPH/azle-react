@@ -25,9 +25,9 @@ const Flashcard: React.FC<FlashcardProps> = ({
         transition={{ duration: 0.8, type: "spring" }}
         className={`${
           flipCard
-            ? "font-black bg-foreground text-background"
-            : "font-sans bg-background text-foreground"
-        } h-full flex items-center justify-center px-14 py-2.5 sm:shadow-[rgba(0,0,0,0.02)_0px_1px_3px_0px,rgba(27,31,35,0.15)_0px_0px_0px_1.5px] w-full sm:w-[33rem] rounded-xl`}
+            ? "font-black bg-zinc-900 text-white"
+            : "font-sans bg-secondary text-secondary-foreground opacity-95"
+        } h-full flex items-center justify-center px-14 py-2.5 sm:shadow border sm:w-[33rem] rounded-xl`}
         onClick={() => setFlipCard(!flipCard)}
       >
         <motion.div
