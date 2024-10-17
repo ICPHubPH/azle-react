@@ -15,5 +15,8 @@
     "workspaces": [
         "src/backend",
         "src/frontend"
-    ]
+    ],
+    "devDependencies": {
+        "backend": "^0.0.0"
+    }
 }

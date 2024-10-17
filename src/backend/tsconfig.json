@@ -2,8 +2,10 @@
     "compilerOptions": {
         "strict": true,
         "target": "ES2020",
+        "module": "commonjs",
         "moduleResolution": "node",
         "allowJs": true,
+        "esModuleInterop": true,
         "outDir": "HACK_BECAUSE_OF_ALLOW_JS",
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
@@ -25,6 +27,14 @@
             "Helpers/*": [
                 "./utils/*"
             ]
-        }
+        },
+        "types": ["node"]
+    },
+    "exclude": [
+        "../../node_modules"
+    ],
+    "ts-node": {
+        "transpileOnly": true,
+        "files": true
     }
 }
