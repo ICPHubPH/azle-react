@@ -374,7 +374,7 @@ export default class UserController {
 
       const jsonData = await sendEmail(
         emailMessage,
-        "kurtddbigtas@gmail.com",
+        "johnraybendelarama@student.laverdad.edu.ph",
         "TEST EMAIL FROM IC (1)"
       );
 
