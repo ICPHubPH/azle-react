@@ -9,10 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-// Define the validation schema using Zod
+// Define the validation schema without password
 const signInSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
 })
 
 export default function SignIn() {
@@ -24,7 +23,6 @@ export default function SignIn() {
     resolver: zodResolver(signInSchema), // Use Zod resolver for validation
     defaultValues: {
       email: "",
-      password: "",
     },
   })
 
@@ -54,21 +52,6 @@ export default function SignIn() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="m@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Password Field */}
-        <FormField
-          control={signInForm.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

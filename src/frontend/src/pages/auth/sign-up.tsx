@@ -8,34 +8,42 @@ import { Button } from "@/components/ui/button"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useNavigate } from "react-router-dom" // Import useNavigate
 
+// Define the sign-up schema without password
 const signUpSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
-  confirmPassword: z.string().min(8),
   role: z.enum(["provider", "student"]),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
+}).refine((data) => !!data.email, {
+  message: "Email is required",
+  path: ["email"],
 })
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate() // Initialize useNavigate
 
   const signUpForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
-      password: "",
-      confirmPassword: "",
       role: "student",
     },
   })
 
   const onSignUp = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true)
-    // TODO: Implement sign-up logic
-    console.log("Sign up", values)
+    console.log("Sign up", values) // Debugging output
+
+    // Simulate successful sign-up (replace this with your actual logic)
+    try {
+      // TODO: Implement your actual sign-up logic here
+      // Temporarily navigate to OTP verification page
+      navigate('/otp-verification') // Ensure this route is correctly set up
+    } catch (error) {
+      console.error("Sign-up error:", error) // Log any error
+    }
+
     setIsLoading(false)
   }
 
@@ -55,32 +63,7 @@ export default function SignUp() {
             </FormItem>
           )}
         />
-        <FormField
-          control={signUpForm.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={signUpForm.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+       
         <FormField
           control={signUpForm.control}
           name="role"
