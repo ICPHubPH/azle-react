@@ -34,12 +34,10 @@ export default class AuthController {
         );
       }
 
-      const hashedPassword = await bcryptjs.hash(data?.password!, 5);
 
       const user = new User();
       user.name = data?.name;
       user.email = data?.email;
-      user.password = hashedPassword;
       user.setRole(data?.role);
 
       await User.save(user);
@@ -166,20 +164,6 @@ export default class AuthController {
           otp: true,
         });
       }
-
-      const passwordCorrect = await bcryptjs.compare(
-        data.password,
-        user.password
-      );
-
-      if (!passwordCorrect) {
-        return response.json({
-          status: 0,
-          message: "Invalid credentials",
-        });
-      }
-
-      // TODO: external api for generating access token
 
       const jsonData = await signToken(user.id, "1m");
 
