@@ -3,8 +3,8 @@ import { xFetch } from "./x-fetch";
 export interface EmailMessage {
   body: {
     name: string;
-    intro: string;
-    outro: string;
+    intro: string | string [];
+    outro: string | string [];
     action?: {
       instructions: string;
       button: {

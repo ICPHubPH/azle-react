@@ -1,7 +1,8 @@
 import * as bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
+import { VerificationCode } from "Database/entities/verification-code";
 import { Request, Response } from "express";
-import { getCanisterLink } from "Helpers/helpers";
+import { generateOTP, getCanisterLink } from "Helpers/helpers";
 import { signToken, verifyToken } from "Helpers/jwt";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { loginSchema, registerSchema } from "Helpers/zod-schemas";
@@ -16,7 +17,7 @@ export default class AuthController {
         return response.status(400).json({
           status: 0,
           error: error.errors,
-          message: "Bad request!"
+          message: "Bad request!",
         });
       }
 
@@ -41,29 +42,31 @@ export default class AuthController {
 
       await User.save(user);
 
-      // TODO: sign token and send verification email
-      const { data: {token} } = await signToken({id: user.id, email: user.email}, '5m');
+      const otp = await generateOTP(6);
+
+      await VerificationCode.insert({
+        code: otp,
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+        user: user,
+      });
+
       const emailMessage: EmailMessage = {
         body: {
           name: user.name,
-          intro: "Welcome to ConnectED",
-          action: {
-            instructions: "To verify your account, please click here:",
-            button: {
-              color: "#22BC66",
-              text: "Verify account",
-              link: `${getCanisterLink()}/auth/verify?t=${token}`, // must change to frontend url
-            },
-          },
+          intro: [
+            "Welcome to ConnectED",
+            `We\'re very excited to have you on board. Here is your One-Time Password (OTP) for account verification: `,
+            `<h1 style="color: blue">${otp}<h1/>`,
+          ],
           outro:
             "Need help, or have questions? Just reply to this email, we'd love to help.",
         },
       };
 
-      const result = await sendEmail(
+      await sendEmail(
         emailMessage,
         user.email,
-        "ConnectED Account Verification"
+        "[ConnectED] Your One-Time Password"
       );
 
       response.status(201).json({
@@ -92,31 +95,33 @@ export default class AuthController {
           message: "Bad request!",
         });
       }
-      
+
       const t = await verifyToken(token as string);
 
       if (!t?.decoded) {
         return response.status(400).json({
           status: 0,
-          message: "Invalid token!"
+          message: "Invalid token!",
         });
       }
 
-      const user = await User.findOneBy({ id: t.decoded.id, archivedAt: IsNull() });
+      const user = await User.findOneBy({
+        id: t.decoded.id,
+        archivedAt: IsNull(),
+      });
 
       if (!user) {
         return response.status(404).json({
           status: 0,
-          message: "Invalid payload!"
+          message: "Invalid payload!",
         });
       }
 
-      
       if (user.emailVerifiedAt) {
         return response.status(400).json({
           status: 0,
-          message: "Your account was already verified!"
-        })
+          message: "Your account was already verified!",
+        });
       }
 
       // additional security - compare emails
@@ -144,11 +149,14 @@ export default class AuthController {
         return response.status(400).json({
           status: 0,
           error: error.errors,
-          message: "Bad request!"
+          message: "Bad request!",
         });
       }
 
-      const user = await User.findOneBy({ email: data.email, archivedAt: IsNull() });
+      const user = await User.findOneBy({
+        email: data.email,
+        archivedAt: IsNull(),
+      });
 
       if (!user) {
         return response.status(400).json({
@@ -158,8 +166,10 @@ export default class AuthController {
       }
 
       if (!user.emailVerifiedAt) {
-        const { data: { token } } = await signToken(user.id, '5m');
-        
+        const {
+          data: { token },
+        } = await signToken(user.id, "5m");
+
         const emailMessage: EmailMessage = {
           body: {
             name: user.name,
@@ -184,11 +194,14 @@ export default class AuthController {
         );
         return response.status(403).json({
           status: 0,
-          message: "Please verify your email!"
+          message: "Please verify your email!",
         });
       }
 
-      const passwordCorrect = await bcryptjs.compare(data.password, user.password);
+      const passwordCorrect = await bcryptjs.compare(
+        data.password,
+        user.password
+      );
 
       if (!passwordCorrect) {
         return response.json({
@@ -199,7 +212,7 @@ export default class AuthController {
 
       // TODO: external api for generating access token
 
-      const jsonData = await signToken(user.id, '1m');
+      const jsonData = await signToken(user.id, "1m");
 
       if (!jsonData) {
         return response.status(500).json({

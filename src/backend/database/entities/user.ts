@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -11,6 +12,7 @@ import { UserRole } from "../../constants";
 import { Bookmark } from "./bookmark";
 import { Feedback } from "./feedback";
 import { Post } from "./post";
+import { VerificationCode } from "./verification-code";
 
 @Entity({
   name: "users",
@@ -21,7 +23,7 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true, type: "varchar" })
   avatarUrl: string | null;
-  
+
   @Column({ nullable: true, type: "varchar" })
   bannerUrl: string | null;
 
@@ -37,7 +39,7 @@ export class User extends BaseEntity {
   @Column({ unique: true, type: "varchar" })
   email: string;
 
-  @Column({ type: "varchar", length: "30" })
+  @Column({ type: "varchar" })
   password: string;
 
   @Column({ nullable: true, type: "datetime" })
@@ -70,9 +72,12 @@ export class User extends BaseEntity {
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Bookmark, bookmark => bookmark.user)
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.user)
   bookmarks: Bookmark[];
-  
+
+  @OneToOne(() => VerificationCode, (verificationCode) => verificationCode.user)
+  verificationCode: VerificationCode;
+
   setRole(role: string) {
     if (UserRole.includes(role)) {
       this.role = role;
