@@ -12,6 +12,11 @@ interface User {
 const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,7 +46,7 @@ const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
         <DropdownMenuItem onSelect={() => { navigate('/profile'); }}>
           Profile
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => console.log("User logged out")}>
+        <DropdownMenuItem onSelect={handleLogout}>
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -22,6 +22,7 @@ import PostPage from "./pages/post";
 // Admin Page
 import AdminPage from "./pages/admin/admin-page";
 import VerifyAuth from "./components/auth/VerifyAuth";
+import { OtpVerification } from "./pages/auth/otp-verification";
 
 function App() {
   return (
@@ -32,8 +33,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/auth/verify" element={<VerifyAuth />} />
+          <Route path="/otp-verification" element={<OtpVerification/>} />
 
-          
+
+
           {/* User Pages */}
           <Route path="/home" element={<User />} />
           <Route path="/profile" element={<Profile />} />
