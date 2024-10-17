@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { TrackPreviousIcon } from "@radix-ui/react-icons";
 import { ArrowLeft } from "lucide-react";
 // import { FormInputIcon } from "lucide-react";
 
@@ -31,8 +30,6 @@ const formSchema = z.object({
 });
 
 function Signup() {
-  const [greeting, setGreeting] = useState("");
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,15 +46,24 @@ function Signup() {
   }
 
   return (
-    <div className="flex items-center justify-center h-full w-full relative">
+    <div className="bg-background flex items-center justify-center h-full w-full">
       {/* //TODO: Pakihanap nalang actual size */}
-      <Button asChild className="fixed top-5 left-5">
-        <Link to="/"> <span><ArrowLeft size={15}/> </span>Back</Link>
+      <Button
+        asChild
+        className="fixed top-5 left-5"
+      >
+        <Link to="/">
+          {" "}
+          <span>
+            <ArrowLeft size={15} />{" "}
+          </span>
+          Back
+        </Link>
       </Button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="bg-background p-8 rounded-lg min-w-[300px] shadow-[0px_2px_4px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
+          className="p-8 min-w-[300px] rounded-xl border bg-primary-foreground text-card-foreground shadow"
         >
           <h1 className="text-2xl font-bold text-center mb-5">Sign up</h1>
 

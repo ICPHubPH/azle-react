@@ -40,8 +40,8 @@
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 17.9%;
+    --secondary-foreground: 0 0% 78%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
@@ -49,7 +49,7 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --input: 240 3.7% 25.9%;
     --ring: 240 4.9% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -67,7 +67,11 @@
     font-family: "Cabinet Grotesk", sans-serif;
   }
   .container-page {
-    @apply p-0 md:p-10 md:rounded-tl-2xl  relative h-full w-full  py-0 sm:py-2 bg-background;
+    @apply pb-5 px-5 md:rounded-tl-2xl relative h-full w-full  bg-background overflow-y-auto [&::-webkit-scrollbar]:w-2
+    [&::-webkit-scrollbar-track]:bg-gray-100
+    [&::-webkit-scrollbar-thumb]:bg-gray-300
+    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500;
   }
 }
 

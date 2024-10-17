@@ -41,10 +41,10 @@ const Stats: React.FC<StatsProps> = ({ recalledForCount, id }) => {
     setRedoCardsLength(redoCardsLength + 1);
   }
 
-  const iconLabel = "leading-5 text-sm text-gray-500";
+  const iconLabel = "leading-4 text-[.8rem] text-secondary-foreground";
 
   return (
-    <IconContext.Provider value={{ color: "gray", size: "2.1rem" }}>
+    <IconContext.Provider value={{ color: "gray", size: "1.8rem" }}>
       <div className="flex flex-col gap-2 mb-3 sm:mb-5 font-sans mx-2">
         <StatsIcon onClick={onClickRecalledForCount}>
           {isRecalled ? <FaSquareCheck /> : <CiSquareCheck />}
