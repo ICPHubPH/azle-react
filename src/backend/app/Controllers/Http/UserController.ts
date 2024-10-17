@@ -1,4 +1,4 @@
-import { hashPassword } from "App/utils/helpers";
+import { comparePassword, hashPassword } from "App/utils/helpers";
 import { User } from "Database/entities/user";
 import { Response, Request } from "express";
 
@@ -103,5 +103,39 @@ export default class UserController {
       status: 200,
       message: "User has been deleted!",
     });
+  }
+
+  static async login(request: Request, response: Response) {
+    const { user_username, user_password } = request.body;
+
+    try {
+      const user = await User.findOneBy({
+        user_username,
+      });
+
+      if (!user) {
+        return response.json({
+          status: 400,
+          message: "User not found!",
+        });
+      }
+
+
+      if (!(await comparePassword(user_password, user.user_password))) {
+        return response.json({
+          status: 400,
+          message: "Invalid password!",
+        });
+      }
+
+      return response.json({
+        status: 200,
+        message: "Login successful!",
+      });
+    } catch (error) {
+      return response
+        .status(400)
+        .json({ message: "Error in logging in the user.", error });
+    }
   }
 }
