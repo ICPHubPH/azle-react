@@ -10,7 +10,7 @@ interface NavItemsProps {
   closeMobileMenu: () => void;
 }
 
-const NavItems: React.FC<NavItemsProps> = ({ onNavigate, isMobileMenuOpen, closeMobileMenu }) => {
+const NavItems: React.FC<NavItemsProps> = ({ closeMobileMenu }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
