@@ -92,9 +92,7 @@ export default class AuthController {
           message: "Bad request!",
         });
       }
-
-      // TODO: external api to verify verification token
-
+      
       const t = await verifyToken(token as string);
 
       if (!t?.decoded) {
