@@ -266,7 +266,12 @@ export default class AuthController {
       });
 
       if (!user) {
-        return httpResponseError(response, null, "We couldn't find your account", 404);
+        return httpResponseError(
+          response,
+          null,
+          "We couldn't find your account",
+          404
+        );
       }
 
       const { otp, token, hashedToken, hashedOtp } =
@@ -328,7 +333,7 @@ export default class AuthController {
         return httpResponseError(response, null, "User not found", 404);
       }
 
-      if (!user.emailVerifiedAt){
+      if (!user.emailVerifiedAt) {
         return httpResponseError(response, null, "Email not yet verified", 400);
       }
 
@@ -401,6 +406,94 @@ export default class AuthController {
         user,
         accessToken: jsonData.data.token,
       });
+    } catch (error) {
+      return httpResponseError(response, null, "Internal server error!", 500);
+    }
+  }
+
+  static async resendOtp(request: Request, response: Response) {
+    try {
+      const { email } = request.body;
+
+      if (!email) {
+        return httpResponseError(
+          response,
+          null,
+          "Missing required fields",
+          400
+        );
+      }
+
+      const user = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (!user) {
+        return httpResponseError(response, null, "User not found", 404);
+      }
+
+      const verificationCode = await VerificationCode.findOne({
+        where: {
+          user: {
+            id: user.id,
+          },
+        },
+      });
+
+      if (!verificationCode) {
+        return httpResponseError(
+          response,
+          null,
+          "Verification code not found",
+          404
+        );
+      }
+
+      const lastTokenCreatedAt = new Date(verificationCode.createdAt as Date);
+      const threeMinutesLater = new Date(
+        lastTokenCreatedAt.getTime() + 3 * 60 * 1000
+      );
+
+      if (new Date() < threeMinutesLater) {
+        return httpResponseError(
+          response,
+          null,
+          "Resend OTP request too frequent. Please try again later.",
+          429
+        );
+      }
+
+      const { otp, token, hashedToken, hashedOtp } =
+        await AuthController.getTokenAndOtp();
+
+      await VerificationCode.delete(verificationCode.id);
+
+      await VerificationCode.insert({
+        code: hashedOtp,
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+        user: user,
+        token: hashedToken,
+      });
+
+      const emailMessage: EmailMessage = {
+        body: {
+          name: user.name,
+          intro: [
+            "We have received your request to send you an OTP",
+            `Here is your One-Time Password (OTP): `,
+            `<h1 style="color: blue">${otp}<h1/>`,
+          ],
+          outro: [
+            "Need help, or have questions? Just reply to this email, we'd love to help.",
+          ],
+        },
+      };
+
+      await sendEmail(emailMessage, user.email, "[ConnectED] Resend OTP");
+
+      httpResponseSuccess(response, { user, token });
     } catch (error) {
       return httpResponseError(response, null, "Internal server error!", 500);
     }
