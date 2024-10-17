@@ -51,9 +51,8 @@ function Login() {
 
     if (data.status === 200) {
       console.log("Login successful!");
-      // Redirect to home page
-    }
-    
+    } 
+
     console.log("Data:", data);
     console.log("Values:", values);
   }
