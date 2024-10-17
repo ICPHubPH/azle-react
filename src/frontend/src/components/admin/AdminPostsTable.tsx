@@ -1,7 +1,7 @@
 // src/components/admin/AdminPostsTable.tsx
 
 import { DataTable } from "@/components/tables/data-table";
-import { dummyPosts } from "@/pages/landing/dummy-data";
+import { dummyPosts } from "@/components/data/dummy-data";
 import { postsColumnDefs } from "../tables/PostsColumnDef";
 
 export default function AdminPostsManagement() {

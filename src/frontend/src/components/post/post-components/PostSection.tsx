@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { dummyPosts } from "@/pages/landing/dummy-data";
+import { dummyPosts } from "@/components/data/dummy-data";
 import { Post } from "@/types/model";
 import parse from "html-react-parser";
 import { Mail } from "lucide-react";

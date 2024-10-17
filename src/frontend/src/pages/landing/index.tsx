@@ -1,6 +1,6 @@
 import React from "react";
 import { Separator } from "@/components/ui/separator";
-import Header from "@/components/header/LandingHeader";
+import Header from "@/components/header/landing-header/Header";
 import CreatePost from "@/components/post/post-form/CreatePost";
 import Footer from "@/components/footer/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

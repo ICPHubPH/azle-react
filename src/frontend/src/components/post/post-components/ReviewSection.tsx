@@ -1,4 +1,4 @@
-import { dummyFeedbacks, dummyUsers } from "@/pages/landing/dummy-data";
+import { dummyFeedbacks, dummyUsers } from "@/components/data/dummy-data";
 import Feedback from "@/components/review/Feedback";
 export default function ReviewSection() {
   return (

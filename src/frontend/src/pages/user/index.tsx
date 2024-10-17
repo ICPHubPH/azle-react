@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "@/components/header/UserHeader";
+import Header from "@/components/header/user-header/Header";
 import UpperContent from "@/components/student-component/UpperContent";
 import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
-import { dummyPosts, dummyTopProviders } from "../landing/dummy-data";
+import { dummyPosts, dummyTopProviders } from "../../components/data/dummy-data";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import RightCardSide from "@/components/student-component/RightCardSide";
 import { ArrowUp } from "lucide-react";

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../../mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate, useLocation } from 'react-router-dom';
-import UserDropdown from '../dropdowns/UserDropdown';
+import UserDropdown from '../../dropdowns/UserDropdown';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
