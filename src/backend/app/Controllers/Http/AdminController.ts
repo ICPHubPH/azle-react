@@ -1,7 +1,8 @@
 import { Post } from "Database/entities/post";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
-import { IsNull } from "typeorm";
+import { httpResponseError, httpResponseSuccess } from "Helpers/response";
+import { IsNull, Not } from "typeorm";
 
 
 export default class AdminController {
@@ -198,9 +199,9 @@ export default class AdminController {
         message: "Server error"
     });
     }
-}
+  }
 
-static async unarchivePostById(request: Request, response: Response) {
+  static async unarchivePostById(request: Request, response: Response) {
     try {
       const currentUser = await User.findOneBy({ id: request.user });
 
@@ -245,8 +246,100 @@ static async unarchivePostById(request: Request, response: Response) {
     }
   }
 
-    // TODOs:
-    // get archive users and posts
-    // get non verified users
-    // get non verified providers
+  // get archive users and posts
+  static async getArchivedUsers(request: Request, response: Response) {
+    try {
+      const user = await User.findOneBy({
+        id: request.user
+      });
+
+      if (!user) {
+        return httpResponseError(response, null, "Unauthorized!", 401);
+      }
+
+      if (user.role != "admin") {
+        return httpResponseError(response, null, "Forbidden!", 403);
+      }
+
+      const skip = request.skip;
+      const take = request.limit;
+
+      const data = await User.findAndCount({
+        where: {
+          archivedAt: Not(IsNull())
+        },
+        skip,
+        take
+      });
+
+      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+  // get non verified users
+  static async getNonVerifiedUsers(request: Request, response: Response) {
+    try {
+      const user = await User.findOneBy({
+        id: request.user
+      });
+
+      if (!user) {
+        return httpResponseError(response, null, "Unauthorized!", 401);
+      }
+
+      if (user.role != "admin") {
+        return httpResponseError(response, null, "Forbidden!", 403);
+      }
+
+      const skip = request.skip;
+      const take = request.limit;
+
+      const data = await User.findAndCount({
+        where: {
+          archivedAt: IsNull(),
+          emailVerifiedAt: IsNull()
+        },
+        skip,
+        take
+      });
+
+      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+
+  // get non verified providers (admin management)
+  static async getNonVerifiedProviders(request: Request, response: Response) {
+    try {
+      const user = await User.findOneBy({
+        id: request.user
+      });
+
+      if (!user) {
+        return httpResponseError(response, null, "Unauthorized!", 401);
+      }
+
+      if (user.role != "admin") {
+        return httpResponseError(response, null, "Forbidden!", 403);
+      }
+
+      const skip = request.skip;
+      const take = request.limit;
+
+      const data = await User.findAndCount({
+        where: {
+          archivedAt: IsNull(),
+          providerVerifiedAt: Not(IsNull())
+        },
+        skip,
+        take
+      });
+
+      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
 }
