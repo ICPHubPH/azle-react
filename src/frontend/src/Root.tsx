@@ -15,7 +15,6 @@ const Layout = () => {
       </header> */}
       <Navigation>
         <Outlet />
-        <ToggleSwitch />
       </Navigation>
     </div>
   );

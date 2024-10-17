@@ -47,11 +47,11 @@ function Signup() {
   }
 
   return (
-    <div className="flex items-center justify-center h-full w-full">
+    <div className="bg-primary-foreground flex items-center justify-center h-full w-full">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="p-8 rounded-lg min-w-[300px] shadow-[0px_2px_4px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
+          className="bg-background p-8 rounded-lg min-w-[300px] shadow-[0px_2px_4px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
         >
           <h1 className="text-2xl font-bold text-center mb-5">Sign up</h1>
 
@@ -106,12 +106,17 @@ function Signup() {
             )}
           />
           <div className="flex flex-end mt-5 justify-between">
-            <Button type="submit">Submit</Button>
+            <Button
+              className="font-bold"
+              type="submit"
+            >
+              Submit
+            </Button>
             <Link
               to="/login"
               className="bg-secondary text-foreground"
             >
-              <Button>Log in</Button>
+              <Button variant={"outline"}>Log in</Button>
             </Link>
           </div>
         </form>
