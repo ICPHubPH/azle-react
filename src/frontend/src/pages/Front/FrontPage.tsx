@@ -68,7 +68,7 @@ const FrontPage = () => {
           {
             isSignedIn ? (
               <Button variant={"default"} asChild>
-                <Link to="/home">Go to Dashboard</Link>
+                <Link to="/class">Go to Dashboard</Link>
               </Button>
             ) : (
               <Button variant={"outline"} asChild>
@@ -115,7 +115,7 @@ const FrontPage = () => {
           {
             isSignedIn ? (
               <Button variant={"default"} asChild>
-                <Link to="/home">Go to Dashboard</Link>
+                <Link to="/class">Go to Dashboard</Link>
               </Button>
             ) : (
               <Button variant={"default"} asChild>

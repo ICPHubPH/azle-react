@@ -52,7 +52,7 @@ function Login() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="p-8 rounded-lg min-w-[300px] shadow-[0px_1px_3px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
+          className="bg-background p-8 rounded-lg min-w-[300px] shadow-[0px_1px_3px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
         >
           <h1 className="text-2xl font-bold font-mono text-center mb-5">
             Login
@@ -93,12 +93,17 @@ function Login() {
             )}
           />
           <div className="flex flex-end mt-5 justify-between">
-            <Button type="submit">Submit</Button>
+            <Button
+              className="font-bold"
+              type="submit"
+            >
+              Submit
+            </Button>
             <Link
               to="/signup"
               className="bg-secondary text-foreground"
             >
-              <Button>Sign up</Button>
+              <Button variant={"outline"}>Sign up</Button>
             </Link>
           </div>
         </form>

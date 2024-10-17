@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/provider/theme-provider";
+import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
+import { IconContext } from "react-icons";
 
 const ToggleSwitch: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -16,7 +18,7 @@ const ToggleSwitch: React.FC = () => {
   }, [theme]);
 
   return (
-    <label className="relative inline-block w-12 h-6">
+    <label className="relative inline-block w-[3.2rem] h-7">
       <input
         type="checkbox"
         className="opacity-0 w-0 h-0"
@@ -28,19 +30,23 @@ const ToggleSwitch: React.FC = () => {
           "absolute cursor-pointer top-0 left-0 right-0 bottom-0 rounded-full transition",
           {
             "bg-gray-700": checked,
-            "bg-blue-500": !checked,
+            "bg-gray-400": !checked,
           }
         )}
       ></span>
       <span
         className={cn(
-          "absolute bottom-[2px] bg-background rounded-full h-5 w-5 transition",
+          "absolute bottom-[2px] bg-background rounded-full h-6 w-6 transition flex align-middle text-center py-1 justify-center",
           {
             "left-1": checked,
-            "left-6 bg-yellow-500 shadow-none": !checked,
+            "left-6 bg-white shadow-none": !checked,
           }
         )}
-      ></span>
+      >
+        <IconContext.Provider value={{ className: "text-gray-500" }}>
+          {checked ? <IoMoonOutline /> : <IoSunnyOutline />}
+        </IconContext.Provider>
+      </span>
     </label>
   );
 };

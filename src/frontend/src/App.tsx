@@ -1,5 +1,3 @@
-import { AnimatePresence } from "framer-motion";
-import { JSX } from "react/jsx-runtime";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -13,9 +11,9 @@ import Root from "./Root";
 import FrontPage from "./pages/Front/FrontPage";
 import Deck from "./pages/Deck/Decks";
 import { Navigation } from "./Navigation";
-import Home from "./pages/Home/Home";
 import Flashcard from "./pages/Flashcard/Flashcards";
 import Profile from "./pages/Profile/Profile";
+import Classes from "./pages/Classes/Classes";
 
 function App() {
   const router = createBrowserRouter(
@@ -24,7 +22,7 @@ function App() {
         <Route index element={<FrontPage />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="home" element={<Navigation><Home /></Navigation>} />
+        <Route path="class" element={<Navigation><Classes /></Navigation>} />
         <Route path="create" element={<Navigation><Create /></Navigation>} />
         <Route path="deck" element={<Navigation><Deck /></Navigation>} />
         <Route path="flashcards" element={<Navigation><Flashcard /></Navigation>} />
