@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { IsNull, Not } from "typeorm";
 
+// GET all users
 export default class UserController {
   static async getAll(request: Request, response: Response) {
     try {
@@ -46,6 +47,7 @@ export default class UserController {
     }
   }
 
+  // GET one user
   static async findById(request: Request, response: Response) {
     const id = request.params.id;
 
