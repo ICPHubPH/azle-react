@@ -52,10 +52,10 @@ export default class UserController {
         // try {
         //     const hashedPassword = await hashPassword(user_password);
         //     console.log("Hashed password:", hashedPassword);
-        //   } catch (error) {
-        //     console.error("Error in hashPassword:", error);
-        //   }
-        //   console.log("in");
+        // } catch (error) {
+        // console.error("Error in hashPassword:", error);
+        // }
+        // console.log("in");
 
         //iinsert na kapag ok na
         await User.insert({

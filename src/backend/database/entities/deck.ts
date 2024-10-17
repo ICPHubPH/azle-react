@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity, ManyToMany, JoinTable} from "typeorm";
 import { User } from "./user";
 import { Class } from "./class";
 import { Folder } from "./folder";
@@ -13,7 +13,7 @@ export class Deck extends BaseEntity {
   deck_name: string;
 
   @Column({ type: "text", nullable: true })
-  deck_description: string;
+  deck_description: string | null;
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   deck_createdAt: Date;
@@ -21,11 +21,13 @@ export class Deck extends BaseEntity {
   @ManyToOne(() => User, (user) => user.decks, { eager: true })
   user: User;
 
-  @ManyToOne(() => Class, (classEntity) => classEntity.decks, { nullable: true })
-  classEntity: Class;
+  @ManyToMany(() => Class, (classEntity) => classEntity.decks)
+  @JoinTable()  // This creates the linking table for many-to-many
+  classEntities: Class[];
 
-  @ManyToOne(() => Folder, (folder) => folder.decks, { nullable: true })
-  folder: Folder;
+  @ManyToMany(() => Folder, (folder) => folder.decks)
+  @JoinTable()  // This creates the linking table for many-to-many
+  folders: Folder[];
 
   @OneToMany(() => Card, (card) => card.deck)
   cards: Card[];

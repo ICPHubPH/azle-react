@@ -1,5 +1,6 @@
 import CardController from 'App/Controllers/Http/CardController';
 import UserController from 'App/Controllers/Http/UserController';
+import DeckController from 'App/Controllers/Http/DeckController';
 import { Router } from 'express';
 const Route = Router();
 
@@ -30,5 +31,11 @@ Route.post('/app/create_card', CardController.create_card);
 Route.post('/app/update_card', CardController.update_card);
 Route.post('/app/delete_card', CardController.delete_card);
 
+/* Deck */
+Route.get('/app/decks', DeckController.decks);
+Route.get('/app/get_deck/:id', DeckController.get_deck);
+Route.post('/app/create_deck', DeckController.create_deck);
+Route.post('/app/update_deck/:id', DeckController.update_deck);
+Route.post('/app/delete_deck/:id', DeckController.delete_deck);
 
 export { Route as routes };
