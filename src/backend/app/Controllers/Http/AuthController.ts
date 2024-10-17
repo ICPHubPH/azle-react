@@ -328,6 +328,10 @@ export default class AuthController {
         return httpResponseError(response, null, "User not found", 404);
       }
 
+      if (!user.emailVerifiedAt){
+        return httpResponseError(response, null, "Email not yet verified", 400);
+      }
+
       const verificationCode = await VerificationCode.findOne({
         where: {
           user: {
