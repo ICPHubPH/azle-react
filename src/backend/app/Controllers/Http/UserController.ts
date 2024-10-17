@@ -1,4 +1,4 @@
-import { comparePassword, hashPassword } from "App/utils/helpers";
+import { generatePasswordHash, verifyPassword } from "App/utils/helpers";
 import { User } from "Database/entities/user";
 import { Response, Request } from "express";
 
@@ -48,12 +48,18 @@ export default class UserController {
         });
       }
 
-      const hashedPassword = await hashPassword(user_password); // Hash the password
-
       const user = new User();
       user.user_username = user_username;
       user.user_email = user_email;
-      user.user_password = hashedPassword; // Use the hashed password
+      const password = generatePasswordHash(user_password);
+      user.user_password = password.hash;
+      user.user_salt = password.salt;
+
+      console.log(user_password);
+      console.log(password.hash);
+      console.log(password.salt);
+
+
       user.classes = [];
 
       await User.insert(user);
@@ -78,10 +84,7 @@ export default class UserController {
         });
       }
 
-      if (user_password) {
-        // If a new password is provided, hash it before updating
-        user_password = await hashPassword(user_password);
-      }
+    user_password = generatePasswordHash(user_password).hash;
 
       await User.update(
         { user_id },
@@ -125,35 +128,33 @@ export default class UserController {
   }
 
   static async login(request: Request, response: Response) {
-    const { user_username, user_password } = request.body;
+    const { user_email, user_password } = request.body;
 
     try {
-      const user = await User.findOneBy({ user_username });
-
+      const user = await User.findOneBy({ user_email });
       if (!user) {
-        return response.status(404).json({
-          status: 404,
-          message: "User not found!",
-        });
+        throw new Error("User not found!");
       }
+      console.log(user_password);
+      console.log(user.user_password);
+      console.log(user.user_salt);
 
-      const isMatch = await comparePassword(user_password, user.user_password);
+      const isMatch = await verifyPassword(user_password, user.user_password, user.user_salt);
 
-      if (!isMatch) {
-        return response.status(400).json({
-          status: 400,
-          message: "Invalid password!",
-        });
-      }
+      // if (!isMatch) {
+      //   return response.status(400).json({
+      //     status: 400,
+      //     message: "Invalid password!",
+      //   });
+      // }
 
-      return response.status(200).json({
-        status: 200,
-        message: "Login successful!",
-      });
+      // return response.status(200).json({
+      //   status: 200,
+      //   message: "Login successful!",
+      // });
+      return response.status(200).json({status: 200,message: isMatch});
     } catch (error) {
-      return response
-        .status(500)
-        .json({ message: "Error in logging in the user.", error });
+      return response.status(400).json({ message: "Error in login", error: error });
     }
   }
 }

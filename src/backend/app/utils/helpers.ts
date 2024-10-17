@@ -1,28 +1,39 @@
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
-const saltRounds: number = 10;
-
-// Function to hash a password
-export const hashPassword = async (password: string): Promise<string> => {
-    try {
-        const salt: string = await bcrypt.genSalt(saltRounds); 
-        const hashedPassword: string = await bcrypt.hash(password, salt); 
-        console.log("Hashed Password:", hashedPassword); // Debugging output
-        return hashedPassword;
-    } catch (error) {
-        console.error("Hashing error:", error); // Capture hashing error
-        throw error;
-    }
+// Generate a random salt
+const generateSalt = (length: number): string => {
+    return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
 };
 
-// Function to compare a plain password with a hashed password
-export const comparePassword = async (plain: string, hashed: string): Promise<boolean> => {
-    try {
-        const match: boolean = await bcrypt.compare(plain, hashed);
-        console.log("Password Match:", match); // Debugging output
-        return match;
-    } catch (error) {
-        console.error("Comparison error:", error); // Capture comparison error
-        throw error;
-    }
+// Hash the password using SHA-256 and the salt
+const hashPassword = (password: string, salt: string): string => {
+    const hash = crypto.createHmac('sha256', salt);  // Using HMAC with SHA-256
+    hash.update(password);
+    const hashedPassword = hash.digest('hex');
+    return hashedPassword;
 };
+
+// Function to generate hashed password and salt
+export const generatePasswordHash = (password: string): { salt: string, hash: string } => {
+    const salt = generateSalt(16);  // Generate a 16-byte salt
+    const hash = hashPassword(password, salt);  // Hash the password with the salt
+    return {
+        salt: salt,
+        hash: hash
+    };
+};
+
+// Verify if the entered password is correct
+export const verifyPassword = (password: string, hash: string, salt: string): boolean => {
+    const hashedPassword = hashPassword(password, salt);
+    return hashedPassword === hash;  // Compare hashed passwords
+};
+
+// Usage example
+export const { salt, hash } = generatePasswordHash('mysecretpassword');
+console.log('Salt:', salt);
+console.log('Hash:', hash);
+
+// Verify the password
+const isValid = verifyPassword('mysecretpassword', hash, salt);
+console.log('Password valid:', isValid);
