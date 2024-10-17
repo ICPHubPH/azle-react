@@ -42,7 +42,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     cell: ({ row }) => (
       <div className="flex flex-row items-center gap-2 sm:gap-3">
         <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-          <AvatarImage src={row.original.avatarSource} />
+          <AvatarImage src={row.original.avatarUrl} />
           <AvatarFallback>
             {row.original.name ? row.original.name.charAt(0) : "A"}
           </AvatarFallback>

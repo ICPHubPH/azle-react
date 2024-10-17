@@ -64,7 +64,7 @@ const User: React.FC = () => {
                   key={post.email}
                   postAuthorEmail={post.email}
                   postAuthorName={post.name}
-                  postAuthorAvatarSource={post.avatarSource}
+                  postAuthorAvatarSource={post.avatarUrl}
                   postTitle={post.postTitle}
                   postThumbnailSource={post.postThumbnailSource}
                   postDescription={post.postDescription}

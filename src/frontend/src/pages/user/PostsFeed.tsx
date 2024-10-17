@@ -97,7 +97,7 @@ export default function PostsFeed() {
                 <PostSummaryCard
                   postId={post.id}
                   postAuthorEmail={post.email}
-                  postAuthorAvatarSource={post.avatarSource}
+                  postAuthorAvatarSource={post.avatarUrl}
                   postTitle={post.postTitle}
                   postThumbnailSource={post.postThumbnailSource}
                   postDescription={post.postDescription}
@@ -120,7 +120,7 @@ export default function PostsFeed() {
                   <PostSummaryCard
                     postId={post.id}
                     postAuthorEmail={post.email}
-                    postAuthorAvatarSource={post.avatarSource}
+                    postAuthorAvatarSource={post.avatarUrl}
                     postTitle={post.postTitle}
                     postThumbnailSource={post.postThumbnailSource}
                     postDescription={post.postDescription}
@@ -142,7 +142,7 @@ export default function PostsFeed() {
                   <PostSummaryCard
                     postId={post.id}
                     postAuthorEmail={post.email}
-                    postAuthorAvatarSource={post.avatarSource}
+                    postAuthorAvatarSource={post.avatarUrl}
                     postTitle={post.postTitle}
                     postThumbnailSource={post.postThumbnailSource}
                     postDescription={post.postDescription}

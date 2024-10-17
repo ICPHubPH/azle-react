@@ -51,7 +51,7 @@ function MetaDataGroup({ post }: { post: Post }) {
     <div className="flex flex-col md:flex-row justify-between items-center py-4 px-4 md:px-8 bg-gradient-to-r from-blue-800 to-purple-800 rounded-b-lg">
       <div className="flex items-center gap-4">
         <Avatar className="w-12 h-12">
-          <AvatarImage src={post.avatarSource} />
+          <AvatarImage src={post.avatarUrl} />
           <div className="h-full w-full absolute inset-0 hover:bg-black/40" />
           <AvatarFallback>ED</AvatarFallback>
         </Avatar>
