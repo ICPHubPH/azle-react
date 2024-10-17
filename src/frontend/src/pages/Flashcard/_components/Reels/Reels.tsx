@@ -31,14 +31,16 @@ function Reels({ cards, redoCards }: ReelsProps) {
   }, [redo, redoCards]);
 
   return (
-    <div className={`select-none ${styles.app}`}>
-      <div className={styles.cards}>
+    <div className={`select-none flex flex-1 ${styles.app}`}>
+      <div
+        className={`p-0 md:p-10 container-page overflow-scroll snap-y snap-mandatory py-0 sm:py-2 cards ${styles.cards}`}
+      >
         {!cards.length && !redoCards.length ? (
           <div
             className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
           >
             <p className="text-base ">There are no cards to display.</p>
-            <Button className="mt-5 bg-white text-black font-black text-base lg:text-lg hover:brightness-200 active:scale-90 ease-in-out duration-150">
+            <Button className="mt-5 bg-background text-foregrount font-black text-base lg:text-lg hover:brightness-200 active:scale-90 ease-in-out duration-150">
               Create cards
             </Button>
           </div>
@@ -69,7 +71,7 @@ function Reels({ cards, redoCards }: ReelsProps) {
               <p className="text-base">You reached the end of Subject!</p>
               <Button
                 size="icon"
-                className="bg-white text-black hover:brightness-200 active:scale-90 ease-in-out duration-150 mt-5"
+                className="bg-background text-foreground hover:brightness-200 active:scale-90 ease-in-out duration-150 mt-5"
               >
                 <HiArrowLongLeft className="h-4 w-4" />
               </Button>

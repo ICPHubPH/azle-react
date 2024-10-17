@@ -13,6 +13,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+import { TrackPreviousIcon } from "@radix-ui/react-icons";
+import { ArrowLeft } from "lucide-react";
 // import { FormInputIcon } from "lucide-react";
 
 const formSchema = z.object({
@@ -46,15 +49,17 @@ function Signup() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-3rem)] grid place-items-center">
+    <div className="flex items-center justify-center h-full w-full relative">
+      {/* //TODO: Pakihanap nalang actual size */}
+      <Button asChild className="fixed top-5 left-5">
+        <Link to="/"> <span><ArrowLeft size={15}/> </span>Back</Link>
+      </Button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="p-8 rounded-lg min-w-[300px] shadow-[0px_1px_3px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
+          className="bg-background p-8 rounded-lg min-w-[300px] shadow-[0px_2px_4px_rgba(0,0,0,0.02),_0px_0px_0px_1.5px_rgba(27,31,35,0.15)]"
         >
-          <h1 className="text-2xl font-bold font-mono text-center mb-5">
-            Sign up
-          </h1>
+          <h1 className="text-2xl font-bold text-center mb-5">Sign up</h1>
 
           <FormField
             control={form.control}
@@ -106,8 +111,19 @@ function Signup() {
               </FormItem>
             )}
           />
-          <div className="flex flex-end mt-5">
-            <Button type="submit">Submit</Button>
+          <div className="flex flex-end mt-5 justify-between">
+            <Button
+              className="font-bold"
+              type="submit"
+            >
+              Submit
+            </Button>
+            <Link
+              to="/login"
+              className="bg-secondary text-foreground"
+            >
+              <Button variant={"outline"}>Log in</Button>
+            </Link>
           </div>
         </form>
       </Form>

@@ -12,11 +12,10 @@ html {
 .cards {
   position: relative;
   height: 100%;
-  background-color: white;
   width: 100%;
   overflow: scroll;
   scroll-snap-type: y mandatory;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
 .cards::-webkit-scrollbar {
@@ -44,12 +43,10 @@ html {
   height: 100%;
   max-width: calc(70vh - 54px);
   margin: 0 auto;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .last-card {
-  background-color: rgb(0, 0, 0);
-  color: white;
   font-family: "Cabinet Grotesk", sans-serif;
 }
 
