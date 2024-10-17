@@ -2,15 +2,17 @@ import * as bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { VerificationCode } from "Database/entities/verification-code";
 import { Request, Response } from "express";
-import { generateOTP, getCanisterLink } from "Helpers/helpers";
+import { generateOTP } from "Helpers/helpers";
 import { signToken, verifyToken } from "Helpers/jwt";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { loginSchema, registerSchema } from "Helpers/zod-schemas";
-import { IsNull } from "typeorm";
+import { IsNull, MoreThanOrEqual } from "typeorm";
 import {
   httpResponseError,
   httpResponseSuccess,
 } from "../../../utils/response";
+import crypto, { verify } from "crypto";
+import { date } from "zod";
 
 export default class AuthController {
   static async register(request: Request, response: Response) {
@@ -34,7 +36,6 @@ export default class AuthController {
         );
       }
 
-
       const user = new User();
       user.name = data?.name;
       user.email = data?.email;
@@ -43,11 +44,15 @@ export default class AuthController {
       await User.save(user);
 
       const otp = await generateOTP(6);
+      const token = crypto.randomBytes(32).toString("hex");
+      const hashedToken = await bcryptjs.hash(token, 5);
+      const hashedOtp = await bcryptjs.hash(otp, 5);
 
       await VerificationCode.insert({
-        code: otp,
+        code: hashedOtp,
         expiresAt: new Date(Date.now() + 10 * 60 * 1000),
         user: user,
+        token: hashedToken,
       });
 
       const emailMessage: EmailMessage = {
@@ -55,7 +60,7 @@ export default class AuthController {
           name: user.name,
           intro: [
             "Welcome to ConnectED",
-            `We\'re very excited to have you on board. Here is your One-Time Password (OTP) for account verification: `,
+            `Here is your One-Time Password (OTP) for account verification: `,
             `<h1 style="color: blue">${otp}<h1/>`,
           ],
           outro:
@@ -69,7 +74,11 @@ export default class AuthController {
         "[ConnectED] Your One-Time Password"
       );
 
-      httpResponseSuccess(response, { user }, "Please verify your email");
+      httpResponseSuccess(
+        response,
+        { user, token },
+        "Please verify your email"
+      );
     } catch (error: any) {
       console.log("ln76", error);
       httpResponseError(response, null, "Internal server error!", 500);
@@ -133,6 +142,106 @@ export default class AuthController {
     }
   }
 
+  static async verifyFromRegister(request: Request, response: Response) {
+    try {
+      const { token, otp, email } = request.body;
+
+      if (!token || !otp || !email) {
+        return httpResponseError(
+          response,
+          null,
+          "Missing required fields",
+          400
+        );
+      }
+
+      const user = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (!user) {
+        return httpResponseError(response, null, "User not found", 404);
+      }
+
+      const verificationCode = await VerificationCode.findOne({
+        where: {
+          user: {
+            id: user.id,
+          },
+        },
+      });
+
+      if (!verificationCode) {
+        return httpResponseError(
+          response,
+          null,
+          "Verification code not found",
+          404
+        );
+      }
+
+      const isOtpExpired =
+        new Date(verificationCode?.expiresAt as Date) < new Date();
+
+      if (isOtpExpired) {
+        return httpResponseError(
+          response,
+          null,
+          "Verification code expired",
+          400
+        );
+      }
+
+      const isOtpEqual = await bcryptjs.compare(
+        otp,
+        verificationCode?.code as string
+      );
+
+      if (!isOtpEqual) {
+        return httpResponseError(
+          response,
+          null,
+          "Invalid verification code",
+          400
+        );
+      }
+
+      const isTokenEqual = await bcryptjs.compare(
+        token,
+        verificationCode?.token as string
+      );
+
+      if (!isTokenEqual) {
+        return httpResponseError(response, null, "Invalid token", 400);
+      }
+
+      user.emailVerifiedAt = new Date();
+      await VerificationCode.delete(verificationCode.id);
+      await User.save(user);
+
+      const jsonData = await signToken({ id: user.id }, "7d");
+
+      if (!jsonData.data) {
+        return httpResponseError(
+          response,
+          null,
+          "Internal server error. Failed to sign token.",
+          500
+        );
+      }
+
+      return httpResponseSuccess(
+        response,
+        { user, accessToken: jsonData.data.token },
+        "Email verified"
+      );
+    } catch (error) {
+      return httpResponseError(response, null, "Internal server error!", 500);
+    }
+  }
+
   static async login(request: Request, response: Response) {
     try {
       const { data, success, error } = loginSchema.safeParse(request.body);
@@ -147,21 +256,12 @@ export default class AuthController {
 
       const user = await User.findOneBy({
         email: data.email,
-        archivedAt: IsNull(),
       });
 
       if (!user) {
         return response.status(400).json({
           status: 0,
           message: "Invalid email!",
-        });
-      }
-
-      if (!user.emailVerifiedAt) {
-        return response.status(403).json({
-          status: 0,
-          message: "Please verify your email!",
-          otp: true,
         });
       }
 
