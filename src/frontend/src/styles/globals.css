@@ -66,6 +66,9 @@
     @apply bg-background text-foreground;
     font-family: "Cabinet Grotesk", sans-serif;
   }
+  .container-page {
+    @apply p-0 md:p-10 md:rounded-tl-2xl  relative h-full w-full  py-0 sm:py-2 bg-background;
+  }
 }
 
 /* Uncomment this for outline*/

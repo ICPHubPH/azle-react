@@ -17,9 +17,6 @@ interface ReelsProps {
 }
 
 function Reels({ cards, redoCards }: ReelsProps) {
-  const nonCard =
-    "relative w-full h-full scroll-snap-start flex items-center text-center justify-center text-[1.2rem] shrink-0 gap-4 pt-6 px-4 max-w-[calc(70vh-54px)] mx-auto mt-8 bg-black text-white font-['Cabinet_Grotesk'] leading-[0.8] rounded-xl shadow-lg flex flex-col";
-
   const [redo, setRedo] = useState<boolean>(false);
   const firstRedoCardRef = useRef<HTMLDivElement>(null);
 
@@ -34,16 +31,16 @@ function Reels({ cards, redoCards }: ReelsProps) {
   }, [redo, redoCards]);
 
   return (
-    <div className={`bg-background select-none flex flex-1 ${styles.app}`}>
+    <div className={`select-none flex flex-1 ${styles.app}`}>
       <div
-        className={`p-0 md:p-10 relative h-full w-full overflow-scroll snap-y snap-mandatory py-0 sm:py-2 ${styles.cards}`}
+        className={`p-0 md:p-10 container-page overflow-scroll snap-y snap-mandatory py-0 sm:py-2 cards ${styles.cards}`}
       >
         {!cards.length && !redoCards.length ? (
           <div
             className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
           >
             <p className="text-base ">There are no cards to display.</p>
-            <Button className="mt-5 bg-white text-black font-black text-base lg:text-lg hover:brightness-200 active:scale-90 ease-in-out duration-150">
+            <Button className="mt-5 bg-background text-foregrount font-black text-base lg:text-lg hover:brightness-200 active:scale-90 ease-in-out duration-150">
               Create cards
             </Button>
           </div>
@@ -65,14 +62,16 @@ function Reels({ cards, redoCards }: ReelsProps) {
               )
             )}
 
-            <div className={`${styles["last-card"]} ${styles["empty-cards"]} `}>
+            <div
+              className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
+            >
               <h1 className="text-xl sm:text-3xl lg:text-4xl">
                 Congratulations!
               </h1>{" "}
               <p className="text-base">You reached the end of Subject!</p>
               <Button
                 size="icon"
-                className="bg-white text-black hover:brightness-200 active:scale-90 ease-in-out duration-150 mt-5"
+                className="bg-background text-foreground hover:brightness-200 active:scale-90 ease-in-out duration-150 mt-5"
               >
                 <HiArrowLongLeft className="h-4 w-4" />
               </Button>
@@ -91,7 +90,7 @@ function Reels({ cards, redoCards }: ReelsProps) {
             ))}
 
             <div
-              className={`${styles["last-card"]} ${styles["empty-cards"]} ${nonCard}`}
+              className={`${styles["last-card"]} ${styles["empty-cards"]} flex flex-col`}
             >
               <h1 className="text-xl sm:text-3xl lg:text-4xl">
                 Congratulations!
@@ -104,14 +103,7 @@ function Reels({ cards, redoCards }: ReelsProps) {
                 >
                   Redo Cards
                 </Button>
-              ) : (
-                <Button
-                  size="icon"
-                  className="bg-white text-black hover:brightness-200 active:scale-90 ease-in-out duration-150 mt-5"
-                >
-                  <HiArrowLongLeft className="h-4 w-4" />
-                </Button>
-              )}
+              ) : null}
             </div>
           </>
         )}

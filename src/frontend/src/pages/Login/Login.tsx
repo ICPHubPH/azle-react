@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 // import { FormInputIcon } from "lucide-react";
 
 const formSchema = z.object({
@@ -43,7 +44,11 @@ function Login() {
   }
 
   return (
-    <div className="bg-primary-foreground flex items-center justify-center h-full w-full">
+    <div className="flex items-center justify-center h-full w-full relative">
+      {/* //TODO: Pakihanap nalang actual size */}
+      <Button asChild className="fixed top-5 left-5">
+        <Link to="/"> <span><ArrowLeft size={15}/> </span>Back</Link>
+      </Button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

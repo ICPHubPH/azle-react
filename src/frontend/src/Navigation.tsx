@@ -1,11 +1,9 @@
-"use client";
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
   IconCards,
   IconSettings,
-  IconUserBolt,
   IconHome2,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
@@ -17,8 +15,23 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
   const links = [
     {
       label: "Classes",
-      href: "/decks",
+      href: "/deckshome",
       icon: (
+        <IconHome2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Flashcards",
+      href: "/flashcards",
+      icon: (
+        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Tokki Decks",
+      href: "/deck",
+      icon: (
+        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
         <IconCards className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
@@ -76,7 +89,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
             <SidebarLink
               link={{
                 label: "FirstName LastName",
-                href: "#",
+                href: "/profile",
                 icon: (
                   <img
                     src="https://assets.aceternity.com/manu.png"
@@ -100,6 +113,11 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
 
 export const Logo = () => {
   return (
+    <>
+      <Link
+        to="/"
+        className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+      >
     <div className="flex justify-between">
       <div className="cursor-pointer font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
         <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
@@ -121,7 +139,7 @@ export const Logo = () => {
 export const LogoIcon = () => {
   return (
     <Link
-      to="#"
+      to="/"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
       <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
