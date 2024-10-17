@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,13 +13,15 @@ import { User } from "./user";
 @Entity({
   name: "verificationCodes",
 })
-
 export class VerificationCode extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ nullable: true, type: "varchar", length: "6" })
   code: string;
+
+  @Column({ nullable: true, type: "varchar" })
+  token: string;
 
   @Column({ nullable: true, type: "datetime" })
   expiresAt: Date | null;
@@ -30,5 +33,6 @@ export class VerificationCode extends BaseEntity {
   updatedAt: Date;
 
   @OneToOne(() => User, (user) => user.verificationCode)
+  @JoinColumn({ name: "userId" })
   user: User;
 }

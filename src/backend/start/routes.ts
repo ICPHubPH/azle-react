@@ -25,6 +25,7 @@ Route.post("/configuration/delete", ApisController.delete_configuration);
 Route.post("/auth/register", AuthController.register);
 Route.post("/auth/login", AuthController.login);
 Route.post("/auth/verify", AuthController.verify);
+Route.post('/auth/verify-register', AuthController.verifyFromRegister)
 
 Route.get("/users/:id", UserController.findById);
 Route.get("/users", Pagination.paginate, UserController.getAll);
