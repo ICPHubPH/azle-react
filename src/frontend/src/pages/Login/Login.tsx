@@ -27,8 +27,6 @@ const formSchema = z.object({
 });
 
 function Login() {
-  const [greeting, setGreeting] = useState("");
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,10 +35,26 @@ function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { email, password } = values;
 
-    console.log(values);
+    const url = `${import.meta.env.VITE_CANISTER_URL}/app/login`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_email: email, user_password: password }),
+    });
+    const data = await response.json();
+
+    if (data.status === 200) {
+      console.log("Login successful!");
+    } 
+
+    console.log("Data:", data);
+    console.log("Values:", values);
   }
 
   return (
@@ -57,6 +71,8 @@ function Login() {
           </span>
           Back
         </Link>
+      <Button asChild className="fixed top-5 left-5">
+        <Link to="/"> <span><ArrowLeft size={15} /> </span>Back</Link>
       </Button>
       <Form {...form}>
         <form

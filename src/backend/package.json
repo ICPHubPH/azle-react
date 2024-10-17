@@ -4,13 +4,31 @@
     "private": true,
     "type": "module",
     "dependencies": {
+        "argon2": "^0.41.1",
         "azle": "^0.21.1",
+        "bcrypt": "^5.1.1",
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.7",
+        "crypto": "^1.0.1",
         "express": "^4.19.2",
+        "express-session": "^1.18.1",
+        "express-validator": "^7.2.0",
+        "passport": "^0.7.0",
+        "passport-local": "^1.0.0",
         "sql.js": "^1.10.3",
         "typeorm": "^0.3.20"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
+        "@types/bcryptjs": "^2.4.6",
         "@types/express": "^4.17.21",
         "@types/sql.js": "^1.4.9"
+    },
+    "ts-node": {
+        "transpileOnly": true,
+        "files": true,
+        "compilerOptions": {
+            "module": "commonjs"
+        }
     }
 }
