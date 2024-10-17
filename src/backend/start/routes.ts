@@ -75,10 +75,15 @@ Route.post('/feedbacks/:id/remove', AuthMiddleware.authorize, FeedbackController
 
 Route.post('/protected/users/:id/archive', AuthMiddleware.authorize, AdminController.archiveUserById);
 Route.post('/protected/users/:id/unarchive', AuthMiddleware.authorize, AdminController.unarchiveUserById);
+Route.post('/protected/archived-users', Pagination.paginate, AuthMiddleware.authorize, AdminController.getArchivedUsers);
+Route.post('/protected/non-verified-users', Pagination.paginate, AuthMiddleware.authorize, AdminController.getNonVerifiedUsers);
+
 Route.post('/protected/posts/:id/archive', AuthMiddleware.authorize, AdminController.archivePostById);
 Route.post('/protected/posts/:id/unarchive', AuthMiddleware.authorize, 
     AdminController.unarchivePostById);
+
 Route.post('/protected/providers/:id/verify', AuthMiddleware.authorize, AdminController.verifyProvider);
+Route.post('/protected/non-verified-providers', Pagination.paginate, AuthMiddleware.authorize, AdminController.getNonVerifiedProviders);
 
 export { Route as routes };
 
