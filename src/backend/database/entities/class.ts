@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, BaseEntity, OneToMany, ManyToOne, JoinTable } from "typeorm";
 import { User } from "./user";
 import { Deck } from "./deck";
 
@@ -16,9 +16,13 @@ export class Class extends BaseEntity {
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   class_createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.classes, { eager: true })
-  user: User;
+  @ManyToOne(() => User, (user) => user.classes)
+  class_owner: User;
+
+  @ManyToMany(() => User, (user) => user.classes)
+  @JoinTable()
+  class_members: User[];
 
   @OneToMany(() => Deck, (deck) => deck.classEntities)
-  decks: Deck[];
+  class_decks: Deck[];
 }

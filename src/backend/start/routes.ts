@@ -1,6 +1,7 @@
 import CardController from 'App/Controllers/Http/CardController';
 import UserController from 'App/Controllers/Http/UserController';
 import DeckController from 'App/Controllers/Http/DeckController';
+import ClassController from 'App/Controllers/Http/ClassController';
 import { Router } from 'express';
 const Route = Router();
 
@@ -37,5 +38,12 @@ Route.get('/app/get_deck/:id', DeckController.get_deck);
 Route.post('/app/create_deck', DeckController.create_deck);
 Route.post('/app/update_deck/:id', DeckController.update_deck);
 Route.post('/app/delete_deck/:id', DeckController.delete_deck);
+
+/* Class */
+Route.get('/app/:user_id/classes', ClassController.classes);
+Route.get('/app/get_class/:class_id', ClassController.get_class);
+Route.post('/app/create_class', ClassController.create_class);
+Route.post('/app/update_class/:class_id', ClassController.update_class);
+Route.post('/app/delete_class/:class_id', ClassController.delete_class);
 
 export { Route as routes };

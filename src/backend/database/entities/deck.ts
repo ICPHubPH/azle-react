@@ -20,8 +20,8 @@ export class Deck extends BaseEntity {
   @ManyToOne(() => User, (user) => user.decks, { eager: true })
   user: User;
 
-  @ManyToMany(() => Class, (classEntity) => classEntity.decks)
-  @JoinTable()  // This creates the linking table for many-to-many
+  @ManyToMany(() => Class, (classEntities) => classEntities.class_decks)
+  @JoinTable() 
   classEntities: Class[];
 
   @OneToMany(() => Card, (card) => card.deck)

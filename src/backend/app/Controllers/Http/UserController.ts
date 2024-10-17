@@ -37,38 +37,36 @@ export default class UserController {
     static async create_user(request: Request, response: Response){
         let { user_name, user_username, user_email, user_password } = request.body;
 
-        const checkIfExist = await User.findBy({ user_username });
-        // checheck muna kung existing para hindi magkaduplicates
-        console.log(checkIfExist);
+        try {
+            const checkIfExist = await User.findOneBy({ user_username });
         
-        if (Array.isArray(checkIfExist) && checkIfExist.length > 0) {
-            response.status(400);
-            return response.json({
-                status: 400,
-                message: "Username already exists!"
-            });
+            if (checkIfExist) {
+                response.status(400);
+                return response.json({
+                    status: 400,
+                    message: "Username already exists!"
+                });
+            }
+            // console.log("out");
+            // try {
+            //     const hashedPassword = await hashPassword(user_password);
+            //     console.log("Hashed password:", hashedPassword);
+            // } catch (error) {
+            // console.error("Error in hashPassword:", error);
+            // }
+            // console.log("in");
+            const user = new User();
+            user.user_name = user_name;
+            user.user_username = user_username;
+            user.user_email = user_email;
+            user.user_password = user_password;
+            user.classes = [];
+
+            await User.insert(user);    
+            return response.status(200).json({message: "User has been created!"});
+        } catch (error) {
+            return response.status(400).json({message: "Error in creating the user.", error});
         }
-        // console.log("out");
-        // try {
-        //     const hashedPassword = await hashPassword(user_password);
-        //     console.log("Hashed password:", hashedPassword);
-        // } catch (error) {
-        // console.error("Error in hashPassword:", error);
-        // }
-        // console.log("in");
-
-        //iinsert na kapag ok na
-        await User.insert({
-            user_name,
-            user_username,
-            user_email,
-            user_password
-        });    
-
-        return response.json({
-            status: 200,
-            message: "User has been created!",
-        });
     }
 
     static async update_user(request: Request, response: Response){
