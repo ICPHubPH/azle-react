@@ -1,4 +1,4 @@
-import { hashPassword } from "App/utils/helpers";
+import { generatePasswordHash } from "App/utils/helpers";
 import { User } from "Database/entities/user";
 import { Response, Request } from "express";
 
@@ -46,7 +46,7 @@ export default class UserController {
       const user = new User();
       user.user_username = user_username;
       user.user_email = user_email;
-      user.user_password = user_password;
+      user.user_password = await generatePasswordHash(user_password).hash; 
       user.classes = [];
 
       await User.insert(user);
@@ -72,7 +72,7 @@ export default class UserController {
     }
     // if nageexist, iuupdate na nya yung value
 
-    // user_password = hashPassword(user_password);
+    user_password = generatePasswordHash(user_password).hash;
 
     await User.update(
       { user_id },
