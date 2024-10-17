@@ -1,9 +1,8 @@
 import * as bcryptjs from "bcryptjs";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
-import { loginSchema, registerSchema } from "Helpers/zod-schemas";
 import { signToken } from "Helpers/jwt";
-import { xFetch } from "Helpers/x-fetch";
+import { loginSchema, registerSchema } from "Helpers/zod-schemas";
 
 export default class AuthController {
   static async register(request: Request, response: Response) {
