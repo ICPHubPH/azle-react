@@ -100,11 +100,55 @@ export const legitCreds = [
   },
 ];
 
+interface UserInterface {
+  avatarUrl: string | null;
+  bannerUrl: string | null;
+  validIdUrl: string | null;
+  name: string;
+  organizationName: string | null;
+  bio: string | null;
+  email: string;
+  emailVerifiedAt: string | null;
+  providerVerifiedAt: string | null;
+  role: string;
+  type: string | null;
+  createdAt: string;
+  updatedAt: string;
+  archivedAt: string | null;
+}
+
+interface PostInterface {
+  thumbnail: string | null;
+  title: string;
+  type: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  archivedAt: string | null;
+  user: User;
+}
+
+interface FeedbackInterface {
+  rate: number;
+  content: string | null;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+  post: Post;
+}
+
+interface BookmarkInterface {
+  user: User;
+  post: Post;
+  createdAt: string;
+  updatedAt: string;
+}
+
 faker.setDefaultRefDate("2024-10-17T00:00:00.000Z");
 
 export const userSeeds = (count: number, role: "student" | "provider") => {
   const generatedEmails = new Set();
-  const seeds = Array.from({ length: count }, () => {
+  const seeds = Array.from({ length: count }, (): UserInterface => {
     let email;
     do {
       email = faker.internet.email();
@@ -125,6 +169,9 @@ export const userSeeds = (count: number, role: "student" | "provider") => {
       emailVerifiedAt: faker.date.recent().toISOString(),
       archivedAt: null,
       type: role === "student" ? null : faker.helpers.arrayElement(UserTypes),
+      validIdUrl: role === "student" ? null : faker.image.url(),
+      providerVerifiedAt:
+        role === "provider" ? faker.date.past().toISOString() : null,
     };
   });
 
@@ -138,7 +185,7 @@ export const postSeeds = async (count: number) => {
     },
   });
 
-  const seeds = Array.from({ length: count }, () => {
+  const seeds = Array.from({ length: count }, (): PostInterface => {
     const randomProvider = faker.helpers.arrayElement(providers);
 
     return {
@@ -149,6 +196,7 @@ export const postSeeds = async (count: number) => {
       createdAt: faker.date.past().toISOString(),
       updatedAt: faker.date.recent().toISOString(),
       user: randomProvider,
+      archivedAt: count % 6 == 0 ? faker.date.recent().toISOString() : null,
     };
   });
 
@@ -159,7 +207,7 @@ export const feedbackSeeds = async (count: number) => {
   const posts = await Post.find();
   const users = await User.find();
 
-  const seeds = Array.from({ length: count }, () => {
+  const seeds = Array.from({ length: count }, (): FeedbackInterface => {
     const randomPost = faker.helpers.arrayElement(posts);
     const randomUser = faker.helpers.arrayElement(users);
 
@@ -181,7 +229,7 @@ export const bookmarkSeeds = async (count: number) => {
   const posts = await Post.find();
   const users = await User.find({ where: { role: "student" } });
 
-  const seeds = Array.from({ length: count }, () => {
+  const seeds = Array.from({ length: count }, (): BookmarkInterface => {
     let randomPost, randomUser, bookmarkId;
 
     // Keep generating until we get a unique bookmarkId
@@ -204,4 +252,3 @@ export const bookmarkSeeds = async (count: number) => {
 
   return seeds;
 };
-
