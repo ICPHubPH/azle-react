@@ -12,7 +12,6 @@ export interface User {
   archivedAt?: string;
   createdAt: string;
   updatedAt: string;
-  archivedAt?: string;
   providerVerfiedAt?:string
 }
 
