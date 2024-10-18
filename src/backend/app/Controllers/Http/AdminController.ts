@@ -50,43 +50,30 @@ export default class AdminController {
       const currentUser = await User.findOneBy({ id: request.user });
 
       if (!currentUser) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       if (currentUser.role != "admin") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Forbidden", 403);
       }
 
       const id = request.params.id;
       const user = await User.findOneBy({ id });
 
       if (!user) {
-        return response.status(404).json({
-          status: 0,
-          message: "User not found!",
-        });
+        return httpResponseError(response, null, "User not found", 404);
       }
 
-      if (user.archivedAt) {
-        user.archivedAt = null;
-        user.save();
+      if (!user.archivedAt) {
+        return httpResponseError(response, null, "User is not archived", 400);
       }
 
-      return response.status(500).json({
-        status: 0,
-        message: "User archived.",
-      });
+      user.archivedAt = null;
+      user.save();
+
+      httpResponseSuccess(response, null, "User unarchived");
     } catch (error) {
-      return response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
