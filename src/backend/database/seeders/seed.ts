@@ -1,4 +1,6 @@
 import { faker } from "@faker-js/faker";
+import { User } from "Database/entities/user";
+import { PostCategoryType } from "../../constants";
 export const legitCreds = [
   {
     avatarUrl:
@@ -65,18 +67,49 @@ export const legitCreds = [
     emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
+  {
+    avatar:
+      "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA3FC",
+    bannerUrl:
+      "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/449449169_447660674809391_692585298774003021_n.jpg?stp=dst-jpg_s960x960&_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFJuJzTCK2Z3odEydsAr1rJYsTexpZPKg1ixN7Glk8qDUu7Q_JCZVw9d4nKgEdy7qKBB_sO2fVWhHEqMiOUNG6T&_nc_ohc=6XaoIN0GI9QQ7kNvgFOZeVG&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=ADYuKfczXQ9LMZkCMLdcZYi&oh=00_AYCeJ0aQh1azc6a-sLBpIsX9rmd4RsjmKNYQ5H9-BVKnww&oe=670F870B",
+    name: "La Verdad Christian College, Inc. - Caloocan",
+    bio: "Wisdom based on the truth is priceless.",
+    email: "admission.caloocan@laverdad.edu.ph",
+    role: "provider",
+    organizationName: "La Verdad Christian College, Inc. - Caloocan",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatar:
+      "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
+    bannerUrl:
+      "https://scontent.fcrk4-2.fna.fbcdn.net/v/t39.30808-6/462693785_572297352034208_4072350988270131867_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFxBIb5Ks6pVotefQzSmLg2vtFEeWRvEfG-0UR5ZG8R8UKS6JjidRPX9j7J9h9xwYhQdTNurlH26M6MCoMhw-9i&_nc_ohc=PHe0jc1YwpoQ7kNvgFGQUBI&_nc_zt=23&_nc_ht=scontent.fcrk4-2.fna&_nc_gid=AsqXPYjBH7H6yMKrcvnDH9x&oh=00_AYDyB5P75ExnxfKLuvVtJztyx3M2aJTRK343Pl9kJny8Og&oe=670FADBD",
+    name: "La Verdad Christian College, Inc. - Apalit, Pampanga",
+    bio: "Wisdom based on the truth is priceless.",
+    email: "info@laverdad.edu.ph",
+    role: "provider",
+    organizationName: "La Verdad Christian College, Inc. - Apalit, Pampanga",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
 ];
 
+faker.setDefaultRefDate("2024-10-17T00:00:00.000Z");
+
 export const userSeeds = (count: number, role: "student" | "provider") => {
-  faker.setDefaultRefDate("2024-10-17T00:00:00.000Z");
-  const generatedEmails = new Set(); // To store unique emails
+  const generatedEmails = new Set();
   const seeds = Array.from({ length: count }, () => {
     let email;
     do {
-      email = faker.internet.email(); // Generate a new email
-    } while (generatedEmails.has(email)); // Check if email already exists
+      email = faker.internet.email();
+    } while (generatedEmails.has(email));
 
-    generatedEmails.add(email); // Add email to the set
+    generatedEmails.add(email);
 
     return {
       avatarUrl: faker.image.avatar(),
@@ -84,7 +117,7 @@ export const userSeeds = (count: number, role: "student" | "provider") => {
       name: faker.person.fullName(),
       organizationName: role === "student" ? null : faker.company.name(),
       bio: faker.lorem.sentence(),
-      email: email, // Unique email
+      email: email,
       role,
       createdAt: faker.date.past().toISOString(),
       updatedAt: faker.date.recent().toISOString(),
@@ -94,4 +127,28 @@ export const userSeeds = (count: number, role: "student" | "provider") => {
   });
 
   return [...seeds, ...legitCreds];
+};
+
+export const postSeeds = async (count: number) => {
+  const providers = await User.find({
+    where: {
+      role: "provider",
+    },
+  });
+
+  const seeds = Array.from({ length: count }, () => {
+    const randomProvider = faker.helpers.arrayElement(providers);
+
+    return {
+      thumbnail: faker.image.url(),
+      title: faker.lorem.words(),
+      type: faker.helpers.arrayElement(PostCategoryType),
+      content: faker.lorem.paragraphs(),
+      createdAt: faker.date.past().toISOString(),
+      updatedAt: faker.date.recent().toISOString(),
+      user: randomProvider,
+    };
+  });
+
+  return seeds;
 };
