@@ -7,7 +7,7 @@ export type DatabaseOptions = {
   storage: DatabaseStorageInterface;
   migrations?: MixedList<string | Function>;
   entities?: MixedList<string | Function | EntitySchema<any>>;
-  sincronize?: boolean;
+  synchronize?: boolean;
   migrationsRun?: boolean;
   logging?: boolean;
   logger?: 'advanced-console' | 'simple-console' | 'file' | 'debug' | Logger | undefined;
@@ -31,7 +31,7 @@ export class Database {
       // TODO: may I get this from the options?
       driver: await initSqlJs({}),
       database: bytes,
-      synchronize: this.options.sincronize,
+      synchronize: this.options.synchronize,
       entities: this.options.entities,
       migrations: this.options.migrations,
       migrationsRun: this.options.migrationsRun,
@@ -46,7 +46,7 @@ export class Database {
 
   public async init() {
     try {
-      this.options.sincronize = true;
+      this.options.synchronize = true;
       this.dataSource = await this.connect(Uint8Array.from([]));
     } catch (error) {
       console.error('Error initializing database:', error);
@@ -59,7 +59,7 @@ export class Database {
       const data = (await this.storage.get()) || Uint8Array.from([]);
 
       if (data.length === 0) {
-        this.options.sincronize = true;
+        this.options.synchronize = true;
         console.log('Empty database found in storage');
       }
 

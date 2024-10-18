@@ -47,7 +47,7 @@ export default function SignIn() {
         <FormField
           control={signInForm.control}
           name="email"
-          render={({ field }) => (
+          render={({ field }: any) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
