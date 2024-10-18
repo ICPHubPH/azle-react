@@ -23,7 +23,7 @@ export const legitCreds = [
     name: "Kurtd Daniel Bigtas",
     bio: "Tech enthusiast and problem solver.",
     email: "kurtddbigtas@gmail.com",
-    role: "student",
+    role: "admin",
     createdAt: "2024-02-15T12:00:00Z",
     updatedAt: "2024-09-15T12:00:00Z",
     emailVerifiedAt: "2024-09-15T12:00:00Z",
@@ -148,32 +148,39 @@ faker.setDefaultRefDate("2024-10-17T00:00:00.000Z");
 
 export const userSeeds = (count: number, role: "student" | "provider") => {
   const generatedEmails = new Set();
-  const seeds = Array.from({ length: count }, (): UserInterface => {
-    let email;
-    do {
-      email = faker.internet.email();
-    } while (generatedEmails.has(email));
+  const seeds = Array.from(
+    { length: count },
+    (index: number): UserInterface => {
+      let email;
+      do {
+        email = faker.internet.email();
+      } while (generatedEmails.has(email));
 
-    generatedEmails.add(email);
+      generatedEmails.add(email);
 
-    return {
-      avatarUrl: faker.image.avatar(),
-      bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
-      name: faker.person.fullName(),
-      organizationName: role === "student" ? null : faker.company.name(),
-      bio: faker.lorem.sentence(),
-      email: email,
-      role,
-      createdAt: faker.date.past().toISOString(),
-      updatedAt: faker.date.recent().toISOString(),
-      emailVerifiedAt: faker.date.recent().toISOString(),
-      archivedAt: null,
-      type: role === "student" ? null : faker.helpers.arrayElement(UserTypes),
-      validIdUrl: role === "student" ? null : faker.image.url(),
-      providerVerifiedAt:
-        role === "provider" ? faker.date.past().toISOString() : null,
-    };
-  });
+      return {
+        avatarUrl: faker.image.avatar(),
+        bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+        name: faker.person.fullName(),
+        organizationName: role === "student" ? null : faker.company.name(),
+        bio: faker.lorem.sentence(),
+        email: email,
+        role,
+        createdAt: faker.date.past().toISOString(),
+        updatedAt: faker.date.recent().toISOString(),
+        emailVerifiedAt: faker.date.recent().toISOString(),
+        archivedAt: null,
+        type: role === "student" ? null : faker.helpers.arrayElement(UserTypes),
+        validIdUrl: role === "student" ? null : faker.image.url(),
+        providerVerifiedAt:
+          role === "provider"
+            ? index % 3 === 0
+              ? faker.date.past().toISOString()
+              : null
+            : null,
+      };
+    }
+  );
 
   return [...seeds, ...legitCreds];
 };
