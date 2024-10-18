@@ -2,12 +2,13 @@ export interface User {
   id: string;
   email: string;
   name?: string;
-  organizationName?: string;
   bio?: string;
   avatarUrl?: string;
   validIdUrl?: string;
   createdAt: string;
   updatedAt: string;
+  archivedAt?: string;
+  providerVerfiedAt?:string
 }
 
 export interface Feedback {
