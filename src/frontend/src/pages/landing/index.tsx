@@ -36,21 +36,27 @@ const Home: React.FC = () => {
             Your Trusted Gateway to Scholarships and Internships.
           </p>
         </BlurFade>
-        
       </div>
       {/* <Separator /> */}
 
       <BlurFade yOffset={50} delay={0.50} duration={0.50} inView>
         <div className="relative flex justify-center items-center w-full h-auto md:w-3/4 md:h-full mx-auto bottom-32">
-          { theme.theme == 'dark' && (
+          { theme.theme == 'dark' ? (
             <img
-            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729225848/landing_page_1st_w9ky9l.png"
+            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729279630/landing_1_epj0sk.png"
             alt="Example Image"
-            className="w-full h-full border-8 rounded-lg"
-          />)
-          }
-          {/* <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent w-full h-full"></div> */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"/>
+            className="w-full h-full border-8 border-b-0 rounded-lg"
+          />) : (
+            <img
+            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729279635/landing_2_fbqyex.png"
+            alt="Example Image"
+            className="w-full h-full border-8 border-b-0 rounded-lg"
+          />)}
+          { theme.theme == 'dark' ? (
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"/>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent"/>
+          )}
         </div>
       </BlurFade>
       <div className="flex flex-col gap-4 items-center container mx-auto">
