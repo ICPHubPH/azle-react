@@ -138,47 +138,47 @@ Route.post(
 
 Route.post(
   "/protected/users/:id/archive",
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.archiveUserById
 );
 Route.post(
   "/protected/users/:id/unarchive",
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.unarchiveUserById
 );
 Route.post(
   "/protected/archived-users",
   Pagination.paginate,
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.getArchivedUsers
 );
 Route.post(
   "/protected/non-verified-users",
   Pagination.paginate,
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.getNonVerifiedUsers
 );
 
 Route.post(
   "/protected/posts/:id/archive",
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.archivePostById
 );
 Route.post(
   "/protected/posts/:id/unarchive",
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.unarchivePostById
 );
 
 Route.post(
   "/protected/providers/:id/verify",
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.verifyProvider
 );
 Route.post(
   "/protected/non-verified-providers",
   Pagination.paginate,
-  AuthMiddleware.authorize,
+  AuthMiddleware.hasAdminAccess,
   AdminController.getNonVerifiedProviders
 );
 

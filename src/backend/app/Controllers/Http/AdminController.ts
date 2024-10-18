@@ -14,11 +14,6 @@ export default class AdminController {
         return httpResponseError(response, null, "Unauthorized", 401);
       }
 
-      // check if user role is admin
-      if (currentUser.role !== "admin") {
-        return httpResponseError(response, null, "Forbidden", 403);
-      }
-
       const id = request.params.id;
       const user = await User.findOneBy({ id });
 
@@ -53,10 +48,6 @@ export default class AdminController {
         return httpResponseError(response, null, "Unauthorized", 401);
       }
 
-      if (currentUser.role != "admin") {
-        return httpResponseError(response, null, "Forbidden", 403);
-      }
-
       const id = request.params.id;
       const user = await User.findOneBy({ id });
 
@@ -83,10 +74,6 @@ export default class AdminController {
 
       if (!user) {
         return httpResponseError(response, null, "Unauthorized", 401);
-      }
-
-      if (user.role != "admin") {
-        return httpResponseError(response, null, "Forbidden", 403);
       }
 
       const id = request.params.id;
@@ -123,11 +110,6 @@ export default class AdminController {
       // check if auth user exists
       if (!currentUser) {
         return httpResponseError(response, null, "Unauthorized", 401);
-      }
-
-      // check if user role is admin
-      if (currentUser.role != "admin") {
-        return httpResponseError(response, null, "Forbidden", 403);
       }
 
       const id = request.params.id;
@@ -199,10 +181,6 @@ export default class AdminController {
         return httpResponseError(response, null, "Unauthorized!", 401);
       }
 
-      if (user.role != "admin") {
-        return httpResponseError(response, null, "Forbidden!", 403);
-      }
-
       const skip = request.skip;
       const take = request.limit;
 
@@ -233,10 +211,6 @@ export default class AdminController {
 
       if (!user) {
         return httpResponseError(response, null, "Unauthorized!", 401);
-      }
-
-      if (user.role != "admin") {
-        return httpResponseError(response, null, "Forbidden!", 403);
       }
 
       const skip = request.skip;
@@ -271,10 +245,6 @@ export default class AdminController {
 
       if (!user) {
         return httpResponseError(response, null, "Unauthorized!", 401);
-      }
-
-      if (user.role != "admin") {
-        return httpResponseError(response, null, "Forbidden!", 403);
       }
 
       const skip = request.skip;
