@@ -71,6 +71,7 @@ function Login() {
           </span>
           Back
         </Link>
+      </Button>
       <Button asChild className="fixed top-5 left-5">
         <Link to="/"> <span><ArrowLeft size={15} /> </span>Back</Link>
       </Button>

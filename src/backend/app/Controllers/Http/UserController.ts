@@ -139,20 +139,20 @@ export default class UserController {
       console.log(user.user_password);
       console.log(user.user_salt);
 
-      const isMatch = await verifyPassword(user_password, user.user_password, user.user_salt);
+      const isMatch = verifyPassword(user_password, user.user_password, user.user_salt);
 
-      // if (!isMatch) {
-      //   return response.status(400).json({
-      //     status: 400,
-      //     message: "Invalid password!",
-      //   });
-      // }
+      if (!isMatch) {
+        return response.status(400).json({
+          status: 400,
+          message: "Invalid password!",
+        });
+      }
 
-      // return response.status(200).json({
-      //   status: 200,
-      //   message: "Login successful!",
-      // });
-      return response.status(200).json({status: 200,message: isMatch});
+      return response.status(200).json({
+        status: 200,
+        message: "Login successful!",
+      });
+      
     } catch (error) {
       return response.status(400).json({ message: "Error in login", error: error });
     }

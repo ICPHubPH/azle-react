@@ -28,7 +28,7 @@ const FrontPage = () => {
   return (
     <div className="min-h-screen ">
       <nav className="w-full py-4 flex gap-4 items-center px-8 bg-card">
-        <div className="text-xl font-bold text-card-foreground">Event++</div>
+        <div className="text-xl font-bold text-card-foreground">TokCards</div>
         <div className="space-x-4">
           {isSignedIn ? (
             <>
@@ -62,12 +62,10 @@ const FrontPage = () => {
         <br />
         <br />
         <h1 className="text-5xl font-bold mb-4">
-          One Tool for Managing All Your Events
+          Lorem ipsum dolor, sit amet consectetur 
         </h1>
         <p className="text-lg mb-8 max-w-2xl">
-          Event++ enables you to effortlessly organize and manage your college
-          events with role-based access control, ensuring everyone stays on
-          track.
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate placeat deserunt et at ipsa assumenda optio enim dignissimos quam dolorem consectetur harum, asperiores quis fugiat praesentium labore deleniti alias delectus.
         </p>
         <div className="flex space-x-4">
           {isSignedIn ? (
@@ -79,10 +77,10 @@ const FrontPage = () => {
             </Button>
           ) : (
             <Button
-              variant={"outline"}
+              variant={"default"}
               asChild
             >
-              <Link to="/login">Login</Link>
+              <Link to="/signup">Get Started</Link>
             </Button>
           )}
         </div>
