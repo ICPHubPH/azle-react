@@ -17,10 +17,8 @@ export default function PostSection() {
     createdAt: "2024-02-11T07:24:44.603Z",
     user: {
       id: 17,
-      avatarUrl: null,
       bannerUrl:
         "https://scontent.fcrk4-2.fna.fbcdn.net/v/t39.30808-6/462693785_572297352034208_4072350988270131867_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFxBIb5Ks6pVotefQzSmLg2vtFEeWRvEfG-0UR5ZG8R8UKS6JjidRPX9j7J9h9xwYhQdTNurlH26M6MCoMhw-9i&_nc_ohc=PHe0jc1YwpoQ7kNvgFGQUBI&_nc_zt=23&_nc_ht=scontent.fcrk4-2.fna&_nc_gid=AsqXPYjBH7H6yMKrcvnDH9x&oh=00_AYDyB5P75ExnxfKLuvVtJztyx3M2aJTRK343Pl9kJny8Og&oe=670FADBD",
-      validIdUrl: null,
       name: "La Verdad Christian College, Inc. - Apalit, Pampanga",
       organizationName: "La Verdad Christian College, Inc. - Apalit, Pampanga",
       bio: "Wisdom based on the truth is priceless.",
@@ -44,7 +42,6 @@ export default function PostSection() {
           id: 2,
           avatarUrl: "https://avatars.githubusercontent.com/u/53380626",
           bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
-          validIdUrl: null,
           name: "Gene Schmidt",
           organizationName: null,
           bio: "Solitudo in defluo colligo vomica sophismata cura.",
