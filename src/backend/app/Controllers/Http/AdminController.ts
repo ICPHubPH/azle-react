@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
 
-
 export default class AdminController {
   static async archiveUserById(request: Request, response: Response) {
     try {
@@ -12,49 +11,40 @@ export default class AdminController {
 
       // check if auth user exists
       if (!currentUser) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!"
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       // check if user role is admin
-      if (currentUser.role != "admin") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!"
-        });
+      if (currentUser.role !== "admin") {
+        return httpResponseError(response, null, "Forbidden", 403);
       }
 
       const id = request.params.id;
       const user = await User.findOneBy({ id });
 
-      
       // check if user exists
       if (!user) {
-        return response.status(404).json({
-          status: 0,
-          message: "User not found!"
-        });
+        return httpResponseError(response, null, "User not found", 404);
       }
 
-      if (!user.archivedAt) {
-        user.archivedAt = new Date();
-        user.save();
+      if (user.archivedAt) {
+        return httpResponseError(
+          response,
+          null,
+          "User is already archived",
+          400
+        );
       }
 
-      return response.status(500).json({
-        status: 0,
-        message: "User archived."
-      });
+      user.archivedAt = new Date();
+      user.save();
+
+      httpResponseSuccess(response, null, "User archived");
     } catch (error) {
-      return response.status(500).json({
-        status: 0,
-        message: "Server error"
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
-    
+
   static async unarchiveUserById(request: Request, response: Response) {
     try {
       const currentUser = await User.findOneBy({ id: request.user });
@@ -62,14 +52,14 @@ export default class AdminController {
       if (!currentUser) {
         return response.status(401).json({
           status: 0,
-          message: "Unauthorized!"
+          message: "Unauthorized!",
         });
       }
 
       if (currentUser.role != "admin") {
         return response.status(403).json({
           status: 0,
-          message: "Forbidden!"
+          message: "Forbidden!",
         });
       }
 
@@ -79,7 +69,7 @@ export default class AdminController {
       if (!user) {
         return response.status(404).json({
           status: 0,
-          message: "User not found!"
+          message: "User not found!",
         });
       }
 
@@ -90,12 +80,12 @@ export default class AdminController {
 
       return response.status(500).json({
         status: 0,
-        message: "User archived."
+        message: "User archived.",
       });
     } catch (error) {
       return response.status(500).json({
         status: 0,
-        message: "Server error"
+        message: "Server error",
       });
     }
   }
@@ -107,14 +97,14 @@ export default class AdminController {
       if (!user) {
         return response.status(401).json({
           status: 0,
-          message: "Unauthorized!"
+          message: "Unauthorized!",
         });
       }
 
       if (user.role != "admin") {
         return response.status(403).json({
           status: 0,
-          message: "Forbidden!"
+          message: "Forbidden!",
         });
       }
 
@@ -124,14 +114,14 @@ export default class AdminController {
           id,
           archivedAt: IsNull(),
           providerVerifiedAt: IsNull(),
-          role: "provider"
-        }
+          role: "provider",
+        },
       });
 
       if (!provider) {
         return response.status(404).json({
           status: 0,
-          message: "Provider not found!"
+          message: "Provider not found!",
         });
       }
 
@@ -141,63 +131,62 @@ export default class AdminController {
       return response.status(200).json({
         status: 1,
         data: provider,
-        message: "Provider has been verified!"
+        message: "Provider has been verified!",
       });
     } catch (error) {
       return response.status(500).json({
         status: 0,
         error,
-        message: "Server error"
+        message: "Server error",
       });
     }
   }
 
   static async archivePostById(request: Request, response: Response) {
     try {
-        const currentUser = await User.findOneBy({ id: request.user });
+      const currentUser = await User.findOneBy({ id: request.user });
 
-        // check if auth user exists
-        if (!currentUser) {
-            return response.status(401).json({
-            status: 0,
-            message: "Unauthorized!"
-            });
-        }
-
-        // check if user role is admin
-        if (currentUser.role != "admin") {
-            return response.status(403).json({
-            status: 0,
-            message: "Forbidden!"
-            });
-        }
-
-        const id = request.params.id;
-        const post = await Post.findOneBy({ id });
-
-        
-        // check if post exists
-        if (!post) {
-            return response.status(404).json({
-            status: 0,
-            message: "Post not found!"
-            });
-        }
-
-        if (!post.archivedAt) {
-            post.archivedAt = new Date();
-            post.save();
-        }
-
-        return response.status(201).json({
-            status: 0,
-            message: "Post archived."
+      // check if auth user exists
+      if (!currentUser) {
+        return response.status(401).json({
+          status: 0,
+          message: "Unauthorized!",
         });
-    } catch (error) {
-    return response.status(500).json({
+      }
+
+      // check if user role is admin
+      if (currentUser.role != "admin") {
+        return response.status(403).json({
+          status: 0,
+          message: "Forbidden!",
+        });
+      }
+
+      const id = request.params.id;
+      const post = await Post.findOneBy({ id });
+
+      // check if post exists
+      if (!post) {
+        return response.status(404).json({
+          status: 0,
+          message: "Post not found!",
+        });
+      }
+
+      if (!post.archivedAt) {
+        post.archivedAt = new Date();
+        post.save();
+      }
+
+      return response.status(201).json({
         status: 0,
-        message: "Server error"
-    });
+        message: "Post archived.",
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 0,
+        message: "Server error",
+      });
     }
   }
 
@@ -208,14 +197,14 @@ export default class AdminController {
       if (!currentUser) {
         return response.status(401).json({
           status: 0,
-          message: "Unauthorized!"
+          message: "Unauthorized!",
         });
       }
 
       if (currentUser.role != "admin") {
         return response.status(403).json({
           status: 0,
-          message: "Forbidden!"
+          message: "Forbidden!",
         });
       }
 
@@ -225,7 +214,7 @@ export default class AdminController {
       if (!post) {
         return response.status(404).json({
           status: 0,
-          message: "Post not found!"
+          message: "Post not found!",
         });
       }
 
@@ -236,12 +225,12 @@ export default class AdminController {
 
       return response.status(500).json({
         status: 0,
-        message: "User archived."
+        message: "User archived.",
       });
     } catch (error) {
       return response.status(500).json({
         status: 0,
-        message: "Server error"
+        message: "Server error",
       });
     }
   }
@@ -250,7 +239,7 @@ export default class AdminController {
   static async getArchivedUsers(request: Request, response: Response) {
     try {
       const user = await User.findOneBy({
-        id: request.user
+        id: request.user,
       });
 
       if (!user) {
@@ -266,13 +255,18 @@ export default class AdminController {
 
       const data = await User.findAndCount({
         where: {
-          archivedAt: Not(IsNull())
+          archivedAt: Not(IsNull()),
         },
         skip,
-        take
+        take,
       });
 
-      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+      httpResponseSuccess(
+        response,
+        { users: data[0], count: data[1] },
+        null,
+        200
+      );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
@@ -281,7 +275,7 @@ export default class AdminController {
   static async getNonVerifiedUsers(request: Request, response: Response) {
     try {
       const user = await User.findOneBy({
-        id: request.user
+        id: request.user,
       });
 
       if (!user) {
@@ -298,13 +292,18 @@ export default class AdminController {
       const data = await User.findAndCount({
         where: {
           archivedAt: IsNull(),
-          emailVerifiedAt: IsNull()
+          emailVerifiedAt: IsNull(),
         },
         skip,
-        take
+        take,
       });
 
-      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+      httpResponseSuccess(
+        response,
+        { users: data[0], count: data[1] },
+        null,
+        200
+      );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
@@ -314,7 +313,7 @@ export default class AdminController {
   static async getNonVerifiedProviders(request: Request, response: Response) {
     try {
       const user = await User.findOneBy({
-        id: request.user
+        id: request.user,
       });
 
       if (!user) {
@@ -331,13 +330,18 @@ export default class AdminController {
       const data = await User.findAndCount({
         where: {
           archivedAt: IsNull(),
-          providerVerifiedAt: Not(IsNull())
+          providerVerifiedAt: Not(IsNull()),
         },
         skip,
-        take
+        take,
       });
 
-      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+      httpResponseSuccess(
+        response,
+        { users: data[0], count: data[1] },
+        null,
+        200
+      );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
