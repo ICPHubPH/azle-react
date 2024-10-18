@@ -150,8 +150,7 @@ export default class AdminController {
       post.archivedAt = new Date();
       post.save();
 
-      httpResponseSuccess(response, null, "Post archived")
-
+      httpResponseSuccess(response, null, "Post archived");
     } catch (error) {
       return httpResponseError(response, null, "Internal Server Error", 500);
     }
@@ -162,43 +161,30 @@ export default class AdminController {
       const currentUser = await User.findOneBy({ id: request.user });
 
       if (!currentUser) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       if (currentUser.role != "admin") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Forbidden", 403);
       }
 
       const id = request.params.id;
       const post = await Post.findOneBy({ id });
 
       if (!post) {
-        return response.status(404).json({
-          status: 0,
-          message: "Post not found!",
-        });
+        return httpResponseError(response, null, "Post not found", 404);
       }
 
-      if (post.archivedAt) {
-        post.archivedAt = null;
-        post.save();
+      if (!post.archivedAt) {
+        return httpResponseError(response, null, "Post is not archived", 400);
       }
 
-      return response.status(500).json({
-        status: 0,
-        message: "User archived.",
-      });
+      post.archivedAt = null;
+      post.save();
+
+      httpResponseSuccess(response, null, "Post unarchived");
     } catch (error) {
-      return response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
+      return httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
