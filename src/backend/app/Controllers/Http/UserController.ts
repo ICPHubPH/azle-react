@@ -1,3 +1,4 @@
+import { id } from "azle/src/lib/ic/id";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
@@ -6,6 +7,16 @@ import { IsNull, Not } from "typeorm";
 
 // GET all users
 export default class UserController {
+  static async getSelf(request: Request, response: Response) {
+    const user = await User.findOneBy({ id: request.user });
+
+    if (!user) {
+      return httpResponseError(response, null, "Unauthorized!", 401);
+    }
+
+    httpResponseSuccess(response, { user }, null, 200);
+  }
+
   static async getAll(request: Request, response: Response) {
     try {
       const skip = request.skip;
@@ -197,7 +208,7 @@ export default class UserController {
         response,
         { students: data[0], count: data[1] },
         null,
-        500
+        200
       );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);

@@ -133,7 +133,7 @@ export const providersColumns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-      const status = row.original.providerVerfiedAt;
+      const status = row.original.providerVerifiedAt;
 
       return (
         <Badge variant={status ? "default" : "destructive"}>
@@ -150,7 +150,7 @@ export const providersColumns: ColumnDef<User>[] = [
       const { mutate: archiveUser } = useArchiveUser();
       const { mutate: deleteUser } = useDeleteAccount();
 
-      const status = row.original.providerVerfiedAt;
+      const status = row.original.providerVerifiedAt;
 
       return (
         <DropdownMenu>
@@ -166,7 +166,7 @@ export const providersColumns: ColumnDef<User>[] = [
               <>
                 <DropdownMenuItem
                   onClick={() => {
-                    archiveUser(row.original.id!);
+                    archiveUser(row.original.id!.toString());
                   }}
                 >
                   Archive
@@ -174,7 +174,7 @@ export const providersColumns: ColumnDef<User>[] = [
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
-                    deleteUser(row.original.id!);
+                    deleteUser(row.original.id!.toString());
                   }}
                 >
                   Delete
@@ -184,7 +184,7 @@ export const providersColumns: ColumnDef<User>[] = [
               <>
                 <DropdownMenuItem
                   onClick={() => {
-                    archiveUser(row.original.id!);
+                    archiveUser(row.original.id!.toString());
                   }}
                 >
                   Approve
@@ -192,7 +192,7 @@ export const providersColumns: ColumnDef<User>[] = [
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
-                    deleteUser(row.original.id!);
+                    deleteUser(row.original.id!.toString());
                   }}
                 >
                   Reject

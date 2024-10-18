@@ -1,76 +1,23 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { toast } from "@/hooks/use-toast";
-import {
-  Bookmark,
-  CalendarDays,
-  Facebook,
-  Forward,
-  Link as LinkIcon,
-  Star,
-} from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } from "lucide-react";
+import { Textarea } from '@/components/ui/textarea';
+import { Post } from '@/types/model';
+import Feedback from '@/components/review/Feedback';
 
-export interface PostSummaryCardProps {
-  postId: string;
-  postAuthorEmail: string;
-  postAuthorName: string;
-  postAuthorAvatarSource: string;
-  postTitle: string;
-  postThumbnailSource: string;
-  postDescription: string;
-  postRatingCount: number;
-  postBookmarkCount: number;
-  postCommentCount: number;
-  postType?: string;
-  postDate?: string;
-}
 
-const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
-  postId,
-  postAuthorEmail,
-  postAuthorName,
-  postAuthorAvatarSource,
-  postTitle,
-  postThumbnailSource,
-  postDescription,
-  postRatingCount,
-  postBookmarkCount,
-  postCommentCount,
-  postType,
-  postDate,
-}) => {
+const PostSummaryCard: React.FC<any> = (post: Post) => {
   const navigate = useNavigate();
+
+  const {id, user, type, createdAt, thumbnail, title, content, feedbacks} = post
+
+  // comment count is just the number of feedbacks that have a content
+  const commentCount = feedbacks.filter((feedback) => feedback.content).length;
 
   const [ratingsUsers, setRatingsUsers] = useState<string[]>([
     "User1",
@@ -136,9 +83,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
 
   const handleRating = () => {
     // Here you would typically send the rating to your backend
-    console.log(
-      `Submitted rating ${ratingValue} for post ${postId} with comment: ${ratingComment}`
-    );
+    console.log(`Submitted rating ${ratingValue} for post ${id} with comment: ${ratingComment}`);
     toast({
       title: "Rating Submitted",
       description: "Thank you for your feedback!",
@@ -153,16 +98,17 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
     });
   };
 
-  const handleShare = (type: "copy" | "facebook") => {
-    if (type === "copy") {
-      navigator.clipboard.writeText(`https://yourwebsite.com/posts/${postId}`);
+  const handleShare = (type: 'copy' | 'facebook') => {
+    if (type === 'copy') {
+      navigator.clipboard.writeText(`https://yourwebsite.com/posts/${id}`);
+      
       toast({
         title: "Link Copied",
         description: "Post link has been copied to clipboard.",
       });
     } else if (type === "facebook") {
       // Here you would typically open a Facebook share dialog
-      console.log(`Sharing post ${postId} on Facebook`);
+      console.log(`Sharing post ${id} on Facebook`);
     }
   };
 
@@ -177,10 +123,10 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             >
               <AvatarImage
                 className="aspect-square object-cover rounded-full"
-                src={postAuthorAvatarSource}
-                alt={postAuthorName}
+                src={user.avatarUrl}
+                alt={user.name}
               />
-              <AvatarFallback>{postAuthorName}</AvatarFallback>
+              <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-.5">
               <HoverCard>
@@ -190,7 +136,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                     className="text-md font-medium z-[1] max-w-[10rem] truncate hover:underline underline-offset-2 cursor-pointer md:max-w-[12rem] xl:max-w-[14rem] 2xl:max-w-[18rem]"
                     onClick={() => alert("Redirect to indiv provider screen")}
                   >
-                    {postAuthorName}
+                    {user.name}
                   </h3>
                 </HoverCardTrigger>
                 <HoverCardContent className="w-[25rem]">
@@ -201,10 +147,10 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                     >
                       <AvatarImage
                         className="aspect-square object-cover rounded-full"
-                        src={postAuthorAvatarSource}
-                        alt={postAuthorName}
+                        src={user.avatarUrl}
+                        alt={user.name}
                       />
-                      <AvatarFallback>{postAuthorName}</AvatarFallback>
+                      <AvatarFallback>{user.name}</AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">
                       <h3
@@ -214,7 +160,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                           alert("Redirect to indiv provider screen")
                         }
                       >
-                        {postAuthorName}
+                        {user.name}
                       </h3>
                       <p className="text-sm">
                         Insert provider description here if there is any.
@@ -231,20 +177,20 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
               </HoverCard>
 
               <p className="text-xs text-gray-500 max-w-[10rem] truncate md:max-w-[12rem] xl:max-w-[14rem] 2xl:max-w-[18rem]">
-                {postAuthorEmail}
+                {user.email}
               </p>
               <p className="hidden">
                 {/** TODO: postType & postDate for filtering currently hidden */}
-                {postType}
-                {postDate}
+                {type}
+                {createdAt}
               </p>
             </div>
           </div>
           <div className="flex flex-col gap-1 items-center">
             {/* <Badge className="cursor-pointer">Trending</Badge> */}
             <a
-              className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"
-              onClick={() => navigate(`/posts/${postId}`)}
+              className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"   
+              onClick={() => navigate(`/posts/${id}`)}
             >
               View post
             </a>
@@ -258,20 +204,20 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             <div className="flex justify-between items-center">
               <h3
                 className="text-lg font-bold max-w-[18rem] truncate xl:max-w-[26rem]"
-                dangerouslySetInnerHTML={{ __html: postTitle }}
+                dangerouslySetInnerHTML={{ __html: title }}
               ></h3>
             </div>
             <img
-              src={postThumbnailSource}
-              alt={`${postTitle} thumbnail`}
+              src={thumbnail}
+              alt={`${title} thumbnail`}
               className="w-full rounded-md object-cover max-h-[15rem] min-h-[15rem] cursor-pointer"
-              onClick={() => navigate(`/posts/${postId}`)}
+              onClick={() => navigate(`/posts/${id}`)}
             />
           </div>
 
           <div className="w-full flex flex-col gap-1 z-[2]">
             <p
-              dangerouslySetInnerHTML={{ __html: postDescription }}
+              dangerouslySetInnerHTML={{ __html: content }}
               className="text-sm text-gray-500 line-clamp-3"
             ></p>
           </div>
@@ -283,7 +229,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
           <Tooltip>
             <TooltipTrigger>
               <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                <small>{postRatingCount} ratings</small>
+                <small>{feedbacks.length} ratings</small>
               </div>
             </TooltipTrigger>
             <TooltipContent>
@@ -304,7 +250,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             <Tooltip>
               <TooltipTrigger>
                 <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                  <small>{postBookmarkCount} bookmarks</small>
+                  <small>seed bookmarks</small>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -323,7 +269,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             <Tooltip>
               <TooltipTrigger>
                 <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                  <small>{postCommentCount} comments</small>
+                  <small>{commentCount} comments</small>
                 </div>
               </TooltipTrigger>
               <TooltipContent>

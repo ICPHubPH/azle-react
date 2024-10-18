@@ -9,7 +9,6 @@ export default class AuthMiddleware {
   ) {
     let token;
     const authorization = request.headers.authorization;
-    console.log("authorization", authorization, "LN 12");
 
     if (authorization && authorization.startsWith("Bearer")) {
       try {

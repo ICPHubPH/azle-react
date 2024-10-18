@@ -43,7 +43,7 @@ Route.get("/students", Pagination.paginate, UserController.getStudents);
 
 Route.get("/posts", Pagination.paginate, PostController.getAll);
 Route.get("/posts/:id", PostController.findById);
-Route.get("/posts/:id/category", PostController.findByCategorytype);
+Route.get("/posts/:type/category", PostController.findByCategoryType);
 
 Route.post(
   "/posts/:id/feedbacks",
@@ -87,6 +87,7 @@ Route.post(
   AuthMiddleware.authorize,
   UserController.updateSelf
 );
+Route.post("/@self", AuthMiddleware.authorize, UserController.getSelf);
 
 Route.post(
   "/users/:id/bookmarks",

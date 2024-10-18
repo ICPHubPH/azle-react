@@ -2,6 +2,7 @@ import { useUserByProviders } from "@/hooks/useUserData";
 import { useState } from "react";
 import { DataTable } from "../tables/data-table";
 import { providersColumns } from "../tables/ProvidersColumnDef";
+import { useState } from "react";
 
 const ProvidersTable = () => {
   const [page, setPage] = useState(0);
