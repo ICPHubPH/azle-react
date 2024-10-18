@@ -38,18 +38,27 @@ export default function SignIn() {
 
   // Handle sign-in form submission
   const onSignIn = async (values: z.infer<typeof signInSchema>) => {
-    setIsLoading(true); // Set loading state to true during the sign-in process
+    try {
+      setIsLoading(true); // Set loading state to true during the sign-in process
 
-    // Simulate sign-in process for development purposes
-    // TODO: Replace with actual sign-in logic in production
-    console.log("Sign in", values);
-    const response = await loginUser(values);
-    login(response.data.token as string);
+      // Simulate sign-in process for development purposes
+      // TODO: Replace with actual sign-in logic in production
+      console.log("Sign in", values);
+      const response = await loginUser(values);
 
-    // For now, navigate the user to the home page after sign-in
-    navigate("/home");
+      // For now, navigate the user to the home page after sign-in
+      navigate("/otp-verification", {
+        state: {
+          otp: response.data.token,
+          email: response.data.user.email,
+          origin: "login",
+        },
+      });
 
-    setIsLoading(false); // Set loading state to false after sign-in
+      setIsLoading(false); // Set loading state to false after sign-in
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

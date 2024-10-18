@@ -1,18 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { toast } from "@/hooks/use-toast";
-import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } from "lucide-react";
-import { Textarea } from '@/components/ui/textarea';
+import {
+  Bookmark,
+  CalendarDays,
+  Facebook,
+  Forward,
+  Link as LinkIcon,
+  Star,
+} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface PostSummaryCardProps {
   postId: string;
@@ -75,10 +102,10 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
     "Commenter7",
     "Commenter8",
   ]);
-  
+
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
   const [ratingValue, setRatingValue] = useState(0);
-  const [ratingComment, setRatingComment] = useState('');
+  const [ratingComment, setRatingComment] = useState("");
 
   const fetchRatingsUsers = async () => {
     const response = await fetch("/api/v1");
@@ -109,7 +136,9 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
 
   const handleRating = () => {
     // Here you would typically send the rating to your backend
-    console.log(`Submitted rating ${ratingValue} for post ${postId} with comment: ${ratingComment}`);
+    console.log(
+      `Submitted rating ${ratingValue} for post ${postId} with comment: ${ratingComment}`
+    );
     toast({
       title: "Rating Submitted",
       description: "Thank you for your feedback!",
@@ -124,14 +153,14 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
     });
   };
 
-  const handleShare = (type: 'copy' | 'facebook') => {
-    if (type === 'copy') {
+  const handleShare = (type: "copy" | "facebook") => {
+    if (type === "copy") {
       navigator.clipboard.writeText(`https://yourwebsite.com/posts/${postId}`);
       toast({
         title: "Link Copied",
         description: "Post link has been copied to clipboard.",
       });
-    } else if (type === 'facebook') {
+    } else if (type === "facebook") {
       // Here you would typically open a Facebook share dialog
       console.log(`Sharing post ${postId} on Facebook`);
     }
@@ -140,7 +169,7 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
   return (
     <Card className="bg-primary-foreground">
       <CardHeader className="py-4">
-      <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <Avatar
               className="w-10 h-10 cursor-pointer"
@@ -215,7 +244,6 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             {/* <Badge className="cursor-pointer">Trending</Badge> */}
             <a
               className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"
-                        
               onClick={() => navigate(`/posts/${postId}`)}
             >
               View post
@@ -335,7 +363,13 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
                   size="sm"
                   onClick={() => setRatingValue(star)}
                 >
-                  <Star className={`h-6 w-6 ${ratingValue >= star ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+                  <Star
+                    className={`h-6 w-6 ${
+                      ratingValue >= star
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                  />
                 </Button>
               ))}
             </div>
@@ -349,7 +383,11 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button className="w-full px-2" variant="ghost" onClick={handleBookmark}>
+        <Button
+          className="w-full px-2"
+          variant="ghost"
+          onClick={handleBookmark}
+        >
           <Bookmark className="mr-0.5 h-4" />
           Bookmark
         </Button>
@@ -361,11 +399,11 @@ const PostSummaryCard: React.FC<PostSummaryCardProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onSelect={() => handleShare('copy')}>
+            <DropdownMenuItem onSelect={() => handleShare("copy")}>
               <LinkIcon className="mr-2 h-4 w-4" />
               <span>Copy link</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleShare('facebook')}>
+            <DropdownMenuItem onSelect={() => handleShare("facebook")}>
               <Facebook className="mr-2 h-4 w-4" />
               <span>Share on Facebook</span>
             </DropdownMenuItem>
