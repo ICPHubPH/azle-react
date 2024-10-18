@@ -33,6 +33,9 @@ export class User extends BaseEntity {
   @Column({ type: "varchar" })
   name: string;
 
+  @Column({ nullable: true, type: "varchar" })
+  organizationName: string;
+
   @Column({ nullable: true, type: "text" })
   bio: string | null;
 
@@ -83,3 +86,11 @@ export class User extends BaseEntity {
     }
   }
 }
+
+/**
+ * provider:
+ * account - avatar, name
+ * email
+ * validId
+ * status (provider verification)
+ */

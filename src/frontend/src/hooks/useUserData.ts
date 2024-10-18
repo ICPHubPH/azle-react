@@ -6,6 +6,7 @@ import {
   updateSelf,
   getAllStudents,
   getAllProviders,
+  archiveUserById,
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -37,8 +38,7 @@ export const useUserByStudents = (skip: number, take: number) => {
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: skip >= 0 && take > 0,
-    select: (data) => ({ data: data.students, count: data.count }) // Return both data and count
-
+    select: (data) => ({ data: data.students, count: data.count }), // Return both data and count
   });
 };
 //Providers
@@ -71,5 +71,12 @@ export const useUpdateBio = () => {
   return useMutation({
     mutationFn: ({ name, bio }: { name: string; bio: string }) =>
       updateSelf(name, bio),
+  });
+};
+
+// Archive user
+export const useArchiveUser = () => {
+  return useMutation({
+    mutationFn: (id: string) => archiveUserById(id),
   });
 };
