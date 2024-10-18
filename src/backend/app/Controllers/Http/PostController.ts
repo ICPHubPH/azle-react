@@ -10,7 +10,7 @@ export default class PostController {
       const skip = request.skip;
       const take = request.limit;
 
-      const posts = await Post.findAndCount({
+      const data = await Post.findAndCount({
         where: {
           archivedAt: IsNull(),
         },
@@ -32,7 +32,7 @@ export default class PostController {
         take,
       });
 
-      httpResponseSuccess(response, { posts });
+      httpResponseSuccess(response, { posts: data[0], count: data[1] });
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error", 500);
     }
