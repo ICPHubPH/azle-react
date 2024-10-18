@@ -82,17 +82,11 @@ export default class AdminController {
       const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       if (user.role != "admin") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Forbidden", 403);
       }
 
       const id = request.params.id;
@@ -106,26 +100,19 @@ export default class AdminController {
       });
 
       if (!provider) {
-        return response.status(404).json({
-          status: 0,
-          message: "Provider not found!",
-        });
+        return httpResponseError(response, null, "User not found", 404);
       }
 
       provider.providerVerifiedAt = new Date();
       await provider.save();
 
-      return response.status(200).json({
-        status: 1,
-        data: provider,
-        message: "Provider has been verified!",
-      });
+      httpResponseSuccess(
+        response,
+        { provider },
+        "Provider has been verified!"
+      );
     } catch (error) {
-      return response.status(500).json({
-        status: 0,
-        error,
-        message: "Server error",
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
