@@ -52,7 +52,7 @@ Route.post(
 );
 
 // testing email sending, change recipient in the controller
-Route.post("/test", UserController.test);
+Route.post("/test", AuthMiddleware.hasAdminAccess, UserController.test);
 
 /*
 |--------------------------------------------------------------------------
