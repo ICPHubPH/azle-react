@@ -1,11 +1,16 @@
 export interface User {
-  id: string;
-  email: string;
+  id?: string;
+  avatarUrl?: string;
+  bannerUrl?: string;
+  validIdUrl?: string;
   name?: string;
   organizationName?: string;
   bio?: string;
-  avatarUrl?: string;
-  validIdUrl?: string;
+  email: string;
+  emailVerifiedAt?: string;
+  providerVerifiedAt?: string;
+  role: "admin" | "provider" | "student";
+  archivedAt?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -23,14 +28,14 @@ export interface Post {
   id: string;
   email: string;
   name: string;
-  avatarUrl: string; 
+  avatarUrl: string;
   postTitle: string;
-  postThumbnailSource: string; 
+  postThumbnailSource: string;
   postDescription: string;
   postRatingCount: number;
   postBookmarkCount: number;
   postCommentCount: number;
   postType: string;
   postDate: string;
-  archivedAt?: string; 
+  archivedAt?: string;
 }
