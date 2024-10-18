@@ -85,6 +85,7 @@ Route.post(
   AuthMiddleware.authorize,
   UserController.updateSelf
 );
+Route.post("/@self", AuthMiddleware.authorize, UserController.getSelf);
 
 Route.post(
   "/users/:id/bookmarks",
