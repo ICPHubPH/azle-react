@@ -175,3 +175,33 @@ export const feedbackSeeds = async (count: number) => {
 
   return seeds;
 };
+
+export const bookmarkSeeds = async (count: number) => {
+  const generatedBookmarks = new Set();
+  const posts = await Post.find();
+  const users = await User.find({ where: { role: "student" } });
+
+  const seeds = Array.from({ length: count }, () => {
+    let randomPost, randomUser, bookmarkId;
+
+    // Keep generating until we get a unique bookmarkId
+    do {
+      randomPost = faker.helpers.arrayElement(posts);
+      randomUser = faker.helpers.arrayElement(users);
+      bookmarkId = `${randomUser.id}_${randomPost.id}`;
+    } while (generatedBookmarks.has(bookmarkId));
+
+    // Add the new bookmarkId to the set once it's unique
+    generatedBookmarks.add(bookmarkId);
+
+    return {
+      createdAt: faker.date.recent().toISOString(),
+      updatedAt: faker.date.recent().toISOString(),
+      post: randomPost,
+      user: randomUser,
+    };
+  });
+
+  return seeds;
+};
+

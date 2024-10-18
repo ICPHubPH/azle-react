@@ -52,7 +52,7 @@ export class User extends BaseEntity {
   role: string;
 
   @Column({ nullable: true, type: "text" })
-  type: string;
+  type: string | null;
 
   @CreateDateColumn()
   createdAt: Date;

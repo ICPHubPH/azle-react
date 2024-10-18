@@ -34,9 +34,10 @@ export default Server(
         db = new Database(databaseOptions);
         await db.init();
         const seeder = new Seeder(db);
-        await seeder.seedUsers(10)
-        await seeder.seedPosts(15);
-        await seeder.seedFeedbacks(30)
+        await seeder.seedUsers(35, "student");
+        await seeder.seedPosts(20);
+        await seeder.seedFeedbacks(10);
+        await seeder.seedBookmarks(20);
         setNodeServer(CreateServer());
       } catch (error) {
         console.error("Error initializing database:", error);
