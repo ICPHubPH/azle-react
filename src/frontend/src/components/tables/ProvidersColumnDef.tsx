@@ -1,5 +1,12 @@
+import { useArchiveUser, useDeleteAccount } from "@/hooks/useUserData";
 import { User } from "@/types/model";
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,13 +15,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Checkbox } from "../ui/checkbox";
-import { useArchiveUser, useDeleteAccount } from "@/hooks/useUserData";
-import { Badge } from "../ui/badge";
 
 export const providersColumns: ColumnDef<User>[] = [
   // CHECKBOX
