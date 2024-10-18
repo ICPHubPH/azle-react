@@ -86,3 +86,11 @@ export class User extends BaseEntity {
     }
   }
 }
+
+/**
+ * provider:
+ * account - avatar, name
+ * email
+ * validId
+ * status (provider verification)
+ */

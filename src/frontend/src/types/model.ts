@@ -13,6 +13,7 @@ export interface User {
   archivedAt?: string;
   createdAt: string;
   updatedAt: string;
+  providerVerfiedAt?:string
 }
 
 export interface Feedback {
