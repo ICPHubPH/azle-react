@@ -53,7 +53,7 @@ export default function SignUp() {
         <FormField
           control={signUpForm.control}
           name="email"
-          render={({ field }) => (
+          render={({ field }: any) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
@@ -67,7 +67,7 @@ export default function SignUp() {
         <FormField
           control={signUpForm.control}
           name="role"
-          render={({ field }) => (
+          render={({ field }: any) => (
             <FormItem>
               <FormLabel>Role</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
