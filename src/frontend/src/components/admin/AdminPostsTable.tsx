@@ -4,6 +4,8 @@ import { DataTable } from "@/components/tables/data-table";
 import { postsColumnDefs } from "../tables/PostsColumnDef";
 import { useState } from "react";
 import { useAllPost } from "@/hooks/usePostData";
+import { useState } from "react";
+import { postsColumnDefs } from "../tables/PostsColumnDef";
 
 export default function AdminPostsManagement() {
   const [page, setPage] = useState(0);

@@ -60,6 +60,8 @@ Route.post("/test", UserController.test);
 |--------------------------------------------------------------------------
 */
 
+Route.post('/@self', AuthMiddleware.authorize, UserController.getSelf);
+
 Route.post(
   "/users/:id/remove",
   AuthMiddleware.authorize,
