@@ -1,22 +1,32 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { useNavigate } from "react-router-dom" // Import useNavigate for redirection
-import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { loginUser } from "@/api/authService";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/use-auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import * as z from "zod";
 
 // Define the validation schema without password
 const signInSchema = z.object({
   email: z.string().email(),
-})
+});
 
 export default function SignIn() {
-  const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate() // Initialize navigate function for redirection
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate function for redirection
+  const { login } = useAuth();
 
   // Initialize the form with react-hook-form and Zod for validation
   const signInForm = useForm<z.infer<typeof signInSchema>>({
@@ -24,21 +34,23 @@ export default function SignIn() {
     defaultValues: {
       email: "",
     },
-  })
+  });
 
   // Handle sign-in form submission
   const onSignIn = async (values: z.infer<typeof signInSchema>) => {
-    setIsLoading(true) // Set loading state to true during the sign-in process
+    setIsLoading(true); // Set loading state to true during the sign-in process
 
     // Simulate sign-in process for development purposes
     // TODO: Replace with actual sign-in logic in production
-    console.log("Sign in", values)
+    console.log("Sign in", values);
+    const response = await loginUser(values);
+    login(response.data.token as string);
 
     // For now, navigate the user to the home page after sign-in
-    navigate("/home")
+    navigate("/home");
 
-    setIsLoading(false) // Set loading state to false after sign-in
-  }
+    setIsLoading(false); // Set loading state to false after sign-in
+  };
 
   return (
     <Form {...signInForm}>
@@ -64,5 +76,5 @@ export default function SignIn() {
         </Button>
       </form>
     </Form>
-  )
+  );
 }

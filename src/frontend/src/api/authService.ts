@@ -1,5 +1,5 @@
-import axiosInstance from './axiosConfig';
 import { AxiosError } from 'axios';
+import axiosInstance from './axiosConfig';
 
 // Function to handle user registration
 export const registerUser = async (userData: any) => {
@@ -19,6 +19,7 @@ export const registerUser = async (userData: any) => {
 export const loginUser = async (credentials: any) => {
   try {
     const response = await axiosInstance.post('/auth/login', credentials);
+    console.log('login response: ', response.data);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
