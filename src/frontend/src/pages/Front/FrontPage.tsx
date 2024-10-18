@@ -53,6 +53,15 @@ const FrontPage = () => {
               >
                 <Link to="/login">Login</Link>
               </Button>
+
+              {/* Dummy for testing */}
+              {/* Delete AFTER */}
+              <Button
+                variant={"default"}
+                asChild
+              >
+                <Link to="/class">Class</Link>
+              </Button>
             </>
           )}
         </div>

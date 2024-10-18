@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -41,7 +41,7 @@ import { Link } from "react-router-dom";
 interface ClassData {
   id: string;
   name: string;
-  icon: string;
+  icon?: string;
   deckCount: number;
   description: string;
   createdAt: string;
@@ -49,54 +49,63 @@ interface ClassData {
   isLiked: boolean;
 }
 
-const sampleClasses: ClassData[] = [
-  {
-    id: "1",
-    name: "Mathematics",
-    icon: "M",
-    deckCount: 5,
-    description: "Algebra, Geometry, and Calculus flashcards",
-    createdAt: "2023-05-15T10:30:00Z",
-    likes: 15,
-    isLiked: false,
-  },
-  {
-    id: "2",
-    name: "History",
-    icon: "H",
-    deckCount: 3,
-    description: "World History and American History flashcards",
-    createdAt: "2023-06-01T14:45:00Z",
-    likes: 8,
-    isLiked: true,
-  },
-
-  // Add more sample classes as needed
-];
-
 export default function TwitterStyleClassLayout() {
-  const [classes, setClasses] = useState<ClassData[]>(sampleClasses);
+  const [classes, setClasses] = useState<ClassData[]>([]);
   const [isGridLayout, setIsGridLayout] = useState(false);
 
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        // TODO: Replace '1' with the actual user ID
+        const userId = '1';
+        const urlWithParams = `${import.meta.env.VITE_CANISTER_URL}/app/${userId}/classes`;
+
+        const response = await fetch(urlWithParams, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setClasses(data.payload);
+        console.log('Data:', data);
+      } catch (error) {
+        console.error('Failed to fetch classes:', error);
+      }
+    };
+
+    fetchClasses();
+    console.log('Classes:', classes);
+  }, []);
+
   const handleDelete = (id: string) => {
-    setClasses(classes.filter((c) => c.id !== id));
+    // TODO: Implement delete class with backend
+    // setClasses(classes.filter((c) => c.id !== id));
   };
 
   const handleLike = (id: string) => {
-    setClasses(
-      classes.map((c) => {
-        if (c.id === id) {
-          return {
-            ...c,
-            likes: c.isLiked ? c.likes - 1 : c.likes + 1,
-            isLiked: !c.isLiked,
-          };
-        }
-        return c;
-      })
-    );
+    // TODO: Implement like class with backend
+    // setClasses(
+    //   classes.map((c) => {
+    //     if (c.id === id) {
+    //       return {
+    //         ...c,
+    //         likes: c.isLiked ? c.likes - 1 : c.likes + 1,
+    //         isLiked: !c.isLiked,
+    //       };
+    //     }
+    //     return c;
+    //   })
+    // );
   };
 
+  // TODO: should be moved to a utility file
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -202,25 +211,26 @@ export default function TwitterStyleClassLayout() {
               <Button
                 variant="ghost"
                 size="sm"
-                className={`p-0 h-auto font-normal ${classItem.isLiked ? "text-red-500" : ""}`}
-                onClick={() => handleLike(classItem.id)}
-              >
-                <Heart
-                  className={`mr-1 h-4 w-4 ${classItem.isLiked ? "fill-current" : ""}`}
-                />
-                {classItem.likes}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="ml-auto"
-              >
-                <Link to="/deck">See Decks</Link>
-                <ChevronRight className="ml-1 h-4 w-4" />
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
+                  className={`p-0 h-auto font-normal ${classItem.isLiked ? "text-destructive" : ""}`}
+                  onClick={() => handleLike(classItem.id)}
+                >
+                  <Heart
+                    className={`mr-1 h-4 w-4 ${classItem.isLiked ? "fill-current" : ""}`}
+                  />
+                  {classItem.likes}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="ml-auto"
+                >
+                  <Link to="/deck">See Decks</Link>
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </Card>
+          ))
+        }
       </div>
     </div>
   );

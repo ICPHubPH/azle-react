@@ -57,6 +57,7 @@ export default class ClassController {
 
         try {
             const classEntity = await Class.findOneBy({ class_id });
+            const deck = await Class.find({ where: { class_id } });
             if (classEntity) {
                 return response.status(200).json(classEntity);
             } else {

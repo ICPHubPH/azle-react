@@ -55,9 +55,9 @@ export default class UserController {
       user.user_password = password.hash;
       user.user_salt = password.salt;
 
-      console.log(user_password);
-      console.log(password.hash);
-      console.log(password.salt);
+      // console.log(user_password);
+      // console.log(password.hash);
+      // console.log(password.salt);
 
 
       user.classes = [];
@@ -135,9 +135,9 @@ export default class UserController {
       if (!user) {
         throw new Error("User not found!");
       }
-      console.log(user_password);
-      console.log(user.user_password);
-      console.log(user.user_salt);
+      // console.log(user_password);
+      // console.log(user.user_password);
+      // console.log(user.user_salt);
 
       const isMatch = verifyPassword(user_password, user.user_password, user.user_salt);
 
