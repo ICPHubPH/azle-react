@@ -38,12 +38,12 @@ export default class PostController {
     }
   }
 
-  static async findByCategorytype(request: Request, response: Response) {
+  static async findByCategoryType(request: Request, response: Response) {
     try {
       const skip = request.skip;
       const take = request.limit;
 
-      const type = request.params.type; // post scholarship type
+      const type = request.params.type; // type of post
 
       const data = await Post.findAndCount({
         where: {
@@ -59,26 +59,14 @@ export default class PostController {
           type: true,
           thumbnail: true,
           createdAt: true,
-          user: {
-            id: true,
-            name: true,
-            email: true,
-            avatarUrl: true,
-          },
         },
+        relations: ["user", "feedbacks", "feedbacks.user"], 
       });
 
-      response.status(200).json({
-        status: 1,
-        data,
-        message: null,
-      });
+      httpResponseSuccess(response, { posts: data[0], count: data[1] });
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      console.error(error); 
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
