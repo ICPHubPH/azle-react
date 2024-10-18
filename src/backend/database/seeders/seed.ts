@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { User } from "Database/entities/user";
 import { PostCategoryType } from "../../constants";
+import { Post } from "Database/entities/post";
 export const legitCreds = [
   {
     avatarUrl:
@@ -147,6 +148,27 @@ export const postSeeds = async (count: number) => {
       createdAt: faker.date.past().toISOString(),
       updatedAt: faker.date.recent().toISOString(),
       user: randomProvider,
+    };
+  });
+
+  return seeds;
+};
+
+export const feedbackSeeds = async (count: number) => {
+  const posts = await Post.find();
+  const users = await User.find();
+
+  const seeds = Array.from({ length: count }, () => {
+    const randomPost = faker.helpers.arrayElement(posts);
+    const randomUser = faker.helpers.arrayElement(users);
+
+    return {
+      rate: faker.helpers.rangeToNumber({ min: 1, max: 5 }),
+      content: faker.lorem.paragraph(),
+      createdAt: faker.date.past().toISOString(),
+      updatedAt: faker.date.recent().toISOString(),
+      post: randomPost,
+      user: randomUser,
     };
   });
 

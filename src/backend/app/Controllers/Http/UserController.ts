@@ -171,7 +171,7 @@ export default class UserController {
         response,
         { students: data[0], count: data[1] },
         null,
-        500
+        200
       );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
