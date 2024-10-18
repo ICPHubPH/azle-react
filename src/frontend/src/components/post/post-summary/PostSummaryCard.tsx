@@ -9,6 +9,10 @@ import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } fro
 import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@/types/model';
 import Feedback from '@/components/review/Feedback';
+import { useNavigate } from "react-router-dom";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Separator } from "@radix-ui/react-select";
+import { useState, useEffect } from "react";
 
 
 const PostSummaryCard: React.FC<any> = (post: Post) => {
