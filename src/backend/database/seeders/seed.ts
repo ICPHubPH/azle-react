@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { User } from "Database/entities/user";
-import { PostCategoryType } from "../../constants";
+import { PostCategoryType, UserTypes } from "../../constants";
 import { Post } from "Database/entities/post";
 export const legitCreds = [
   {
@@ -124,6 +124,7 @@ export const userSeeds = (count: number, role: "student" | "provider") => {
       updatedAt: faker.date.recent().toISOString(),
       emailVerifiedAt: faker.date.recent().toISOString(),
       archivedAt: null,
+      type: role === "student" ? null : faker.helpers.arrayElement(UserTypes),
     };
   });
 

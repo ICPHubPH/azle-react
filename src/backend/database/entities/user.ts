@@ -51,6 +51,9 @@ export class User extends BaseEntity {
   @Column({ type: "text" })
   role: string;
 
+  @Column({ nullable: true, type: "text" })
+  type: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
