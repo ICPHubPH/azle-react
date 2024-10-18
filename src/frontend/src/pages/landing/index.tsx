@@ -17,37 +17,37 @@ const reviews = [
   {
     name: "DOST",
     username: "@DOST",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
+    // body: "I've never seen anything like this before. It's amazing. I love it.",
     img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293524/dost_wqm8fs.png",
   },
   {
     name: "DepEd",
     username: "@DepEd",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
+    
     img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293534/GgmPiSLC_400x400_ecauou.jpg",
   },
   {
     name: "SM Foundation",
     username: "@SM Foundation",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    
     img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293533/sm_sno0b1.png",
   },
   {
     name: "Jane",
     username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    
     img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293532/LVCC_s8wjgj.jpg",
   },
   {
     name: "Jenny",
     username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    
     img: "https://avatar.vercel.sh/jenny",
   },
   {
     name: "James",
     username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    
     img: "https://avatar.vercel.sh/james",
   },
 ];
@@ -58,12 +58,12 @@ const ReviewCard = ({
   img,
   name,
   username,
-  body,
+  // body,
 }: {
   img: string;
   name: string;
   username: string;
-  body: string;
+  // body: string;
 }) => {
   return (
     <figure
@@ -84,7 +84,7 @@ const ReviewCard = ({
           <p className="text-xs font-medium dark:text-white/40">{username}</p>
         </div>
       </div>
-      <blockquote className="mt-2 text-sm">{body}</blockquote>
+      {/* <blockquote className="mt-2 text-sm">{body}</blockquote> */}
     </figure>
   );
 };
@@ -228,10 +228,10 @@ const Home: React.FC = () => {
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
           Partnerships
         </h1>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
-    </div>
-
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
+      </div>
+      <Separator />
       <CreatePost />
 
       {/* TEST FEEDBACKS */}
