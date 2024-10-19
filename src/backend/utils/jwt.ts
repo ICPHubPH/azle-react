@@ -9,7 +9,6 @@ export const verifyToken = async (token: string) => {
         Authorization: `Bearer ${token}`,
       }
     );
-    console.log(response, "ln6jwt");
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
