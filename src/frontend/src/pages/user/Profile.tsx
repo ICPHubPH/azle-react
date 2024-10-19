@@ -8,6 +8,7 @@ import { CalendarDays, MapPin, Briefcase, Link as LinkIcon, UserCircle, Settings
 import Header from '@/components/header/user-header/Header';
 import { AccountSettingsModal } from '@/components/profile/AccountSettingsModal';
 import { EditProfileModal } from '@/components/profile/EditProfileModal';
+import UploadValidId from '@/components/provider-component/UploadValidId';
 
 interface User {
   name: string;
@@ -51,17 +52,15 @@ export default function ProfilePage() {
   };
 
   const handleDeleteAccount = (email: string) => {
-    // Implement your delete logic here
     console.log(`Deleting account for email: ${email}`);
-    // Optionally, show a success or error message to the user
+    // Implement delete account logic here
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Header/>
       <div className="relative">
-        {/* Banner */}
-        <div className="h-64 bg-gradient-to-r from-blue-400 to-purple-500 relative">
+        <div className="h-64 md:h-80 bg-gradient-to-r from-blue-400 to-purple-500 relative">
           <img
             src={user.banner}
             alt="Profile Banner"
@@ -70,21 +69,19 @@ export default function ProfilePage() {
           <div className="absolute inset-0 bg-black bg-opacity-30" />
         </div>
         
-        {/* User Info Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-          <div className="max-w-6xl mx-auto flex items-end">
-            <Avatar className="w-32 h-32 border-4 border-white">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end">
+            <Avatar className="w-32 h-32 border-4 border-white mb-4 md:mb-0">
               <AvatarImage src={user.avatar} alt={user.name} />
               <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
             </Avatar>
-            <div className="ml-6 mb-2">
-              <h1 className="text-4xl font-bold ">{user.name}</h1>
+            <div className="md:ml-6 text-center md:text-left">
+              <h1 className="text-3xl md:text-4xl font-bold">{user.name}</h1>
               <p className="text-xl">{user.information.role}</p>
             </div>
           </div>
         </div>
 
-        {/* Change Banner Button */}
         <Button 
           variant="outline" 
           size="icon" 
@@ -96,11 +93,10 @@ export default function ProfilePage() {
         </Button>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-16">
+      <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 mt-16 md:mt-20">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main content */}
-          <div className="w-full lg:w-2/3">
-            <Card className="mb-8">
+          <div className="w-full lg:w-2/3 space-y-8">
+            <Card>
               <CardContent className="p-6">
                 <p className="text-muted-foreground mb-4">{user.bio}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
@@ -121,6 +117,15 @@ export default function ProfilePage() {
                     <a href={`https://${user.information.website}`} className="text-primary hover:underline">{user.information.website}</a>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Valid ID</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <UploadValidId/>
               </CardContent>
             </Card>
 
@@ -148,7 +153,6 @@ export default function ProfilePage() {
             </Tabs>
           </div>
 
-          {/* Sidebar */}
           <div className="w-full lg:w-1/3 space-y-6">
             <Card>
               <CardContent className="p-6">
@@ -198,13 +202,12 @@ export default function ProfilePage() {
         onClose={() => setIsEditProfileModalOpen(false)}
         onSave={handleEditProfile}
       />
-
-     <AccountSettingsModal
-      isOpen={isAccountSettingsModalOpen}
-      onClose={() => setIsAccountSettingsModalOpen(false)}
-      onSave={handleAccountSettings}
-      onDeleteAccount={handleDeleteAccount} // Pass the new handler
-    />
+      <AccountSettingsModal
+        isOpen={isAccountSettingsModalOpen}
+        onClose={() => setIsAccountSettingsModalOpen(false)}
+        onSave={handleAccountSettings}
+        onDeleteAccount={handleDeleteAccount}
+      />
     </div>
   );
 }
