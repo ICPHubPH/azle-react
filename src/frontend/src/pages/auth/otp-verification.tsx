@@ -16,6 +16,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -27,8 +28,17 @@ const FormSchema = z.object({
 });
 
 export function OtpVerification() {
+  const { isAuthenticated, login } = useAuth();
+  const navigate = useNavigate();
+
+  if (isAuthenticated) {
+    navigate("/home");
+  }
+
   const location = useLocation();
-  const { login } = useAuth();
+  const [otpToken, setOtpToken] = useState<string>(
+    location.state.token as string
+  );
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -37,8 +47,6 @@ export function OtpVerification() {
     },
   });
   const { toast } = useToast();
-
-  const navigate = useNavigate();
 
   const handleResendOTP = () => {
     toast({
