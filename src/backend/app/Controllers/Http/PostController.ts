@@ -1,4 +1,3 @@
-
 import { Post } from "Database/entities/post";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
@@ -15,6 +14,7 @@ export default class PostController {
         where: {
           archivedAt: IsNull(),
         },
+        relations: ["user", "feedbacks", "feedbacks.user"],
         skip,
         take,
       });
@@ -47,53 +47,50 @@ export default class PostController {
           thumbnail: true,
           createdAt: true,
         },
-        relations: ["user", "feedbacks", "feedbacks.user"], 
+        relations: ["user", "feedbacks", "feedbacks.user"],
       });
 
       httpResponseSuccess(response, { posts: data[0], count: data[1] });
     } catch (error) {
-      console.error(error); 
+      console.error(error);
       httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
   static async findById(request: Request, response: Response) {
-    const id = request.params.id;
+    try {
+      const id = request.params.id;
 
-    const data = await Post.findOne({
-      where: {
-        id,
-        archivedAt: IsNull(),
-      },
-      select: {
-        id: true,
-        user: {
-          id: true,
-          name: true,
-          email: true,
-          avatarUrl: true,
+      const post = await Post.findOne({
+        where: {
+          id,
+          archivedAt: IsNull(),
         },
-        title: true,
-        thumbnail: true,
-        content: true,
-        type: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-
-    if (!data) {
-      response.status(404).json({
-        status: 0,
-        message: "Post not found!",
+        select: {
+          id: true,
+          user: {
+            id: true,
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+          title: true,
+          thumbnail: true,
+          content: true,
+          type: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
-    }
 
-    response.status(200).json({
-      status: 1,
-      data,
-      message: null,
-    });
+      if (!post) {
+        return httpResponseError(response, null, "Post not found", 404);
+      }
+
+      httpResponseSuccess(response, { post });
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error", 500);
+    }
   }
 
   // TODO: Thumbnail upload
@@ -103,27 +100,23 @@ export default class PostController {
       const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized!", 401);
       }
 
       if (user.role != "provider") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Unauthorized!", 401);
       }
 
       if (!user.providerVerifiedAt) {
-        return response.status(403).json({
-          status: 0,
-          message: "You must be a verified provider!",
-        });
+        return httpResponseError(
+          response,
+          null,
+          "You must be a verified provider!",
+          403
+        );
       }
 
-      const data = await Post.create({
+      const post = Post.create({
         title,
         content,
         thumbnail,
@@ -131,19 +124,12 @@ export default class PostController {
         user,
       });
 
-      await Post.save(data);
+      await Post.save(post);
 
-      return response.status(201).json({
-        status: 1,
-        data,
-        message: "New post created!",
-      });
+      httpResponseSuccess(response, { post }, "New post created");
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      console.error(error);
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
@@ -167,24 +153,15 @@ export default class PostController {
       });
 
       if (!post) {
-        return response.status(404).json({
-          status: 0,
-          message: "Post not found!",
-        });
+        return httpResponseError(response, null, "Post not found!", 404);
       }
 
       if (post?.user.id != request.user && post?.user.role != "admin") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Unauthorized!", 401);
       }
 
       if (!post?.user.providerVerifiedAt) {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Forbidden!", 403);
       }
 
       const data = await Post.update(
@@ -192,66 +169,48 @@ export default class PostController {
         { thumbnail, title, type, content }
       );
 
-      return response.status(200).json({
-        status: 1,
-        data,
-        message: "Post has been updated!",
-      });
+      httpResponseSuccess(response, { post: data }, "Post has been updated!");
     } catch (error) {
-      return response.status(500).json({
-        status: 0,
-        error,
-        message: "Server error",
-      });
+      console.error(error);
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
   static async deleteById(request: Request, response: Response) {
-    const id = request.params.id;
+    try {
+      const id = request.params.id;
 
-    const post = await Post.findOne({
-      where: {
-        id,
-      },
-      select: {
-        id: true,
-        user: {
-          id: true,
-          role: true,
+      const post = await Post.findOne({
+        where: {
+          id,
         },
-      },
-    });
-
-    if (!post) {
-      return response.status(404).json({
-        status: 0,
-        data: null,
-        message: "Post doesn't exist!",
+        select: {
+          id: true,
+          user: {
+            id: true,
+            role: true,
+          },
+        },
       });
+
+      if (!post) {
+        return httpResponseError(response, null, "Post not found!", 404);
+      }
+
+      if (post?.user.id != request.user && post?.user.role != "admin") {
+        return httpResponseError(response, null, "Forbidden!", 403);
+      }
+
+      if (!post?.user.providerVerifiedAt) {
+        return httpResponseError(response, null, "Forbidden!", 403);
+      }
+
+      const data = await Post.delete({ id });
+
+      httpResponseSuccess(response, { post: data }, "Post has been deleted");
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
-
-    if (post?.user.id != request.user && post?.user.role != "admin") {
-      return response.status(403).json({
-        status: 0,
-        data: null,
-        message: "Forbidden!",
-      });
-    }
-
-    if (!post?.user.providerVerifiedAt) {
-      return response.status(403).json({
-        status: 0,
-        message: "Forbidden!",
-      });
-    }
-
-    const data = await Post.delete({ id });
-
-    return response.status(200).json({
-      status: 1,
-      data,
-      message: "Post has been deleted!",
-    });
   }
 
   // TODO: get archived posts

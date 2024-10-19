@@ -54,7 +54,7 @@ export const useCreatePost = () => {
       title: string;
       thumbnail: string;
       type: string;
-      content: String;
+      content: string;
     }) => {
       return createPost(title, thumbnail, type, content);
     },

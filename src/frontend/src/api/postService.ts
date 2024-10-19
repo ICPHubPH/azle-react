@@ -37,9 +37,9 @@ export const createPost = async (
   title: string,
   thumbnail: string,
   type: string,
-  content: String
+  content: string
 ) => {
-  const response = await axiosInstance.post("/post/create", {
+  const response = await axiosInstance.post("/posts/create", {
     title,
     thumbnail,
     type,
