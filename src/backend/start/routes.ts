@@ -32,9 +32,8 @@ Route.post("/auth/resend-otp", AuthController.resendOtp); // tested
 
 Route.get("/users", Pagination.paginate, UserController.getAll); // tested
 Route.get("/users/:id", UserController.findById); // tested
-Route.get("/providers", Pagination.paginate, UserController.getProviders); 
-Route.get("/providers/:id", UserController.getProviderById);
-Route.get("/non-verified-providers", Pagination.paginate, UserController.getNonVerifiedProviders );
+Route.get("/providers", Pagination.paginate, UserController.getProviders); // tested
+Route.get("/providers/:id", UserController.getProviderById); // tested
 Route.get("/students", Pagination.paginate, UserController.getStudents);
 
 Route.get("/posts", Pagination.paginate, PostController.getAll);

@@ -71,12 +71,14 @@ export default class UserController {
         type,
         verified = "true",
         archived = "false",
+        emailVerified = "true",
       } = request.query;
 
       const whereCondition: any = {
         role: "provider",
         providerVerifiedAt: verified === "true" ? Not(IsNull()) : IsNull(),
         archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
       };
 
       if (type) {
@@ -111,8 +113,6 @@ export default class UserController {
         where: {
           id: id,
           role: "provider",
-          providerVerifiedAt: Not(IsNull()),
-          validIdUrl: Not(IsNull()),
         },
       });
 
@@ -159,14 +159,25 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
+      const {
+        sortOrder = "ASC",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereConditions: any = {
+        role: "student",
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
+
       const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull()),
-          role: "student",
-        },
+        where: whereConditions,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
