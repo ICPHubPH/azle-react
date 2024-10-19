@@ -420,37 +420,6 @@ export default class UserController {
   }
 
   static async test(request: Request, response: Response) {
-    try {
-      const emailMessage: EmailMessage = {
-        body: {
-          name: "Kurtd Daniel Bigtas",
-          intro: "Test ulit gamit dfx deploy",
-          action: {
-            instructions: "To get started with Mailgen, please click here:",
-            button: {
-              color: "#22BC66",
-              text: "click kung baliw ka",
-              link: "https://mailgen.js/confirm?s=d9729feb74992cc3482b350163a1a010",
-            },
-          },
-          outro:
-            "Need help, or have questions? Just reply to this email, we'd love to help.",
-        },
-      };
-
-      const jsonData = await sendEmail(
-        emailMessage,
-        "johnraybendelarama@student.laverdad.edu.ph",
-        "TEST EMAIL FROM IC (1)"
-      );
-
-      return response.json(jsonData);
-    } catch (error) {
-      console.log("LN415", error);
-      response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
-    }
+    httpResponseSuccess(response, null, "testing")
   }
 }

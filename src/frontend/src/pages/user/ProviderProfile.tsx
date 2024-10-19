@@ -32,7 +32,6 @@ export default function ProviderProfile() {
       id: 2,
       avatarUrl: "https://avatars.githubusercontent.com/u/53380626",
       bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
-      validIdUrl: null,
       name: "Gene Schmidt",
       organizationName: null,
       bio: "Solitudo in defluo colligo vomica sophismata cura.",

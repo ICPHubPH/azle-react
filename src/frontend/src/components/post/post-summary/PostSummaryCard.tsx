@@ -30,16 +30,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { toast } from "@/hooks/use-toast";
-import { Post } from "@/types/model";
-import {
-  Bookmark,
-  CalendarDays,
-  Facebook,
-  Forward,
-  Link as LinkIcon,
-  Star,
-} from "lucide-react";
 import { useEffect, useState } from "react";
+import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } from "lucide-react";
+import { Post } from '@/types/model';
+import Feedback from '@/components/review/Feedback';
 import { useNavigate } from "react-router-dom";
 
 const PostSummaryCard: React.FC<any> = (post: Post) => {

@@ -1,19 +1,20 @@
 import { DataSource } from "typeorm";
-import { Feedback } from "../entities/feedback";
-import { Post } from "../entities/post";
-import { User } from "../entities/user";
 import { Database } from "../index";
-import { feedbackSeeds, postSeeds, userSeeds } from "./seed";
+import { User } from "Database/entities/user";
+import { bookmarkSeeds, feedbackSeeds, postSeeds, userSeeds } from "./seed";
+import { Post } from "Database/entities/post";
+import { Feedback } from "Database/entities/feedback";
+import { Bookmark } from "Database/entities/bookmark";
 
 export class Seeder {
   private dataSource: DataSource;
 
   constructor(private db: Database) {}
 
-  public async seedUsers(count: number, callback?: () => void) {
+  public async seedUsers(count: number, role: "student" | "provider", callback?: () => void) {
     try {
       this.dataSource = await this.db.getDataSource();
-      const users = User.create(userSeeds(count, "student"));
+      const users = User.create(userSeeds(count, role));
 
       await this.dataSource.getRepository(User).save(users);
 
@@ -63,4 +64,24 @@ export class Seeder {
       throw err;
     }
   }
+
+  public async seedBookmarks(count: number, callback?: () => void) {
+    try {
+      this.dataSource = await this.db.getDataSource();
+      const bookmarks = Bookmark.create(await bookmarkSeeds(count));
+
+      await this.dataSource.getRepository(Bookmark).save(bookmarks);
+
+      console.log("Bookmarks seeded successfully!");
+
+      if (callback) {
+        callback();
+      }
+    } catch (err) {
+      console.error("Error while seeding bookmarks:", err);
+      throw err;
+    }
+  }
+
+  
 }

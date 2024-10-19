@@ -1,14 +1,14 @@
 export interface User {
   id?: number;
-  avatarUrl?: any;
+  avatarUrl?: string ;
   bannerUrl?: string;
-  validIdUrl?: any;
+  validIdUrl?: string;
   name: string;
   organizationName?: string | null;
   bio?: string;
   email: string;
-  emailVerifiedAt?: string;
-  providerVerifiedAt?: any;
+  emailVerifiedAt?: string | null;
+  providerVerifiedAt?: string | null;
   role: string | "admin" | "student" | "provider";
   type?: string | "school" | "government" | "corporate" | "other";
   createdAt: string;
