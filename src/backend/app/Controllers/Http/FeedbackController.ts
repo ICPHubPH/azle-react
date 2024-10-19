@@ -1,200 +1,196 @@
 import { Request, Response } from "express";
 import { Feedback } from "../../../database/entities/feedback";
 import { User } from "../../../database/entities/user";
+import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 
 export default class FeedbackController {
-    static async getPostFeedbacks(request: Request, response: Response) {
-        try {
-            const skip = request.skip;
-            const take = request.limit;
-            const postId = request.params.postId;
+  static async getPostFeedbacks(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+      const postId = request.params.postId;
 
-            const data = await Feedback.findAndCount({
-                where: {
-                    post: {
-                        id: postId
-                    }
-                },
-                select: {
-                    id: true,
-                    rate: true,
-                    content: true,
-                    createdAt: true,
-                    updatedAt: true,
-                    user: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        avatarUrl: true
-                    },
-                    post: {
-                        id: true
-                    }
-                },
-                skip,
-                take
-            });
+      const data = await Feedback.findAndCount({
+        where: {
+          post: {
+            id: postId,
+          },
+        },
+        select: {
+          id: true,
+          rate: true,
+          content: true,
+          createdAt: true,
+          updatedAt: true,
+          user: {
+            id: true,
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+          post: {
+            id: true,
+          },
+        },
+        skip,
+        take,
+      });
 
-            response.status(200).json({
-                status: 1,
-                data,
-                message: null
-            });
-        } catch (error) {
-            response.status(500).json({
-                status: 0,
-                error,
-                message: "Internal server error!"
-            });
-        }
+      httpResponseSuccess(response, { feedbacks: data[0], count: data[1] });
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
+  }
 
-    static async createFeedback(request: Request, response: Response) {
-        try {
-            const user = await User.findOneBy({ id: request.user });
+  static async createFeedback(request: Request, response: Response) {
+    try {
+      const user = await User.findOneBy({ id: request.user });
 
-            if (!user || !user.emailVerifiedAt) {
-                return response.status(401).json({
-                    status: 0,
-                    message: "Unauthorized!"
-                });
-            }
+      if (!user || !user.emailVerifiedAt) {
+        return response.status(401).json({
+          status: 0,
+          message: "Unauthorized!",
+        });
+      }
 
-            if (user.role != "student") {
-                return response.status(403).json({
-                    status: 0,
-                    message: "Forbidden!"
-                });
-            }
+      if (user.role != "student") {
+        return response.status(403).json({
+          status: 0,
+          message: "Forbidden!",
+        });
+      }
 
-            const { postId, rate, content } = request.body;
+      const { postId, rate, content } = request.body;
 
-            const data = await Feedback.insert({
-                user: {
-                    id: user.id,
-                },
-                post: {
-                    id: postId
-                },
-                rate, 
-                content: content || null
-            });
+      const data = await Feedback.insert({
+        user: {
+          id: user.id,
+        },
+        post: {
+          id: postId,
+        },
+        rate,
+        content: content || null,
+      });
 
-            return response.status(201).json({
-                status: 1,
-                data,
-                message: null
-            });
-        } catch (error) {
-            response.status(500).json({
-                status: 0,
-                error,
-                message: "Internal server error!"
-            })
-        }
+      return response.status(201).json({
+        status: 1,
+        data,
+        message: null,
+      });
+    } catch (error) {
+      response.status(500).json({
+        status: 0,
+        error,
+        message: "Internal server error!",
+      });
     }
+  }
 
-    static async updateFeedback(request: Request, response: Response) {
-        try {
-            const { content, rate } = request.body;
-            const id = request.params.id;
+  static async updateFeedback(request: Request, response: Response) {
+    try {
+      const { content, rate } = request.body;
+      const id = request.params.id;
 
-            const isFeedbackExist = await Feedback.findOne({
-                where: {
-                    id
-                },
-                select: {
-                    user: {
-                        id: true
-                    }
-                }
-            });
+      const isFeedbackExist = await Feedback.findOne({
+        where: {
+          id,
+        },
+        select: {
+          user: {
+            id: true,
+          },
+        },
+      });
 
-            if (!isFeedbackExist) {
-                return response.status(404).json({
-                    status: 0,
-                    message: "Feedback not found!"
-                });
-            }
+      if (!isFeedbackExist) {
+        return response.status(404).json({
+          status: 0,
+          message: "Feedback not found!",
+        });
+      }
 
-            if (isFeedbackExist?.user.id != request.user) {
-                return response.status(403).json({
-                    status: 0,
-                    message: "Forbidden!"
-                });
-            }
-            
-            const data = await Feedback.update({
-                id
-            }, {
-                content,
-                rate
-            });
+      if (isFeedbackExist?.user.id != request.user) {
+        return response.status(403).json({
+          status: 0,
+          message: "Forbidden!",
+        });
+      }
 
-            return response.status(200).json({
-                status: 1,
-                data,
-                message: "Feedback updated."
-            });
-        } catch (error) {
-            response.status(500).json({
-                status: 0,
-                error,
-                message: "Internal server error!"
-            });
+      const data = await Feedback.update(
+        {
+          id,
+        },
+        {
+          content,
+          rate,
         }
+      );
+
+      return response.status(200).json({
+        status: 1,
+        data,
+        message: "Feedback updated.",
+      });
+    } catch (error) {
+      response.status(500).json({
+        status: 0,
+        error,
+        message: "Internal server error!",
+      });
     }
+  }
 
-    static async deleteFeedback(request: Request, response: Response) {
-        try {
-            const id = request.params.id;
-            
-            const feedback = await Feedback.findOne({
-                where: {
-                    id
-                },
-                select: {
-                    user: {
-                        id: true
-                    }
-                }
-            });
+  static async deleteFeedback(request: Request, response: Response) {
+    try {
+      const id = request.params.id;
 
-            if (!feedback) {
-                return response.status(404).json({
-                    status: 0,
-                    data: null,
-                    message: "Feedback not found!"
-                });
-            }
+      const feedback = await Feedback.findOne({
+        where: {
+          id,
+        },
+        select: {
+          user: {
+            id: true,
+          },
+        },
+      });
 
-            if (!feedback.user) {
-                return response.status(401).json({
-                    status: 0,
-                    message: "User not found!"
-                });
-            }
+      if (!feedback) {
+        return response.status(404).json({
+          status: 0,
+          data: null,
+          message: "Feedback not found!",
+        });
+      }
 
-            if (feedback?.user.id != request.user) {
-                return response.status(403).json({
-                    status: 0,
-                    data: null,
-                    message: "Forbidden!"
-                });
-            }
+      if (!feedback.user) {
+        return response.status(401).json({
+          status: 0,
+          message: "User not found!",
+        });
+      }
 
-            await Feedback.delete({ id: feedback.id });
+      if (feedback?.user.id != request.user) {
+        return response.status(403).json({
+          status: 0,
+          data: null,
+          message: "Forbidden!",
+        });
+      }
 
-            response.status(200).json({
-                status: 1,
-                message: "Feedback deleted."
-            });
-        } catch (error) {
-            response.status(500).json({
-                status: 0,
-                error,
-                message: "Internal server error!"
-            })
-        }
+      await Feedback.delete({ id: feedback.id });
+
+      response.status(200).json({
+        status: 1,
+        message: "Feedback deleted.",
+      });
+    } catch (error) {
+      response.status(500).json({
+        status: 0,
+        error,
+        message: "Internal server error!",
+      });
     }
+  }
 }
