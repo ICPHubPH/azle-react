@@ -87,9 +87,10 @@ You can use any API testing tool (like Postman) as long as the app is deployed.
 
 ## 📌 Additional Reminders
 
-- When developing the API, you may need to frequently run commands like dfx stop && dfx start --clean --background && dfx deploy due to the lack of hot reload for backend changes.
+- When developing the API, you may need to frequently run commands like `dfx stop && dfx start --clean --background && dfx deploy` due to the lack of hot reload for backend changes.
 - For the frontend, simply run npm run start from the root directory if you're using Gitpod. On your local machine, navigate to src/frontend before running the command. The frontend has hot reload enabled.
 - Gitpod provides 50 hours of free service when you link your LinkedIn account, and 10 hours otherwise. Keep this in mind to avoid service interruptions during development.
+- Authentication of this system heavily relies on our external API for managing JWT and email service. Our team developed a separate API for issuing and verifying JWT, and sending of email. API key is necessary for authentication to work properly. Contact us if you need credentials.
 
 ## 🛠️ Project Team
 
@@ -105,12 +106,12 @@ You can use any API testing tool (like Postman) as long as the app is deployed.
 
 <table style="border: none">
   <tr style="border: none" align="center">
-    <td style="border: none"><image src="https://github.com/ravendelarama.png
+    <td style="border: none"><img src="https://github.com/ravendelarama.png
 " width=40 height=40 style="border-radius: 9999px" alt="Raven"/><br><strong>John Raven Dela Rama</strong><br>Full Stack Developer <br><br>
       <a href="https://www.facebook.com/rxybxn"><img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
       <a href="https://github.com/ravendelarama"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
     </td>
-    <td style="border: none"><image src="https://github.com/Kertsu.png
+    <td style="border: none"><img src="https://github.com/Kertsu.png
 " width=40 height=40 style="border-radius: 9999px" alt="Kurtd"/><br><strong>Kurtd Daniel Bigtas</strong><br>Lead  & Full Stack Developer <br><br>
       <a href="https://www.facebook.com/Kertsuuu/"><img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
       <a href="https://github.com/Kertsu"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
@@ -120,20 +121,42 @@ You can use any API testing tool (like Postman) as long as the app is deployed.
 
 <table style="border: none">
   <tr style="border: none" align="center" >
-    <td style="border: none"><image src="https://github.com/jeyemPF.png
+    <td style="border: none"><img src="https://github.com/jeyemPF.png
 " width=40 height=40 style="border-radius: 9999px" alt="JM"/><br><strong>John Mark Faeldonia</strong><br>Project Manager & Frontend Developer <br><br>
       <a href="https://www.facebook.com/johnmac.pareja"><img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
       <a href="https://github.com/jeyemPF"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
     </td>
-    <td style="border: none"><image src="https://github.com/Sora1173.png
+    <td style="border: none"><img src="https://github.com/Sora1173.png
 " width=40 height=40 style="border-radius: 9999px" alt="Allen"/><br><strong>Allen Magadia</strong><br>UI/UX Designer & Frontend Developer <br><br>
       <a href="https://www.facebook.com/allenmagadia11"><img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
       <a href="https://github.com/Sora1173"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
     </td>
-    <td style="border: none"><image src="https://github.com/jethrocadang.png
+    <td style="border: none"><img src="https://github.com/jethrocadang.png
 " width=40 height=40 style="border-radius: 9999px" alt="Jethro"/><br><strong>Jethro Cadang</strong><br>Frontend Developer <br><br>
       <a href="https://www.facebook.com/jethro.cadang"><img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"></a>
       <a href="https://github.com/jethrocadang"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<table style="border: none">
+
+  <div align="center">
+
+🙏🏻 **SPECIAL THANKS TO** 🙏🏻
+
+   </div>
+
+  <tr style="border: none" align="center" >
+    <td style="border: none"><img src="https://github.com/fxgst.png
+" width=40 height=40 style="border-radius: 9999px" alt="JM"/><br><strong>Elias Datler</strong><br>Azle-React Owner<br><br>
+      <a href="https://github.com/fxgst"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+    </td>
+    <td style="border: none"><img src="https://github.com/seiferxiii.png
+" width=40 height=40 style="border-radius: 9999px" alt="Allen"/><br><strong>Eliezer Rabadon</strong><br>Azle-React Owner<br><br>
+      <a href="https://github.com/seiferxiii"><img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
     </td>
   </tr>
 </table>
