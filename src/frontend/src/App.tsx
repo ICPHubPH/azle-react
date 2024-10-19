@@ -122,7 +122,7 @@ function App() {
             <Route
               path="/admin"
               element={
-                <ProtectedRouteContext allow={["admin"]}>
+                <ProtectedRouteContext allow={["*"]}>
                   <AdminPage />
                 </ProtectedRouteContext>
               }

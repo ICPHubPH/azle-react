@@ -3,6 +3,7 @@ import {
   createPost,
   deletePost,
   getAllPost,
+  getArchivedPosts,
   getPostById,
   getPostsByCategoryType,
 } from "@/api/postService";
@@ -63,17 +64,31 @@ export const useCreatePost = () => {
   });
 };
 
-
 //DELETE post
 export const useDeletePost = () => {
-    return useMutation({
-        mutationFn: async (id:string) => deletePost(id)
-    })
-}
+  return useMutation({
+    mutationFn: async (id: string) => deletePost(id),
+  });
+};
 
 //Archive post
 export const useArchivePost = () => {
-    return useMutation({
-        mutationFn: async (id:string) => archivePostById(id)
-    })
-}
+  return useMutation({
+    mutationFn: async (id: string) => archivePostById(id),
+  });
+};
+
+export const useGetAllArchivedPosts = (
+  page: number,
+  take: number,
+  sortOrder: string = "ASC"
+) => {
+  return useQuery({
+    queryKey: ["archivedPosts", page, take, sortOrder],
+    queryFn: () => getArchivedPosts(page, take, sortOrder),
+    staleTime: 10000,
+    refetchOnWindowFocus: false,
+    enabled: page >= 0 && take > 0,
+    select: (data) => ({ posts: data.posts, count: data.count }), // Return both data and count
+  });
+};

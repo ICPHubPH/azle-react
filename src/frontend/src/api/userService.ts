@@ -40,12 +40,14 @@ export const getAllProviders = async (page: number, take: number) => {
   return response.data;
 };
 
-//Verified Providers
-export const getUnVerifiedProviders = async (page: number, take: number) => {
-  const response = await axiosInstance.post("/protected/non-verified-providers", {
+// Service for fetching unverified providers (specify verified = false)
+export const getUnVerifiedProviders = async (page: number, take: number, sortOrder: string = "ASC") => {
+  const response = await axiosInstance.get("/providers", {
     params: {
       page,
       take,
+      sortOrder,
+      verified: "false", // Explicitly specify unverified providers
     },
   });
   return response.data;
@@ -108,3 +110,10 @@ export const unArchiveUserById = async (id: string) => {
   const response = await axiosInstance.post(`/protected/users/${id}/unarchive`);
   return response.data;
 };
+// accept provider
+export const verifyProviderById = async (id: string) => {
+  const response = await axiosInstance.post(`/protected/providers/${id}/verify`);
+  return response.data;
+};
+
+// reject provider

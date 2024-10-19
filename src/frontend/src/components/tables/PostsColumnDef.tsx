@@ -38,28 +38,6 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
       />
     ),
   },
-  // {
-  //   accessorKey: "id",
-  //   header: "Provider",
-  //   cell: ({ row }) => (
-  //     <div className="flex flex-row items-center gap-2 sm:gap-3">
-  //       <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-  //         <AvatarImage src={row.original.user.avatarUrl} />
-  //         <AvatarFallback>
-  //           {row.original.user.name ? row.original.user.name.charAt(0) : "A"}
-  //         </AvatarFallback>
-  //       </Avatar>
-  //       <div>
-  //         <p className="text-sm truncate max-w-[150px] md:max-w-none">
-  //           {row.original.user.name}
-  //         </p>
-  //         <p className="text-xs truncate max-w-[150px] sm:max-w-none text-muted-foreground">
-  //           {row.original.user.email}
-  //         </p>
-  //       </div>
-  //     </div>
-  //   ),
-  // },
   {
     accessorKey: "title",
     header: "Post Title",
@@ -69,30 +47,6 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
         className="truncate "
       ></p>
     ),
-  },
-  {
-    accessorKey: "archivedAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="px-0 hover:bg-none"
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    sortingFn: "alphanumeric",
-    cell: ({ row }) => {
-      const status = row.original.archivedAt;
-      return (
-        <Badge variant={status === null ? "default" : "blue"}>
-          {status === null ? "Active" : "Archived"}
-        </Badge>
-      );
-    },
   },
   {
     accessorKey: "type",
@@ -161,6 +115,30 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
         </DialogContent>
       </Dialog>
     ),
+  },
+  {
+    accessorKey: "archivedAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0 hover:bg-none"
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    sortingFn: "alphanumeric",
+    cell: ({ row }) => {
+      const status = row.original.archivedAt;
+      return (
+        <Badge variant={status === null ? "green" : "blue"}>
+          {status === null ? "Active" : "Archived"}
+        </Badge>
+      );
+    },
   },
   {
     id: "actions",

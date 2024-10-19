@@ -10,8 +10,7 @@ const VerfiedProvidersTable = () => {
   const take = 10; 
   const skip = page * take;
 
-  const { data, isLoading, isError } = useUserByProviders(skip, take);
-  console.log("Verified Providers:", data); // Add this line to log the data
+  const { data } = useUserByProviders(skip, take);
   const totalRows = data?.count || 0;
 
   return (
@@ -33,8 +32,8 @@ const UnverifiedProvidersTable = () => {
   const take = 10; 
   const skip = page * take;
 
-  const { data, isLoading, isError } = useUnverifiedProviders(skip, take);
-  console.log("Unverified Providers:", data); // Add this line to log the data
+  const { data } = useUnverifiedProviders(skip, take);
+  console.log("Unverified Providers:", data); 
   const totalRows = data?.count || 0;
 
   return (

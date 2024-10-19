@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StudentsTable from "./StudentsTable";
-import {UnverifiedProvidersTable, VerfiedProvidersTable} from "./ProvidersTable";
+import {
+  UnverifiedProvidersTable,
+  VerfiedProvidersTable,
+} from "./ProvidersTable";
 
 export default function AdminUserManagement() {
-  const [activeTab, setActiveTab] = useState("providers");
+  const [activeTab, setActiveTab] = useState("verifiedProviders");
 
   return (
     <div className="container mx-auto p-4 space-y-4 flex-grow">
@@ -25,7 +28,7 @@ export default function AdminUserManagement() {
           <VerfiedProvidersTable />
         </TabsContent>
         <TabsContent value="unverifiedProviders" className="mt-4">
-          <UnverifiedProvidersTable/>
+          <UnverifiedProvidersTable />
         </TabsContent>
         <TabsContent value="students" className="mt-4">
           <StudentsTable />
