@@ -118,6 +118,39 @@ export default class UserController {
     }
   }
 
+  static async getProviderById(request: Request, response: Response) {
+    try {
+        const id = request.params.id;
+
+        const provider = await User.findOne({
+            where: {
+                id: id,
+                role: "provider",
+                // providerVerifiedAt: Not(IsNull()),
+                // validIdUrl: Not(IsNull()),
+            },
+            select: {
+                id: true,
+                avatarUrl: true,
+                bannerUrl: true,
+                name: true,
+                email: true,
+                bio: true,
+                validIdUrl: true,
+            },
+        });
+
+        if (!provider) {
+            return response.status(404).json({ message: "Provider not found" });
+        }
+
+        return httpResponseSuccess(response, provider, null, 200);
+    } catch (error) {
+        console.log("Error fetching provider: ", error);
+        return httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+}
+
   static async getNonVerifiedProviders(request: Request, response: Response) {
     try {
       const skip = request.skip;

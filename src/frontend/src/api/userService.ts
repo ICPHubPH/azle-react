@@ -30,15 +30,35 @@ export const getAllStudents = async (page: number, take: number) => {
 };
 
 //ALL PROVIDERS
-export const getAllProviders = async (page: number, take: number) => {
+export const getAllProviders = async (
+  _activeTab: string,
+  _sortOrder: string,
+  _searchQuery: string,
+  page: number,
+  take: number
+) => {
   const response = await axiosInstance.get("/providers", {
     params: {
-      page,
-      take,
+      activeTab: _activeTab,  
+      sortOrder: _sortOrder, 
+      searchQuery: _searchQuery, 
+      page,  
+      take, 
     },
   });
-  return response.data;
+  return response.data;  
 };
+
+export const getProviderById = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/providers/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching provider by ID:", error);
+    throw error; 
+  }
+};
+
 
 //Change Password
 export const changePassword = async (
