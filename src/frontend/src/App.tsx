@@ -22,6 +22,7 @@ import PostPage from "./pages/post";
 // Admin Page
 import VerifyAuth from "./components/auth/VerifyAuth";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRouteContext from "./context/ProtectedRouteContext";
 import AdminPage from "./pages/admin/admin-page";
 import { OtpVerification } from "./pages/auth/otp-verification";
 
@@ -32,33 +33,128 @@ function App() {
         <Router>
           <Routes>
             {/* Landing and Auth */}
-            <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/auth/verify" element={<VerifyAuth />} />
-            <Route path="/otp-verification" element={<OtpVerification />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <Home />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/auth"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <AuthPage />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/auth/verify"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <VerifyAuth />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/otp-verification"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <OtpVerification />
+                </ProtectedRouteContext>
+              }
+            />
 
             {/* User Pages */}
-            <Route path="/home" element={<User />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/provider-feed" element={<ProvidersFeed />} />
-            <Route path="/posts-feed" element={<PostsFeed />} />
-            <Route path="/provider-profile/:id" element={<ProviderProfile />} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <User />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <Profile />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/provider-feed"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <ProvidersFeed />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/posts-feed"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <PostsFeed />
+                </ProtectedRouteContext>
+              }
+            />
+            <Route
+              path="/provider-profile/:id"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <ProviderProfile />
+                </ProtectedRouteContext>
+              }
+            />
 
             {/* Post Pages */}
-            <Route path="/posts/:postId" element={<PostPage />} />
+            <Route
+              path="/posts/:postId"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <PostPage />
+                </ProtectedRouteContext>
+              }
+            />
 
             {/* Admin Page */}
-            <Route path="/admin" element={<AdminPage />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRouteContext allow={["admin"]}>
+                  <AdminPage />
+                </ProtectedRouteContext>
+              }
+            />
 
             {/* Legal Pages */}
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route
+              path="/privacy-policy"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <PrivacyPolicy />
+                </ProtectedRouteContext>
+              }
+            />
             <Route
               path="/terms-and-conditions"
-              element={<TermsAndConditions />}
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <TermsAndConditions />
+                </ProtectedRouteContext>
+              }
             />
 
             {/* 404 Not Found */}
-            <Route path="*" element={<NotFoundPage />} />
+            <Route
+              path="*"
+              element={
+                <ProtectedRouteContext allow={["*"]}>
+                  <NotFoundPage />
+                </ProtectedRouteContext>
+              }
+            />
           </Routes>
         </Router>
         <Toaster />
