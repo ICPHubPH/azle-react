@@ -1,48 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { CalendarDays, MapPin, Star, Mail } from "lucide-react";
+  Star,
+  MapPin,
+  Book,
+  Users,
+  Calendar,
+  ExternalLink,
+  ArrowLeft,
+} from "lucide-react";
 import Header from "@/components/header/user-header/Header";
+
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { User } from "@/types/model";
-import { getProviderById } from "@/api/userService"; // Import the new service function
 
 export default function ProviderProfile() {
-  const { id } = useParams<{ id: string }>(); // Specify the type for useParams
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const [provider, setProvider] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // To handle loading state
-
-  useEffect(() => {
-    const fetchProvider = async () => {
-      if (id) { // Ensure id is defined
-        try {
-          const data = await getProviderById(id); // Fetch provider by ID
-          setProvider(data); // Assuming data contains the provider object directly
-        } catch (error) {
-          console.error("Error fetching provider:", error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false); // Set loading to false if id is not present
-      }
-    };
-
-    fetchProvider();
-  }, [id]);
-
-  if (loading) {
-    return <div>Loading...</div>; // Loading state
-  }
+  const provider = [
+    {
+      id: 2,
+      avatarUrl: "https://avatars.githubusercontent.com/u/53380626",
+      bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+      name: "Gene Schmidt",
+      organizationName: null,
+      bio: "Solitudo in defluo colligo vomica sophismata cura.",
+      email: "Henri96@yahoo.com",
+      emailVerifiedAt: "2024-10-16T09:26:15.474Z",
+      providerVerifiedAt: null,
+      role: "provider",
+      createdAt: "2024-03-05T13:04:38.457Z",
+      updatedAt: "2024-10-16T13:16:26.688Z",
+      archivedAt: null,
+      type: "other",
+    },
+  ].find((provider: User) => provider.id === id);
 
   if (!provider) {
     return (
@@ -55,114 +57,107 @@ export default function ProviderProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div>
       <Header />
-      <div className="relative">
-        {/* Cover Photo */}
-        <div className="h-64 bg-gradient-to-r from-blue-400 to-purple-500 relative">
-          <img
-            src={provider.bannerUrl || 'default-cover-photo-url'}
-            alt={provider.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-30" />
-        </div>
 
-        {/* Provider Info Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-          <div className="max-w-6xl mx-auto flex items-end">
-            <Avatar className="w-32 h-32 border-4 border-white">
-              <AvatarImage src={provider.avatarUrl || 'default-avatar-url'} alt={provider.name} />
-              <AvatarFallback>{provider.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="ml-6 mb-2">
-              <h1 className="text-4xl font-bold">{provider.name}</h1>
-              <p className="text-xl">Corporation</p>
-              <div className="flex items-center">
-                <MapPin className="w-4 h-4 mr-2" />
-                <span>Samploc, Apalit, Pampanga</span>
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="mb-6 p-0 hover:bg-transparent dark:hover:bg-transparent"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          <span className="text-sm">Back</span>
+        </Button>
+        {/* <Card className="overflow-hidden">
+          <CardHeader className="pb-0">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              <Avatar className="h-24 w-24 sm:h-32 sm:w-32">
+                <AvatarImage src={provider.avatarUrl} alt={provider.name} />
+                <AvatarFallback>{provider.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className="text-center sm:text-left">
+                <Badge className="mb-2">{provider.type}</Badge>
+                <CardTitle className="text-2xl sm:text-3xl font-bold mb-2">
+                  {provider.name}
+                </CardTitle>
+                <div className="flex items-center justify-center sm:justify-start text-muted-foreground mb-2">
+                  <MapPin className="h-4 w-4 mr-1" />
+                  <span className="text-sm">[Location]</span>
+                </div>
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${
+                        i < provider.rating
+                          ? "text-yellow-400"
+                          : "text-gray-300 dark:text-gray-600"
+                      }`}
+                      fill="currentColor"
+                    />
+                  ))}
+                  <span className="ml-2 text-sm text-muted-foreground">
+                    {provider.rating.toFixed(1)} ({provider.reviews} reviews)
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main content */}
-          <div className="w-full lg:w-2/3">
-            <Card className="mb-8">
-              <CardContent className="p-6">
-                <p className="text-muted-foreground mb-4">{""}</p>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center">
-                    <CalendarDays className="w-4 h-4 mr-2 text-muted-foreground" />
-                    <span>Joined May 2024</span>
+          </CardHeader>
+          <CardContent className="mt-6">
+            <p className="text-muted-foreground">{provider.description}</p>
+            <Separator className="my-6" />
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-lg font-semibold mb-2">
+                  Scholarship Details
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {provider.scholarship}
+                </p>
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold mb-2">
+                  Additional Information
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center text-muted-foreground">
+                    <Book className="h-4 w-4 mr-2" />
+                    <span>10+ Courses Offered</span>
                   </div>
-                  <div className="flex items-center">
-                    <span className="text-sm text-muted-foreground">laverdadchristiancollege@laverdad.com</span>
+                  <div className="flex items-center text-muted-foreground">
+                    <Users className="h-4 w-4 mr-2" />
+                    <span>500+ Students Enrolled</span>
+                  </div>
+                  <div className="flex items-center text-muted-foreground">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    <span>Established in 2010</span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Tabs defaultValue="details" className="w-full">
-              <TabsList className="w-full justify-start mb-6">
-                <TabsTrigger value="details">Details</TabsTrigger>
-                <TabsTrigger value="scholarship">Scholarship</TabsTrigger>
-              </TabsList>
-              <TabsContent value="details">
-                <Card>
-                  <CardContent className="p-6">
-                    <h2 className="text-xl font-semibold mb-4">Details</h2>
-                    <p className="text-muted-foreground">Provider details go here. This section can include more specific information about the provider, their services, or any other relevant details.</p>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              <TabsContent value="scholarship">
-                <Card>
-                  <CardContent className="p-6">
-                    <h2 className="text-xl font-semibold mb-4">Scholarship Information</h2>
-                    <p className="text-muted-foreground">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente similique iusto asperiores expedita molestiae ipsam cumque! Labore earum doloremque rem eligendi libero, ratione, tempora unde excepturi, qui saepe quaerat.</p>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          {/* Sidebar */}
-          <div className="w-full lg:w-1/3 space-y-6">
-            
-
-            <Card>
-              <CardContent className="p-6 space-y-4">
-                <Button className="w-full" onClick={() => navigate('/contact')}>
-                  <Mail className="mr-2 h-4 w-4" />
-                  Contact Provider
-                </Button>
-                <Button variant="outline" className="w-full" onClick={() => navigate('/scholarships')}>
-                  View Scholarships
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">Quick Facts</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <Badge variant="secondary" className="mr-2">Type</Badge>
-                    {/* <span>{type}</span> */}
-                  </li>
-                  <li className="flex items-center">
-                    <Badge variant="secondary" className="mr-2">Established</Badge>
-                    <span>May 5, 2024</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              </div>
+            </div>
+            <Separator className="my-6" />
+            <div className="flex flex-wrap gap-2">
+              {[
+                "Online",
+                "In-Person",
+                "Flexible Schedule",
+                "Certification",
+              ].map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between">
+            <Button className="w-full sm:w-auto">Contact Provider</Button>
+            <Button variant="outline" className="w-full sm:w-auto">
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Visit Website
+            </Button>
+          </CardFooter>
+        </Card> */}
       </div>
     </div>
   );
