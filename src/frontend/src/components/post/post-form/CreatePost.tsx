@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { formats, modules } from "./quill-options";
 import "./quill.css";
+import { useCreatePost } from "@/hooks/usePostData";
 
 interface CreatePostProps {
   children?: ReactNode; // Allow children to be passed as props
@@ -37,6 +38,13 @@ export default function CreatePost({ children }: CreatePostProps) {
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const { mutate: createPost } = useCreatePost();
+
+  // Upload constants
+  const cloud_name = "dst8xk1fa"; // change this to your cloud name
+  const upload_preset = "pwdckr9c";
+
+  const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
   useEffect(() => {
     return () => {
@@ -76,11 +84,43 @@ export default function CreatePost({ children }: CreatePostProps) {
     setContent(value);
   }
 
-  function createPostHandler() {
-    console.log(thumbnailURL);
-    console.log(title);
-    console.log(type);
-    console.log(content);
+  async function uploadThumbnail() {
+    if (!thumbnail) return ""; // Return empty if no thumbnail is selected
+
+    const formData = new FormData();
+    formData.append("file", thumbnail); 
+    formData.append("upload_preset", upload_preset);
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`Upload failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.secure_url; // Return the uploaded image URL
+    } catch (error) {
+      console.error("Upload error", error);
+      return ""; // Return empty string on error
+    }
+  }
+
+  async function createPostHandler() {
+    console.log("create post handler"); // Add this line for debugging
+    if (title && type && content) {
+      const thumbnailURL = await uploadThumbnail(); // Upload thumbnail and get URL
+      createPost({
+        title,
+        thumbnail: thumbnailURL || "", // Use the uploaded URL
+        type,
+        content,
+      });
+    } else {
+      console.log("Please fill all required fields.");
+    }
   }
 
   return (
