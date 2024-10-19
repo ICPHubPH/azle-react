@@ -34,7 +34,8 @@ export default Server(
         db = new Database(databaseOptions);
         await db.init();
         const seeder = new Seeder(db);
-        await seeder.seedUsers(35, "student");
+        await seeder.seedStudents(20);
+        await seeder.seedProviders(20)
         await seeder.seedPosts(20);
         await seeder.seedFeedbacks(10);
         await seeder.seedBookmarks(20);
