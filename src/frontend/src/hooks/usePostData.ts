@@ -2,7 +2,7 @@ import {
   archivePostById,
   createPost,
   deletePost,
-  getAllPost,
+  getAllPosts,
   getArchivedPosts,
   getPostById,
   getPostsByCategoryType,
