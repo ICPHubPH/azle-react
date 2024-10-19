@@ -24,7 +24,7 @@ export default function ProvidersFeed() {
       setLoading(true);
       try {
         // Fetch providers based on tab and sortOrder (filtering can also be done in backend)
-        const response = await getAllProviders(activeTab, sortOrder, searchQuery, 1, 10); // Pass filters to your API
+        const response = await getAllProviders( 1, 10); // Pass filters to your API
         setProviders(response.providers); // Adjust based on your API response
       } catch (error) {
         console.error("Failed to fetch providers:", error);

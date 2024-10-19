@@ -1,6 +1,7 @@
 import { useUserByStudents } from "@/hooks/useUserData";
 import { useState } from "react";
 import { studentsColumns } from "../tables/StudentsColumnDef";
+import { DataTable } from "../tables/data-table";
 
 const StudentsTable = () => {
   const [pages, setPages] = useState(0);
