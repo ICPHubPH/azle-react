@@ -3,12 +3,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlusCircle } from "lucide-react"
+import { useAuth } from '@/hooks/use-auth'
 
 export default function PostForm() {
   // Replace these with actual user data
-  const userName = "John Doe"
-  const userInitials = "JD"
-  const userAvatarUrl = "/placeholder.svg?height=40&width=40"
+  const { data, isAuthenticated, login, logout } = useAuth(); 
+  
+  const userName = data?.name || "";  
+  const userAvatarUrl = data?.avatarUrl || "";  
+
+  const getUserInitials = (name: string) => {
+    const initials = name
+      .split(" ") // Split the name into an array of words
+      .map((word) => word[0]) // Get the first letter of each word
+      .join("") // Join the initials together
+      .toUpperCase(); // Ensure they are uppercase
+    return initials;
+  };
+  const userInitials = getUserInitials(userName);
+
+
 
   return (
     <Card className="w-full max-w mx-auto my-8">
