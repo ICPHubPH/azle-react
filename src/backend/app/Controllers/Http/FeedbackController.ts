@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
+import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { Feedback } from "../../../database/entities/feedback";
 import { User } from "../../../database/entities/user";
-import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 
 export default class FeedbackController {
   static async getPostFeedbacks(request: Request, response: Response) {
@@ -52,7 +52,23 @@ export default class FeedbackController {
 
       const { postId, rate, content } = request.body;
 
-      const data = await Feedback.insert({
+      const isExist = await Feedback.findOne({
+        where: {
+          user: {
+            id: user.id
+          },
+          post: {
+            id: postId
+          }
+        },
+        relations: ["user", "post"]
+      });
+
+      if (isExist) {
+        return httpResponseError(response, null, "You already submitted a feedback!", 400);
+      }
+
+      const data = await Feedback.create({
         user: {
           id: user.id,
         },
@@ -63,71 +79,11 @@ export default class FeedbackController {
         content: content || null,
       });
 
-      return response.status(201).json({
-        status: 1,
-        data,
-        message: null,
-      });
+      await Feedback.save(data);
+
+      httpResponseSuccess(response, data, null, 201);
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
-    }
-  }
-
-  static async updateFeedback(request: Request, response: Response) {
-    try {
-      const { content, rate } = request.body;
-      const id = request.params.id;
-
-      const isFeedbackExist = await Feedback.findOne({
-        where: {
-          id,
-        },
-        select: {
-          user: {
-            id: true,
-          },
-        },
-      });
-
-      if (!isFeedbackExist) {
-        return response.status(404).json({
-          status: 0,
-          message: "Feedback not found!",
-        });
-      }
-
-      if (isFeedbackExist?.user.id != request.user) {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
-      }
-
-      const data = await Feedback.update(
-        {
-          id,
-        },
-        {
-          content,
-          rate,
-        }
-      );
-
-      return response.status(200).json({
-        status: 1,
-        data,
-        message: "Feedback updated.",
-      });
-    } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
 

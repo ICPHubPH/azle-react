@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Post } from "@/types/model";
-import { Mail, ExternalLink } from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 import { toast } from "sonner";
 import CustomHtmlParser from "./CustomHTMLParser";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PostSectionProps {
   post: Post | null;
@@ -12,7 +12,11 @@ interface PostSectionProps {
 
 export default function PostSection({ post }: PostSectionProps) {
   if (!post) {
-    return <Card><CardContent>No post found.</CardContent></Card>;
+    return (
+      <Card>
+        <CardContent>No post found.</CardContent>
+      </Card>
+    );
   }
 
   return (
