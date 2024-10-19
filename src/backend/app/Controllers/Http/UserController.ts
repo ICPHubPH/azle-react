@@ -189,14 +189,6 @@ export default class UserController {
           emailVerifiedAt: Not(IsNull()),
           role: "student",
         },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          bio: true,
-          avatarUrl: true,
-          bannerUrl: true,
-        },
         skip,
         take,
       });

@@ -229,7 +229,10 @@ export const providerSeeds = async (
         archivedAt: null,
         type: faker.helpers.arrayElement(UserTypes),
         validIdUrl: faker.image.url(),
-        providerVerifiedAt: faker.date.recent().toISOString(),
+        providerVerifiedAt:
+          faker.helpers.arrayElement([0, 1, 2]) === 2
+            ? null
+            : faker.date.recent().toISOString(),
       };
     })
   );
