@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
+import { Feedback } from "../entities/feedback";
+import { Post } from "../entities/post";
+import { User } from "../entities/user";
 import { Database } from "../index";
-import { User } from "Database/entities/user";
 import { feedbackSeeds, postSeeds, userSeeds } from "./seed";
-import { Post } from "Database/entities/post";
-import { Feedback } from "Database/entities/feedback";
 
 export class Seeder {
   private dataSource: DataSource;

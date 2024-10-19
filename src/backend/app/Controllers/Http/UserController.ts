@@ -1,9 +1,8 @@
-import { id } from "azle/src/lib/ic/id";
-import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
+import { User } from "../../../database/entities/user";
 
 // GET all users
 export default class UserController {
@@ -79,32 +78,6 @@ export default class UserController {
       data,
       message: null,
     });
-  }
-
-  static async getSelf(request: Request, response: Response) {
-    try {
-      const user = await User.findOne({
-        where: {
-          id: request.user,
-        }, 
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          role: true,
-          avatarUrl: true,
-          bannerUrl: true,
-        }
-      });
-
-      if (!user) {
-        return httpResponseError(response, null, "Unauthorized!", 404);
-      }
-
-      httpResponseSuccess(response, { user }, null, 200);
-    } catch (error) {
-      httpResponseError(response, null, "Internal Server Error!", 500);
-    }
   }
 
   static async getProviders(request: Request, response: Response) {

@@ -1,20 +1,52 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { toast } from "@/hooks/use-toast";
-import { Bookmark, CalendarDays, Forward, Star, Facebook, Link as LinkIcon } from "lucide-react";
-import { Textarea } from '@/components/ui/textarea';
-import { Post } from '@/types/model';
-import Feedback from '@/components/review/Feedback';
-
+import { Post } from "@/types/model";
+import {
+  Bookmark,
+  CalendarDays,
+  Facebook,
+  Forward,
+  Link as LinkIcon,
+  Star,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PostSummaryCard: React.FC<any> = (post: Post) => {
   const navigate = useNavigate();
 
-  const {id, user, type, createdAt, thumbnail, title, content, feedbacks} = post
+  const { id, user, type, createdAt, thumbnail, title, content, feedbacks } =
+    post;
 
   // comment count is just the number of feedbacks that have a content
   const commentCount = feedbacks.filter((feedback) => feedback.content).length;
@@ -83,7 +115,9 @@ const PostSummaryCard: React.FC<any> = (post: Post) => {
 
   const handleRating = () => {
     // Here you would typically send the rating to your backend
-    console.log(`Submitted rating ${ratingValue} for post ${id} with comment: ${ratingComment}`);
+    console.log(
+      `Submitted rating ${ratingValue} for post ${id} with comment: ${ratingComment}`
+    );
     toast({
       title: "Rating Submitted",
       description: "Thank you for your feedback!",
@@ -98,10 +132,10 @@ const PostSummaryCard: React.FC<any> = (post: Post) => {
     });
   };
 
-  const handleShare = (type: 'copy' | 'facebook') => {
-    if (type === 'copy') {
+  const handleShare = (type: "copy" | "facebook") => {
+    if (type === "copy") {
       navigator.clipboard.writeText(`https://yourwebsite.com/posts/${id}`);
-      
+
       toast({
         title: "Link Copied",
         description: "Post link has been copied to clipboard.",
@@ -189,7 +223,7 @@ const PostSummaryCard: React.FC<any> = (post: Post) => {
           <div className="flex flex-col gap-1 items-center">
             {/* <Badge className="cursor-pointer">Trending</Badge> */}
             <a
-              className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"   
+              className="text-blue-500 text-sm hover:underline underline-offset-2 cursor-pointer"
               onClick={() => navigate(`/posts/${id}`)}
             >
               View post

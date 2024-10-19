@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { User } from "Database/entities/user";
 import { PostCategoryType, UserTypes } from "../../constants";
-import { Post } from "Database/entities/post";
+import { Post } from "../entities/post";
+import { User } from "../entities/user";
 export const legitCreds = [
   {
     avatarUrl:
