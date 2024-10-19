@@ -94,7 +94,9 @@ export const resendOtp = async (email: string) => {
 // Function to get logged-in user details
 export const getCurrentUser = async () => {
   try {
+    console.log("Fetching user details...");
     const response = await axiosInstance.post("/@self");
+    console.log("User details fetched successfully:", response.data);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
