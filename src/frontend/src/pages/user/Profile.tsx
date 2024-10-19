@@ -9,6 +9,7 @@ import Header from '@/components/header/user-header/Header';
 import { AccountSettingsModal } from '@/components/profile/AccountSettingsModal';
 import { EditProfileModal } from '@/components/profile/EditProfileModal';
 import UploadValidId from '@/components/provider-component/UploadValidId';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface User {
   name: string;
@@ -208,6 +209,103 @@ export default function ProfilePage() {
         onSave={handleAccountSettings}
         onDeleteAccount={handleDeleteAccount}
       />
+    </div>
+  );
+}
+
+
+function ProviderProfileSkeleton() {
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="relative">
+        {/* Cover Photo Skeleton */}
+        <Skeleton className="h-64 w-full" />
+
+        {/* Provider Info Overlay Skeleton */}
+        <div className="absolute bottom-0 left-0 right-0 p-6">
+          <div className="max-w-6xl mx-auto flex items-end">
+            <Skeleton className="w-32 h-32 rounded-full" />
+            <div className="ml-6 mb-2 space-y-2">
+              <Skeleton className="h-8 w-48" />
+              <Skeleton className="h-6 w-32" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Main content skeleton */}
+          <div className="w-full lg:w-2/3">
+            <Card className="mb-8">
+              <CardContent className="p-6">
+                <Skeleton className="h-4 w-full mb-4" />
+                <Skeleton className="h-4 w-3/4 mb-4" />
+                <div className="grid grid-cols-2 gap-4">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Tabs defaultValue="details" className="w-full">
+              <TabsList className="w-full justify-start mb-6">
+                <TabsTrigger value="details">Details</TabsTrigger>
+                <TabsTrigger value="scholarship">Scholarship</TabsTrigger>
+              </TabsList>
+              <TabsContent value="details">
+                <Card>
+                  <CardContent className="p-6">
+                    <Skeleton className="h-6 w-1/4 mb-4" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+
+          {/* Sidebar skeleton */}
+          <div className="w-full lg:w-1/3 space-y-6">
+            <Card>
+              <CardContent className="p-6">
+                <Skeleton className="h-6 w-1/2 mb-2" />
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Skeleton key={i} className="h-5 w-5 mr-1" />
+                  ))}
+                  <Skeleton className="h-4 w-16 ml-2" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6 space-y-4">
+                <Skeleton className="h-10 w-full" />
+                <Skeleton className="h-10 w-full" />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <Skeleton className="h-6 w-1/2 mb-2" />
+                <ul className="space-y-2">
+                  <li className="flex items-center">
+                    <Skeleton className="h-6 w-16 mr-2" />
+                    <Skeleton className="h-4 w-24" />
+                  </li>
+                  <li className="flex items-center">
+                    <Skeleton className="h-6 w-16 mr-2" />
+                    <Skeleton className="h-4 w-24" />
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

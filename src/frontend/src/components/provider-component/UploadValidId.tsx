@@ -122,12 +122,12 @@ const UploadValidId = () => {
                 </Label>
               </div>
 
-              <div className="flex justify-end gap-2 items-center">
+              <div className="flex justify-end gap-2 items-center ">
                 <Button
-                  variant={"default"}
+                  variant={"info"}
                   size={"lg"}
                   onClick={uploadImageHandler}
-                  className="flex gap-1 items-center"
+                  className="flex gap-1 items-center "
                 >
                   <Plus /> Upload
                 </Button>
