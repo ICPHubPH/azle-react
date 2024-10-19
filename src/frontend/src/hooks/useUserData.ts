@@ -7,6 +7,7 @@ import {
   getAllStudents,
   getAllProviders,
   archiveUserById,
+  getProviderById,
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -49,6 +50,15 @@ export const useUserByProviders = (page: number, take: number) => {
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: page >= 0 && take > 0,
+  });
+};
+
+export const useProviderById = (id: string) => {
+  return useQuery({
+    queryKey: ["provider", id],
+    queryFn: () => getProviderById(id),
+    staleTime: 5000,
+    enabled: !!id, // Only fetch if id is defined
   });
 };
 
