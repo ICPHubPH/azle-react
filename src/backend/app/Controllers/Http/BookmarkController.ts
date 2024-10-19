@@ -98,6 +98,7 @@ export default class BookmarkController {
             id: true,
           },
         },
+        relations: ["user"],
       });
 
       if (!bookmark) {
@@ -108,10 +109,11 @@ export default class BookmarkController {
         return httpResponseError(response, null, "Unauthorized", 401);
       }
 
-      await Bookmark.delete({ id });
+      await Bookmark.delete({ id: bookmark.id });
 
       httpResponseSuccess(response, null, "Bookmark deleted successfully");
     } catch (error) {
+      console.log(error)
       httpResponseError(response, null, "Internal Server Error", 500);
     }
   }

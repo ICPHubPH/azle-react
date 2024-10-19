@@ -1,14 +1,28 @@
-import CreatePost from './post-form/CreatePost'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { PlusCircle } from "lucide-react"
+import CreatePost from "./post-form/CreatePost";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PlusCircle } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function PostForm() {
   // Replace these with actual user data
-  const userName = "John Doe"
-  const userInitials = "JD"
-  const userAvatarUrl = "/placeholder.svg?height=40&width=40"
+  const { data, isAuthenticated, login, logout } = useAuth();
+
+  const userName = data?.name || "";
+  const userAvatarUrl = data?.avatarUrl || "";
+
+  console.log("User Data:", data);
+
+  const getUserInitials = (name: string) => {
+    const initials = name
+      .split(" ") // Split the name into an array of words
+      .map((word) => word[0]) // Get the first letter of each word
+      .join("") // Join the initials together
+      .toUpperCase(); // Ensure they are uppercase
+    return initials;
+  };
+  const userInitials = getUserInitials(userName);
 
   return (
     <Card className="w-full max-w mx-auto my-8">
@@ -29,24 +43,33 @@ export default function PostForm() {
       <CardContent>
         <div className="space-y-6">
           <p className="text-muted-foreground">
-            Create and manage your posts to connect with students and share your expertise.
+            Create and manage your posts to connect with students and share your
+            expertise.
           </p>
           <div className="bg-secondary p-6 rounded-lg">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-secondary-foreground">Create a New Post</h2>
+              <h2 className="text-xl font-semibold text-secondary-foreground">
+                Create a New Post
+              </h2>
               <CreatePost>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
                   <PlusCircle className="w-4 h-4" />
                   New Post
                 </Button>
               </CreatePost>
             </div>
             <p className="text-sm text-muted-foreground">
-              Click the button above to create a new post. You can add a title, select a scholarship type, upload a thumbnail, and write your content.
+              Click the button above to create a new post. You can add a title,
+              select a scholarship type, upload a thumbnail, and write your
+              content.
             </p>
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

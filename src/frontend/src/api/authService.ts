@@ -78,9 +78,9 @@ export const verifyLoginOtp = async ({ otp, email, token }: {
 };
 
 // Function to resend OTP
-export const resendOtp = async (email: string) => {
+export const resendOtp = async (email: string, t: string) => {
   try {
-    const response = await axiosInstance.post('/auth/resend-otp', { email });
+    const response = await axiosInstance.post('/auth/resend-otp', { email, t });
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -94,7 +94,9 @@ export const resendOtp = async (email: string) => {
 // Function to get logged-in user details
 export const getCurrentUser = async () => {
   try {
+    console.log("Fetching user details...");
     const response = await axiosInstance.post("/@self");
+    console.log("User details fetched successfully:", response.data);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

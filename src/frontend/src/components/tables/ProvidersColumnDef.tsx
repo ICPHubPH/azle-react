@@ -77,6 +77,42 @@ export const providersColumns: ColumnDef<User>[] = [
     ),
   },
   //END EMAIL
+    // DATE JOINED
+    {
+      accessorKey: "createdAt",
+      sortingFn: "datetime",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className="px-0"
+          >
+            Date Joined
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const date = new Date(row.original.createdAt); // Convert to Date object
+        const formattedDate = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+        const formattedTime = date.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+  
+        return (
+          <div className="truncate">
+            {formattedDate} {formattedTime}
+          </div>
+        );
+      },
+    },
+    // END DATE JOINED
   // VALID ID
   {
     accessorKey: "validIdUrl",
@@ -93,29 +129,7 @@ export const providersColumns: ColumnDef<User>[] = [
     ),
   },
   // END VALID ID
-  // DATE JOINED
-  {
-    accessorKey: "createdAt",
-    sortingFn: "datetime",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="px-0"
-        >
-          Date Joined
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <p className="text-sm min-w-[100px]  truncate sm:min-w-none ">
-        {row.original.createdAt}
-      </p>
-    ),
-  },
-  // END DATE JOINED
+
   // STATUS
   {
     accessorKey: "providerVerfiedAt",
@@ -136,7 +150,7 @@ export const providersColumns: ColumnDef<User>[] = [
       const status = row.original.providerVerifiedAt;
 
       return (
-        <Badge variant={status ? "default" : "destructive"}>
+        <Badge variant={status ? "green" : "destructive"}>
           {status ? "Verified" : "Pending"}
         </Badge>
       );

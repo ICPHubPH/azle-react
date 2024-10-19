@@ -1,4 +1,8 @@
-import { verifyLoginOtp, verifyRegistrationOtp } from "@/api/authService";
+import {
+  resendOtp,
+  verifyLoginOtp,
+  verifyRegistrationOtp,
+} from "@/api/authService";
 import {
   Form,
   FormControl,
@@ -12,11 +16,10 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { ToastAction } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -48,19 +51,39 @@ export function OtpVerification() {
   });
   const { toast } = useToast();
 
-  const handleResendOTP = () => {
-    toast({
-      title: "Wait",
-      description: "Friday, February 10, 2023 at 5:57 PM",
-      action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
-    });
+  useEffect(() => {
+    form.reset();
+  }, [otpToken]);
+
+  const handleResendOTP = async () => {
+    try {
+      const result = await resendOtp(location.state.email, otpToken);
+
+      if (result.success == 1) {
+        setOtpToken(result.token);
+        navigate("/otp-verification", {
+          state: {
+            token: otpToken,
+            email: result.user.email,
+            origin: location.state.origin,
+          },
+        });
+      }
+
+      console.log(result.message);
+    } catch (error) {
+      toast({
+        title: "Resend OTP Error",
+        description: "Something went wrong!",
+      });
+    }
   };
 
   const handleVerifyOtp = async ({ otp }: z.infer<typeof FormSchema>) => {
     try {
       if (location.state.origin == "register") {
         const result = await verifyRegistrationOtp({
-          token: location.state.token,
+          token: otpToken,
           email: location.state.email,
           otp,
         });
@@ -73,7 +96,7 @@ export function OtpVerification() {
         }
       } else {
         const result = await verifyLoginOtp({
-          token: location.state.token,
+          token: otpToken,
           email: location.state.email,
           otp,
         });
@@ -90,18 +113,16 @@ export function OtpVerification() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleVerifyOtp)}
-          className="w-full h-full flex flex-col justify-center items-center"
-        >
-          <div className="w-full h-full max-w-md rounded-lg shadow-lg p-6 border">
-            <h2 className="text-2xl font-semibold text-center mb-4">
-              Enter OTP
-            </h2>
-            <p className="text-center mb-6">
-              Please enter the 6-digit code sent to your email.
-            </p>
+      <div className="w-full h-full max-w-md rounded-lg shadow-lg p-6 border">
+        <h2 className="text-2xl font-semibold text-center mb-4">Enter OTP</h2>
+        <p className="text-center mb-6">
+          Please enter the 6-digit code sent to your email.
+        </p>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleVerifyOtp)}
+            className="w-full h-full flex flex-col justify-center items-center"
+          >
             <div className="flex justify-center items-center space-x-2">
               <FormField
                 control={form.control}
@@ -157,20 +178,18 @@ export function OtpVerification() {
                 Verify OTP
               </button>
             </div>
-            <div className="text-center">
-              <p className="text-gray-500 mb-2 text-sm">
-                Didn't receive the code?
-              </p>
-              <button
-                className="hover:underline focus:outline-none text-sm"
-                onClick={handleResendOTP}
-              >
-                Resend OTP
-              </button>
-            </div>
-          </div>
-        </form>
-      </Form>
+          </form>
+        </Form>
+        <div className="text-center">
+          <p className="text-gray-500 mb-2 text-sm">Didn't receive the code?</p>
+          <button
+            className="hover:underline focus:outline-none text-sm"
+            onClick={handleResendOTP}
+          >
+            Resend OTP
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -59,11 +59,11 @@ Route.post("/@self/update", AuthMiddleware.authorize, UserController.updateSelf)
 
 Route.post("/users/:id/bookmarks", AuthMiddleware.authorize,Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
 Route.post("/bookmarks", AuthMiddleware.authorize, BookmarkController.createBookmark); // tested
-Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark);
+Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark); // tested
 
-Route.post("/posts/create", AuthMiddleware.authorize, PostController.create);
-Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById);
-Route.post("/posts/:id/remove", AuthMiddleware.authorize, PostController.deleteById);
+Route.post("/posts/create", AuthMiddleware.authorize, PostController.create); // tested
+Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById); // ?
+Route.post("/posts/:id/remove", AuthMiddleware.authorize, PostController.deleteById); // tested
 
 Route.post("/feedbacks", AuthMiddleware.authorize, FeedbackController.createFeedback);
 Route.post("/feedbacks/:id", AuthMiddleware.authorize, FeedbackController.updateFeedback);
