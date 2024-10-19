@@ -1,19 +1,31 @@
 import Feedback from "@/components/review/Feedback";
-import { Feedback as FeedbackModel, User } from "@/types/model";
+import { Feedback as FeedbackModel } from "@/types/model";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ReviewSectionProps {
-  feedbacks: FeedbackModel[]; // Accept feedbacks as a prop
+  feedbacks: FeedbackModel[];
 }
 
 export default function ReviewSection({ feedbacks }: ReviewSectionProps) {
   return (
-    <div className="min-h-96 h-full w-full md:w-full lg:w-96 flex flex-col gap-2">
-      <h1 className="text-xl tracking-tight font-semibold">Reviews</h1>
-      <div className="flex flex-col justify-start items-center gap-2">
-        {feedbacks.map((feedback) => (
-          <Feedback key={feedback.id} user={feedback.user} feedback={feedback} />
-        ))}
-      </div>
-    </div>
+    <Card className="w-full h-full">
+      <CardHeader>
+        <CardTitle>Reviews</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea className="h-[calc(100vh-200px)] pr-4">
+          {feedbacks.length > 0 ? (
+            <div className="space-y-4">
+              {feedbacks.map((feedback) => (
+                <Feedback key={feedback.id} user={feedback.user} feedback={feedback} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted-foreground">No reviews yet.</p>
+          )}
+        </ScrollArea>
+      </CardContent>
+    </Card>
   );
 }
