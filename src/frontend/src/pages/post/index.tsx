@@ -90,10 +90,6 @@ export default function PostPage() {
               <Bookmark className="h-4 w-4 mr-2" />
               Save
             </Button>
-            <Button variant="outline" size="sm" onClick={handleLike}>
-              <ThumbsUp className="h-4 w-4 mr-2" />
-              Like
-            </Button>
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

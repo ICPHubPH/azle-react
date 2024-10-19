@@ -40,31 +40,8 @@ export function AccountSettingsModal({ isOpen, onClose, onSave, onDeleteAccount 
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-6 py-4">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">New Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter new password"
-              />
-            </div>
-          </div>
-          
-          <Separator />
+        <div className="space-y-6 py-4">        
+        <Separator />
           
           <div className="space-y-4">
             <div className="flex items-center space-x-2 text-red-600">
