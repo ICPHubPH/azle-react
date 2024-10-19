@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { Toaster } from "./components/ui/sonner";
 
 // Pages
 import AuthPage from "./pages/auth";
@@ -21,6 +20,7 @@ import PostPage from "./pages/post";
 
 // Admin Page
 import VerifyAuth from "./components/auth/VerifyAuth";
+import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRouteContext from "./context/ProtectedRouteContext";
 import AdminPage from "./pages/admin/admin-page";

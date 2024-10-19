@@ -66,7 +66,6 @@ Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById); /
 Route.post("/posts/:id/remove", AuthMiddleware.authorize, PostController.deleteById); // tested
 
 Route.post("/feedbacks", AuthMiddleware.authorize, FeedbackController.createFeedback);
-Route.post("/feedbacks/:id", AuthMiddleware.authorize, FeedbackController.updateFeedback);
 Route.post("/feedbacks/:id/remove", AuthMiddleware.authorize, FeedbackController.deleteFeedback);
 
 /*
