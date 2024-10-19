@@ -1,17 +1,15 @@
 "use client";
 import { useState } from "react";
-// import { useQuery } from "@tanstack/react-query"; // Comment this out for now
 import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
-import Header from "@/components/header/user-header/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusCircle, Search } from "lucide-react";
+import Header from "@/components/header/user-header/Header";
 
-import { useAllPost } from "@/hooks/usePostData";
+import { useAllPost } from "@/hooks/usePostData"; // This hook needs to be created
 import { Post } from "@/types/model";
-
 
 export default function PostsFeed() {
   const [activeTab, setActiveTab] = useState<"all" | "scholarship" | "internship">("all");
@@ -36,12 +34,10 @@ export default function PostsFeed() {
       : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     );
 
-  console.log(filteredPosts); // Debugging line
-
   return (
     <>
-      <Header />
       <div className="container mx-auto p-4">
+        <Header/>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Posts Feed</h1>
           <Button onClick={() => console.log("Create post clicked")}>
@@ -49,7 +45,7 @@ export default function PostsFeed() {
           </Button>
         </div>
 
-        <Tabs value={activeTab} onValueChange={(value: string) => setActiveTab(value as "all" | "scholarship" | "internship")}>
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "scholarship" | "internship")}>
           <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="scholarship">Scholarships</TabsTrigger>
@@ -68,7 +64,7 @@ export default function PostsFeed() {
             </div>
             <Select
               value={sortOrder}
-              onValueChange={(value: string) => setSortOrder(value as "latest" | "oldest")}
+              onValueChange={(value) => setSortOrder(value as "latest" | "oldest")}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
@@ -93,14 +89,7 @@ export default function PostsFeed() {
           </TabsContent>
         </Tabs>
 
-        <div className="flex justify-center mt-6">
-          <Button disabled={page === 0} onClick={() => setPage(page - 1)}>
-            Previous
-          </Button>
-          <Button disabled={!data || data.posts.length < take} onClick={() => setPage(page + 1)}>
-            Next
-          </Button>
-        </div>
+        
       </div>
     </>
   );

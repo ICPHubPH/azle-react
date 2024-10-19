@@ -21,7 +21,7 @@ export const useAllPost = (skip: number, take: number) => {
 // get ONE post
 export const usePostById = (id: string) => {
   return useQuery({
-    queryKey: ["post", id],
+    queryKey: ["posts", id],
     queryFn: () => getPostById(id),
     staleTime: 5000,
   });

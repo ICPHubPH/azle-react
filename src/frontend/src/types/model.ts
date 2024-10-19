@@ -1,14 +1,4 @@
 export interface User {
-  joinedDate: string;
-  message: string;
-  rating: number;
-  reviewCount: number;
-  category: string;
-  location: string;
-  coursesCount: string;
-  studentsCount: string;
-  establishedYear: string;
-  tags: any;
   id?: number;
   avatarUrl?: string ;
   bannerUrl?: string;
@@ -35,22 +25,15 @@ export interface Feedback {
   user: User;
 }
 
-// Example Post type definition (adjust as per your actual definition)
 export interface Post {
+  posts: any;
+  comment: any;
   id: number;
+  thumbnail: string;
   title: string;
+  type: string;
   content: string;
   createdAt: string;
-  type: string;
-  thumbnail: string; // Assuming thumbnail is a string URL
-  user: {
-    id: number;
-    name: string;
-    avatar: string; // Assuming user has an avatar
-  };
-  feedbacks: Array<{
-    id: number;
-    content: string;
-    createdAt: string;
-  }>;
+  user: User;
+  feedbacks: Feedback[];
 }

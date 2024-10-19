@@ -78,7 +78,7 @@ export default function ProfilePage() {
               <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
             </Avatar>
             <div className="ml-6 mb-2">
-              <h1 className="text-4xl font-bold bg-red-200">{user.name}</h1>
+              <h1 className="text-4xl font-bold ">{user.name}</h1>
               <p className="text-xl">{user.information.role}</p>
             </div>
           </div>

@@ -13,7 +13,7 @@ export const getAllPosts = async (skip: number, take: number) => {
 
 //GET one post
 export const getPostById = async (id: string) => {
-  const response = await axiosInstance.get(`/post/${id}`);
+  const response = await axiosInstance.get(`/posts/${id}`);
   return response.data;
 };
 

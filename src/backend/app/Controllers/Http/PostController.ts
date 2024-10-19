@@ -66,21 +66,7 @@ export default class PostController {
           id,
           archivedAt: IsNull(),
         },
-        select: {
-          id: true,
-          user: {
-            id: true,
-            name: true,
-            email: true,
-            avatarUrl: true,
-          },
-          title: true,
-          thumbnail: true,
-          content: true,
-          type: true,
-          createdAt: true,
-          updatedAt: true,
-        },
+        relations: ["user", "feedbacks", "feedbacks.user"],
       });
 
       if (!post) {

@@ -55,10 +55,16 @@ const CustomHtmlParser: React.FC<CustomHtmlParserProps> = ({ htmlContent }) => {
     }
   };
   return (
-    <div className="prose">
-      {parse(htmlContent, {
-        replace,
-      })}
+    <div 
+    
+    dangerouslySetInnerHTML={{
+      __html: htmlContent 
+    }}
+    className="prose">
+
+      
+    
+
     </div>
   );
 };
