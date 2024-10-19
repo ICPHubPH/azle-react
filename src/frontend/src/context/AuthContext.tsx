@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setToken(storedToken);
       try {
         getCurrentUser().then((result) => {
-          setData(result.data as User);
+          setData(result.user as User);
         });
       } catch (error) {
         console.error("Failed to decode token", error);
