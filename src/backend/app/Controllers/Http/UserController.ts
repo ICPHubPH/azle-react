@@ -66,16 +66,30 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
+      const {
+        sortOrder = "ASC",
+        type,
+        verified = "true",
+        archived = "false",
+      } = request.query;
+
+      const whereCondition: any = {
+        role: "provider",
+        providerVerifiedAt: verified === "true" ? Not(IsNull()) : IsNull(),
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      if (type) {
+        whereCondition.type = type;
+      }
+
       const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull()),
-          role: "provider",
-          providerVerifiedAt: Not(IsNull()),
-          validIdUrl: Not(IsNull()),
-        },
+        where: whereCondition,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
