@@ -431,9 +431,9 @@ export default class AuthController {
 
   static async resendOtp(request: Request, response: Response) {
     try {
-      const { email } = request.body;
+      const { email, t } = request.body;
 
-      if (!email) {
+      if (!email || !t) {
         return httpResponseError(
           response,
           null,
@@ -466,6 +466,15 @@ export default class AuthController {
           null,
           "Verification code not found",
           404
+        );
+      }
+
+      if (!(await bcryptjs.compare(t, verificationCode.token))){
+        return httpResponseError(
+          response,
+          null,
+          "Invalid token",
+          400
         );
       }
 
