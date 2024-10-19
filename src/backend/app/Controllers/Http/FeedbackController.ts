@@ -8,32 +8,22 @@ export default class FeedbackController {
     try {
       const skip = request.skip;
       const take = request.limit;
-      const postId = request.params.postId;
+      const id = request.params.id;
+
+      const { sortOrder = "ASC" } = request.query;
 
       const data = await Feedback.findAndCount({
         where: {
           post: {
-            id: postId,
+            id,
           },
         },
-        select: {
-          id: true,
-          rate: true,
-          content: true,
-          createdAt: true,
-          updatedAt: true,
-          user: {
-            id: true,
-            name: true,
-            email: true,
-            avatarUrl: true,
-          },
-          post: {
-            id: true,
-          },
-        },
+        relations: ["user"],
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(response, { feedbacks: data[0], count: data[1] });
