@@ -36,30 +36,30 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
       />
     ),
   },
+  // {
+  //   accessorKey: "id",
+  //   header: "Provider",
+  //   cell: ({ row }) => (
+  //     <div className="flex flex-row items-center gap-2 sm:gap-3">
+  //       <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
+  //         <AvatarImage src={row.original.user.avatarUrl} />
+  //         <AvatarFallback>
+  //           {row.original.user.name ? row.original.user.name.charAt(0) : "A"}
+  //         </AvatarFallback>
+  //       </Avatar>
+  //       <div>
+  //         <p className="text-sm truncate max-w-[150px] md:max-w-none">
+  //           {row.original.user.name}
+  //         </p>
+  //         <p className="text-xs truncate max-w-[150px] sm:max-w-none text-muted-foreground">
+  //           {row.original.user.email}
+  //         </p>
+  //       </div>
+  //     </div>
+  //   ),
+  // },
   {
-    accessorKey: "id",
-    header: "Provider",
-    cell: ({ row }) => (
-      <div className="flex flex-row items-center gap-2 sm:gap-3">
-        <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-          <AvatarImage src={row.original.user.avatarUrl} />
-          <AvatarFallback>
-            {row.original.user.name ? row.original.user.name.charAt(0) : "A"}
-          </AvatarFallback>
-        </Avatar>
-        <div>
-          <p className="text-sm truncate max-w-[150px] md:max-w-none">
-            {row.original.user.name}
-          </p>
-          <p className="text-xs truncate max-w-[150px] sm:max-w-none text-muted-foreground">
-            {row.original.user.email}
-          </p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "postTitle",
+    accessorKey: "title",
     header: "Post Title",
     cell: ({ row }) => (
       <p
@@ -69,23 +69,19 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     ),
   },
   {
-    accessorKey: "postType",
+    accessorKey: "type",
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.type;
       return (
-        <Badge variant={status === "internship" ? "default" : "destructive"}>
+        <Badge variant={status === "internship" ? "default" : "blue"}>
           {status === "internship" ? "Active" : "Archived"}
         </Badge>
       );
     },
   },
   {
-    accessorKey: "postType",
-    header: "Post Type",
-  },
-  {
-    accessorKey: "postDate",
+    accessorKey: "createdAt",
     header: "Date Posted",
     cell: ({ row }) => <div className="truncate">{row.original.createdAt}</div>,
   },

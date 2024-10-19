@@ -15,6 +15,7 @@ export const useAllPost = (skip: number, take: number) => {
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: skip >= 0 && take > 0,
+    select: (data) => ({ posts: data.posts, count: data.count }), // Return both data and count
   });
 };
 

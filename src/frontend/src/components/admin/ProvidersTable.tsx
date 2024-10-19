@@ -6,18 +6,17 @@ import { providersColumns } from "../tables/ProvidersColumnDef";
 const ProvidersTable = () => {
   const [page, setPage] = useState(0);
 
-  const take = 10; // Number of items per page
+  const take = 10; 
   const skip = page * take;
 
-  // Assume this API returns both `data` and `total` (total number of rows)
   const { data, isLoading, isError } = useUserByProviders(skip, take);
-  const totalRows = data || 0;
+  const totalRows = data?.count || 0;
 
   return (
     <>
       <DataTable
         columns={providersColumns}
-        data={data || []}
+        data={data?.providers || []}
         page={page}
         pageSize={take}
         totalRows={totalRows}

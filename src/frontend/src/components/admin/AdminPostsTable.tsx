@@ -12,14 +12,15 @@ export default function AdminPostsManagement() {
   const skip = page * take;
 
   const { data, isLoading, isError } = useAllPost(skip, take);
-  const totalRows = data || 0;
+  console.log("Posts Data:", data); // Add this line to log the data
+  const totalRows = data?.count || 0;
 
   return (
     <div className="container mx-auto p-4 space-y-4 flex-grow">
       <h1 className="text-2xl font-bold mb-4">Admin Post Management</h1>
       <DataTable
         columns={postsColumnDefs}
-        data={data || []}
+        data={data?.posts || []}
         page={page}
         pageSize={take}
         totalRows={totalRows}
