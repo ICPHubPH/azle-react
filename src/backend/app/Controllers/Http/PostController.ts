@@ -10,23 +10,29 @@ export default class PostController {
       const skip = request.skip;
       const take = request.limit;
 
-      const {sortOrder = "ASC", type, archived = "false"} = request.query
+      const { sortOrder = "ASC", type, archived = "false" } = request.query;
 
       const whereConditions: any = {
-        archivedAt: archived == "true"? Not(IsNull()) : IsNull(),
-      }
+        archivedAt: archived == "true" ? Not(IsNull()) : IsNull(),
+      };
 
-      if(type){
-        whereConditions.type = type
+      if (type) {
+        whereConditions.type = type;
       }
 
       const data = await Post.findAndCount({
         where: whereConditions,
-        relations: ["user", "feedbacks", "feedbacks.user", "bookmarks", "bookmarks.user"],
+        relations: [
+          "user",
+          "feedbacks",
+          "feedbacks.user",
+          "bookmarks",
+          "bookmarks.user",
+        ],
         skip,
         take,
         order: {
-          id: sortOrder === "DESC"? "DESC" : "ASC",
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
         },
       });
 
@@ -36,7 +42,6 @@ export default class PostController {
     }
   }
 
-
   static async findPostById(request: Request, response: Response) {
     try {
       const id = request.params.id;
@@ -45,7 +50,13 @@ export default class PostController {
         where: {
           id,
         },
-        relations: ["user", "feedbacks", "feedbacks.user", "bookmarks", "bookmarks.user"]
+        relations: [
+          "user",
+          "feedbacks",
+          "feedbacks.user",
+          "bookmarks",
+          "bookmarks.user",
+        ],
       });
 
       if (!post) {
@@ -113,8 +124,10 @@ export default class PostController {
             id: true,
             role: true,
             archivedAt: true,
+            providerVerifiedAt: true,
           },
         },
+        relations: ["user"],
       });
 
       if (!post) {
@@ -129,12 +142,20 @@ export default class PostController {
         return httpResponseError(response, null, "Forbidden!", 403);
       }
 
-      const data = await Post.update(
-        { id },
-        { thumbnail, title, type, content }
-      );
+      await Post.update({ id }, { thumbnail, title, type, content });
 
-      httpResponseSuccess(response, { post: data }, "Post has been updated!");
+      const updatedPost = await Post.findOne({
+        where: {
+          id: post.id
+        },
+        relations: ["user"]
+      });
+
+      httpResponseSuccess(
+        response,
+        { post: updatedPost },
+        "Post has been updated!"
+      );
     } catch (error) {
       console.error(error);
       httpResponseError(response, null, "Internal Server Error", 500);
@@ -154,8 +175,10 @@ export default class PostController {
           user: {
             id: true,
             role: true,
+            providerVerifiedAt: true,
           },
         },
+        relations: ["user"],
       });
 
       if (!post) {
@@ -172,7 +195,7 @@ export default class PostController {
 
       const data = await Post.delete({ id });
 
-      httpResponseSuccess(response, { post: data }, "Post has been deleted");
+      httpResponseSuccess(response, null, "Post has been deleted");
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error", 500);
     }

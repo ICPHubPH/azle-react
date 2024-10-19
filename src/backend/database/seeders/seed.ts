@@ -30,7 +30,7 @@ export const legitCreds: UserInterface[] = [
     bio: "Tech enthusiast and problem solver.",
     email: "kurtddbigtas@gmail.com",
     emailVerifiedAt: "2024-09-15T12:00:00Z",
-    providerVerifiedAt: null,
+    providerVerifiedAt: "2024-09-15T12:00:00Z",
     role: "provider",
     type: null,
     createdAt: "2024-02-15T12:00:00Z",
