@@ -93,15 +93,6 @@ export default class UserController {
           providerVerifiedAt: Not(IsNull()),
           validIdUrl: Not(IsNull()),
         },
-        select: {
-          id: true,
-          avatarUrl: true,
-          bannerUrl: true,
-          name: true,
-          email: true,
-          bio: true,
-          validIdUrl: true,
-        },
         skip,
         take,
       });

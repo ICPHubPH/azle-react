@@ -25,7 +25,7 @@ const User: React.FC = () => {
       const take = 10; // Set the number of providers to fetch
     
       try {
-        const response = await getAllProviders(activeTab, sortOrder, searchQuery, page, take);
+        const response = await getAllProviders( page, take);
         setProviders(response.providers); // Update this line to get providers from response
       } catch (error) {
         setError("Failed to load providers."); // Generic error message
