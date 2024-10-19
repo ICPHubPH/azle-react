@@ -10,7 +10,7 @@ export default class UserController {
     const user = await User.findOneBy({ id: request.user });
 
     if (!user) {
-      return httpResponseError(response, null, "Unauthorized!", 401);
+      return httpResponseError(response, null, "Account not found", 401);
     }
 
     httpResponseSuccess(response, { user }, null, 200);
@@ -191,31 +191,17 @@ export default class UserController {
     }
   }
 
-  // delete account
-  static async deleteById(request: Request, response: Response) {
+  static async deleteUserById(request: Request, response: Response) {
     try {
-      const user = await User.findOne({
-        where: {
-          id: request.user,
-        },
-        select: {
-          role: true,
-        },
-      });
-
-      if (!user) {
-        return httpResponseError(response, null, "Unauthorized!", 401);
-      }
-
       const id = request.params.id;
-      const isUserExists = await User.findOneBy({ id });
+      const userExists = await User.findOneBy({ id });
 
-      if (!isUserExists) {
+      if (!userExists) {
         return httpResponseError(response, null, "User not found!", 404);
       }
 
-      if (isUserExists.id != request.user && user.role != "admin") {
-        return httpResponseError(response, null, "Forbidden!", 403);
+      if (userExists.id === request.user) {
+        return httpResponseError(response, null, "Bad workflow", 403);
       }
 
       const data = await User.delete({ id });
@@ -225,6 +211,15 @@ export default class UserController {
       }
 
       httpResponseSuccess(response, null, "User has been deleted");
+    } catch (error) {
+      return httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+
+  static async deleteSelf(request: Request, response: Response) {
+    try {
+      await User.delete({ id: request.user });
+      httpResponseSuccess(response, null, "Account deleted");
     } catch (error) {
       return httpResponseError(response, null, "Internal Server Error!", 500);
     }
