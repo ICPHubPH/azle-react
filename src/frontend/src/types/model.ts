@@ -26,6 +26,8 @@ export interface Feedback {
 }
 
 export interface Post {
+  posts: any;
+  comment: any;
   id: number;
   thumbnail: string;
   title: string;

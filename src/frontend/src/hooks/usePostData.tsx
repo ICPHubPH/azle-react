@@ -1,7 +1,7 @@
 import {
   createPost,
   deletePost,
-  getAllPost,
+  getAllPosts,
   getPostById,
   getPostsByCategoryType,
 } from "@/api/postService";
@@ -11,7 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 export const useAllPost = (skip: number, take: number) => {
   return useQuery({
     queryKey: ["posts", skip, take],
-    queryFn: () => getAllPost(skip, take),
+    queryFn: () => getAllPosts(skip, take),
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: skip >= 0 && take > 0,
@@ -21,7 +21,7 @@ export const useAllPost = (skip: number, take: number) => {
 // get ONE post
 export const usePostById = (id: string) => {
   return useQuery({
-    queryKey: ["post", id],
+    queryKey: ["posts", id],
     queryFn: () => getPostById(id),
     staleTime: 5000,
   });
