@@ -73,10 +73,7 @@ export default class BookmarkController {
       const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       const id = request.params.id;
@@ -92,30 +89,18 @@ export default class BookmarkController {
       });
 
       if (!bookmark) {
-        return response.status(404).json({
-          status: 0,
-          message: "Bookmarked post not found!",
-        });
+        return httpResponseError(response, null, "Bookmark not found", 404);
       }
 
       if (user.id != bookmark.user.id) {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       await Bookmark.delete({ id });
 
-      return response.status(200).json({
-        status: 1,
-        message: "Bookmark deleted",
-      });
+      httpResponseSuccess(response, null, "Bookmark deleted successfully");
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        message: "Server error!",
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 }
