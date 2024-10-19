@@ -8,6 +8,8 @@ import {
   getAllProviders,
   archiveUserById,
   getProviderById,
+  getUnVerifiedProviders,
+  verifyProviderById,
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -50,6 +52,7 @@ export const useUserByProviders = (page: number, take: number) => {
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: page >= 0 && take > 0,
+    select: (data) => ({ providers: data.providers, count: data.count }), // Return both data and count
   });
 };
 
@@ -61,7 +64,18 @@ export const useProviderById = (id: string) => {
     enabled: !!id, // Only fetch if id is defined
   });
 };
-
+// Hook for fetching unverified providers with sorting
+export const useUnverifiedProviders = (page: number, take: number, sortOrder: string = "ASC") => {
+  return useQuery({
+    queryKey: ["unverifiedProviders", page, take, sortOrder],
+    queryFn: () => getUnVerifiedProviders(page, take, sortOrder),
+    staleTime: 10000,
+    refetchOnWindowFocus: false,
+    enabled: page >= 0 && take > 0,
+    // Optionally, you can select specific fields to return
+    // select: (data) => ({ providers: data.providers, count: data.count }),
+  });
+};
 // DELETE user
 export const useDeleteAccount = () => {
   return useMutation({
@@ -88,5 +102,11 @@ export const useUpdateBio = () => {
 export const useArchiveUser = () => {
   return useMutation({
     mutationFn: (id: string) => archiveUserById(id),
+  });
+};
+
+export const useApproveProvider = () => {
+  return useMutation({
+    mutationFn: (id: string) => verifyProviderById(id),
   });
 };
