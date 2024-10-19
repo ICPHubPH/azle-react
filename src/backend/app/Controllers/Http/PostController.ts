@@ -22,7 +22,7 @@ export default class PostController {
 
       const data = await Post.findAndCount({
         where: whereConditions,
-        relations: ["user", "feedbacks", "feedbacks.user"],
+        relations: ["user", "feedbacks", "feedbacks.user", "bookmarks", "bookmarks.user"],
         skip,
         take,
         order: {
@@ -45,7 +45,7 @@ export default class PostController {
         where: {
           id,
         },
-        relations: ["user", "feedbacks", "feedbacks.user"]
+        relations: ["user", "feedbacks", "feedbacks.user", "bookmarks", "bookmarks.user"]
       });
 
       if (!post) {

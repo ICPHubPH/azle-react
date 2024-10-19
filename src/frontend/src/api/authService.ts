@@ -78,9 +78,9 @@ export const verifyLoginOtp = async ({ otp, email, token }: {
 };
 
 // Function to resend OTP
-export const resendOtp = async (email: string) => {
+export const resendOtp = async (email: string, t: string) => {
   try {
-    const response = await axiosInstance.post('/auth/resend-otp', { email });
+    const response = await axiosInstance.post('/auth/resend-otp', { email, t });
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

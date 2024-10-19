@@ -1,19 +1,19 @@
 import axiosInstance from "./axiosConfig";
 
 //GET all post
-export const getAllPost = async (skip: number, take: number) => {
-  const response = await axiosInstance.get("/posts", {
+export const getAllPosts = async (skip: number, take: number) => {
+  const response = await axiosInstance.get(`/posts`, {
     params: {
-        skip,
-        take
-    }
+      page: skip / take,
+      take,
+    },
   });
   return response.data;
 };
 
 //GET one post
 export const getPostById = async (id: string) => {
-  const response = await axiosInstance.get(`/post/${id}`);
+  const response = await axiosInstance.get(`/posts/${id}`);
   return response.data;
 };
 
