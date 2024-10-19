@@ -50,17 +50,15 @@ Route.post("/posts/:id/feedbacks", Pagination.paginate, FeedbackController.getPo
 |--------------------------------------------------------------------------
 */
 
+Route.post("/@self", AuthMiddleware.authorize, UserController.getSelf); // tested
+Route.post("/@self/delete", AuthMiddleware.authorize, UserController.deleteSelf ); // tested
+Route.post("/@self/upload/valid-id", AuthMiddleware.authorize, UserController.uploadValidIdUrl ); // tested
+Route.post("/@self/upload/avatar", AuthMiddleware.authorize, UserController.uploadAvatarUrl); // tested
+Route.post("/@self/upload/banner", AuthMiddleware.authorize, UserController.uploadBannerUrl); // tested
+Route.post("/@self/update", AuthMiddleware.authorize, UserController.updateSelf); // tested
 
-Route.post("/@self", AuthMiddleware.authorize, UserController.getSelf);
-Route.post("/users/:id/remove", AuthMiddleware.authorize, UserController.deleteById );
-Route.post("/@self/upload/valid-id", AuthMiddleware.authorize, UserController.uploadValidIdUrl );
-Route.post("/@self/upload/avatar", AuthMiddleware.authorize, UserController.uploadAvatarUrl);
-Route.post("/@self/upload/banner", AuthMiddleware.authorize, UserController.uploadBannerUrl);
-Route.post("/@self/update", AuthMiddleware.authorize, UserController.updateSelf);
-Route.post("/@self", AuthMiddleware.authorize, UserController.getSelf);
-
-Route.post("/users/:id/bookmarks",AuthMiddleware.authorize,Pagination.paginate,BookmarkController.getUserBookmarks);
-Route.post("/bookmarks",AuthMiddleware.authorize,BookmarkController.createBookmark);
+Route.post("/users/:id/bookmarks", AuthMiddleware.authorize,Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
+Route.post("/bookmarks", AuthMiddleware.authorize, BookmarkController.createBookmark); // tested
 Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark);
 
 Route.post("/posts/create", AuthMiddleware.authorize, PostController.create);
@@ -76,7 +74,7 @@ Route.post("/feedbacks/:id/remove", AuthMiddleware.authorize, FeedbackController
 | Protected Routes
 |--------------------------------------------------------------------------
 */
-
+Route.post("protected/users/:id/remove", AuthMiddleware.hasAdminAccess, UserController.deleteUserById );
 Route.post("/protected/users/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archiveUserById);
 Route.post("/protected/users/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchiveUserById);
 Route.post("/protected/archived-users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getArchivedUsers);
