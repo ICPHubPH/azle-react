@@ -15,20 +15,6 @@ export default class PostController {
         where: {
           archivedAt: IsNull(),
         },
-        select: {
-          id: true,
-          title: true,
-          content: true,
-          type: true,
-          thumbnail: true,
-          createdAt: true,
-          user: {
-            id: true,
-            name: true,
-            email: true,
-            avatarUrl: true,
-          },
-        },
         skip,
         take,
       });
