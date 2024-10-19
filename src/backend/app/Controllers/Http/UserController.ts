@@ -1,9 +1,8 @@
-import { id } from "azle/src/lib/ic/id";
-import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
+import { User } from "../../../database/entities/user";
 
 // GET all users
 export default class UserController {
@@ -80,7 +79,6 @@ export default class UserController {
       message: null,
     });
   }
-
 
   static async getProviders(request: Request, response: Response) {
     try {

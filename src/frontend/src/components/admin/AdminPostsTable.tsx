@@ -1,8 +1,6 @@
 // src/components/admin/AdminPostsTable.tsx
 
 import { DataTable } from "@/components/tables/data-table";
-import { postsColumnDefs } from "../tables/PostsColumnDef";
-import { useState } from "react";
 import { useAllPost } from "@/hooks/usePostData";
 
 export default function AdminPostsManagement() {
