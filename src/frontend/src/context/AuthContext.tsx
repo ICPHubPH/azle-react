@@ -1,37 +1,64 @@
-// AuthContext.tsx
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { getCurrentUser } from "@/api/authService";
+import { User } from "@/types/model";
+import React, { createContext, useEffect, useState } from "react";
 
-// Define the type for the AuthContext value
-interface AuthContextType {
-  isAuthenticated: boolean | null;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean | null>>;
-  loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+export interface AuthContextType {
+  token: string | null;
+  data: User | null;
+  login: (token: string) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
 }
 
-// Create the AuthContext with an initial value of undefined
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [token, setToken] = useState<string | null>(null);
+  const [data, setData] = useState<User | null>(null);
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null represents the initial loading state
-  const [loading, setLoading] = useState<boolean>(false);
-
+  // Effect to load token from localStorage and decode it
   useEffect(() => {
-    // Simulate an asynchronous check for authentication
-    const checkAuthStatus = () => {
-      const token = localStorage.getItem('token');
-      setIsAuthenticated(!!token); // Update the authentication status based on the presence of a token
-    };
-
-    checkAuthStatus();
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      try {
+        getCurrentUser().then((result) => {
+          setData(result.data as User);
+        });
+      } catch (error) {
+        console.error("Failed to decode token", error);
+      }
+    }
   }, []);
 
+  const login = (token: string) => {
+    localStorage.setItem("token", token);
+    setToken(token);
+    try {
+      getCurrentUser().then((result) => {
+        setData(result.data as User);
+      });
+    } catch (error) {
+      console.error("Failed to decode token", error);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setData(null);
+  };
+
+  const isAuthenticated = !!token;
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, loading, setLoading }}>
+    <AuthContext.Provider
+      value={{ token, data, login, logout, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );

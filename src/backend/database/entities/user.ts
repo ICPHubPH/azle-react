@@ -1,12 +1,12 @@
 import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from "typeorm";
 import { UserRole } from "../../constants";
 import { Bookmark } from "./bookmark";
@@ -52,7 +52,7 @@ export class User extends BaseEntity {
   role: string;
 
   @Column({ nullable: true, type: "text" })
-  type: string;
+  type: string | null;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -17,6 +17,7 @@ import { getProviderById } from "@/api/userService"; // Import the new service f
 export default function ProviderProfile() {
   const { id } = useParams<{ id: string }>(); // Specify the type for useParams
   const navigate = useNavigate();
+
   const [provider, setProvider] = useState<User | null>(null);
   const [loading, setLoading] = useState(true); // To handle loading state
 
