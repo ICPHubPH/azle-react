@@ -13,7 +13,7 @@ export default function ProvidersFeed() {
   const [activeTab, setActiveTab] = useState<"all" | "school" | "corporate" | "government">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
-[
+
   const [loading, setLoading] = useState(true);
   const [providers, setProviders] = useState<User[]>([]); // State for providers
 
