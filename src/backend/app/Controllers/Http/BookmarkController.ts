@@ -46,20 +46,14 @@ export default class BookmarkController {
       const { postId } = request.body;
 
       if (!user) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       if (user.role == "admin") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Forbidden!", 403);
       }
 
-      const data = await Bookmark.insert({
+      const bookmark = await Bookmark.insert({
         post: {
           id: postId,
         },
@@ -68,17 +62,9 @@ export default class BookmarkController {
         },
       });
 
-      return response.status(201).json({
-        status: 1,
-        data,
-        message: null,
-      });
+      httpResponseSuccess(response, { bookmark }, "Bookmarked successfully");
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
