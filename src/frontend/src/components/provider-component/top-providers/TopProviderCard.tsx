@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom"; 
 import { User } from "@/types/model";
 
-
+const DEFAULT_BANNER_URL = "path/to/default-banner-url.jpg"; // Define your default URL
+const DEFAULT_AVATAR_URL = "path/to/default-avatar-url.jpg"; // Define your default URL
 
 const TopProviderCard: React.FC<{ provider: User }> = ({ provider }) => {
   const navigate = useNavigate();
@@ -24,13 +25,13 @@ const TopProviderCard: React.FC<{ provider: User }> = ({ provider }) => {
       <CardHeader className="p-0">
         <div className="relative h-48">
           <img
-            src={bannerUrl || "default-banner-url.jpg"} // Fallback for banner
+            src={bannerUrl || DEFAULT_BANNER_URL} // Use constant for default banner
             alt={`${name}'s banner`} // Improved alt text for accessibility
             className="w-full h-full object-cover"
           />
           <Avatar className="absolute -translate-y-[50%] left-6 h-[5rem] w-[5rem] border-4 border-background lg:h-[7rem] lg:w-[7rem]">
             <AvatarImage 
-              src={avatarUrl || "default-avatar-url.jpg"} 
+              src={avatarUrl || DEFAULT_AVATAR_URL} // Use constant for default avatar
               alt={`${name}'s avatar`} // Improved alt text for accessibility
             />
             <AvatarFallback>{name.charAt(0)}</AvatarFallback> {/* Fallback uses the first letter of the name */}
