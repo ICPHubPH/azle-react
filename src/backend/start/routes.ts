@@ -16,6 +16,9 @@ const Route = Router();
 |--------------------------------------------------------------------------
 */
 
+// testing API
+Route.post("/test", AuthMiddleware.hasAdminAccess, UserController.test);
+
 Route.get("/", ApisController.landing);
 
 Route.get("/greet", ApisController.greet);
@@ -30,20 +33,16 @@ Route.post("/auth/verify-register", AuthController.verifyFromRegister); // teste
 Route.post("/auth/verify-login", AuthController.verifyFromLogin); // tested
 Route.post("/auth/resend-otp", AuthController.resendOtp); // tested
 
-Route.get("/users", Pagination.paginate, UserController.getAll); // tested
-Route.get("/users/:id", UserController.findById); // tested
+Route.get("/users", Pagination.paginate, UserController.getUsers); // tested
+Route.get("/users/:id", UserController.findUserById); // tested
 Route.get("/providers", Pagination.paginate, UserController.getProviders); // tested
 Route.get("/providers/:id", UserController.getProviderById); // tested
-Route.get("/students", Pagination.paginate, UserController.getStudents);
+Route.get("/students", Pagination.paginate, UserController.getStudents); // tested
 
-Route.get("/posts", Pagination.paginate, PostController.getAll);
-Route.get("/posts/:id", PostController.findById);
-Route.get("/posts/:type/category", PostController.findByCategoryType);
-Route.post("/posts/:id/feedbacks", Pagination.paginate, FeedbackController.getPostFeedbacks );
+Route.get("/posts", Pagination.paginate, PostController.getPosts); // tested
+Route.get("/posts/:id", PostController.findPostById); // tested
+Route.post("/posts/:id/feedbacks", Pagination.paginate, FeedbackController.getPostFeedbacks ); // tested
 
-
-// testing email sending, change recipient in the controller
-Route.post("/test", AuthMiddleware.hasAdminAccess, UserController.test);
 
 /*
 |--------------------------------------------------------------------------

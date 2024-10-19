@@ -16,7 +16,7 @@ export default class UserController {
     httpResponseSuccess(response, { user }, null, 200);
   }
 
-  static async getAll(request: Request, response: Response) {
+  static async getUsers(request: Request, response: Response) {
     try {
       const skip = request.skip;
       const take = request.limit;
@@ -42,7 +42,7 @@ export default class UserController {
   }
 
   // GET one user
-  static async findById(request: Request, response: Response) {
+  static async findUserById(request: Request, response: Response) {
     try {
       const id = request.params.id;
 
