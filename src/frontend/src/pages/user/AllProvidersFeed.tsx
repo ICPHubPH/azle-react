@@ -1,50 +1,82 @@
-import { useState, useEffect } from "react"; 
+"use client";
+
+import { useState, useEffect } from "react"; // Import useEffect
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { PlusCircle, Search } from "lucide-react";
 import Header from "@/components/header/user-header/Header";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
-import { SkeletonCard } from "@/components/ui/skeleton"; 
+import { SkeletonCard } from "@/components/ui/skeleton"; // Import your SkeletonCard
 import { User } from "@/types/model";
-import { getAllProviders } from "@/api/userService"; // Import your userService
 
 export default function ProvidersFeed() {
-  const [activeTab, setActiveTab] = useState<"all" | "school" | "corporate" | "government">("all");
+  const [activeTab, setActiveTab] = useState<
+    "all" | "school" | "corporate" | "government"
+  >("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
+  const [loading, setLoading] = useState(true); // Loading state
 
-  const [loading, setLoading] = useState(true);
-  const [providers, setProviders] = useState<User[]>([]); // State for providers
+  const filteredProviders: User[] = [
+    {
+      id: 2,
+      avatarUrl: "https://avatars.githubusercontent.com/u/53380626",
+      bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+      name: "Gene Schmidt",
+      organizationName: null,
+      bio: "Solitudo in defluo colligo vomica sophismata cura.",
+      email: "Henri96@yahoo.com",
+      emailVerifiedAt: "2024-10-16T09:26:15.474Z",
+      providerVerifiedAt: null,
+      role: "provider",
+      createdAt: "2024-03-05T13:04:38.457Z",
+      updatedAt: "2024-10-16T13:16:26.688Z",
+      archivedAt: null,
+      type: "school",
+    },
+    {
+      id: 3,
+      avatarUrl: "https://avatars.githubusercontent.com/u/53380626",
+      bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+      name: "Gene Schmidt 3",
+      organizationName: null,
+      bio: "Solitudo in defluo colligo vomica sophismata cura.",
+      email: "Henri96@yahoo.com",
+      emailVerifiedAt: "2024-10-16T09:26:15.474Z",
+      providerVerifiedAt: null,
+      role: "provider",
+      createdAt: "2024-03-05T13:04:38.457Z",
+      updatedAt: "2024-10-16T13:16:26.688Z",
+      archivedAt: null,
+      type: "school",
+    },
+  ]
+    .filter(
+      (provider) =>
+        activeTab === "all" || provider.type.toLowerCase() === activeTab
+    )
+    .filter(
+      (provider) =>
+        provider.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        provider.bio.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-  
-
+  // Simulate loading data
   useEffect(() => {
-    const fetchProviders = async () => {
-      setLoading(true);
-      try {
-        // Fetch providers based on tab and sortOrder (filtering can also be done in backend)
-        const response = await getAllProviders( 1, 10); // Pass filters to your API
-        setProviders(response.providers); // Adjust based on your API response
-      } catch (error) {
-        console.error("Failed to fetch providers:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading to false after 2 seconds
+    }, 2000);
 
-    fetchProviders();
-  }, [activeTab, sortOrder, searchQuery]); // Trigger when tab, sort order or search query changes
-
-  const filteredProviders: User[] = providers
-  .filter((provider) => 
-    activeTab === "all" || (provider.type && provider.type.toLowerCase() === activeTab) // Add null check for provider.type
-  )
-  .filter((provider) =>
-    provider.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (provider.bio && provider.bio.toLowerCase().includes(searchQuery.toLowerCase())) // Add null check for provider.bio
-  );
-
+    return () => clearTimeout(timer); // Cleanup
+  }, []);
 
   return (
     <>
@@ -54,7 +86,10 @@ export default function ProvidersFeed() {
           <h1 className="text-2xl font-bold">Providers Feed</h1>
         </div>
 
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as typeof activeTab)}>
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) => setActiveTab(value as typeof activeTab)}
+        >
           <TabsList className="grid w-full grid-cols-4 mb-6">
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="school">Schools</TabsTrigger>
@@ -73,9 +108,12 @@ export default function ProvidersFeed() {
               />
             </div>
             <Select
-              onValueChange={(value) => setSortOrder(value as "latest" | "oldest")}
+              value={sortOrder}
+              onValueChange={(value) =>
+                setSortOrder(value as "latest" | "oldest")
+              }
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -88,14 +126,60 @@ export default function ProvidersFeed() {
           <TabsContent value="all" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {loading
-                ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
-                : filteredProviders.map((provider) => (
-                    <TopProviderCard key={provider.id} provider={provider} />
+                ? Array.from({ length: 6 }).map(
+                    (
+                      _,
+                      index // Display 6 skeletons
+                    ) => <SkeletonCard key={index} />
+                  )
+                : filteredProviders.map((provider: User) => (
+                    <TopProviderCard provider={provider} />
                   ))}
             </div>
           </TabsContent>
 
-          {/* Repeat TabsContent for school, corporate, government as needed */}
+          <TabsContent value="school" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders
+                    .filter(
+                      (provider) => provider.type?.toLowerCase() === "school"
+                    )
+                    .map((provider) => <TopProviderCard provider={provider} />)}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="corporate" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders
+                    .filter(
+                      (provider) => provider.type?.toLowerCase() === "corporate"
+                    )
+                    .map((provider) => <TopProviderCard provider={provider} />)}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="government" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {loading
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonCard key={index} />
+                  ))
+                : filteredProviders
+                    .filter(
+                      (provider) =>
+                        provider.type?.toLowerCase() === "government"
+                    )
+                    .map((provider) => <TopProviderCard provider={provider} />)}
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
     </>
