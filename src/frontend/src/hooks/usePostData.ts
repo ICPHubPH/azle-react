@@ -1,4 +1,5 @@
 import {
+  archivePostById,
   createPost,
   deletePost,
   getAllPost,
@@ -67,5 +68,12 @@ export const useCreatePost = () => {
 export const useDeletePost = () => {
     return useMutation({
         mutationFn: async (id:string) => deletePost(id)
+    })
+}
+
+//Archive post
+export const useArchivePost = () => {
+    return useMutation({
+        mutationFn: async (id:string) => archivePostById(id)
     })
 }

@@ -53,3 +53,10 @@ export const deletePost = async (id: string): Promise<void> => {
   const response = await axiosInstance.post(`/posts/${id}/remove`);
   return response.data;
 };
+
+//Archive Post
+export const archivePostById = async (id: string) => {
+  const response = await axiosInstance.post(`/protected/posts/${id}/archive`);
+  return response.data;
+};
+

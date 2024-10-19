@@ -32,6 +32,7 @@ export interface Post {
   type: string;
   content: string;
   createdAt: string;
+  archivedAt?: string | null;
   user: User;
   feedbacks: Feedback[];
 }

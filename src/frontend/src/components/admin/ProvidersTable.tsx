@@ -1,15 +1,40 @@
-import { useUserByProviders } from "@/hooks/useUserData";
+import { useUnverifiedProviders, useUserByProviders } from "@/hooks/useUserData";
 import { useState } from "react";
 import { DataTable } from "../tables/data-table";
 import { providersColumns } from "../tables/ProvidersColumnDef";
 
-const ProvidersTable = () => {
+
+const VerfiedProvidersTable = () => {
   const [page, setPage] = useState(0);
 
   const take = 10; 
   const skip = page * take;
 
   const { data, isLoading, isError } = useUserByProviders(skip, take);
+  console.log("Verified Providers:", data); // Add this line to log the data
+  const totalRows = data?.count || 0;
+
+  return (
+    <>
+      <DataTable
+        columns={providersColumns}
+        data={data?.providers || []}
+        page={page}
+        pageSize={take}
+        totalRows={totalRows}
+        onPageChange={setPage}
+      />
+    </>
+  );
+};
+const UnverifiedProvidersTable = () => {
+  const [page, setPage] = useState(0);
+
+  const take = 10; 
+  const skip = page * take;
+
+  const { data, isLoading, isError } = useUnverifiedProviders(skip, take);
+  console.log("Unverified Providers:", data); // Add this line to log the data
   const totalRows = data?.count || 0;
 
   return (
@@ -26,4 +51,5 @@ const ProvidersTable = () => {
   );
 };
 
-export default ProvidersTable;
+export { VerfiedProvidersTable, UnverifiedProvidersTable }
+

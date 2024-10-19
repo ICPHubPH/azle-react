@@ -8,6 +8,7 @@ import {
   getAllProviders,
   archiveUserById,
   getProviderById,
+  getUnVerifiedProviders,
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -50,6 +51,7 @@ export const useUserByProviders = (page: number, take: number) => {
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: page >= 0 && take > 0,
+    select: (data) => ({ providers: data.providers, count: data.count }), // Return both data and count
   });
 };
 
@@ -59,6 +61,18 @@ export const useProviderById = (id: string) => {
     queryFn: () => getProviderById(id),
     staleTime: 5000,
     enabled: !!id, // Only fetch if id is defined
+  });
+};
+
+// Unverfied Providers
+export const useUnverifiedProviders = (page: number, take: number) => {
+  return useQuery({
+    queryKey: ["providers", page, take],
+    queryFn: () => getUnVerifiedProviders(page, take),
+    staleTime: 10000,
+    refetchOnWindowFocus: false,
+    enabled: page >= 0 && take > 0,
+    // select: (data) => ({ providers: data.providers, count: data.count }), // Return both data and count
   });
 };
 

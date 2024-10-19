@@ -40,6 +40,17 @@ export const getAllProviders = async (page: number, take: number) => {
   return response.data;
 };
 
+//Verified Providers
+export const getUnVerifiedProviders = async (page: number, take: number) => {
+  const response = await axiosInstance.post("/protected/non-verified-providers", {
+    params: {
+      page,
+      take,
+    },
+  });
+  return response.data;
+};
+
 export const getProviderById = async (id: string) => {
   try {
     const response = await axiosInstance.get(`/providers/${id}`);

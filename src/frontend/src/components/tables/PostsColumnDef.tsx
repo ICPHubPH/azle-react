@@ -8,12 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Checkbox } from "../ui/checkbox";
 import { Badge } from "../ui/badge";
+import { useArchivePost } from "@/hooks/usePostData";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
 
 export const postsColumnDefs: ColumnDef<Post>[] = [
   {
@@ -69,21 +71,82 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     ),
   },
   {
-    accessorKey: "type",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.type;
+    accessorKey: "archivedAt",
+    header: ({ column }) => {
       return (
-        <Badge variant={status === "internship" ? "default" : "blue"}>
-          {status === "internship" ? "Active" : "Archived"}
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0 hover:bg-none"
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    sortingFn: "alphanumeric",
+    cell: ({ row }) => {
+      const status = row.original.archivedAt;
+      return (
+        <Badge variant={status === null ? "default" : "blue"}>
+          {status === null ? "Active" : "Archived"}
         </Badge>
       );
     },
   },
   {
+    accessorKey: "type",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0 hover:bg-none"
+        >
+          Type
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    sortingFn: "alphanumeric",
+    cell: ({ row }) => {
+      const status = row.original.type;
+      return <Badge variant={"outline"}>{row.original.type}</Badge>;
+    },
+  },
+  {
     accessorKey: "createdAt",
-    header: "Date Posted",
-    cell: ({ row }) => <div className="truncate">{row.original.createdAt}</div>,
+    sortingFn: "datetime",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0"
+        >
+          Date Posted
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt); // Convert to Date object
+      const formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      const formattedTime = date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      return (
+        <div className="truncate">
+          {formattedDate} {formattedTime}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "postThumbnailSource",
@@ -94,11 +157,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
           View Thumbnail
         </DialogTrigger>
         <DialogContent className="w-full max-w-lg">
-          <img
-            className="w-full"
-            src={row.original.thumbnail}
-            alt="id"
-          />
+          <img className="w-full" src={row.original.thumbnail} alt="id" />
         </DialogContent>
       </Dialog>
     ),
@@ -106,21 +165,40 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem>Suspend</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Archive</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    cell: ({ row }) => {
+      const { mutate: archivePost } = useArchivePost();
+      const queryClient  = useQueryClient();
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>View</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                archivePost(row.original.id!.toString(),{
+                  onSuccess: () => {
+                    toast({
+                      title: "Post Archived",
+                      description: "The post has been successfully archived.",
+                      duration: 3000, // Optional: Set duration for how long the toast stays
+                    });
+                    queryClient.invalidateQueries({ queryKey: ["posts"] });
+                  },
+                });
+              }}
+            >
+              Archive
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];

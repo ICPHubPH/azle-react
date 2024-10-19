@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StudentsTable from "./StudentsTable";
-import ProvidersTable from "./ProvidersTable";
+import {UnverifiedProvidersTable, VerfiedProvidersTable} from "./ProvidersTable";
 
 export default function AdminUserManagement() {
   const [activeTab, setActiveTab] = useState("providers");
@@ -11,15 +11,21 @@ export default function AdminUserManagement() {
       <h1 className="text-2xl font-bold mb-4">Admin User Management</h1>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="w-full sm:w-auto">
-          <TabsTrigger value="providers" className="flex-1 sm:flex-none">
-            Providers
+          <TabsTrigger value="verifiedProviders" className=" sm:flex-none">
+            Verified Providers
           </TabsTrigger>
-          <TabsTrigger value="students" className="flex-1 sm:flex-none">
+          <TabsTrigger value="unverifiedProviders" className=" sm:flex-none">
+            Unverified Providers
+          </TabsTrigger>
+          <TabsTrigger value="students" className=" sm:flex-none">
             Students
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="providers" className="mt-4">
-          <ProvidersTable/>
+        <TabsContent value="verifiedProviders" className="mt-4">
+          <VerfiedProvidersTable />
+        </TabsContent>
+        <TabsContent value="unverifiedProviders" className="mt-4">
+          <UnverifiedProvidersTable/>
         </TabsContent>
         <TabsContent value="students" className="mt-4">
           <StudentsTable />

@@ -253,7 +253,7 @@ export default class AdminController {
       const data = await User.findAndCount({
         where: {
           archivedAt: IsNull(),
-          providerVerifiedAt: Not(IsNull()),
+          providerVerifiedAt: IsNull(),
         },
         skip,
         take,
