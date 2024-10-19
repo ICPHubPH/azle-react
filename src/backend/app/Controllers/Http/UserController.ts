@@ -10,36 +10,21 @@ export default class UserController {
     const user = await User.findOneBy({ id: request.user });
 
     if (!user) {
-      return httpResponseError(response, null, "Unauthorized!", 401);
+      return httpResponseError(response, null, "Account not found", 401);
     }
 
     httpResponseSuccess(response, { user }, null, 200);
   }
 
-  static async getAll(request: Request, response: Response) {
+  static async getUsers(request: Request, response: Response) {
     try {
       const skip = request.skip;
       const take = request.limit;
-
-      console.log("ln12", request.user);
 
       const data = await User.findAndCount({
         where: {
           archivedAt: IsNull(),
           emailVerifiedAt: Not(IsNull()),
-        },
-        select: {
-          id: true,
-          name: true,
-          avatarUrl: true,
-          bio: true,
-          email: true,
-          role: true,
-          bannerUrl: true,
-          createdAt: true,
-          updatedAt: true,
-          emailVerifiedAt: true,
-          organizationName: true,
         },
         skip,
         take,
@@ -57,27 +42,23 @@ export default class UserController {
   }
 
   // GET one user
-  static async findById(request: Request, response: Response) {
-    const id = request.params.id;
+  static async findUserById(request: Request, response: Response) {
+    try {
+      const id = request.params.id;
 
-    const data = await User.findOneBy({
-      id,
-      archivedAt: IsNull(),
-      emailVerifiedAt: Not(IsNull()),
-    });
-
-    if (!data) {
-      response.status(404).json({
-        status: 0,
-        message: "User not found!",
+      const user = await User.findOneBy({
+        id,
+        archivedAt: IsNull(),
+        emailVerifiedAt: Not(IsNull()),
       });
-    }
 
-    response.status(200).json({
-      status: 1,
-      data,
-      message: null,
-    });
+      if (!user) {
+        return httpResponseError(response, null, "User not found!", 404);
+      }
+      httpResponseSuccess(response, { user }, null, 200);
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error!", 500);
+    }
   }
 
   static async getProviders(request: Request, response: Response) {
@@ -85,16 +66,32 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
+      const {
+        sortOrder = "ASC",
+        type,
+        verified = "true",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereCondition: any = {
+        role: "provider",
+        providerVerifiedAt: verified === "true" ? Not(IsNull()) : IsNull(),
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      if (type) {
+        whereCondition.type = type;
+      }
+
       const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull()),
-          role: "provider",
-          providerVerifiedAt: Not(IsNull()),
-          validIdUrl: Not(IsNull()),
-        },
+        where: whereCondition,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
@@ -104,43 +101,31 @@ export default class UserController {
         200
       );
     } catch (error) {
-      console.log("78: ", error);
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
 
   static async getProviderById(request: Request, response: Response) {
     try {
-        const id = request.params.id;
+      const id = request.params.id;
 
-        const provider = await User.findOne({
-            where: {
-                id: id,
-                role: "provider",
-                // providerVerifiedAt: Not(IsNull()),
-                // validIdUrl: Not(IsNull()),
-            },
-            select: {
-                id: true,
-                avatarUrl: true,
-                bannerUrl: true,
-                name: true,
-                email: true,
-                bio: true,
-                validIdUrl: true,
-            },
-        });
+      const provider = await User.findOne({
+        where: {
+          id: id,
+          role: "provider",
+        },
+      });
 
-        if (!provider) {
-            return response.status(404).json({ message: "Provider not found" });
-        }
+      if (!provider) {
+        return httpResponseError(response, null, "Provider not found!", 404);
+      }
 
-        return httpResponseSuccess(response, provider, null, 200);
+      return httpResponseSuccess(response, provider, null, 200);
     } catch (error) {
-        console.log("Error fetching provider: ", error);
-        return httpResponseError(response, null, "Internal Server Error!", 500);
+      console.log("Error fetching provider: ", error);
+      return httpResponseError(response, null, "Internal Server Error!", 500);
     }
-}
+  }
 
   static async getNonVerifiedProviders(request: Request, response: Response) {
     try {
@@ -153,15 +138,6 @@ export default class UserController {
           archivedAt: IsNull(),
           providerVerifiedAt: IsNull(),
           emailVerifiedAt: Not(IsNull()),
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          avatarUrl: true,
-          bannerUrl: true,
-          bio: true,
-          validIdUrl: true,
         },
         skip,
         take,
@@ -183,14 +159,25 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
+      const {
+        sortOrder = "ASC",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereConditions: any = {
+        role: "student",
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
+
       const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull()),
-          role: "student",
-        },
+        where: whereConditions,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
@@ -204,72 +191,48 @@ export default class UserController {
     }
   }
 
-  // delete account
-  static async deleteById(request: Request, response: Response) {
+  static async deleteUserById(request: Request, response: Response) {
     try {
-      const user = await User.findOne({
-        where: {
-          id: request.user,
-        },
-        select: {
-          role: true,
-        },
-      });
-
-      if (!user) {
-        return response.status(401).json({
-          success: 0,
-          message: "Unauthorized!",
-        });
-      }
-
       const id = request.params.id;
-      const isUserExists = await User.findOneBy({ id });
+      const userExists = await User.findOneBy({ id });
 
-      if (!isUserExists) {
-        return response.status(404).json({
-          success: 0,
-          data: null,
-          message: "User not found!",
-        });
+      if (!userExists) {
+        return httpResponseError(response, null, "User not found!", 404);
       }
 
-      if (isUserExists.id != request.user && user.role != "admin") {
-        return response.status(403).json({
-          success: 0,
-          data: null,
-          message: "Forbidden!",
-        });
+      if (userExists.id === request.user) {
+        return httpResponseError(response, null, "Bad workflow", 403);
       }
 
       const data = await User.delete({ id });
 
       if (!data.affected || data.affected == 0) {
-        response.status(400).json({
-          status: 0,
-          message: "User doesn't exist!",
-        });
+        return httpResponseError(response, null, "User not found!", 404);
       }
 
-      response.status(200).json({
-        status: 1,
-        message: "User has been deleted!",
-      });
+      httpResponseSuccess(response, null, "User has been deleted");
     } catch (error) {
-      return response.status(500).json({
-        success: 0,
-        message: "Server error!",
-      });
+      return httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+
+  static async deleteSelf(request: Request, response: Response) {
+    try {
+      await User.delete({ id: request.user });
+      httpResponseSuccess(response, null, "Account deleted");
+    } catch (error) {
+      return httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
 
   // for test
   static async deleteMany(request: Request, response: Response) {
-    await User.clear();
-    response.status(200).json({
-      status: 1,
-      message: "Users deleted.",
-    });
+    try {
+      await User.clear();
+      httpResponseSuccess(response, null, "All users have been deleted");
+    } catch (error) {
+      return httpResponseError(response, null, "Internal Server Error!", 500);
+    }
   }
 
   // Need to replace ID with the actual user ID coming from the request (req.user)
@@ -278,10 +241,7 @@ export default class UserController {
       const { validIdUrl } = request.body;
 
       if (!validIdUrl) {
-        return response.status(400).json({
-          status: 0,
-          message: "Invalid ID URL!",
-        });
+        return httpResponseError(response, null, "ID URL is required", 400);
       }
 
       const user = await User.findOneBy({
@@ -289,32 +249,27 @@ export default class UserController {
       });
 
       if (!user) {
-        return response.status(404).json({
-          status: 0,
-          message: "User not found!",
-        });
+        return httpResponseError(response, null, "Bad request", 400);
       }
 
       if (user.role != "provider") {
-        return response.status(403).json({
-          status: 0,
-          message: "Only providers can upload ID URLs.",
-        });
+        return httpResponseError(
+          response,
+          null,
+          "Only providers can upload ID URLs.",
+          403
+        );
       }
 
       user.validIdUrl = validIdUrl;
       await User.save(user);
-      response.status(200).json({
-        status: 1,
-        message: "Valid ID URL updated.",
-        user,
-      });
+      httpResponseSuccess(
+        response,
+        { user },
+        "Valid ID URL saved successfully"
+      );
     } catch (error: any) {
-      console.log("LN176", error);
-      response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
+      return httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
 
@@ -324,10 +279,7 @@ export default class UserController {
       const { avatarUrl } = request.body;
 
       if (!avatarUrl) {
-        return response.status(400).json({
-          status: 0,
-          message: "Invalid avatar URL!",
-        });
+        return httpResponseError(response, null, "Invalid avatar URL!", 400);
       }
 
       const user = await User.findOneBy({
@@ -335,40 +287,26 @@ export default class UserController {
       });
 
       if (!user) {
-        return response.status(404).json({
-          status: 0,
-          message: "User not found!",
-        });
+        return httpResponseError(response, null, "Bad request", 400);
       }
 
       user.avatarUrl = avatarUrl;
       await User.save(user);
-      response.status(200).json({
-        status: 1,
-        message: "Avatar URL updated.",
-        user,
-      });
+
+      httpResponseSuccess(response, { user }, "Avatar URL saved successfully");
     } catch (error: any) {
       console.log("LN226", error);
-      response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
   // Need to replace ID with the actual user ID coming from the request (req.user)
   static async uploadBannerUrl(request: Request, response: Response) {
     try {
-      console.log("req.user", request.user);
-
       const { bannerUrl } = request.body;
 
       if (!bannerUrl) {
-        return response.status(400).json({
-          status: 0,
-          message: "Invalid banner URL!",
-        });
+        return httpResponseError(response, null, "Banner URL is required", 400);
       }
 
       const user = await User.findOneBy({
@@ -376,25 +314,16 @@ export default class UserController {
       });
 
       if (!user) {
-        return response.status(404).json({
-          status: 0,
-          message: "User not found!",
-        });
+        return httpResponseError(response, null, "Bad request", 400);
       }
 
       user.bannerUrl = bannerUrl;
       await User.save(user);
-      response.status(200).json({
-        status: 1,
-        message: "Banner URL updated.",
-        user,
-      });
+
+      httpResponseSuccess(response, { user }, "Banner URL saved successfully");
     } catch (error: any) {
       console.log("LN280", error);
-      response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
@@ -406,10 +335,7 @@ export default class UserController {
       const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
-        return response.status(404).json({
-          status: 0,
-          message: "User not found!",
-        });
+        return httpResponseError(response, null, "Bad Request", 400);
       }
 
       user.name = name ?? user.name;
@@ -421,21 +347,14 @@ export default class UserController {
       }
 
       await User.save(user);
-      response.status(200).json({
-        status: 1,
-        message: "User updated.",
-        user,
-      });
+      httpResponseSuccess(response, { user }, "Profile updated successfully");
     } catch (error: any) {
       console.log("LN392", error);
-      return response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
+      return httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
   static async test(request: Request, response: Response) {
-    httpResponseSuccess(response, null, "testing")
+    httpResponseSuccess(response, null, "testing");
   }
 }

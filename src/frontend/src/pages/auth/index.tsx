@@ -1,19 +1,31 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
-import SignIn from "./sign-in"
-import SignUp from "./sign-up"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/hooks/use-auth";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SignIn from "./sign-in";
+import SignUp from "./sign-up";
 
 export default function AuthPage() {
-  const [activeTab, setActiveTab] = useState("signin")
-  const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState("signin");
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
+    navigate("/home");
+  }
 
   const handleBackClick = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -36,7 +48,11 @@ export default function AuthPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
@@ -51,11 +67,15 @@ export default function AuthPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-500">
-            {activeTab === "signin" ? "Don't have an account? " : "Already have an account? "}
+            {activeTab === "signin"
+              ? "Don't have an account? "
+              : "Already have an account? "}
             <Button
               variant="link"
               className="p-0 h-auto font-normal"
-              onClick={() => setActiveTab(activeTab === "signin" ? "signup" : "signin")}
+              onClick={() =>
+                setActiveTab(activeTab === "signin" ? "signup" : "signin")
+              }
             >
               {activeTab === "signin" ? "Sign up" : "Sign in"}
             </Button>
@@ -63,5 +83,5 @@ export default function AuthPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

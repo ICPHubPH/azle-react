@@ -2,21 +2,32 @@ import { Post } from "Database/entities/post";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
-import { IsNull } from "typeorm";
+import { IsNull, Not } from "typeorm";
 
 export default class PostController {
-  static async getAll(request: Request, response: Response) {
+  static async getPosts(request: Request, response: Response) {
     try {
       const skip = request.skip;
       const take = request.limit;
 
+      const {sortOrder = "ASC", type, archived = "false"} = request.query
+
+      const whereConditions: any = {
+        archivedAt: archived == "true"? Not(IsNull()) : IsNull(),
+      }
+
+      if(type){
+        whereConditions.type = type
+      }
+
       const data = await Post.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-        },
+        where: whereConditions,
         relations: ["user", "feedbacks", "feedbacks.user"],
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC"? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(response, { posts: data[0], count: data[1] });
@@ -25,48 +36,16 @@ export default class PostController {
     }
   }
 
-  static async findByCategoryType(request: Request, response: Response) {
-    try {
-      const skip = request.skip;
-      const take = request.limit;
 
-      const type = request.params.type; // type of post
-
-      const data = await Post.findAndCount({
-        where: {
-          type,
-          archivedAt: IsNull(),
-        },
-        skip,
-        take,
-        select: {
-          id: true,
-          title: true,
-          content: true,
-          type: true,
-          thumbnail: true,
-          createdAt: true,
-        },
-        relations: ["user", "feedbacks", "feedbacks.user"],
-      });
-
-      httpResponseSuccess(response, { posts: data[0], count: data[1] });
-    } catch (error) {
-      console.error(error);
-      httpResponseError(response, null, "Internal Server Error", 500);
-    }
-  }
-
-  static async findById(request: Request, response: Response) {
+  static async findPostById(request: Request, response: Response) {
     try {
       const id = request.params.id;
 
       const post = await Post.findOne({
         where: {
           id,
-          archivedAt: IsNull(),
         },
-        relations: ["user", "feedbacks", "feedbacks.user"],
+        relations: ["user", "feedbacks", "feedbacks.user"]
       });
 
       if (!post) {

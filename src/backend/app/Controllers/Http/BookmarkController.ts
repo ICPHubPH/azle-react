@@ -53,13 +53,25 @@ export default class BookmarkController {
         return httpResponseError(response, null, "Forbidden!", 403);
       }
 
-      const bookmark = await Bookmark.insert({
+      await Bookmark.insert({
         post: {
           id: postId,
         },
         user: {
           id: request.user,
         },
+      });
+
+      const bookmark = await Bookmark.findOne({
+        where: {
+          user: {
+            id: request.user,
+          },
+          post: {
+            id: postId,
+          },
+        },
+        relations: ["user", "post"],
       });
 
       httpResponseSuccess(response, { bookmark }, "Bookmarked successfully");
