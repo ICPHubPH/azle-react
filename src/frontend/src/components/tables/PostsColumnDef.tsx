@@ -8,14 +8,39 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import {
+  Archive,
+  ArchiveRestore,
+  ArrowUpDown,
+  Loader,
+  LoaderCircle,
+  MoreHorizontal,
+  SquareArrowOutUpRight,
+  Trash,
+} from "lucide-react";
 import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import { Checkbox } from "../ui/checkbox";
 import { Badge } from "../ui/badge";
-import { useArchivePost } from "@/hooks/usePostData";
+import {
+  useArchivePost,
+  useDeletePost,
+  useUnArchivePost,
+} from "@/hooks/usePostData";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { Skeleton } from "../ui/skeleton";
+import React from "react";
 
 export const postsColumnDefs: ColumnDef<Post>[] = [
   {
@@ -144,38 +169,162 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
+      const queryClient = useQueryClient();
       const { mutate: archivePost } = useArchivePost();
-      const queryClient  = useQueryClient();
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                archivePost(row.original.id!.toString(),{
-                  onSuccess: () => {
-                    toast({
-                      title: "Post Archived",
-                      description: "The post has been successfully archived.",
-                      duration: 3000, // Optional: Set duration for how long the toast stays
-                    });
-                    queryClient.invalidateQueries({ queryKey: ["posts"] });
-                  },
+      const { mutate: unarchivePost } = useUnArchivePost();
+      const { mutate: deletePost } = useDeletePost();
+      const status = row.original.archivedAt;
+      const [isPending, setIsPending] = React.useState(false); // Single loading state
+      const [open, setOpen] = React.useState(false);
+
+      const handleMutation = (action: () => void) => {
+        setIsPending(true);
+        action();
+      };
+
+      const mutationHandlers = {
+        archive: (id: string) =>
+          handleMutation(() =>
+            archivePost(id, {
+              onSuccess: () => {
+                toast({
+                  title: "Success",
+                  description: "Post archived successfully",
+                  variant: "default",
                 });
-              }}
-            >
-              Archive
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                queryClient.invalidateQueries({ queryKey: ["posts"] });
+              },
+              onSettled: () => setIsPending(false),
+            })
+          ),
+        unarchive: (id: string) =>
+          handleMutation(() =>
+            unarchivePost(id, {
+              onSuccess: () => {
+                toast({
+                  title: "Success",
+                  description: "Post Removed from archived successfully",
+                  variant: "default",
+                });
+                queryClient.invalidateQueries({ queryKey: ["posts"] });
+              },
+              onSettled: () => setIsPending(false),
+            })
+          ),
+        delete: (id: string) =>
+          handleMutation(() =>
+            deletePost(id, {
+              onSuccess: () => {
+                toast({
+                  title: "Success",
+                  description: "Post deleted successfully",
+                  variant: "default",
+                });
+                setOpen(false);
+                queryClient.invalidateQueries({ queryKey: ["posts"] });
+              },
+              onSettled: () => setIsPending(false),
+              onError: (error: Error) => {
+                toast({
+                  title: "Forbidden!",
+                  description: "Failed to delete post!!",
+                  variant: "destructive",
+                });
+                setOpen(false);
+              },
+            })
+          ),
+      };
+
+      if (isPending) {
+        return (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="ml-1.5">
+                <LoaderCircle className="animate-spin h-5 w-5 text-gray-600 " />
+              </DropdownMenuTrigger>
+            </DropdownMenu>
+          </>
+        ); // Replace the skeleton with the animated loader
+      }
+      return (
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem className="px-2 flex gap-2 items-center">
+                <SquareArrowOutUpRight className="w-4" />
+                View
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {status === null ? (
+                <DropdownMenuItem
+                  className="px-2 flex gap-2 items-center"
+                  onClick={mutationHandlers.archive.bind(
+                    null,
+                    row.original.id!.toString()
+                  )}
+                >
+                  <Archive className="w-4" /> Archive
+                </DropdownMenuItem>
+              ) : (
+                <>
+                  <DropdownMenuItem
+                    className="px-2 flex gap-2 items-center"
+                    onClick={mutationHandlers.unarchive.bind(
+                      null,
+                      row.original.id!.toString()
+                    )}
+                  >
+                    <ArchiveRestore className="w-4" /> Remove Archive
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="px-2 flex gap-2 items-center"
+                    asChild // Make this item a trigger for the dialog
+                  >
+                    <DialogTrigger>
+                      <div className="flex items-center gap-2">
+                        <Trash className="w-4 text-red-500" />
+                        <span className="text-red-500">Delete Post</span>
+                      </div>
+                    </DialogTrigger>
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Dialog for confirming post deletion */}
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete Post</DialogTitle>
+              <DialogDescription>
+                This action is irreversible. All your data will be permanently
+                removed.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button
+                disabled={isPending} // Disable the button while the mutation is pending
+                variant="destructive"
+                onClick={() =>
+                  mutationHandlers.delete(row.original.id!.toString())
+                }
+              >
+                Confirm Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       );
     },
   },
