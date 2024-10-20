@@ -2,7 +2,7 @@ import axiosInstance from "./axiosConfig";
 
 //GET all post
 export const getAllPosts = async (skip: number, take: number) => {
-  const response = await axiosInstance.get(`/posts`, {
+  const response = await axiosInstance.post(`/posts`, {},{
     params: {
       page: skip / take,
       take,
