@@ -3,6 +3,7 @@ import {
   verifyLoginOtp,
   verifyRegistrationOtp,
 } from "@/api/authService";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -42,6 +43,7 @@ export function OtpVerification() {
   const [otpToken, setOtpToken] = useState<string>(
     location.state.token as string
   );
+  const [isLoading, setIsLoading] = useState(false); // Loading state for OTP verification
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -58,7 +60,6 @@ export function OtpVerification() {
   const handleResendOTP = async () => {
     try {
       const result = await resendOtp(location.state.email, otpToken);
-
       if (result.success == 1) {
         setOtpToken(result.token);
         navigate("/otp-verification", {
@@ -69,7 +70,6 @@ export function OtpVerification() {
           },
         });
       }
-
       console.log(result.message);
     } catch (error) {
       toast({
@@ -80,9 +80,11 @@ export function OtpVerification() {
   };
 
   const handleVerifyOtp = async ({ otp }: z.infer<typeof FormSchema>) => {
+    setIsLoading(true); // Set loading state to true
     try {
+      let result;
       if (location.state.origin == "register") {
-        const result = await verifyRegistrationOtp({
+        result = await verifyRegistrationOtp({
           token: otpToken,
           email: location.state.email,
           otp,
@@ -95,7 +97,7 @@ export function OtpVerification() {
           navigate("/home");
         }
       } else {
-        const result = await verifyLoginOtp({
+        result = await verifyLoginOtp({
           token: otpToken,
           email: location.state.email,
           otp,
@@ -108,15 +110,26 @@ export function OtpVerification() {
       }
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Verification Error",
+        description: "There was an issue verifying your OTP.",
+      });
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
       <div className="w-full h-full max-w-md rounded-lg shadow-lg p-6 border">
-        <h2 className="text-2xl font-semibold text-center mb-4">Enter OTP</h2>
-        <p className="text-center mb-6">
-          Please enter the 6-digit code sent to your email.
+        <div className="flex justify-center mb-4">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
+            ConnectED
+          </h1>
+        </div>
+        <h2 className="text-2xl font-bold text-center mb-4">Verify Your Account</h2>
+        <p className="text-center text-sm text-gray-400 mb-6">
+          Enter the 6-digit code sent to your email.
         </p>
         <Form {...form}>
           <form
@@ -129,7 +142,7 @@ export function OtpVerification() {
                 name="otp"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>One-Time Password</FormLabel>
+                    <FormLabel></FormLabel>
                     <FormControl>
                       <InputOTP maxLength={6} {...field}>
                         <InputOTPGroup>
@@ -170,13 +183,14 @@ export function OtpVerification() {
                 )}
               />
             </div>
-            <div className="flex justify-center mb-4 pt-10">
-              <button
+            <div className="w-full flex justify-center mb-4 pt-5">
+              <Button
                 className="text-sm border rounded-md p-2 w-full transition duration-150"
                 type="submit"
+                disabled={isLoading} // Disable button while loading
               >
-                Verify OTP
-              </button>
+                {isLoading ? "Verifying..." : "Verify OTP"} {/* Change button text */}
+              </Button>
             </div>
           </form>
         </Form>
