@@ -8,14 +8,25 @@ import { ArrowUp } from "lucide-react";
 import LeftCardSide from "@/components/user/LeftCardSide";
 import PostForm from "@/components/post/FormPost";
 import { Post, User as UserModel } from "@/types/model";
-import { useAuth } from "@/hooks/use-auth"; // Assuming your auth hook provides user details
+import { useAuth } from "@/hooks/use-auth";
+import { useAllPost } from "@/hooks/usePostData";
+import { useUserByProviders } from "@/hooks/useUserData"; 
+import { SkeletonCard } from "@/components/ui/skeleton";
 
 const User: React.FC = () => {
-  // State to track visibility of the "Go to Top" button
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-
-  // Get the logged-in user data
   const { data: user } = useAuth();
+
+  const skip = 0; 
+  const take = 10; 
+
+  // Fetching posts using the custom hook with skip and take arguments
+  const { data: postsData, isLoading: postsLoading } = useAllPost(skip, take);
+  const posts: Post[] = postsData?.posts || [];
+
+  // Fetching providers using your new hook
+  const { data: providersData, isLoading: providersLoading } = useUserByProviders(skip, take); // Pass skip and take for pagination
+  const filteredProviders: UserModel[] = providersData?.providers || []; // Adjust based on your API response
 
   // Scroll detection to show the arrow button when reaching the bottom
   useEffect(() => {
@@ -24,7 +35,6 @@ const User: React.FC = () => {
       const scrollTop = document.documentElement.scrollTop;
       const clientHeight = document.documentElement.clientHeight;
 
-      // Check if user has scrolled near the bottom (10% threshold)
       if (scrollTop + clientHeight >= scrollHeight * 0.9) {
         setShowScrollToTop(true);
       } else {
@@ -36,16 +46,12 @@ const User: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
-
-  const posts: Post[] = [];
-  const providers: UserModel[] = [];
 
   return (
     <>
@@ -56,30 +62,39 @@ const User: React.FC = () => {
         </div>
 
         <div className="flex flex-col">
+          
+          {/* Conditionally render UpperContent based on the user's role */}
+          {user?.role !== "provider" && <UpperContent />}
+          
+          {/* Conditionally render PostForm based on the user's role */}
+          {user?.role !== "student" && <PostForm />}
+          
           <div className="container mx-auto px-4">
-            {/* Conditionally render UpperContent based on the user's role */}
-            {user?.role !== "provider" && <UpperContent />}
+          <div className="grid grid-cols-1 gap-4 justify-center items-center py-4">
+            {postsLoading ? (
+              Array.from({ length: 6 }).map((_, index) => (
+                <SkeletonCard key={index} />
+              ))
+            ) : (
+              posts.length > 0 ? (
+                posts.map((post: Post) => (
+                  <PostSummaryCard key={post.id} post={post} />
+                ))
+              ) : (
+                <div>No posts available.</div>
+              )
+            )}
           </div>
-
-          <div className="container mx-auto px-4">
-            {/* Conditionally render PostForm based on the user's role */}
-            {user?.role !== "student" && <PostForm />}
-          </div>
-
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 justify-center items-center">
-              {posts.map((post: Post) => (
-                <PostSummaryCard key={post.id} post={post} />
-              ))}
-            </div>
           </div>
 
           <div className="container mx-auto px-4 py-10">
             <h1 className="text-2xl font-bold">Top Providers</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 justify-center items-center pt-10">
-              {providers.map((provider, index) => (
-                <TopProviderCard key={index} provider={provider} />
-              ))}
+              {providersLoading
+                ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
+                : filteredProviders.map((provider: UserModel) => (
+                    <TopProviderCard key={provider.id} provider={provider} />
+                  ))}
             </div>
           </div>
         </div>
