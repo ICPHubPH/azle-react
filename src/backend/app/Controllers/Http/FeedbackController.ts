@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
+import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { Feedback } from "../../../database/entities/feedback";
 import { User } from "../../../database/entities/user";
-import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 
 export default class FeedbackController {
   static async getPostFeedbacks(request: Request, response: Response) {
@@ -37,22 +37,37 @@ export default class FeedbackController {
       const user = await User.findOneBy({ id: request.user });
 
       if (!user || !user.emailVerifiedAt) {
-        return response.status(401).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       if (user.role != "student") {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       const { postId, rate, content } = request.body;
 
-      const data = await Feedback.insert({
+      const isExist = await Feedback.findOne({
+        where: {
+          user: {
+            id: user.id,
+          },
+          post: {
+            id: postId,
+          },
+        },
+        relations: ["user", "post"],
+      });
+
+      if (isExist) {
+        return httpResponseError(
+          response,
+          null,
+          "You already submitted a feedback!",
+          400
+        );
+      }
+
+      const post = Feedback.create({
         user: {
           id: user.id,
         },
@@ -63,71 +78,11 @@ export default class FeedbackController {
         content: content || null,
       });
 
-      return response.status(201).json({
-        status: 1,
-        data,
-        message: null,
-      });
+      await Feedback.save(post);
+
+      httpResponseSuccess(response, { post }, null, 201);
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
-    }
-  }
-
-  static async updateFeedback(request: Request, response: Response) {
-    try {
-      const { content, rate } = request.body;
-      const id = request.params.id;
-
-      const isFeedbackExist = await Feedback.findOne({
-        where: {
-          id,
-        },
-        select: {
-          user: {
-            id: true,
-          },
-        },
-      });
-
-      if (!isFeedbackExist) {
-        return response.status(404).json({
-          status: 0,
-          message: "Feedback not found!",
-        });
-      }
-
-      if (isFeedbackExist?.user.id != request.user) {
-        return response.status(403).json({
-          status: 0,
-          message: "Forbidden!",
-        });
-      }
-
-      const data = await Feedback.update(
-        {
-          id,
-        },
-        {
-          content,
-          rate,
-        }
-      );
-
-      return response.status(200).json({
-        status: 1,
-        data,
-        message: "Feedback updated.",
-      });
-    } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
 
@@ -144,43 +99,27 @@ export default class FeedbackController {
             id: true,
           },
         },
+        relations: ["user"],
       });
 
       if (!feedback) {
-        return response.status(404).json({
-          status: 0,
-          data: null,
-          message: "Feedback not found!",
-        });
+        return httpResponseError(response, null, "Feedback not found", 404);
       }
 
       if (!feedback.user) {
-        return response.status(401).json({
-          status: 0,
-          message: "User not found!",
-        });
+        return httpResponseError(response, null, "User not found", 404);
       }
 
       if (feedback?.user.id != request.user) {
-        return response.status(403).json({
-          status: 0,
-          data: null,
-          message: "Forbidden!",
-        });
+        return httpResponseError(response, null, "Unauthorized", 401);
       }
 
       await Feedback.delete({ id: feedback.id });
 
-      response.status(200).json({
-        status: 1,
-        message: "Feedback deleted.",
-      });
+      httpResponseSuccess(response, null, "Feedback deleted successfully", 200);
     } catch (error) {
-      response.status(500).json({
-        status: 0,
-        error,
-        message: "Internal server error!",
-      });
+      console.log(error);
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 }
