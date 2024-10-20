@@ -1,9 +1,17 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Post } from "./post";
 import { User } from "./user";
 
 @Entity({
-    name: "feedbacks"
+  name: "feedbacks",
 })
 export class Feedback extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -21,9 +29,13 @@ export class Feedback extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => User, user => user.feedbacks)
+  @ManyToOne(() => User, (user) => user.feedbacks, {
+    onDelete: "CASCADE",
+  })
   user: User;
 
-  @ManyToOne(() => Post, post => post.feedbacks)
+  @ManyToOne(() => Post, (post) => post.feedbacks, {
+    onDelete: "CASCADE",
+  })
   post: Post;
 }

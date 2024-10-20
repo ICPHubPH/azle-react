@@ -1,12 +1,12 @@
 import {
-    BaseEntity,
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToMany,
-    OneToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { UserRole } from "../../constants";
 import { Bookmark } from "./bookmark";
@@ -75,10 +75,20 @@ export class User extends BaseEntity {
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Bookmark, (bookmark) => bookmark.user)
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.user, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   bookmarks: Bookmark[];
 
-  @OneToOne(() => VerificationCode, (verificationCode) => verificationCode.user)
+  @OneToOne(
+    () => VerificationCode,
+    (verificationCode) => verificationCode.user,
+    {
+      cascade: true,
+      onDelete: "CASCADE",
+    }
+  )
   verificationCode: VerificationCode;
 
   setRole(role: string) {
