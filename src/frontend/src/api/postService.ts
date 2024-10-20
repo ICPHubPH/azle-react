@@ -56,26 +56,34 @@ export const deletePost = async (id: string): Promise<void> => {
 
 //Archive Post
 export const archivePostById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/posts/${id}/archive`);
+  const response = await axiosInstance.post(`/admin/posts/${id}/archive`);
   return response.data;
 };
 
 //Archive Post
 export const unArchivePostById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/posts/${id}/unarchive`);
+  const response = await axiosInstance.post(`/admin/posts/${id}/unarchive`);
   return response.data;
 };
 
 // Get all archived posts
-export const getArchivedPosts = async (page: number, take: number, sortOrder: string = "ASC") => {
-  const response = await axiosInstance.get("/posts", {
-    params: {
-      page,
-      take,
-      sortOrder,
-      archived: "true", 
-    },
-  });
+export const getArchivedPosts = async (
+  page: number,
+  take: number,
+  sortOrder: string = "ASC"
+) => {
+  const response = await axiosInstance.post(
+    "/admin/posts",
+    {},
+    {
+      params: {
+        page,
+        take,
+        sortOrder,
+        archived: "true",
+      },
+    }
+  );
+  console.log("ln:79 postService.ts", response.data); // Add this line to log the response data
   return response.data;
 };
-

@@ -17,7 +17,7 @@ const  Active = () => {
   return (
     <>
       <DataTable
-        columns={postsColumnDefs}
+        columns={postsColumnDefs(isLoading)}
         data={data?.posts || []}
         page={page}
         pageSize={take}
@@ -41,7 +41,7 @@ const  Archived = () => {
   return (
     <>
       <DataTable
-        columns={postsColumnDefs}
+        columns={postsColumnDefs(isLoading)}
         data={data?.posts || []}
         page={page}
         pageSize={take}
