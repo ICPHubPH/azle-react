@@ -31,8 +31,11 @@ export class VerificationCode extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToOne(() => User, (user) => user.verificationCode)
+  
+  @OneToOne(() => User, (user) => user.verificationCode, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "userId" })
   user: User;
+  
 }

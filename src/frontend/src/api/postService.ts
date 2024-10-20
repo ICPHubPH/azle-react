@@ -60,6 +60,12 @@ export const archivePostById = async (id: string) => {
   return response.data;
 };
 
+//Archive Post
+export const unArchivePostById = async (id: string) => {
+  const response = await axiosInstance.post(`/protected/posts/${id}/unarchive`);
+  return response.data;
+};
+
 // Get all archived posts
 export const getArchivedPosts = async (page: number, take: number, sortOrder: string = "ASC") => {
   const response = await axiosInstance.get("/posts", {

@@ -16,31 +16,6 @@ export default class UserController {
     httpResponseSuccess(response, { user }, null, 200);
   }
 
-  static async getUsers(request: Request, response: Response) {
-    try {
-      const skip = request.skip;
-      const take = request.limit;
-
-      const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull()),
-        },
-        skip,
-        take,
-      });
-
-      httpResponseSuccess(
-        response,
-        { users: data[0], count: data[1] },
-        null,
-        200
-      );
-    } catch (error) {
-      httpResponseError(response, null, "Internal Server Error!", 500);
-    }
-  }
-
   // GET one user
   static async findUserById(request: Request, response: Response) {
     try {
@@ -66,19 +41,13 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
-      const {
-        sortOrder = "ASC",
-        type,
-        verified = "true",
-        archived = "false",
-        emailVerified = "true",
-      } = request.query;
+      const { sortOrder = "ASC", type } = request.query;
 
       const whereCondition: any = {
         role: "provider",
-        providerVerifiedAt: verified === "true" ? Not(IsNull()) : IsNull(),
-        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
-        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+        providerVerifiedAt: Not(IsNull()),
+        archivedAt: IsNull(),
+        emailVerifiedAt: Not(IsNull()),
       };
 
       if (type) {
@@ -159,20 +128,14 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
-      const {
-        sortOrder = "ASC",
-        archived = "false",
-        emailVerified = "true",
-      } = request.query;
-
-      const whereConditions: any = {
-        role: "student",
-        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
-        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
-      };
+      const { sortOrder = "ASC" } = request.query;
 
       const data = await User.findAndCount({
-        where: whereConditions,
+        where: {
+          role: "student",
+          archivedAt: IsNull(),
+          emailVerifiedAt: Not(IsNull()),
+        },
         skip,
         take,
         order: {
@@ -194,24 +157,37 @@ export default class UserController {
   static async deleteUserById(request: Request, response: Response) {
     try {
       const id = request.params.id;
-      const userExists = await User.findOneBy({ id });
+      const userToRemove = await User.findOne({
+        where: { id },
+        relations: ["posts", "feedbacks", "bookmarks", "verificationCode"],
+      });
 
-      if (!userExists) {
+      if (!userToRemove) {
         return httpResponseError(response, null, "User not found!", 404);
       }
 
-      if (userExists.id === request.user) {
+      if (userToRemove.id === request.user) {
         return httpResponseError(response, null, "Bad workflow", 403);
       }
 
-      const data = await User.delete({ id });
+      if (userToRemove.role === "admin") {
+        return httpResponseError(
+          response,
+          null,
+          "Cannot delete admin account",
+          403
+        );
+      }
 
-      if (!data.affected || data.affected == 0) {
-        return httpResponseError(response, null, "User not found!", 404);
+      const result = await User.remove(userToRemove);
+
+      if (!result) {
+        return httpResponseError(response, null, "Failed to delete user!", 500);
       }
 
       httpResponseSuccess(response, null, "User has been deleted");
     } catch (error) {
+      console.error("Error deleting user:", error);
       return httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }

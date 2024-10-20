@@ -9,7 +9,7 @@ const StudentsTable = () => {
   const take = 10; 
   const page = pages * take;
 
-  const { data } = useUserByStudents(page, take);
+  const { data, isLoading } = useUserByStudents(page, take);
   const totalRows = data?.count || 0;
 
   return (
@@ -21,6 +21,7 @@ const StudentsTable = () => {
         pageSize={take}
         totalRows={totalRows}
         onPageChange={setPages}
+        loading={isLoading} // Pass the loading state to the DataTable component
       />
     </>
   );

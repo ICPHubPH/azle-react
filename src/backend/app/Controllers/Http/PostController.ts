@@ -10,10 +10,10 @@ export default class PostController {
       const skip = request.skip;
       const take = request.limit;
 
-      const { sortOrder = "ASC", type, archived = "false" } = request.query;
+      const { sortOrder = "ASC", type} = request.query;
 
       const whereConditions: any = {
-        archivedAt: archived == "true" ? Not(IsNull()) : IsNull(),
+        archivedAt: IsNull(),
       };
 
       if (type) {

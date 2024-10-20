@@ -10,7 +10,7 @@ const VerfiedProvidersTable = () => {
   const take = 10; 
   const skip = page * take;
 
-  const { data } = useUserByProviders(skip, take);
+  const { data, isLoading } = useUserByProviders(skip, take);
   const totalRows = data?.count || 0;
 
   return (
@@ -22,6 +22,7 @@ const VerfiedProvidersTable = () => {
         pageSize={take}
         totalRows={totalRows}
         onPageChange={setPage}
+        loading={isLoading} // Pass the loading state to the DataTable component
       />
     </>
   );
@@ -32,7 +33,7 @@ const UnverifiedProvidersTable = () => {
   const take = 10; 
   const skip = page * take;
 
-  const { data } = useUnverifiedProviders(skip, take);
+  const { data, isLoading } = useUnverifiedProviders(skip, take);
   console.log("Unverified Providers:", data); 
   const totalRows = data?.count || 0;
 
@@ -45,6 +46,7 @@ const UnverifiedProvidersTable = () => {
         pageSize={take}
         totalRows={totalRows}
         onPageChange={setPage}
+        loading={isLoading} // Pass the loading state to the DataTable component
       />
     </>
   );

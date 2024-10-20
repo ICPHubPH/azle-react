@@ -16,15 +16,19 @@ export class Bookmark extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @ManyToOne(() => User, (user) => user.bookmarks)
-  user: User;
-
-  @ManyToOne(() => Post, (post) => post.bookmarks)
-  post: Post;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.bookmarks, {
+    onDelete: "CASCADE",
+  })
+  user: User;
+
+  @ManyToOne(() => Post, (post) => post.bookmarks, {
+    onDelete: "CASCADE",
+  })
+  post: Post;
 }
