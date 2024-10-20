@@ -8,10 +8,14 @@ import { ArrowUp } from "lucide-react";
 import LeftCardSide from "@/components/user/LeftCardSide";
 import PostForm from "@/components/post/FormPost";
 import { Post, User as UserModel } from "@/types/model";
+import { useAuth } from "@/hooks/use-auth"; // Assuming your auth hook provides user details
 
 const User: React.FC = () => {
   // State to track visibility of the "Go to Top" button
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+  // Get the logged-in user data
+  const { data: user } = useAuth();
 
   // Scroll detection to show the arrow button when reaching the bottom
   useEffect(() => {
@@ -47,31 +51,34 @@ const User: React.FC = () => {
     <>
       <Header />
       <div className="flex flex-row w-full container mx-auto px-4">
-        <div className="hidden lg:block ">
+        <div className="hidden lg:block">
           <LeftCardSide />
         </div>
 
         <div className="flex flex-col">
           <div className="container mx-auto px-4">
-            <UpperContent />
-          </div>
-          <div className="container mx-auto px-4">
-            <PostForm />
+            {/* Conditionally render UpperContent based on the user's role */}
+            {user?.role !== "provider" && <UpperContent />}
           </div>
 
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 justify-center items-center ">
+            {/* Conditionally render PostForm based on the user's role */}
+            {user?.role !== "student" && <PostForm />}
+          </div>
+
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 justify-center items-center">
               {posts.map((post: Post) => (
-                <PostSummaryCard post={post} />
+                <PostSummaryCard key={post.id} post={post} />
               ))}
             </div>
           </div>
 
           <div className="container mx-auto px-4 py-10">
-            <h1 className="text-2xl font-bold ">Top Providers</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2  gap-4 justify-center items-center pt-10 ">
+            <h1 className="text-2xl font-bold">Top Providers</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 justify-center items-center pt-10">
               {providers.map((provider, index) => (
-                <TopProviderCard provider={provider} />
+                <TopProviderCard key={index} provider={provider} />
               ))}
             </div>
           </div>
@@ -81,9 +88,10 @@ const User: React.FC = () => {
           <RightCardSide />
         </div>
       </div>
+
       {/* Up arrow button */}
       {showScrollToTop && (
-        <button onClick={scrollToTop} className="fixed bottom-8 right-8 p-3 ">
+        <button onClick={scrollToTop} className="fixed bottom-8 right-8 p-3">
           <ArrowUp className="h-6 w-6" />
         </button>
       )}
