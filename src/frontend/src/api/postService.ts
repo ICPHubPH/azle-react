@@ -11,6 +11,29 @@ export const getAllPosts = async (skip: number, take: number) => {
   return response.data;
 };
 
+//get ALl posts for admin
+export const getAllPostsForAdmin = async (
+  page: number,
+  take: number,
+  sortOrder: string = "ASC"
+) => {
+  const response = await axiosInstance.post(
+    `/admin/posts`,
+    {},
+    {
+      params: {
+        page,
+        take,
+        sortOrder,
+        archived: "false",
+      },
+    }
+  );
+  return response.data;
+};
+
+//GET all archived posts
+
 //GET one post
 export const getPostById = async (id: string) => {
   const response = await axiosInstance.get(`/posts/${id}`);

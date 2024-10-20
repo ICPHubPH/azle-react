@@ -3,6 +3,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getAllPostsForAdmin,
   getArchivedPosts,
   getPostById,
   getPostsByCategoryType,
@@ -21,6 +22,8 @@ export const useAllPost = (skip: number, take: number) => {
     select: (data) => ({ posts: data.posts, count: data.count }), // Return both data and count
   });
 };
+
+
 
 // get ONE post
 export const usePostById = (id: string) => {
@@ -100,3 +103,19 @@ export const useGetAllArchivedPosts = (
     select: (data) => ({ posts: data.posts, count: data.count }), // Return both data and count
   });
 };
+export const useGetAllPostsForAdmin = (
+  page: number,
+  take: number,
+  sortOrder: string = "ASC"
+) => {
+  return useQuery({
+    queryKey: ["posts", page, take, sortOrder],
+    queryFn: () => getAllPostsForAdmin(page, take, sortOrder),
+    staleTime: 10000,
+    refetchOnWindowFocus: false,
+    enabled: page >= 0 && take > 0,
+    select: (data) => ({ posts: data.posts, count: data.count }), // Return both data and count
+  });
+};
+
+

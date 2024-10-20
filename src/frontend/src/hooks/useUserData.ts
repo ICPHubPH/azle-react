@@ -10,6 +10,8 @@ import {
   getProviderById,
   getUnVerifiedProviders,
   verifyProviderById,
+  unArchiveUserById,
+  getArchiveUsers
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -105,8 +107,35 @@ export const useArchiveUser = () => {
   });
 };
 
+// Unarchive user
+export const useUnArchiveUser = () => {
+  return useMutation({
+    mutationFn: (id: string) => unArchiveUserById(id),
+  });
+};
+
+// Approve Provider
 export const useApproveProvider = () => {
   return useMutation({
     mutationFn: (id: string) => verifyProviderById(id),
+  });
+};
+
+// Remove user
+export const useDeleteUserById = () => {
+  return useMutation({
+    mutationFn: (id: string) => deleteAccount(id),
+  });
+}
+
+// getArchived users
+export const useArchivedUsers = (page: number, take: number, sortOrder: string = "ASC") => {
+  return useQuery({
+    queryKey: ["archivedUsers", page, take, sortOrder],
+    queryFn: () => getArchiveUsers(page, take, sortOrder),
+    staleTime: 10000,
+    refetchOnWindowFocus: false,
+    enabled: page >= 0 && take > 0,
+    select: (data) => ({ archivedUsers: data.archivedUsers, count: data.count }), // Return both data and count
   });
 };

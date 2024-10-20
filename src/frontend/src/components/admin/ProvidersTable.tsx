@@ -1,4 +1,4 @@
-import { useUnverifiedProviders, useUserByProviders } from "@/hooks/useUserData";
+import { useArchivedUsers, useUnverifiedProviders, useUserByProviders } from "@/hooks/useUserData";
 import { useState } from "react";
 import { DataTable } from "../tables/data-table";
 import { providersColumns } from "../tables/ProvidersColumnDef";
@@ -34,7 +34,6 @@ const UnverifiedProvidersTable = () => {
   const skip = page * take;
 
   const { data, isLoading } = useUnverifiedProviders(skip, take);
-  console.log("Unverified Providers:", data); 
   const totalRows = data?.count || 0;
 
   return (
@@ -51,6 +50,30 @@ const UnverifiedProvidersTable = () => {
     </>
   );
 };
+const ArchivedUsers = () => {
+  const [page, setPage] = useState(0);
 
-export { VerfiedProvidersTable, UnverifiedProvidersTable }
+  const take = 10; 
+  const skip = page * take;
+
+  const { data, isLoading } = useArchivedUsers(skip, take);
+  console.log("Archived:", data); 
+  const totalRows = data?.count || 0;
+
+  return (
+    <>
+      <DataTable
+        columns={providersColumns}
+        data={data?.archivedUsers || []}
+        page={page}
+        pageSize={take}
+        totalRows={totalRows}
+        onPageChange={setPage}
+        loading={isLoading} // Pass the loading state to the DataTable component
+      />
+    </>
+  );
+};
+
+export { VerfiedProvidersTable, UnverifiedProvidersTable, ArchivedUsers }
 
