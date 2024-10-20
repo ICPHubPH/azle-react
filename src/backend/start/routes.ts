@@ -73,7 +73,7 @@ Route.post("/feedbacks/:id/remove", AuthMiddleware.authorize, FeedbackController
 | Protected Routes
 |--------------------------------------------------------------------------
 */
-Route.post("protected/users/:id/remove", AuthMiddleware.hasAdminAccess, UserController.deleteUserById );
+Route.post("/protected/users/:id/remove", AuthMiddleware.hasAdminAccess, UserController.deleteUserById );
 Route.post("/protected/users/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archiveUserById);
 Route.post("/protected/users/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchiveUserById);
 Route.post("/protected/archived-users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getArchivedUsers);

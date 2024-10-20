@@ -20,6 +20,7 @@ export default class UserController {
     try {
       const skip = request.skip;
       const take = request.limit;
+      const { sortOrder = "ASC" } = request.query;
 
       const data = await User.findAndCount({
         where: {
@@ -28,6 +29,9 @@ export default class UserController {
         },
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
@@ -194,7 +198,10 @@ export default class UserController {
   static async deleteUserById(request: Request, response: Response) {
     try {
       const id = request.params.id;
-      const userExists = await User.findOneBy({ id });
+      const userExists = await User.findOne({
+        where: { id },
+        relations: ["posts", "feedbacks", "bookmarks", "verificationCode"],
+      });
 
       if (!userExists) {
         return httpResponseError(response, null, "User not found!", 404);
@@ -204,14 +211,15 @@ export default class UserController {
         return httpResponseError(response, null, "Bad workflow", 403);
       }
 
-      const data = await User.delete({ id });
+      const result = await User.remove(userExists);
 
-      if (!data.affected || data.affected == 0) {
-        return httpResponseError(response, null, "User not found!", 404);
+      if (!result) {
+        return httpResponseError(response, null, "Failed to delete user!", 500);
       }
 
       httpResponseSuccess(response, null, "User has been deleted");
     } catch (error) {
+      console.error("Error deleting user:", error);
       return httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }

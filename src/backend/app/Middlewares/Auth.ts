@@ -17,30 +17,22 @@ export default class AuthMiddleware {
 
         const jsonData = await verifyToken(token);
 
-        if (!jsonData?.decoded)
-          return response.status(401).json({
-            status: 0,
-            message: "Invalid token.",
-          });
+        if (!jsonData?.decoded) {
+          return httpResponseError(response, null, "Invalid token", 401);
+        }
 
         request.user = jsonData.decoded.id as string;
 
         next();
       } catch (err) {
         console.log("ln33-auth");
-        return response.status(403).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized!", 401);
       }
     }
 
     if (!token) {
       console.log("ln42-auth");
-      return response.status(401).json({
-        status: 0,
-        message: "Unauthorized!",
-      });
+      return httpResponseError(response, null, "Unauthorized!", 401);
     }
   }
 
@@ -58,11 +50,9 @@ export default class AuthMiddleware {
 
         const jsonData = await verifyToken(token);
 
-        if (!jsonData?.decoded)
-          return response.status(401).json({
-            status: 0,
-            message: "Invalid token.",
-          });
+        if (!jsonData?.decoded) {
+          return httpResponseError(response, null, "Invalid token!", 401);
+        }
 
         if (jsonData.decoded.role !== "admin") {
           return httpResponseError(response, null, "Forbidden", 403);
@@ -73,19 +63,13 @@ export default class AuthMiddleware {
         next();
       } catch (err) {
         console.log("ln75-auth");
-        return response.status(403).json({
-          status: 0,
-          message: "Unauthorized!",
-        });
+        return httpResponseError(response, null, "Unauthorized!", 401);
       }
     }
 
     if (!token) {
       console.log("ln84-auth");
-      return response.status(401).json({
-        status: 0,
-        message: "Unauthorized!",
-      });
+      return httpResponseError(response, null, "Unauthorized!", 401);
     }
   }
 }
