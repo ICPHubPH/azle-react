@@ -3,6 +3,7 @@ import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
 import { User } from "../../../database/entities/user";
+import { Post } from "Database/entities/post";
 
 // GET all users
 export default class UserController {
@@ -327,6 +328,39 @@ export default class UserController {
     } catch (error: any) {
       console.log("LN392", error);
       return httpResponseError(response, null, "Internal Server Error", 500);
+    }
+  }
+
+  static async getSelfPosts(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+
+      const { sortOrder = "ASC" } = request.query;
+
+      const user = await User.findOneBy({ id: request.user });
+
+      if (!user) {
+        return httpResponseError(response, null, "Bad Request", 400);
+      }
+
+      const posts = await Post.find({
+        where: {
+          user: {
+            id: user.id,
+          },
+        },
+        skip,
+        take,
+        relations: ["feedbacks", "feedbacks.user"],
+        order: {
+          createdAt: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+      });
+
+      httpResponseSuccess(response, { posts }, "Posts fetched successfully");
+    } catch (error: any) {
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 
