@@ -5,6 +5,7 @@ import { ConsoleLogger } from "./database/logger";
 import { Seeder } from "./database/seeders/seeder";
 import { DatabaseStorage } from "./database/storage";
 import { CreateServer } from "./server";
+import { getCanisterLink } from "Helpers/helpers";
 
 const databaseOptions: DatabaseOptions = {
   synchronize: false,
@@ -34,10 +35,10 @@ export default Server(
         db = new Database(databaseOptions);
         await db.init();
         const seeder = new Seeder(db);
-        await seeder.seedStudents(20);
-        await seeder.seedProviders(20)
+        await seeder.seedStudents(100);
+        await seeder.seedProviders(20);
         await seeder.seedPosts(20);
-        await seeder.seedFeedbacks(10);
+        await seeder.seedFeedbacks(80);
         await seeder.seedBookmarks(20);
         setNodeServer(CreateServer());
       } catch (error) {

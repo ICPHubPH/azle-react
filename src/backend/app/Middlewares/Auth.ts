@@ -1,3 +1,4 @@
+import { User } from "Database/entities/user";
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "Helpers/jwt";
 import { httpResponseError } from "Helpers/response";
@@ -54,7 +55,9 @@ export default class AuthMiddleware {
           return httpResponseError(response, null, "Invalid token!", 401);
         }
 
-        if (jsonData.decoded.role !== "admin") {
+        const user = await User.findOneBy({id: jsonData.decoded.id});
+
+        if (user?.role !== "admin") {
           return httpResponseError(response, null, "Forbidden", 403);
         }
 

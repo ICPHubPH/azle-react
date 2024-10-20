@@ -30,7 +30,7 @@ const TopProviderCard: React.FC<{ provider: User }> = ({ provider }) => {
             className="w-full h-full object-cover"
           />
           <Avatar className="absolute -translate-y-[50%] left-6 h-[5rem] w-[5rem] border-4 border-background lg:h-[7rem] lg:w-[7rem]">
-            <AvatarImage 
+            <AvatarImage  className="object-cover"
               src={avatarUrl || DEFAULT_AVATAR_URL} // Use constant for default avatar
               alt={`${name}'s avatar`} // Improved alt text for accessibility
             />

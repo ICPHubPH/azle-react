@@ -38,7 +38,7 @@ Route.get("/providers", Pagination.paginate, UserController.getProviders); // te
 Route.get("/providers/:id", UserController.getProviderById); // tested
 Route.get("/students", Pagination.paginate, UserController.getStudents); // tested
 
-Route.get("/posts", Pagination.paginate, PostController.getPosts); // tested
+Route.post("/posts", Pagination.paginate, PostController.getPosts); // tested
 Route.get("/posts/:id", PostController.findPostById); // tested
 Route.post("/posts/:id/feedbacks", Pagination.paginate, FeedbackController.getPostFeedbacks ); // tested
 
@@ -55,8 +55,11 @@ Route.post("/@self/upload/valid-id", AuthMiddleware.authorize, UserController.up
 Route.post("/@self/upload/avatar", AuthMiddleware.authorize, UserController.uploadAvatarUrl); // tested
 Route.post("/@self/upload/banner", AuthMiddleware.authorize, UserController.uploadBannerUrl); // tested
 Route.post("/@self/update", AuthMiddleware.authorize, UserController.updateSelf); // tested
+Route.post('/@self/posts', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfPosts) // tested
+Route.post('/@self/bookmarks', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfBookmarks) // tested
 
-Route.post("/users/:id/bookmarks", AuthMiddleware.authorize,Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
+
+Route.post("/users/:id/bookmarks", AuthMiddleware.authorize, Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
 Route.post("/bookmarks", AuthMiddleware.authorize, BookmarkController.createBookmark); // tested
 Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark); // tested
 
@@ -76,17 +79,17 @@ Route.post("/admin/users/:id/remove", AuthMiddleware.hasAdminAccess, UserControl
 Route.post("/admin/users/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archiveUserById); // tested
 Route.post("/admin/users/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchiveUserById); // tested
 
-Route.post("/admin/posts/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archivePostById);
-Route.post("/admin/posts/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchivePostById);
+Route.post("/admin/posts/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archivePostById); // tested
+Route.post("/admin/posts/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchivePostById); // tested
 Route.post("/admin/providers/:id/verify", AuthMiddleware.hasAdminAccess, AdminController.verifyProvider);
 
 // Breaking changes
 Route.post("/admin/users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getUsers); // tested
 Route.post("/admin/providers", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getProviders); // tested
 Route.post("/admin/students", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getStudents); // tested
-Route.post("/admin/posts", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getPosts);
+Route.post("/admin/posts", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getPosts); // tested
 
 
-
+Route.post('/creative', ApisController.createPost)
 
 export { Route as routes };
