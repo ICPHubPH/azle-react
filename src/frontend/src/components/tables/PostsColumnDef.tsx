@@ -12,9 +12,9 @@ import {
   Archive,
   ArchiveRestore,
   ArrowUpDown,
-  Loader,
   LoaderCircle,
   MoreHorizontal,
+  Square,
   SquareArrowOutUpRight,
   Trash,
 } from "lucide-react";
@@ -38,11 +38,11 @@ import {
 } from "@/hooks/usePostData";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
-import React from "react";
 
-export const postsColumnDefs: ColumnDef<Post>[] = [
+export const postsColumnDefs = (isLoading: boolean): ColumnDef<Post>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -130,32 +130,38 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
   {
     accessorKey: "postThumbnailSource",
     header: "Thumbnail",
-    cell: ({ row }) => (
-      <Dialog>
-        <DialogTrigger className="text-sm sm:text-base underline text-blue-600">
-          View Thumbnail
-        </DialogTrigger>
-        <DialogContent className="w-full max-w-lg">
-          <img className="w-full" src={row.original.thumbnail} alt="id" />
-        </DialogContent>
-      </Dialog>
-    ),
+    cell: ({ row }) => {
+      const [isImageLoading, setIsImageLoading] = useState(true); // Loading state for the image
+
+      return (
+        <Dialog>
+          <DialogTrigger className="text-sm sm:text-base">
+            <Badge
+              variant={"outline"}
+              className="font-medium py-1 px-1.5 text-blue-500 gap-1.5 "
+            >
+              <SquareArrowOutUpRight className="w-4" />
+              View Thumbnail
+            </Badge>
+          </DialogTrigger>
+          <DialogContent className="w-full max-w-lg">
+            {isImageLoading && (
+              <Skeleton className="h-96 w-full" /> // Show skeleton while image is loading
+            )}
+            <img
+              className={`w-full ${isImageLoading ? "hidden" : "block"}`} // Hide image until loaded
+              src={row.original.thumbnail}
+              alt="Thumbnail"
+              onLoad={() => setIsImageLoading(false)} // Once the image is loaded, hide the skeleton
+            />
+          </DialogContent>
+        </Dialog>
+      );
+    },
   },
   {
     accessorKey: "archivedAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="px-0 hover:bg-none"
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    sortingFn: "alphanumeric",
+    header: "Status",
     cell: ({ row }) => {
       const status = row.original.archivedAt;
       return (
@@ -226,7 +232,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
               onSettled: () => setIsPending(false),
               onError: (error: Error) => {
                 toast({
-                  title: "Forbidden!",
+                  title: "Error!",
                   description: "Failed to delete post!!",
                   variant: "destructive",
                 });
@@ -258,9 +264,14 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem className="px-2 flex gap-2 items-center">
-                <SquareArrowOutUpRight className="w-4" />
-                View
+              <DropdownMenuItem>
+                <Link
+                  to={`/posts/${row.original.id}`}
+                  className=" flex gap-2 items-center"
+                >
+                  <SquareArrowOutUpRight className="w-4" />
+                  View Post
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {status === null ? (
@@ -271,7 +282,8 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
                     row.original.id!.toString()
                   )}
                 >
-                  <Archive className="w-4" /> Archive
+                  <Archive className="w-4 text-blue-500" />{" "}
+                  <span className="text-blue-500">Archive</span>
                 </DropdownMenuItem>
               ) : (
                 <>
