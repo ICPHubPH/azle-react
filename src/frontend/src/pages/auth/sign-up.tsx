@@ -1,5 +1,5 @@
-import { registerUser } from "@/api/authService";
-import { Button } from "@/components/ui/button";
+import { registerUser } from "@/api/authService"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -7,36 +7,30 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import * as z from "zod";
+} from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import * as z from "zod"
 
-// Define the sign-up schema without password
-const signUpSchema = z
-  .object({
-    name: z.string(),
-    email: z.string().email(),
-    role: z.enum(["provider", "student"]),
-  })
-  .refine((data) => !!data.email, {
-    message: "Email is required",
-    path: ["email"],
-  });
+const signUpSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email(),
+  role: z.enum(["provider", "student"]),
+})
 
-export default function SignUp() {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
+export default function SignUp({ onSubmit }: { onSubmit: (action: () => Promise<void>) => Promise<void> }) {
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
   const signUpForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -45,44 +39,38 @@ export default function SignUp() {
       email: "",
       role: "student",
     },
-  });
+  })
 
-  const onSignUp = async (values: z.infer<typeof signUpSchema>) => {
-    setIsLoading(true);
-    console.log("Sign up", values); // Debugging output
-
-    // Simulate successful sign-up (replace this with your actual logic)
-    try {
-      // TODO: Implement your actual sign-up logic here
-      // Temporarily navigate to OTP verification page
-      const result = await registerUser(values);
-
-      console.log("Sign up response: ", result.user);
-      console.log(result.message);
-
-      if (result.success) {
-        navigate("/otp-verification", {
-          state: {
-            token: result.token,
-            email: result.user.email,
-            origin: "register",
-          },
-        });
+  const handleSignUp = async (values: z.infer<typeof signUpSchema>) => {
+    await onSubmit(async () => {
+      try {
+        console.log("Sign up", values)
+        const result = await registerUser(values)
+        console.log("Sign up response: ", result.user)
+        console.log(result.message)
+        if (result.success) {
+          navigate("/otp-verification", {
+            state: {
+              token: result.token,
+              email: result.user.email,
+              origin: "register",
+            },
+          })
+        }
+      } catch (error) {
+        console.error("Sign-up error:", error)
+        throw error
       }
-    } catch (error) {
-      console.error("Sign-up error:", error); // Log any error
-    }
-
-    setIsLoading(false);
-  };
+    })
+  }
 
   return (
     <Form {...signUpForm}>
-      <form onSubmit={signUpForm.handleSubmit(onSignUp)} className="space-y-4">
+      <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="space-y-4">
         <FormField
           control={signUpForm.control}
           name="name"
-          render={({ field }: any) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
@@ -95,7 +83,7 @@ export default function SignUp() {
         <FormField
           control={signUpForm.control}
           name="email"
-          render={({ field }: any) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
@@ -105,11 +93,10 @@ export default function SignUp() {
             </FormItem>
           )}
         />
-
         <FormField
           control={signUpForm.control}
           name="role"
-          render={({ field }: any) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Role</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -128,9 +115,9 @@ export default function SignUp() {
           )}
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Signing up..." : "Sign Up"}
+          Sign Up
         </Button>
       </form>
     </Form>
-  );
+  )
 }

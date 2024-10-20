@@ -1,34 +1,46 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/hooks/use-auth";
-import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SignIn from "./sign-in";
-import SignUp from "./sign-up";
+} from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useAuth } from "@/hooks/use-auth"
+import { ArrowLeft, Loader2 } from "lucide-react"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import SignIn from "./sign-in"
+import SignUp from "./sign-up"
 
 export default function AuthPage() {
-  const [activeTab, setActiveTab] = useState("signin");
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const [activeTab, setActiveTab] = useState("signin")
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
 
   if (isAuthenticated) {
-    navigate("/home");
+    navigate("/home")
   }
 
   const handleBackClick = () => {
-    navigate("/");
-  };
+    navigate("/")
+  }
+
+  const handleAuthAction = async (action: () => Promise<void>) => {
+    setIsLoading(true)
+    try {
+      await action()
+    } catch (error) {
+      console.error("Authentication error:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen ">
       <Card className="w-full max-w-md relative">
         <button
           onClick={handleBackClick}
@@ -48,7 +60,7 @@ export default function AuthPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs
+          <Tabs 
             value={activeTab}
             onValueChange={setActiveTab}
             className="w-full"
@@ -58,14 +70,14 @@ export default function AuthPage() {
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
             <TabsContent value="signin">
-              <SignIn />
+              <SignIn onSubmit={(action) => handleAuthAction(action)} />
             </TabsContent>
             <TabsContent value="signup">
-              <SignUp />
+              <SignUp onSubmit={(action) => handleAuthAction(action)} />
             </TabsContent>
           </Tabs>
         </CardContent>
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex flex-col items-center space-y-4">
           <p className="text-sm text-gray-500">
             {activeTab === "signin"
               ? "Don't have an account? "
@@ -80,8 +92,16 @@ export default function AuthPage() {
               {activeTab === "signin" ? "Sign up" : "Sign in"}
             </Button>
           </p>
+          {isLoading && (
+            <div className="flex items-center justify-center">
+              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              <span className="ml-2 text-sm text-gray-600">
+                {activeTab === "signin" ? "Signing in..." : "Signing up..."}
+              </span>
+            </div>
+          )}
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }
