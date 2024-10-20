@@ -1,15 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {
+  createBookmark,
+  deleteBookmark,
+  isBookmarked,
+} from "@/api/bookmarkService";
+import { getPostById } from "@/api/postService";
+import Header from "@/components/header/user-header/Header";
 import PostSection from "@/components/post/post-components/PostSection";
 import ReviewSection from "@/components/post/post-components/ReviewSection";
 import { Button } from "@/components/ui/button";
+<<<<<<< Updated upstream
 import { MoveLeft, Share2, Bookmark, ThumbsUp } from "lucide-react";
 import Header from "@/components/header/user-header/Header";
-import { getPostById } from "@/api/postService"; 
-import { Post } from "@/types/model"; 
+import { getPostById } from "@/api/postService";
+import { Post } from "@/types/model";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/hooks/use-auth";
+import { Badge } from "@/components/ui/badge";
+=======
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Post } from "@/types/model";
+import { Bookmark, BookmarkCheck, MoveLeft, Share2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
+>>>>>>> Stashed changes
 
 export default function PostPage() {
   const { postId } = useParams();
@@ -17,6 +34,13 @@ export default function PostPage() {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+<<<<<<< Updated upstream
+  const { data } = useAuth();
+
+  const role = data?.role;
+=======
+  const [bookmarked, setBookmarked] = useState<boolean>();
+>>>>>>> Stashed changes
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -27,7 +51,7 @@ export default function PostPage() {
       }
 
       try {
-        const data = await getPostById(postId); 
+        const data = await getPostById(postId);
         setPost(data.post);
       } catch (error) {
         setError("Error fetching post information.");
@@ -39,6 +63,16 @@ export default function PostPage() {
     fetchPost();
   }, [postId]);
 
+  useEffect(() => {
+    isBookmarked(String(postId))
+      .then((result) => {
+        setBookmarked(result?.bookmarked);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  }, []);
+
   const handleBack = () => {
     navigate(-1);
     toast.info("Back to feed");
@@ -49,9 +83,20 @@ export default function PostPage() {
     toast.success("Post shared successfully!");
   };
 
-  const handleBookmark = () => {
+  const handleBookmark = async () => {
     // Implement bookmark functionality
-    toast.success("Post bookmarked!");
+    try {
+      if (!bookmarked) {
+        await createBookmark(String(postId));
+        setBookmarked(true);
+        toast.success("Saved to Bookmark");
+      } else {
+        await deleteBookmark(String(postId));
+        setBookmarked(false);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   const handleLike = () => {
@@ -79,17 +124,43 @@ export default function PostPage() {
             onClick={handleBack}
           >
             <MoveLeft className="h-4 w-4" />
-            Back to feed
+            {role === "admin" ? "Back to admin" : "Back to feed"}
           </Button>
           <div className="flex gap-2">
+<<<<<<< Updated upstream
+            {role === "admin" ? (
+              <Badge variant={post?.archivedAt === null ? "green" : "blue"}>
+                {post?.archivedAt === null ? "Active" : "Archived"}
+              </Badge>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" onClick={handleShare}>
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Share
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleBookmark}>
+                  <Bookmark className="h-4 w-4 mr-2" />
+                  Save
+                </Button>
+              </>
+            )}
+=======
             <Button variant="outline" size="sm" onClick={handleShare}>
               <Share2 className="h-4 w-4 mr-2" />
               Share
             </Button>
             <Button variant="outline" size="sm" onClick={handleBookmark}>
-              <Bookmark className="h-4 w-4 mr-2" />
-              Save
+              {!bookmarked ? (
+                <>
+                  <Bookmark className="h-4 m-4 mr-2" /> Save
+                </>
+              ) : (
+                <>
+                  <BookmarkCheck className="h-4 w-4 mr-2" /> Saved
+                </>
+              )}
             </Button>
+>>>>>>> Stashed changes
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -99,7 +170,6 @@ export default function PostPage() {
           <div>
             <Card>
               <CardContent className="p-6">
-              
                 {post ? (
                   <ReviewSection feedbacks={post.feedbacks} />
                 ) : (

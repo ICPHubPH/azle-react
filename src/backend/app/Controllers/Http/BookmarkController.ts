@@ -1,42 +1,86 @@
 import { Request, Response } from "express";
+import { APIError, httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { Bookmark } from "../../../database/entities/bookmark";
 import { User } from "../../../database/entities/user";
-import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 
 export default class BookmarkController {
   static async getUserBookmarks(request: Request, response: Response) {
     try {
+      const user = await User.findOneBy({
+        id: request.user
+      });
+
+      
+      if (!user) {
+        throw new APIError("Unauthorized!", 401);
+      }
+
       const skip = request.skip;
       const take = request.limit;
 
-      const data = await User.find({
+      const bookmarks = await Bookmark.findAndCount({
         where: {
-          id: request.user,
+          user: {
+            id: user.id
+          }
         },
         select: {
           id: true,
-          bookmarks: {
-            post: {
-              id: true,
-              title: true,
-              content: true,
-              thumbnail: true,
-              createdAt: true,
-            },
-          },
+          post: {
+            id: true,
+            title: true,
+            content: true,
+            thumbnail: true,
+            type: true
+          }
         },
-        relations: ["bookmarks", "bookmarks.post"],
+        relations: ["user", "post"],
         skip,
-        take,
+        take
       });
 
-      if (!data) {
-        return httpResponseError(response, null, "Unauthorized", 401);
+      httpResponseSuccess(response, { bookmarks });
+    } catch (error) {
+      if (error instanceof APIError) {
+        httpResponseError(response, null, error.message, error.code);
+      } else {
+        httpResponseError(response, null, "Internal Server Error", 500);
+      }
+    }
+  }
+
+  static async isBookmarked(request: Request, response: Response) {
+    try {
+      const user = await User.findOneBy({
+        id: request.user
+      });
+
+      if (!user) {
+        throw new APIError("Unauthorized", 401);
       }
 
-      httpResponseSuccess(response, { bookmarks: data[0], count: data[1] });
+      const { postId } = request.body;
+
+      const bookmark = await Bookmark.findOne({
+        where: {
+          user: {
+            id: user.id
+          },
+          post: {
+            id: postId
+          }
+        },
+        relations: ['post']
+      });
+
+      
+      httpResponseSuccess(response, { bookmarked: !!bookmark }, null, 200);
     } catch (error) {
-      httpResponseError(response, null, "Internal Server Error", 500);
+      if (error instanceof APIError) {
+        httpResponseError(response, null, error.message, error.code);
+      } else {
+        httpResponseError(response, null, "Internal Server Error", 500);
+      }
     }
   }
 
@@ -46,11 +90,11 @@ export default class BookmarkController {
       const { postId } = request.body;
 
       if (!user) {
-        return httpResponseError(response, null, "Unauthorized", 401);
+        throw new APIError("Unauthorized", 401);
       }
 
       if (user.role == "admin") {
-        return httpResponseError(response, null, "Forbidden!", 403);
+        throw new APIError("Forbidden", 403);
       }
 
       await Bookmark.insert({
@@ -71,12 +115,16 @@ export default class BookmarkController {
             id: postId,
           },
         },
-        relations: ["user", "post"],
+        relations: ["post"],
       });
 
       httpResponseSuccess(response, { bookmark }, "Bookmarked successfully");
     } catch (error) {
-      httpResponseError(response, null, "Internal Server Error", 500);
+      if (error instanceof APIError) {
+        httpResponseError(response, null, error.message, error.code);
+      } else {
+        httpResponseError(response, null, "Internal Server Error", 500);
+      }
     }
   }
 
@@ -85,36 +133,36 @@ export default class BookmarkController {
       const user = await User.findOneBy({ id: request.user });
 
       if (!user) {
-        return httpResponseError(response, null, "Unauthorized", 401);
+        throw new APIError("Unauthorized", 401);
       }
 
-      const id = request.params.id;
+      const {
+        postId
+      } = request.body;
       const bookmark = await Bookmark.findOne({
         where: {
-          id,
-        },
-        select: {
-          user: {
-            id: true,
+          post: {
+            id: postId
           },
-        },
-        relations: ["user"],
+          user: {
+            id: user.id
+          }
+        }
       });
 
       if (!bookmark) {
-        return httpResponseError(response, null, "Bookmark not found", 404);
-      }
-
-      if (user.id != bookmark.user.id) {
-        return httpResponseError(response, null, "Unauthorized", 401);
+        throw new APIError("Bookmark not found", 404);
       }
 
       await Bookmark.delete({ id: bookmark.id });
 
       httpResponseSuccess(response, null, "Bookmark deleted successfully");
     } catch (error) {
-      console.log(error)
-      httpResponseError(response, null, "Internal Server Error", 500);
+      if (error instanceof APIError) {
+        httpResponseError(response, null, error.message, error.code);
+      } else {
+        httpResponseError(response, null, "Internal Server Error", 500);
+      }
     }
   }
 }
