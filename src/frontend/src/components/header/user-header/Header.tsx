@@ -1,19 +1,18 @@
+// src/frontend/src/components/header/user-header/Header.tsx
+
 import React, { useState, useEffect } from 'react';
 import { ModeToggle } from "../../mode-toggle";
 import UserDropdown from '../../dropdowns/UserDropdown';
 import MobileMenu from './MobileMenu';
 import NavItems from './NavItems';
+import { useAuth } from "@/hooks/use-auth"; // Import your auth hook or context
+import { User } from "@/types/model"; // Import the User type
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  const user = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    role: 'Student',
-    avatarUrl: 'https://github.com/shadcn.png',
-  };
+  const { data } = useAuth(); // Get user data from AuthContext
+  const user = data as User; // Cast data to User type
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -22,7 +21,7 @@ const Header: React.FC = () => {
   }, []);
 
   const handleLogoClick = () => {
-    // Logic for logo click
+    // Logic for logo click (e.g., navigate to homepage)
   };
 
   return (
@@ -47,18 +46,17 @@ const Header: React.FC = () => {
         </ul>
 
         {/* Conditionally render MobileMenu based on screen size */}
-        {isMobile && (
-          <MobileMenu
+        <MobileMenu
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
-            user={user}
+            user={user} 
           />
-        )}
+
 
         {/* Desktop Mode Toggle and User Dropdown */}
         <div className="hidden md:flex items-center space-x-4">
           <ModeToggle />
-          <UserDropdown user={user} />
+          <UserDropdown user={user} /> {/* Pass the user prop here */}
         </div>
       </div>
     </header>
