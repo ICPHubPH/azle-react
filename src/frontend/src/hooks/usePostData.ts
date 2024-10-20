@@ -6,6 +6,7 @@ import {
   getArchivedPosts,
   getPostById,
   getPostsByCategoryType,
+  unArchivePostById,
 } from "@/api/postService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -75,6 +76,13 @@ export const useDeletePost = () => {
 export const useArchivePost = () => {
   return useMutation({
     mutationFn: async (id: string) => archivePostById(id),
+  });
+};
+
+//unArchive post
+export const useUnArchivePost = () => {
+  return useMutation({
+    mutationFn: async (id: string) => unArchivePostById(id),
   });
 };
 
