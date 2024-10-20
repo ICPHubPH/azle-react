@@ -31,7 +31,7 @@ export const legitCreds: UserInterface[] = [
     email: "kurtddbigtas@gmail.com",
     emailVerifiedAt: "2024-09-15T12:00:00Z",
     providerVerifiedAt: null,
-    role: "student",
+    role: "admin",
     type: null,
     createdAt: "2024-02-15T12:00:00Z",
     updatedAt: "2024-09-15T12:00:00Z",
@@ -93,9 +93,9 @@ export const legitCreds: UserInterface[] = [
 const legitProviders: UserInterface[] = [
   {
     avatarUrl:
-      "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA3FC",
+      "https://scontent.fmnl3-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=Fbo2i0QCSnMQ7kNvgGh67Bm&_nc_zt=23&_nc_ht=scontent.fmnl3-1.fna&_nc_gid=AQIxOjVs2nLloJAWYY83P7x&oh=00_AYCHmnARhruBUM6qi7l8x8E-7mLA_ZYQVFzVXD58s-icEA&oe=671AA439",
     bannerUrl:
-      "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/449449169_447660674809391_692585298774003021_n.jpg?stp=dst-jpg_s960x960&_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFJuJzTCK2Z3odEydsAr1rJYsTexpZPKg1ixN7Glk8qDUu7Q_JCZVw9d4nKgEdy7qKBB_sO2fVWhHEqMiOUNG6T&_nc_ohc=6XaoIN0GI9QQ7kNvgFOZeVG&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=ADYuKfczXQ9LMZkCMLdcZYi&oh=00_AYCeJ0aQh1azc6a-sLBpIsX9rmd4RsjmKNYQ5H9-BVKnww&oe=670F870B",
+      "https://scontent.fmnl37-1.fna.fbcdn.net/v/t39.30808-6/462693785_572297352034208_4072350988270131867_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFxBIb5Ks6pVotefQzSmLg2vtFEeWRvEfG-0UR5ZG8R8UKS6JjidRPX9j7J9h9xwYhQdTNurlH26M6MCoMhw-9i&_nc_ohc=2G1SHqYETpgQ7kNvgG3C3DR&_nc_zt=23&_nc_ht=scontent.fmnl37-1.fna&_nc_gid=AmwBANvCIlpUVUapEakdYKr&oh=00_AYDhyMKVGCoKKx-9sk-Kw5vZtidySKm79N6TgTOYSZeI6g&oe=671AAA3D",
     validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
     name: "La Verdad Christian College, Inc. - Caloocan",
     organizationName: "La Verdad Christian College, Inc. - Caloocan",
@@ -111,9 +111,9 @@ const legitProviders: UserInterface[] = [
   },
   {
     avatarUrl:
-      "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
+      "https://scontent.fmnl37-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=rtSNceS5kT4Q7kNvgET17h3&_nc_zt=23&_nc_ht=scontent.fmnl37-1.fna&_nc_gid=AOenHZFdecdhRUSI_2YHLUy&oh=00_AYCwwTG9NilvuJ_O1wY2MIx232-lzCRHOprLRYvPaZsv9g&oe=671AA07C",
     bannerUrl:
-      "https://scontent.fcrk4-2.fna.fbcdn.net/v/t39.30808-6/462693785_572297352034208_4072350988270131867_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFxBIb5Ks6pVotefQzSmLg2vtFEeWRvEfG-0UR5ZG8R8UKS6JjidRPX9j7J9h9xwYhQdTNurlH26M6MCoMhw-9i&_nc_ohc=PHe0jc1YwpoQ7kNvgFGQUBI&_nc_zt=23&_nc_ht=scontent.fcrk4-2.fna&_nc_gid=AsqXPYjBH7H6yMKrcvnDH9x&oh=00_AYDyB5P75ExnxfKLuvVtJztyx3M2aJTRK343Pl9kJny8Og&oe=670FADBD",
+      "https://scontent.fmnl37-1.fna.fbcdn.net/v/t39.30808-6/449449169_447660674809391_692585298774003021_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFJuJzTCK2Z3odEydsAr1rJYsTexpZPKg1ixN7Glk8qDUu7Q_JCZVw9d4nKgEdy7qKBB_sO2fVWhHEqMiOUNG6T&_nc_ohc=91KyknYT-SgQ7kNvgFGG-Qg&_nc_zt=23&_nc_ht=scontent.fmnl37-1.fna&_nc_gid=AVFfJHiG3p40XW7Naio3mjq&oh=00_AYD9mpN4wDoaxqu-Q-wIw8E9sSLcGQPqZdPFGevAvpD7BQ&oe=671ABBCB",
     validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
     name: "La Verdad Christian College, Inc. - Apalit, Pampanga",
     organizationName: "La Verdad Christian College, Inc. - Apalit, Pampanga",
@@ -123,6 +123,132 @@ const legitProviders: UserInterface[] = [
     providerVerifiedAt: "2024-09-20T12:00:00Z",
     role: "provider",
     type: "school",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl:
+      "https://www.britishcouncil.ph/sites/default/files/solas_ched.png",
+    bannerUrl:
+      "https://mimaropa.ched.gov.ph/wp-content/uploads/2022/05/CHED-Building-e1651394610719.jpg",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "Commission on Higher Education (CHED)",
+    organizationName: "Commission on Higher Education (CHED)",
+    bio: "CHED is the governing body responsible for overseeing tertiary and graduate education in the Philippines. It formulates policies, plans, and programs that promote quality education and makes higher education accessible through various scholarship programs.",
+    email: "scholarships@ched.gov.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "government",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl:
+      "https://www.mfi.org.ph/wp-content/uploads/2024/02/SM-FOUNDATION-SCHOLARSHIP.jpg",
+    bannerUrl:
+      "https://www.sm-foundation.org/wp-content/uploads/2024/02/Educ-banner_0208.png",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "SM Foundation, Inc.",
+    organizationName: "SM Foundation, Inc.",
+    bio: "SM Foundation is the corporate social responsibility (CSR) arm of SM Group, a leading retail, real estate, and financial services conglomerate in the Philippines. The foundation focuses on education, health, disaster response, and the environment, offering various scholarships to underprivileged students.",
+    email: "scholarships@sm.co.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "corporate",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl:
+      "https://www.megaworldfoundation.com/mfs/assets/images/mf-logo.png",
+    bannerUrl:
+      "https://connect-assets.prosple.com/cdn/ff/Ku5cniYCbNZW3yUnh4bvKXPsV2iDproOgcw50PiJ8bA/1571621125/public/2019-10/banner-megaworld-corporation-890x320-2019.jpg",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "Megaworld Foundation, Inc.",
+    organizationName: "Megaworld Foundation, Inc.",
+    bio: "Megaworld Foundation is the CSR arm of Megaworld Corporation, one of the Philippines’ largest developers of residential condominiums and integrated urban townships. The foundation provides scholarships to academically excellent but financially challenged students.",
+    email: "scholarships@mw.co.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "corporate",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl:
+      "https://the-post-assets.sgp1.digitaloceanspaces.com/2023/03/DOST-SCHOLARSHIP_thumbnail.png",
+    bannerUrl:
+      "https://the-post-assets.sgp1.digitaloceanspaces.com/2023/06/DOST-SEI-SCHOLARSHIP_banner-1896x800.jpg",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "Department of Science and Technology - Science Education Institute (DOST-SEI)",
+    organizationName:
+      "Department of Science and Technology - Science Education Institute (DOST-SEI)",
+    bio: "DOST-SEI is a government agency under the Department of Science and Technology. Its mission is to accelerate the development of the Philippines’ science and technology sector through scholarships, research funding, and capacity-building initiatives.",
+    email: "scholarships@dost.gov.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "government",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl:
+      "https://ayala.com/app/themes/custom-theme/dist/images/others/others-placeholder.png",
+    bannerUrl:
+      "https://scontent.fmnl3-1.fna.fbcdn.net/v/t39.30808-6/442479493_842547407913748_439927497003671249_n.png?_nc_cat=107&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeGHhOUP8YXukR2rMeV8JFQsf-xhgRx8taZ_7GGBHHy1piLXLU4qftjpqRAZtRwCDsOmUWyqI6sxD-iVp2dHO4Xq&_nc_ohc=hKcO4wH-om8Q7kNvgGOr53y&_nc_zt=23&_nc_ht=scontent.fmnl3-1.fna&_nc_gid=AD3rFLkBMXFnzp46XuKExpH&oh=00_AYCkcOGOWlQCXmLBOsXfXjwRNloJEd16ti-OPsWAoaCzTQ&oe=671AA96F",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "Ayala Foundation, Inc.",
+    organizationName: "Ayala Foundation, Inc.",
+    bio: "Ayala Foundation is the social development arm of Ayala Corporation, one of the oldest and largest conglomerates in the Philippines. It supports education, arts, and community development, providing scholarships to talented students from disadvantaged backgrounds.",
+    email: "scholarships@ayala.co.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "corporate",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl: "https://newsinfo.inquirer.net/files/2024/07/GSIS-LOGO.png",
+    bannerUrl:
+      "https://ptvnews.ph/wp-content/uploads/2023/04/viber_image_2023-04-24_16-43-20-530.jpg",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "Government Service Insurance System (GSIS)",
+    organizationName: "Government Service Insurance System (GSIS)",
+    bio: "GSIS is a government financial institution that provides life insurance, retirement, and pension benefits to Filipino government employees. It offers a scholarship program for the children of its members to ensure their access to quality education.",
+    email: "scholarships@gsis.gov.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "government",
+    createdAt: "2024-03-20T12:00:00Z",
+    updatedAt: "2024-09-20T12:00:00Z",
+    archivedAt: null,
+  },
+  {
+    avatarUrl:
+      "https://i.pinimg.com/736x/4a/c9/6c/4ac96cf93e07bb096431538005c1b077.jpg",
+    bannerUrl:
+      "https://angelescity.ph/wp-content/uploads/cache/images/jollibee-logo/jollibee-logo-3567621404.jpg",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
+    name: "Jollibee Group Foundation",
+    organizationName: "Jollibee Group Foundation",
+    bio: "Jollibee Group Foundation is the philanthropic arm of Jollibee Foods Corporation, the largest fast-food chain in the Philippines. The foundation’s focus is on addressing hunger and education challenges through sustainable initiatives, including scholarships for students in hospitality and business programs.",
+    email: "scholarships@jollibee.co.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
+    role: "provider",
+    type: "government",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
@@ -202,7 +328,7 @@ export const studentSeeds = async (count: number) => {
     })
   );
 
-  return [...seeds, ...legitCreds];
+  return [...legitCreds, ...seeds];
 };
 
 export const providerSeeds = async (
@@ -237,7 +363,7 @@ export const providerSeeds = async (
     })
   );
 
-  return [...seeds, ...legitProviders];
+  return [...legitProviders, ...seeds];
 };
 
 export const postSeeds = async (count: number) => {
@@ -250,11 +376,26 @@ export const postSeeds = async (count: number) => {
   const seeds = Array.from({ length: count }, (): PostInterface => {
     const randomProvider = faker.helpers.arrayElement(providers);
 
+    const content = `
+      <h2>${faker.company.name()} Scholarship</h2>
+      <p><strong>Description:</strong> ${faker.lorem.paragraphs(2)}</p>
+      <p><strong>Requirements:</strong></p>
+      <ul>
+        <li>${faker.lorem.sentence()}</li>
+        <li>${faker.lorem.sentence()}</li>
+        <li>${faker.lorem.sentence()}</li>
+      </ul>
+      <p><strong>Application Deadline:</strong> ${faker.date
+        .future()
+        .toLocaleDateString()}</p>
+      <p><strong>Contact:</strong> ${faker.internet.email()}</p>
+    `;
+
     return {
       thumbnail: faker.image.url(),
       title: faker.lorem.words(),
       type: faker.helpers.arrayElement(PostCategoryType),
-      content: faker.lorem.paragraphs(),
+      content: content,
       createdAt: faker.date.past().toISOString(),
       updatedAt: faker.date.recent().toISOString(),
       user: randomProvider,

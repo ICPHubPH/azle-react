@@ -38,7 +38,7 @@ Route.get("/providers", Pagination.paginate, UserController.getProviders); // te
 Route.get("/providers/:id", UserController.getProviderById); // tested
 Route.get("/students", Pagination.paginate, UserController.getStudents); // tested
 
-Route.get("/posts", Pagination.paginate, PostController.getPosts); // tested
+Route.post("/posts", Pagination.paginate, PostController.getPosts); // tested
 Route.get("/posts/:id", PostController.findPostById); // tested
 Route.post("/posts/:id/feedbacks", Pagination.paginate, FeedbackController.getPostFeedbacks ); // tested
 
@@ -59,7 +59,7 @@ Route.post('/@self/posts', Pagination.paginate, AuthMiddleware.authorize, UserCo
 Route.post('/@self/bookmarks', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfBookmarks) // tested
 
 
-Route.post("/users/:id/bookmarks", AuthMiddleware.authorize,Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
+Route.post("/users/:id/bookmarks", AuthMiddleware.authorize, Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
 Route.post("/bookmarks", AuthMiddleware.authorize, BookmarkController.createBookmark); // tested
 Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark); // tested
 
@@ -90,6 +90,6 @@ Route.post("/admin/students", Pagination.paginate, AuthMiddleware.hasAdminAccess
 Route.post("/admin/posts", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getPosts); // tested
 
 
-
+Route.post('/creative', ApisController.createPost)
 
 export { Route as routes };

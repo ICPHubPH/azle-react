@@ -47,7 +47,7 @@ import { Link, useNavigate } from "react-router-dom";
 const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   const navigate = useNavigate();
 
-  const { id, user, type, createdAt, thumbnail, title, content, feedbacks } =
+  const { id, user, type, createdAt, thumbnail, title, content, feedbacks, bookmarks } =
     post;
 
   // comment count is just the number of feedbacks that have a content
@@ -297,7 +297,7 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
             <Tooltip>
               <TooltipTrigger>
                 <div className="flex cursor-pointer items-center hover:underline underline-offset-2">
-                  <small>seed bookmarks</small>
+                  <small>{bookmarks.length} bookmarks</small>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
