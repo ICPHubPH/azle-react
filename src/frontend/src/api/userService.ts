@@ -60,10 +60,10 @@ export const getArchiveUsers = async (page: number, take: number, sortOrder: str
       page,
       take,
       sortOrder,
-      verified: "true", 
       archived: "true",
     },
   });
+  console.log("ln:67 User Service", response.data); // Add this line to log the response data
   return response.data;
 };
 

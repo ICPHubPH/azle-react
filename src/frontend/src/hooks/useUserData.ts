@@ -136,6 +136,6 @@ export const useArchivedUsers = (page: number, take: number, sortOrder: string =
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: page >= 0 && take > 0,
-    select: (data) => ({ archivedUsers: data.archivedUsers, count: data.count }), // Return both data and count
+    // select: (data) => ({ archivedUsers: data.archivedUsers, count: data.count }), // Return both data and count
   });
 };
