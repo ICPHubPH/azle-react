@@ -33,7 +33,6 @@ Route.post("/auth/verify-register", AuthController.verifyFromRegister); // teste
 Route.post("/auth/verify-login", AuthController.verifyFromLogin); // tested
 Route.post("/auth/resend-otp", AuthController.resendOtp); // tested
 
-Route.get("/users", Pagination.paginate, UserController.getUsers); // tested
 Route.get("/users/:id", UserController.findUserById); // tested
 Route.get("/providers", Pagination.paginate, UserController.getProviders); // tested
 Route.get("/providers/:id", UserController.getProviderById); // tested
@@ -70,17 +69,21 @@ Route.post("/feedbacks/:id/remove", AuthMiddleware.authorize, FeedbackController
 
 /*
 |--------------------------------------------------------------------------
-| Protected Routes
+| Admin Routes
 |--------------------------------------------------------------------------
 */
-Route.post("/protected/users/:id/remove", AuthMiddleware.hasAdminAccess, UserController.deleteUserById );
-Route.post("/protected/users/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archiveUserById);
-Route.post("/protected/users/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchiveUserById);
-Route.post("/protected/archived-users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getArchivedUsers);
-Route.post("/protected/non-verified-users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getNonVerifiedUsers);
-Route.post("/protected/posts/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archivePostById);
-Route.post("/protected/posts/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchivePostById);
-Route.post("/protected/providers/:id/verify", AuthMiddleware.hasAdminAccess, AdminController.verifyProvider);
-Route.post("/protected/non-verified-providers", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getNonVerifiedProviders);
+Route.post("/admin/users/:id/remove", AuthMiddleware.hasAdminAccess, UserController.deleteUserById ); // tested
+Route.post("/admin/users/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archiveUserById); // tested
+Route.post("/admin/users/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchiveUserById); // tested
+Route.post("/admin/archived-users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getArchivedUsers);
+Route.post("/admin/non-verified-users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getNonVerifiedUsers);
+Route.post("/admin/posts/:id/archive", AuthMiddleware.hasAdminAccess, AdminController.archivePostById);
+Route.post("/admin/posts/:id/unarchive", AuthMiddleware.hasAdminAccess, AdminController.unarchivePostById);
+Route.post("/admin/providers/:id/verify", AuthMiddleware.hasAdminAccess, AdminController.verifyProvider);
+Route.post("/admin/non-verified-providers", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getNonVerifiedProviders);
+
+// Breaking changes
+Route.post("/admin/users", Pagination.paginate, AuthMiddleware.hasAdminAccess, UserController.getUsers); 
+
 
 export { Route as routes };
