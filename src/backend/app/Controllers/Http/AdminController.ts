@@ -171,7 +171,6 @@ export default class AdminController {
     }
   }
 
-
   static async getProviders(request: Request, response: Response) {
     try {
       const skip = request.skip;
@@ -243,6 +242,43 @@ export default class AdminController {
       httpResponseSuccess(
         response,
         { users: data[0], count: data[1] },
+        null,
+        200
+      );
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+
+  static async getStudents(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+
+      const {
+        sortOrder = "ASC",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereConditions: any = {
+        role: "student",
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      const data = await User.findAndCount({
+        where: whereConditions,
+        skip,
+        take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+      });
+
+      httpResponseSuccess(
+        response,
+        { students: data[0], count: data[1] },
         null,
         200
       );

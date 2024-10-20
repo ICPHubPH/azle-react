@@ -73,7 +73,6 @@ export default class UserController {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
-  
 
   static async getProviderById(request: Request, response: Response) {
     try {
@@ -129,20 +128,14 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
-      const {
-        sortOrder = "ASC",
-        archived = "false",
-        emailVerified = "true",
-      } = request.query;
-
-      const whereConditions: any = {
-        role: "student",
-        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
-        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
-      };
+      const { sortOrder = "ASC" } = request.query;
 
       const data = await User.findAndCount({
-        where: whereConditions,
+        where: {
+          role: "student",
+          archivedAt: IsNull(),
+          emailVerifiedAt: Not(IsNull()),
+        },
         skip,
         take,
         order: {
