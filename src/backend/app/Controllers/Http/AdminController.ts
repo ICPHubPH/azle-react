@@ -171,7 +171,6 @@ export default class AdminController {
     }
   }
 
-
   static async getProviders(request: Request, response: Response) {
     try {
       const skip = request.skip;
@@ -248,6 +247,80 @@ export default class AdminController {
       );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+
+  static async getStudents(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+
+      const {
+        sortOrder = "ASC",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereConditions: any = {
+        role: "student",
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      const data = await User.findAndCount({
+        where: whereConditions,
+        skip,
+        take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+      });
+
+      httpResponseSuccess(
+        response,
+        { students: data[0], count: data[1] },
+        null,
+        200
+      );
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+  }
+
+  static async getPosts(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+
+      const { sortOrder = "ASC", type, archived = "false" } = request.query;
+
+      const whereConditions: any = {
+        archivedAt: archived == "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      if (type) {
+        whereConditions.type = type;
+      }
+
+      const data = await Post.findAndCount({
+        where: whereConditions,
+        relations: [
+          "user",
+          "feedbacks",
+          "feedbacks.user",
+          "bookmarks",
+          "bookmarks.user",
+        ],
+        skip,
+        take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+      });
+
+      httpResponseSuccess(response, { posts: data[0], count: data[1] });
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
 }
