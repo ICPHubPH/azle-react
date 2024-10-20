@@ -42,12 +42,26 @@ export const getAllProviders = async (page: number, take: number) => {
 
 // Service for fetching unverified providers (specify verified = false)
 export const getUnVerifiedProviders = async (page: number, take: number, sortOrder: string = "ASC") => {
-  const response = await axiosInstance.get("/providers", {
+  const response = await axiosInstance.post("/admin/providers",{}, {
     params: {
       page,
       take,
       sortOrder,
-      verified: "false", // Explicitly specify unverified providers
+      verified: "false", 
+    },
+  });
+  return response.data;
+};
+
+// Get Archives
+export const getArchiveUsers = async (page: number, take: number, sortOrder: string = "ASC") => {
+  const response = await axiosInstance.post("/admin/users",{}, {
+    params: {
+      page,
+      take,
+      sortOrder,
+      verified: "true", 
+      archived: "true",
     },
   });
   return response.data;
@@ -96,23 +110,23 @@ export const updateSelf = async (name: string, bio: string) => {
 
 //Delete Account
 export const deleteAccount = async (id: string): Promise<void> => {
-  const response = await axiosInstance.post(`/users/${id}/remove`);
+  const response = await axiosInstance.post(`/admin/users/${id}/remove`);
   return response.data;
 };
 
 //Archive user
 export const archiveUserById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/users/${id}/archive`);
+  const response = await axiosInstance.post(`/admin/users/${id}/archive`);
   return response.data;
 };
-//Reomove archive status
+//Remove archive status
 export const unArchiveUserById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/users/${id}/unarchive`);
+  const response = await axiosInstance.post(`/admin/users/${id}/unarchive`);
   return response.data;
 };
 // accept provider
 export const verifyProviderById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/providers/${id}/verify`);
+  const response = await axiosInstance.post(`/admin/providers/${id}/verify`);
   return response.data;
 };
 
