@@ -345,6 +345,10 @@ export default class UserController {
         return httpResponseError(response, null, "Bad Request", 400);
       }
 
+      if (user.role !== "provider") {
+        return httpResponseError(response, null, "Forbidden", 403);
+      }
+
       const posts = await Post.find({
         where: {
           user: {

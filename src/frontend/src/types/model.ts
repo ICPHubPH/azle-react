@@ -37,4 +37,14 @@ export interface Post {
   archivedAt?: string | null;
   user: User;
   feedbacks: Feedback[];
+  bookmarks: Bookmark[];
+}
+
+
+export interface Bookmark {
+  id: number;
+  createdAt: string
+  updatedAt: string;
+  user: User;
+  post: Post;
 }
