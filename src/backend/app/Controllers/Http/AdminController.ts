@@ -36,7 +36,7 @@ export default class AdminController {
 
       httpResponseSuccess(response, null, "User archived");
     } catch (error) {
-      console.log('Error archiving user: ', error)
+      console.log("Error archiving user: ", error);
       httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
@@ -171,64 +171,43 @@ export default class AdminController {
     }
   }
 
-  // get archive users and posts
-  static async getArchivedUsers(request: Request, response: Response) {
+
+  static async getProviders(request: Request, response: Response) {
     try {
-      const user = await User.findOneBy({
-        id: request.user,
-      });
-
-      if (!user) {
-        return httpResponseError(response, null, "Unauthorized!", 401);
-      }
-
       const skip = request.skip;
       const take = request.limit;
 
+      const {
+        sortOrder = "ASC",
+        type,
+        verified = "true",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereCondition: any = {
+        role: "provider",
+        providerVerifiedAt: verified === "true" ? Not(IsNull()) : IsNull(),
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      if (type) {
+        whereCondition.type = type;
+      }
+
       const data = await User.findAndCount({
-        where: {
-          archivedAt: Not(IsNull()),
-        },
+        where: whereCondition,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
         response,
-        { users: data[0], count: data[1] },
-        null,
-        200
-      );
-    } catch (error) {
-      httpResponseError(response, null, "Internal Server Error!", 500);
-    }
-  }
-  // get non verified users
-  static async getNonVerifiedUsers(request: Request, response: Response) {
-    try {
-      const user = await User.findOneBy({
-        id: request.user,
-      });
-
-      if (!user) {
-        return httpResponseError(response, null, "Unauthorized!", 401);
-      }
-
-      const skip = request.skip;
-      const take = request.limit;
-
-      const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: IsNull(),
-        },
-        skip,
-        take,
-      });
-
-      httpResponseSuccess(
-        response,
-        { users: data[0], count: data[1] },
+        { providers: data[0], count: data[1] },
         null,
         200
       );
@@ -237,27 +216,28 @@ export default class AdminController {
     }
   }
 
-  // get non verified providers (admin management)
-  static async getNonVerifiedProviders(request: Request, response: Response) {
+  static async getUsers(request: Request, response: Response) {
     try {
-      const user = await User.findOneBy({
-        id: request.user,
-      });
-
-      if (!user) {
-        return httpResponseError(response, null, "Unauthorized!", 401);
-      }
-
       const skip = request.skip;
       const take = request.limit;
+      const {
+        sortOrder = "ASC",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereCondition = {
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
 
       const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          providerVerifiedAt: IsNull(),
-        },
+        where: whereCondition,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(

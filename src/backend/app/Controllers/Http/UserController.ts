@@ -16,41 +16,6 @@ export default class UserController {
     httpResponseSuccess(response, { user }, null, 200);
   }
 
-  static async getUsers(request: Request, response: Response) {
-    try {
-      const skip = request.skip;
-      const take = request.limit;
-      const {
-        sortOrder = "ASC",
-        archived = "false",
-        emailVerified = "true",
-      } = request.query;
-
-      const whereCondition = {
-        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
-        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
-      };
-
-      const data = await User.findAndCount({
-        where: whereCondition,
-        skip,
-        take,
-        order: {
-          id: sortOrder === "DESC" ? "DESC" : "ASC",
-        },
-      });
-
-      httpResponseSuccess(
-        response,
-        { users: data[0], count: data[1] },
-        null,
-        200
-      );
-    } catch (error) {
-      httpResponseError(response, null, "Internal Server Error!", 500);
-    }
-  }
-
   // GET one user
   static async findUserById(request: Request, response: Response) {
     try {
@@ -76,19 +41,13 @@ export default class UserController {
       const skip = request.skip;
       const take = request.limit;
 
-      const {
-        sortOrder = "ASC",
-        type,
-        verified = "true",
-        archived = "false",
-        emailVerified = "true",
-      } = request.query;
+      const { sortOrder = "ASC", type } = request.query;
 
       const whereCondition: any = {
         role: "provider",
-        providerVerifiedAt: verified === "true" ? Not(IsNull()) : IsNull(),
-        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
-        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+        providerVerifiedAt: Not(IsNull()),
+        archivedAt: IsNull(),
+        emailVerifiedAt: Not(IsNull()),
       };
 
       if (type) {
@@ -114,6 +73,7 @@ export default class UserController {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
+  
 
   static async getProviderById(request: Request, response: Response) {
     try {
