@@ -40,7 +40,6 @@ export interface Post {
   bookmarks: Bookmark[];
 }
 
-
 export interface Bookmark {
   id: number;
   createdAt: string
