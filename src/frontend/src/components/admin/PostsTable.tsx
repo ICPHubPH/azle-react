@@ -23,6 +23,7 @@ const  Active = () => {
         pageSize={take}
         totalRows={totalRows}
         onPageChange={setPage}
+        loading={isLoading} // Pass the loading state to the DataTable component
       />
     </>
   );
@@ -46,6 +47,7 @@ const  Archived = () => {
         pageSize={take}
         totalRows={totalRows}
         onPageChange={setPage}
+        loading={isLoading} // Pass the loading state to the DataTable component
       />
     </>
   );
