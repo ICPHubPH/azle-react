@@ -286,4 +286,41 @@ export default class AdminController {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
+
+  static async getPosts(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+
+      const { sortOrder = "ASC", type, archived = "false" } = request.query;
+
+      const whereConditions: any = {
+        archivedAt: archived == "true" ? Not(IsNull()) : IsNull(),
+      };
+
+      if (type) {
+        whereConditions.type = type;
+      }
+
+      const data = await Post.findAndCount({
+        where: whereConditions,
+        relations: [
+          "user",
+          "feedbacks",
+          "feedbacks.user",
+          "bookmarks",
+          "bookmarks.user",
+        ],
+        skip,
+        take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+      });
+
+      httpResponseSuccess(response, { posts: data[0], count: data[1] });
+    } catch (error) {
+      httpResponseError(response, null, "Internal Server Error", 500);
+    }
+  }
 }

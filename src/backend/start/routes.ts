@@ -84,6 +84,7 @@ Route.post("/admin/providers/:id/verify", AuthMiddleware.hasAdminAccess, AdminCo
 Route.post("/admin/users", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getUsers); // tested
 Route.post("/admin/providers", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getProviders); // tested
 Route.post("/admin/students", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getStudents); // tested
+Route.post("/admin/posts", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getPosts);
 
 
 
