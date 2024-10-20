@@ -62,11 +62,11 @@ Route.post("/bookmarks", AuthMiddleware.authorize, BookmarkController.createBook
 Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark); // tested
 
 Route.post("/posts/create", AuthMiddleware.authorize, PostController.create); // tested
-Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById); // ?
+Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById); // tested
 Route.post("/posts/:id/remove", AuthMiddleware.authorize, PostController.deleteById); // tested
 
-Route.post("/feedbacks", AuthMiddleware.authorize, FeedbackController.createFeedback);
-Route.post("/feedbacks/:id/remove", AuthMiddleware.authorize, FeedbackController.deleteFeedback);
+Route.post("/feedbacks", AuthMiddleware.authorize, FeedbackController.createFeedback); // tested
+Route.post("/feedbacks/:id/remove", AuthMiddleware.authorize, FeedbackController.deleteFeedback); // tested
 
 /*
 |--------------------------------------------------------------------------
