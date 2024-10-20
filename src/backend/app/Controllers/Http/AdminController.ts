@@ -36,6 +36,7 @@ export default class AdminController {
 
       httpResponseSuccess(response, null, "User archived");
     } catch (error) {
+      console.log('Error archiving user: ', error)
       httpResponseError(response, null, "Internal Server Error", 500);
     }
   }

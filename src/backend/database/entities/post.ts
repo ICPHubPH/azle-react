@@ -1,11 +1,20 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { PostCategoryType } from "../../constants";
 import { Bookmark } from "./bookmark";
 import { Feedback } from "./feedback";
 import { User } from "./user";
 
 @Entity({
-  name: 'posts',
+  name: "posts",
 })
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -14,7 +23,7 @@ export class Post extends BaseEntity {
   @Column({ nullable: true, type: "varchar" })
   thumbnail: string | null;
 
-  @Column({type: "varchar", length: 60})
+  @Column({ type: "varchar", length: 60 })
   title: string;
 
   @Column({ type: "text" })
@@ -32,23 +41,28 @@ export class Post extends BaseEntity {
   @Column({ nullable: true, type: "datetime" })
   archivedAt: Date | null;
 
-  @ManyToOne(() => User, user => user.posts)
+  @ManyToOne(() => User, (user) => user.posts, {
+    onDelete: "CASCADE",
+  })
   user: User;
 
-  @OneToMany(() => Feedback, feedback => feedback.post, {
+  @OneToMany(() => Feedback, (feedback) => feedback.post, {
     cascade: true,
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
   })
   feedbacks: Feedback[];
 
-  @OneToMany(() => Bookmark, bookmark => bookmark.post)
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.post, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   bookmarks: Bookmark[];
 
   setType(type: string) {
     if (PostCategoryType.includes(type)) {
       this.type = type;
     } else {
-        throw new Error("Invalid post type");
+      throw new Error("Invalid post type");
     }
   }
 }

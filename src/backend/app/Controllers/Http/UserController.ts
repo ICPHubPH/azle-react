@@ -20,14 +20,24 @@ export default class UserController {
     try {
       const skip = request.skip;
       const take = request.limit;
+      const {
+        sortOrder = "ASC",
+        archived = "false",
+        emailVerified = "true",
+      } = request.query;
+
+      const whereCondition = {
+        archivedAt: archived === "true" ? Not(IsNull()) : IsNull(),
+        emailVerifiedAt: emailVerified === "true" ? Not(IsNull()) : IsNull(),
+      };
 
       const data = await User.findAndCount({
-        where: {
-          archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull()),
-        },
+        where: whereCondition,
         skip,
         take,
+        order: {
+          id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
       });
 
       httpResponseSuccess(
@@ -194,24 +204,37 @@ export default class UserController {
   static async deleteUserById(request: Request, response: Response) {
     try {
       const id = request.params.id;
-      const userExists = await User.findOneBy({ id });
+      const userToRemove = await User.findOne({
+        where: { id },
+        relations: ["posts", "feedbacks", "bookmarks", "verificationCode"],
+      });
 
-      if (!userExists) {
+      if (!userToRemove) {
         return httpResponseError(response, null, "User not found!", 404);
       }
 
-      if (userExists.id === request.user) {
+      if (userToRemove.id === request.user) {
         return httpResponseError(response, null, "Bad workflow", 403);
       }
 
-      const data = await User.delete({ id });
+      if (userToRemove.role === "admin") {
+        return httpResponseError(
+          response,
+          null,
+          "Cannot delete admin account",
+          403
+        );
+      }
 
-      if (!data.affected || data.affected == 0) {
-        return httpResponseError(response, null, "User not found!", 404);
+      const result = await User.remove(userToRemove);
+
+      if (!result) {
+        return httpResponseError(response, null, "Failed to delete user!", 500);
       }
 
       httpResponseSuccess(response, null, "User has been deleted");
     } catch (error) {
+      console.error("Error deleting user:", error);
       return httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
