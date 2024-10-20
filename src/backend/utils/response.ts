@@ -25,3 +25,9 @@ export const httpResponseError = (
     message,
   });
 };
+
+export class APIError extends Error {
+  constructor(message: string | null, public code: number) {
+    super(message!);
+  }
+}

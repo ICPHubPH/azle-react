@@ -20,6 +20,7 @@ import PostPage from "./pages/post";
 
 // Admin Page
 import VerifyAuth from "./components/auth/VerifyAuth";
+import { Toaster as SonnerToaster } from "./components/ui/sonner";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRouteContext from "./context/ProtectedRouteContext";
@@ -158,6 +159,7 @@ function App() {
           </Routes>
         </Router>
         <Toaster />
+        <SonnerToaster />
       </AuthProvider>
     </ThemeProvider>
   );

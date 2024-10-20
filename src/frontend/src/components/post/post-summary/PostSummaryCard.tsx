@@ -1,4 +1,8 @@
-import { createBookmark } from "@/api/bookmarkService";
+import {
+  createBookmark,
+  deleteBookmark,
+  isBookmarked,
+} from "@/api/bookmarkService";
 import { createFeedback } from "@/api/feedbackService";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -35,6 +39,7 @@ import { toast } from "@/hooks/use-toast";
 import { Post } from "@/types/model";
 import {
   Bookmark,
+  BookmarkCheck,
   CalendarDays,
   Facebook,
   Forward,
@@ -87,6 +92,7 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
   const [ratingValue, setRatingValue] = useState(0);
   const [ratingComment, setRatingComment] = useState("");
+  const [bookmarked, setBookmarked] = useState<boolean>(false);
 
   useEffect(() => {
     if (
@@ -95,6 +101,16 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
     ) {
       setIsTouchDevice(true);
     }
+
+    isBookmarked(String(id))
+      .then((result) => {
+        setBookmarked(result?.bookmarked!);
+      })
+      .catch((error) => {
+        toast({
+          description: error.message,
+        });
+      });
   }, []);
 
   const handleRating = async () => {
@@ -130,17 +146,19 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   const handleBookmark = async () => {
     // Here you would typically toggle the bookmark status in your backend
     try {
-      const result = await createBookmark(String(id));
-
-      if (result.success) {
+      if (!bookmarked) {
+        await createBookmark(String(id));
+        setBookmarked(true);
         toast({
           description: "Saved to Bookmark",
         });
+      } else {
+        await deleteBookmark(String(id));
+        setBookmarked(false);
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
-        title: "Bookmark Added",
-        description: "This post has been bookmarked.",
+        description: error.message,
       });
     }
   };
@@ -381,8 +399,15 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
           variant="ghost"
           onClick={handleBookmark}
         >
-          <Bookmark className="mr-0.5 h-4" />
-          Bookmark
+          {!bookmarked ? (
+            <>
+              <Bookmark className="mr-0.5 h-4" /> Bookmark
+            </>
+          ) : (
+            <>
+              <BookmarkCheck className="mr-0.5 h-4" /> Bookmarked
+            </>
+          )}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
