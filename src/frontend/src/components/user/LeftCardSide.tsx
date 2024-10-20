@@ -5,6 +5,8 @@ import { UserCircle, Settings } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "@/hooks/use-auth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { format } from 'date-fns'; // Import date-fns for date formatting
+
 
 export default function LeftCardSide() {
   const navigate = useNavigate();
@@ -60,8 +62,8 @@ export default function LeftCardSide() {
         </Button>
       </div>
       <div className="mt-auto text-xs text-muted-foreground space-y-1">
-        <p>Member since {data.createdAt}</p>
-        <p>ConnectEd 2024</p>
+      <p>Member since {data.createdAt ? format(new Date(data.createdAt), 'MMMM dd, yyyy') : 'N/A'}</p>
+      <p>ConnectEd 2024</p>
       </div>
     </div>
   );

@@ -15,8 +15,7 @@ export default function ProtectedRouteContext({
 
   if (
     allow.includes("*") ||
-    auth.isAuthenticated ||
-    allow.includes(auth?.data?.role! as PermittedRole)
+    (auth.isAuthenticated && allow.includes(auth?.data?.role! as PermittedRole))
   ) {
     return <>{children}</>;
   }

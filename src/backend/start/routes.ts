@@ -58,10 +58,10 @@ Route.post("/@self/update", AuthMiddleware.authorize, UserController.updateSelf)
 Route.post('/@self/posts', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfPosts) // tested
 Route.post('/@self/bookmarks', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfBookmarks) // tested
 
-
 Route.post("/users/:id/bookmarks", AuthMiddleware.authorize, Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
 Route.post("/bookmarks", AuthMiddleware.authorize, BookmarkController.createBookmark); // tested
-Route.post("/bookmarks/:id/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark); // tested
+Route.post("/bookmarks/remove", AuthMiddleware.authorize, BookmarkController.deleteBookmark); // tested; by post id
+Route.post("/bookmarks/check", AuthMiddleware.authorize, BookmarkController.isBookmarked); // by post id
 
 Route.post("/posts/create", AuthMiddleware.authorize, PostController.create); // tested
 Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById); // tested

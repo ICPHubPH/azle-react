@@ -66,7 +66,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ user }) => {
             <p className="text-sm font-semibold text-gray-900 dark:text-white">
               {currentUser.name}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-gray-500 dark:text-gray-400 truncate w-32">
               {currentUser.email}
             </p>
             <p className="text-xs text-gray-400 dark:text-gray-500">

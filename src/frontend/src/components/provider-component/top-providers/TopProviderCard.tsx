@@ -1,18 +1,18 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom"; 
 import { User } from "@/types/model";
 
-const DEFAULT_BANNER_URL = "path/to/default-banner-url.jpg"; // Define your default URL
-const DEFAULT_AVATAR_URL = "path/to/default-avatar-url.jpg"; // Define your default URL
+const DEFAULT_BANNER_URL = "/placeholder.svg?height=192&width=384";
+const DEFAULT_AVATAR_URL = "/placeholder.svg?height=96&width=96";
 
-const TopProviderCard: React.FC<{ provider: User }> = ({ provider }) => {
+interface TopProviderCardProps {
+  provider: User;
+}
+
+const TopProviderCard: React.FC<TopProviderCardProps> = ({ provider }) => {
   const navigate = useNavigate();
   const { id, name, bannerUrl, avatarUrl, bio } = provider;
 
@@ -21,29 +21,37 @@ const TopProviderCard: React.FC<{ provider: User }> = ({ provider }) => {
   };
 
   return (
-    <Card className="w-full overflow-hidden">
-      <CardHeader className="p-0">
-        <div className="relative h-48">
-          <img
-            src={bannerUrl || DEFAULT_BANNER_URL} // Use constant for default banner
-            alt={`${name}'s banner`} // Improved alt text for accessibility
-            className="w-full h-full object-cover"
+    <Card className="w-full overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+      <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20">
+        <img
+          src={bannerUrl || DEFAULT_BANNER_URL}
+          alt={`${name}'s banner`}
+          className="w-full h-full object-cover opacity-1"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+      </div>
+      <CardContent className="relative pt-16 pb-6 px-6">
+        <Avatar className="absolute -top-12 left-6 h-24 w-24 border-4 border-background shadow-lg">
+          <AvatarImage
+            src={avatarUrl || DEFAULT_AVATAR_URL}
+            alt={`${name}'s avatar`}
+            className="object-cover"
           />
-          <Avatar className="absolute -translate-y-[50%] left-6 h-[5rem] w-[5rem] border-4 border-background lg:h-[7rem] lg:w-[7rem]">
-            <AvatarImage  className="object-cover"
-              src={avatarUrl || DEFAULT_AVATAR_URL} // Use constant for default avatar
-              alt={`${name}'s avatar`} // Improved alt text for accessibility
-            />
-            <AvatarFallback>{name.charAt(0)}</AvatarFallback> {/* Fallback uses the first letter of the name */}
-          </Avatar>
+          <AvatarFallback className="text-2xl font-bold">{name.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <div className="space-y-4 min-h-[120px]">
+          <h3 className="font-semibold text-lg line-clamp-1">{name}</h3>
+          {bio && (
+            <p className="text-sm text-muted-foreground line-clamp-3">
+              {bio}
+            </p>
+          )}
         </div>
-      </CardHeader>
-      <CardContent className="pt-10 lg:pt-14 pb-6 px-6">
-        <div className="space-y-4">
-          <h3 className="font-semibold text-lg">{name}</h3>
-          {bio && <p className="text-sm text-muted-foreground">{bio}</p>} {/* Conditional rendering for bio */}
-        </div>
-        <Button className="mt-5" onClick={handleViewProfile}>
+        <Button 
+          className="w-full mt-4" 
+          onClick={handleViewProfile}
+          variant="outline"
+        >
           View Profile
         </Button>
       </CardContent>
