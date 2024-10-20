@@ -4,6 +4,7 @@ import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
 import { User } from "../../../database/entities/user";
 import { Post } from "Database/entities/post";
+import { Bookmark } from "Database/entities/bookmark";
 
 // GET all users
 export default class UserController {
@@ -359,6 +360,43 @@ export default class UserController {
       });
 
       httpResponseSuccess(response, { posts }, "Posts fetched successfully");
+    } catch (error: any) {
+      httpResponseError(response, null, "Internal Server Error", 500);
+    }
+  }
+
+  static async getSelfBookmarks(request: Request, response: Response) {
+    try {
+      const skip = request.skip;
+      const take = request.limit;
+
+      const { sortOrder = "ASC" } = request.query;
+
+      const user = await User.findOneBy({ id: request.user });
+
+      if (!user) {
+        return httpResponseError(response, null, "Bad Request", 400);
+      }
+
+      const bookmarks = await Bookmark.find({
+        where: {
+          user: {
+            id: user.id,
+          },
+        },
+        relations: ["post", "post.user"],
+        skip,
+        take,
+        order: {
+          createdAt: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+      });
+
+      httpResponseSuccess(
+        response,
+        { bookmarks },
+        "Bookmarks fetched successfully"
+      );
     } catch (error: any) {
       httpResponseError(response, null, "Internal Server Error", 500);
     }

@@ -56,6 +56,7 @@ Route.post("/@self/upload/avatar", AuthMiddleware.authorize, UserController.uplo
 Route.post("/@self/upload/banner", AuthMiddleware.authorize, UserController.uploadBannerUrl); // tested
 Route.post("/@self/update", AuthMiddleware.authorize, UserController.updateSelf); // tested
 Route.post('/@self/posts', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfPosts) // tested
+Route.post('/@self/bookmarks', Pagination.paginate, AuthMiddleware.authorize, UserController.getSelfBookmarks) // tested
 
 
 Route.post("/users/:id/bookmarks", AuthMiddleware.authorize,Pagination.paginate, BookmarkController.getUserBookmarks); // ????????????????
