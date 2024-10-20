@@ -42,7 +42,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isMobileMenuOpen, setIsMobileMe
 
           <div className="flex justify-start flex-col w-full">
             <p className="text-sm font-semibold text-gray-900 dark:text-white">{currentUser.name}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{currentUser.email}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 truncate w-32">
+              {currentUser.email}
+            </p>
           </div>
         </div>
 
