@@ -1,7 +1,7 @@
 // src/components/admin/AdminPostsTable.tsx
 
 import { DataTable } from "@/components/tables/data-table";
-import { useAllPost, useGetAllArchivedPosts } from "@/hooks/usePostData";
+import { useAllPost, useGetAllArchivedPosts, useGetAllPostsForAdmin } from "@/hooks/usePostData";
 import { useState } from "react";
 import { postsColumnDefs } from "../tables/PostsColumnDef";
 
@@ -11,7 +11,8 @@ const  Active = () => {
   const take = 10; // Number of items per page
   const skip = page * take;
 
-  const { data, isLoading, isError } = useAllPost(skip, take);
+  const { data, isLoading, isError } = useGetAllPostsForAdmin(skip, take);
+  console.log("Active Posts Data:", data); // Add this line to log the data
   const totalRows = data?.count || 0;
 
   return (
