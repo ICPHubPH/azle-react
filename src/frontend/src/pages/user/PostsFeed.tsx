@@ -20,18 +20,22 @@ export default function PostsFeed() {
 
   const { data: user } = useAuth();
 
-  const { data, isLoading, isError } = useAllPost(page * take, take);
+  const { data, isLoading,  } = useAllPost(page * take, take);
 
   const filteredPosts = data?.posts
-    .filter((post: { type: string; }) => activeTab === "all" || post.type === activeTab)
-    .filter((post: { title: string; content: string; }) =>
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => sortOrder === "latest"
+  .filter((post: { type: string }) =>
+    activeTab === "all" || post.type === activeTab // If the active tab is "all", show all posts. Otherwise, filter by post type.
+  )
+  .filter((post: { title: string; content: string }) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.content.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .sort((a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) =>
+    sortOrder === "latest"
       ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    );
+  );
+
 
   return (
     <>

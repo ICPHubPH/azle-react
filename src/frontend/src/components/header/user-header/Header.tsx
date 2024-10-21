@@ -11,7 +11,8 @@ import { User } from "@/types/model"; // Import the User type
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const { data } = useAuth(); // Get user data from AuthContext
+  const { data, isAuthenticated, loading } = useAuth(); // Get user data from AuthContext
+
   const user = data as User; // Cast data to User type
 
   useEffect(() => {
@@ -23,6 +24,11 @@ const Header: React.FC = () => {
   const handleLogoClick = () => {
     // Logic for logo click (e.g., navigate to homepage)
   };
+
+  // Error handling
+  if (!isAuthenticated || !data) {
+    return <div></div>;
+  }
 
   return (
     <header className={`border-b ${isMobileMenuOpen ? '' : 'z-[10]'} sticky top-0 backdrop-blur-lg`}>
@@ -47,16 +53,15 @@ const Header: React.FC = () => {
 
         {/* Conditionally render MobileMenu based on screen size */}
         <MobileMenu
-            isMobileMenuOpen={isMobileMenuOpen}
-            setIsMobileMenuOpen={setIsMobileMenuOpen}
-            user={user} 
-          />
-
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          user={user} 
+        />
 
         {/* Desktop Mode Toggle and User Dropdown */}
         <div className="hidden md:flex items-center space-x-4">
           <ModeToggle />
-          <UserDropdown user={user} /> {/* Pass the user prop here */}
+          <UserDropdown user={user} loading={loading} /> {/* Pass the user and loading state here */}
         </div>
       </div>
     </header>
