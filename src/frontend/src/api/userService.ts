@@ -130,4 +130,10 @@ export const verifyProviderById = async (id: string) => {
   return response.data;
 };
 
-// reject provider
+//Upload Valid ID
+export const uploadValidId = async ( validIdUrl: string) => {
+  const response = await axiosInstance.post("/@self/upload/valid-id", {
+    validIdUrl,
+  });
+  return response.data;
+};

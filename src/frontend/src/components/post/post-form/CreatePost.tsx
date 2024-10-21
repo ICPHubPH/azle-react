@@ -109,7 +109,6 @@ export default function CreatePost({ children }: CreatePostProps) {
   }
 
   async function createPostHandler() {
-    console.log("create post handler"); // Add this line for debugging
     if (title && type && content) {
       const thumbnailURL = await uploadThumbnail(); // Upload thumbnail and get URL
       createPost({
