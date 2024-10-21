@@ -55,21 +55,25 @@ const User: React.FC = () => {
 
   return (
     <>
-      <Header />
-      <div className="flex flex-row w-full container mx-auto px-4">
-        <div className="hidden lg:block">
-          <LeftCardSide />
-        </div>
-
-        <div className="flex flex-col">
-          
-          {/* Conditionally render UpperContent based on the user's role */}
+    <Header />
+    <div className="flex flex-row w-full container mx-auto px-4">
+      <div className="hidden lg:block">
+        <LeftCardSide />
+      </div>
+  
+      <div className="flex flex-col flex-grow"> {/* Added flex-grow to ensure it takes available space */}
+        <div className="container mx-auto px-4">
           {user?.role !== "provider" && <UpperContent />}
-          
-          {/* Conditionally render PostForm based on the user's role */}
-          {user?.role !== "student" && <PostForm />}
-          
-          <div className="container mx-auto px-4">
+        </div>
+  
+        <div className="container mx-auto px-4">
+          {/* Use a min-height to avoid layout shifts */}
+          <div className="min-h-[100px]"> {/* Adjust min-height as needed */}
+            {user?.role !== "student" && <PostForm />}
+          </div>
+        </div>
+  
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-4 justify-center items-center py-4">
             {postsLoading ? (
               Array.from({ length: 6 }).map((_, index) => (
@@ -85,32 +89,33 @@ const User: React.FC = () => {
               )
             )}
           </div>
-          </div>
-
-          <div className="container mx-auto px-4 py-10">
-            <h1 className="text-2xl font-bold">Top Providers</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 justify-center items-center pt-10">
-              {providersLoading
-                ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
-                : filteredProviders.map((provider: UserModel) => (
-                    <TopProviderCard key={provider.id} provider={provider} />
-                  ))}
-            </div>
-          </div>
         </div>
-
-        <div className="hidden lg:block">
-          <RightCardSide />
+  
+        <div className="container mx-auto px-4 py-10">
+          <h1 className="text-2xl font-bold">Top Providers</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 justify-center items-center pt-10">
+            {providersLoading
+              ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
+              : filteredProviders.map((provider: UserModel) => (
+                  <TopProviderCard key={provider.id} provider={provider} />
+                ))}
+          </div>
         </div>
       </div>
-
-      {/* Up arrow button */}
-      {showScrollToTop && (
-        <button onClick={scrollToTop} className="fixed bottom-8 right-8 p-3">
-          <ArrowUp className="h-6 w-6" />
-        </button>
-      )}
-    </>
+  
+      <div className="hidden lg:block">
+        <RightCardSide />
+      </div>
+    </div>
+  
+    {/* Up arrow button */}
+    {showScrollToTop && (
+      <button onClick={scrollToTop} className="fixed bottom-8 right-8 p-3">
+        <ArrowUp className="h-6 w-6" />
+      </button>
+    )}
+  </>
+  
   );
 };
 

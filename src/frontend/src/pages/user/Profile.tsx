@@ -84,7 +84,7 @@ export default function ProfilePage() {
           <div className="absolute inset-0 bg-black bg-opacity-30" />
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+        <div className="absolute bottom-0 left-0 right-0 p-6 ">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end">
             <Avatar className="w-32 h-32 border-4 border-white mb-4 md:mb-0">
               <AvatarImage src={auth?.data?.avatarUrl} alt={auth?.data?.name} />
@@ -147,14 +147,17 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Valid ID</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <UploadValidId />
-              </CardContent>
-            </Card>
+            {user.information.role === "Provider" && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Valid ID</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <UploadValidId />
+                  </CardContent>
+                </Card>
+              )}
+
 
             <Tabs defaultValue="posts" className="w-full">
               <TabsList className="w-full justify-start mb-6">
