@@ -16,11 +16,15 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen, user }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Call useNavigate inside the component
 
   const defaultUser = { name: "Guest", email: "guest@example.com", avatarUrl: "" };
-
   const currentUser = user || defaultUser; // Fallback to defaultUser if user is null
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove the token from local storage
+    navigate('/'); // Navigate to the home page after logout
+  };
 
   return (
     <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -72,7 +76,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isMobileMenuOpen, setIsMobileMe
 
             <Button
               className="w-full mt-2 justify-start hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200 cursor-pointer"
-              onClick={() => navigate('/logout')}
+              onClick={handleLogout} // Call handleLogout for logout functionality
               variant={null}
             >
               Logout
